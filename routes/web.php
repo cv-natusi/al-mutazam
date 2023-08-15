@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LandingPage\LandingPageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +13,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+Route::controller(LandingPageController::class)
+	// ->prefix('webhook')
+	->group(function(){
+	Route::get('/','index');
 });
+// Route::get('/', function () {
+// 	return view('welcome');
+// });
