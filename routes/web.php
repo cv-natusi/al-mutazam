@@ -16,8 +16,5 @@ use App\Http\Controllers\LandingPage\LandingPageController;
 Route::controller(LandingPageController::class)
 	// ->prefix('webhook')
 	->group(function(){
-	Route::get('/','index');
+	Route::get('/','home');
 });
-// Route::get('/', function () {
-// 	return view('welcome');
-// });
