@@ -1,171 +1,213 @@
 @extends('layout.landing-page.main')
+@push('style')
+	<style>
+	/* Slider start */
+		.slider-clink{
+			text-decoration: none;
+			color: white;
+		}
+		.slider-clink:hover{
+			color: #a2b9ff;
+		}
+		.slider-card {
+			background: rgb(172,197,19);
+			background: linear-gradient(180deg, rgba(172,197,19,1) 0%, rgba(41,105,161,1) 100%);
+			border: 1px solid #ddd;
+			padding: 25px;
+			margin-bottom: 16px;
+			-webkit-transition: all 450ms ease-in-out;
+			-moz-transition: all 450ms ease-in-out;
+			-o-transition: all 450ms ease-in-out;
+			-ms-transition: all 450ms ease-in-out;
+			transition: all 450ms ease-in-out;
+		}
+		.hero-section{
+			margin-top: 80px;
+		}
+		.slider {
+			position: relative;
+			max-width: 100%;
+			height: 600px;
+			margin-top: 10px;
+		}
+		.slider .slides li img {
+			background-position: center;
+		}
+	/* Slider end */
+
+	.second-section{
+		background-color: var(--custom-bg-section);
+	}
+
+	/* Section 2 start */
+		.color-a{
+			color: #307cc1;
+		}
+		.color-a:hover{
+			color: #0F4C81;
+		}
+	/* Section 2 end */
+	</style>
+@endpush
 @section('content')
 	<!-- HERO-1 ============================================= -->
 	<section id="hero-1" class="hero-section division">
-		<!-- SLIDER -->
-		<div class="slider">
-				<ul class="slides">
-				<!-- SLIDE #1 -->
-				<li id="slide-1">
-					<img src="{{asset('landing-page/images/slider/slide-1.jpg')}}" alt="slide-background"> <!-- Background Image -->
-					<!-- Image Caption -->
-					<div class="caption d-flex align-items-center left-align">
-						<div class="container">
+		<div class="row">
+			<div class="col-md-4 mtb-auto" style="line-height: 1;">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="slider-card b-bottom" style="margin: 9px -1px 0px -1px;">
 							<div class="row">
-								<div class="col-md-8 col-lg-7">
-									<div class="caption-txt">
-										<h2 class="h2-sm">25K+ students trust our online courses</h2> <!-- Title -->
-										<!-- Text -->
-										<p class="p-lg">
-											Feugiat primis ligula gravida auctor egestas augue viverra mauri 
-											tortor in iaculis placerat an eugiat mauris ipsum undo viverra tortor gravida 
-											purus lorem in tortor a viverr
-										</p>
-										<a href="#categories-3" class="btn btn-md btn-rose tra-black-hover">View Popular Courses</a> <!-- Button -->
-									</div>
+								<div class="col-sm-12 cbox-5-txt">
+									<h5 class="h5-xs fwhite fw8">Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</h5>
+									<p class="fwhite fw3 mb-3">Lorem ipsum, atau ringkasnya lipsum, adalah teks standar yang ditempatkan untuk mendemostrasikan el...</p>
+									<a href="javascript:void(0)" class="slider-clink m-0">[baca]</a>
 								</div>
 							</div>
-							<!-- End row -->
 						</div>
-						<!-- End container -->
 					</div>
-					<!-- End Image Caption -->
-				</li>
-				<!-- END SLIDE #1 -->
-
-				<!-- SLIDE #2 -->
-				<li id="slide-2">
-					<img src="{{asset('landing-page/images/slider/slide-2.jpg')}}" alt="slide-background">
-						<div class="caption d-flex align-items-center right-align">
-							<div class="container">
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="slider-card b-bottom" style="margin: 9px -1px 0px -1px;">
 							<div class="row">
-								<div class="col-md-8 col-lg-7">
-									<div class="caption-txt white-color">
-										<h2 class="h2-sm">2,769 online courses from the best tutors</h2>
-										<form class="hero-form" action="categories-list.html">
-											<div class="input-group">
-												<input type="text" class="form-control" placeholder="What do you want to learn?" aria-label="Search">
-												<span class="input-group-btn"><button type="submit" class="btn"><i class="fa fa-search" aria-hidden="true"></i></button></span>
+								<div class="col-sm-12 cbox-5-txt">
+									<h5 class="h5-xs fwhite fw8">Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</h5>
+									<p class="fwhite fw3 mb-3">Lorem ipsum, atau ringkasnya lipsum, adalah teks standar yang ditempatkan untuk mendemostrasikan el...</p>
+									<a href="javascript:void(0)" class="slider-clink m-0">[baca]</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="slider-card b-bottom" style="margin: 9px -1px 0px -1px;">
+							<div class="row">
+								<div class="col-sm-12 cbox-5-txt">
+									<h5 class="h5-xs fwhite fw8">Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</h5>
+									<p class="fwhite fw3 mb-3">Lorem ipsum, atau ringkasnya lipsum, adalah teks standar yang ditempatkan untuk mendemostrasikan el...</p>
+									<a href="javascript:void(0)" class="slider-clink m-0">[baca]</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-8 p-0">
+				<div class="slider">
+					<ul class="slides">
+						<!-- SLIDE #1 -->
+						<li id="slide-1">
+							<img src="{{asset('landing-page/images/slider/slide-1.jpg')}}" alt="slide-background"> <!-- Background Image -->
+							<!-- Image Caption -->
+							<div class="caption d-flex align-items-center left-align">
+								<div class="container">
+									<div class="row">
+										<div class="col-md-8 col-lg-7">
+											<div class="caption-txt">
+												<h2 class="h2-sm">25K+ students trust our online courses</h2> <!-- Title -->
+												<!-- Text -->
+												<p class="p-lg">
+													Feugiat primis ligula gravida auctor egestas augue viverra mauri 
+													tortor in iaculis placerat an eugiat mauris ipsum undo viverra tortor gravida 
+													purus lorem in tortor a viverr
+												</p>
+												<a href="#categories-3" class="btn btn-md btn-rose tra-black-hover">View Popular Courses</a> <!-- Button -->
 											</div>
-										</form>
+										</div>
+									</div>
+									<!-- End row -->
+								</div>
+								<!-- End container -->
+							</div>
+							<!-- End Image Caption -->
+						</li>
+						<!-- END SLIDE #1 -->
+		
+						<!-- SLIDE #2 -->
+						<li id="slide-2">
+							<img src="{{asset('landing-page/images/slider/slide-2.jpg')}}" alt="slide-background">
+								<div class="caption d-flex align-items-center right-align">
+									<div class="container">
+									<div class="row">
+										<div class="col-md-8 col-lg-7">
+											<div class="caption-txt white-color">
+												<h2 class="h2-sm">2,769 online courses from the best tutors</h2>
+												<form class="hero-form" action="categories-list.html">
+													<div class="input-group">
+														<input type="text" class="form-control" placeholder="What do you want to learn?" aria-label="Search">
+														<span class="input-group-btn"><button type="submit" class="btn"><i class="fa fa-search" aria-hidden="true"></i></button></span>
+													</div>
+												</form>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-					</li>
-				<!-- END SLIDE #2 -->
-
-				<!-- SLIDE #3 -->
-				<li id="slide-3">
-						<img src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
-					<div class="caption d-flex align-items-center right-align">
-							<div class="container">
-							<div class="row">
-								<div class="col-md-8 col-lg-7">
-									<div class="caption-txt">
-										<h2 class="h2-sm">High quality courses from the leading experts</h2>
-										<p class="p-lg">Feugiat primis ligula gravida auctor egestas augue viverra mauri 
-											tortor in iaculis placerat an eugiat mauris ipsum undo viverra tortor gravida 
-											purus lorem in tortor a viverr
-										</p>
-										<a href="#courses-4" class="btn btn-md btn-rose tra-black-hover">View Popular Courses</a>
+							</li>
+						<!-- END SLIDE #2 -->
+		
+						<!-- SLIDE #3 -->
+						<li id="slide-3">
+								<img src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
+							<div class="caption d-flex align-items-center right-align">
+									<div class="container">
+									<div class="row">
+										<div class="col-md-8 col-lg-7">
+											<div class="caption-txt">
+												<h2 class="h2-sm">High quality courses from the leading experts</h2>
+												<p class="p-lg">Feugiat primis ligula gravida auctor egestas augue viverra mauri 
+													tortor in iaculis placerat an eugiat mauris ipsum undo viverra tortor gravida 
+													purus lorem in tortor a viverr
+												</p>
+												<a href="#courses-4" class="btn btn-md btn-rose tra-black-hover">View Popular Courses</a>
+											</div>
+											</div>
 									</div>
-									</div>
+									<!-- End row -->
+								</div>
+								<!-- End container -->
 							</div>
-							<!-- End row -->
-						</div>
-						<!-- End container -->
-					</div>
-					<!-- End Image Caption -->
-					</li>
-				<!-- END SLIDE #3 -->
-			</ul>
+							<!-- End Image Caption -->
+							</li>
+						<!-- END SLIDE #3 -->
+					</ul>
+				</div>
 			</div>
-		<!-- END SLIDER -->
-	</section>
-	<!-- END HERO-1 -->	
-
-	<!-- ABOUT-1 ============================================= -->
-	<section id="about-1" class="bg-05 about-section division">
-		<div class="container white-color">
-			<div class="row d-flex align-items-center">
-				<!-- ABOUT BOX #1 -->		
-				<div class="col-md-4">
-					<div class="abox-1 icon-xs">
-						<span class="flaticon-004-computer"></span>
-						<div class="abox-1-txt">
-							<h5 class="h5-md">2,769 online courses</h5>
-							<p class="p-md">Explore a variety of fresh topics</p>
-						</div>
-					</div>
-				</div>
-				<!-- END ABOUT BOX #1 -->
-
-				<!-- ABOUT BOX #2 -->
-				<div class="col-md-4">
-					<div class="abox-1 icon-xs">
-						<span class="flaticon-028-learning-1"></span>
-						<div class="abox-1-txt">
-							<h5 class="h5-md">Expert instruction</h5>
-							<p class="p-md">Find the right instructor for you</p>
-						</div>
-					</div>
-				</div>
-				<!-- END ABOUT BOX #2 -->
-
-				<!-- ABOUT BOX #3 -->
-				<div class="col-md-4">
-					<div class="abox-1 icon-xs">
-						<span class="flaticon-032-tablet"></span>
-						<div class="abox-1-txt">
-							<h5 class="h5-md">Lifetime access</h5>
-							<p class="p-md">Learn on your schedule</p>
-						</div>
-					</div>
-				</div>
-				<!-- END ABOUT BOX #3 -->
-			</div>
-			<!-- End row -->
 		</div>
-		<!-- End container -->
 	</section>
-	<!-- End ABOUT-1 -->
+	<!-- END HERO-1 -->
 
 	<!-- ABOUT-2 ============================================= -->
-	<section id="about-2" class="wide-60 about-section division">
+	<section id="about-2" class="second-section wide-60 about-section division">
 		<div class="container">
 			<div class="row d-flex align-items-center">
-				<!-- ABOUT IMAGE -->
-				<div class="col-md-5 col-lg-6">
-					<div class="img-block pc-25 mb-40">
-						<img class="img-fluid" src="{{asset('landing-page/images/image-01.png')}}" alt="about-image">
-						</div>
-				</div>
-
-				<!-- ABOUT TEXT -->
-					<div class="col-md-7 col-lg-6">
-						<div class="txt-block pc-25 mb-40">
-						<h3 class="h3-sm">Transform your life through online education</h3>
-						<p>
-							An enim nullam tempor sapien gravida donec porta and blandit ipsum enim justo integer velna vitae 
-							auctor integer congue magna and purus pretium risus ligula rutrum luctus ultrice 
+				<div class="col-md-5 col-lg-4">
+					<div class="txt-block pc-25 mb-40">
+						<p class="h3-sm fw7 m-0" style="font-size: 14px; color: #0F4C81;">MTs AL-MUTAZAM</p>
+						<h3 class="h3-sm" style="line-height: 1">Sambutan<br>Kepala Madrasah</h3>
+						<p class="text-justify">
+							Puji syukur kehadirat Allah SWT, karena kita masih diberikan kesempatan, kekuatan, dan kesehatan untuk melanjutkan ibadah kita, karya kita, serta tugas dan pengabdian kita dalam upaya mencerdaskan kehidupan bangsa dan negara yang tercinta. Rasa syukur ini juga saya panjatkan dalam rangka peluncuran situs website resmi MTs Al-Multazam Mojokerto sebagai sarana informasi dan komunikasi.
+							<a href="javascript:void(0)" class="color-a fw4">[Baca Selengkapnya]</a>
 						</p>
-						<ul class="txt-list mb-15">
-							<li>Nullam rutrum eget nunc varius etiam mollis risus undo</li>
-							<li>Integer congue magna at pretium purus pretium ligula at rutrum risus luctus dolor auctor 
-								ipsum blandit purus		
-							</li>
-							<li>Risus at congue etiam aliquam sapien egestas posuere</li>
-							<li>At pretium purus integer congue magna pretium ligula at ipsum blandit purus	rutrum risus 
-								luctus dolor auctor 	
-							</li>
-						</ul>
+						<div class="row">
+							<div class="col-md-3">TTD</div>
+							<div class="col-md-9 text-left">
+								<h5>Nama Kepala Madrasah</h5>
+								<p>Kepala Sekolah</p>
+							</div>
 						</div>
 					</div>
-				<!-- END ABOUT TEXT -->
+				</div>
+
+				<div class="col-md-7 col-lg-8">
+					<div class="embed-responsive embed-responsive-16by9" style="height:100%">
+						<div id="playerId"></div>
+					</div>
+				</div>
 			</div>
-			<!-- End row -->
 		</div>
 	</section>
 	<!-- End ABOUT-2 -->
@@ -1030,3 +1072,37 @@
 	</section>
 	<!-- End SERVICES-5 -->
 @endsection
+@push('script')
+<script type='text/javascript' src='http://www.youtube.com/iframe_api'></script>
+<script type="text/javascript">
+// https://youtu.be/ysNDDrG9PtI
+	var player;
+	function onYouTubeIframeAPIReady(){
+		player = new YT.Player('playerId',{
+			videoId: 'ysNDDrG9PtI', // Video id
+			playerVars: {
+				'autoplay': 1,
+				'controls': 1,
+				'showinfo': 0,
+				'modestbranding': 0,
+				'loop': 1,
+				'fs': 0,
+				'cc_load_policty': 0,
+				'iv_load_policy': 3
+			},
+			events:{
+				onReady: function(event){
+					// event.target.mute();
+					event.target.setVolume(2);
+					event.target.playVideo();
+				},
+				onStateChange: function(e){
+					if(e.data === YT.PlayerState.ENDED){
+						e.target.playVideo();
+					}
+				}
+			}
+		})
+	}
+</script>
+@endpush

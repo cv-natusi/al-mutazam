@@ -62,9 +62,8 @@
 												<img class="img-40" src="{{asset('landing-page/images/icons/mail.png')}}" alt="contacts-icon"><br>
 												<span class="fw8" style="font-size: 20px;">Email</span>
 											</div>
-											<div class="col-md-8 text-left">
-												<span class="fw5">Sekolah:</span><br>
-												<span>Jalan Raya Kepuhanyar No. 24 Mojoanyar Mojokerto</span>
+											<div class="col-md-8 mtb-auto f-color text-left">
+												<span class="fw4">mtsalmutazam@gmail.com</span>
 											</div>
 										</div>
 									</div>

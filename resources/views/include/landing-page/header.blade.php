@@ -51,13 +51,13 @@
 				<div class="desktoplogo">
 					<div class="row m-0">
 						<div class="col-md-4">
-							<a href="javascript:void(0)" class="logo-black"><img src="{{asset('al-mutazam.png')}}" width="65" height="60" alt="header-logo"></a>
+							<a href="javascript:void(0)" class="logo-black"><img src="{{asset('al-mutazam.png')}}" width="70" height="65" alt="header-logo"></a>
 						</div>
 						{{-- <div class="col-md-8" style="text-align: center;"> --}}
-						<div class="col-md-8" style="line-height:1.2;">
+						<div class="col-md-8 mtb-auto" style="line-height:1.2;">
 							{{-- <span class="m-0 fw9" style="font-size: 20px; display: inline-block !important; line-height: normal !important; vertical-align:middle !important;">MTs AL-MUTAZAM</span> --}}
 								<span class="fw9" style="font-size: 15px;">MTs AL-MUTAZAM</span><br>
-								<span class="fw4" style="font-size: 14px;">Kab. Mojokerto - Jawa Timur</span>
+								<span class="fw4" style="font-size: 13px;">Kab. Mojokerto - Jawa Timur</span>
 							{{-- <span class="m-0 fw5" style="font-size: 14px;">Kab. Mojokerto - Jawa Timur</span> --}}
 						</div>
 					</div>

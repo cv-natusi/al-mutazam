@@ -20,3 +20,4 @@
 
 <!-- Custom Script -->
 <script src="{{asset('landing-page/js/custom.js')}}"></script>
+@stack('script')

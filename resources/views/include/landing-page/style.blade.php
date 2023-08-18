@@ -35,6 +35,10 @@
 <link href="{{asset('landing-page/css/responsive.css')}}" rel="stylesheet"> <!-- RESPONSIVE CSS -->
 
 <style>
+	:root{
+		--custom-color: #9f9f9f;
+		--custom-bg-section: #E6F5E0;
+	}
 	.fw3{
 		font-weight: 300;
 	}
@@ -57,13 +61,49 @@
 		font-weight: 900;
 	}
 	
-	.white-menu .wsmainfull{
-		padding: 5px 0;
-	}
-	.slider {
-		margin-top: 10vh;
+	.mtb-auto{
+		margin-top: auto;
+		margin-bottom: auto;
 	}
 
+	/* .white-menu .wsmainfull{
+		padding: 5px 0;
+	}
+	#header {
+		width: 100%;
+		display: block;
+		z-index: 99999;
+		overflow: hidden;
+		padding: 5px 0;
+		position:absolute;
+		left:0;
+		right:0;
+		margin-left:auto;
+		margin-right:auto;
+	} */
+
+	/* @media (min-width:576px){
+		.container{
+			max-width:540px
+		}
+	}
+	@media (min-width:768px){
+		.container{
+			max-width:720px
+		}
+	} */
+
+	.clearfix{
+		height: auto;
+	}
+	.container {
+		max-width: 1346px;
+	}
+	.fwhite{
+		color: white;
+	}
+
+	/* Header start */
 	.white-menu .wsmainfull{
 		background-color: #5A79CB!important;
 	}
@@ -96,12 +136,10 @@
 		color: white !important;
 		line-height: 25px;
 	}
-	.container {
-		max-width: 1346px;
-	}
+	/* Header end */
 
 
-	/* Footer */
+	/* Footer start */
 	.img-40{
 		width: 40px;
 		height: 40px;
@@ -120,6 +158,11 @@
 	.footer{
 		padding-bottom: 0;
 	}
+	.f-color{
+		color: var(--custom-color);
+	}
+	/* Footer end */
+
 	#scrollUp{
 		border-radius: 15px;
 		width: 30px;
@@ -127,20 +170,8 @@
 		bottom: 70px;
 		right: 20px;
 	}
-	.mtb-auto{
-		margin-top: auto;
-		margin-bottom: auto;
-	}
-	.ptb-16{
+	/* .ptb-16{
 		padding: 16px 0;
-	}
-	.f-color{
-		color: #9f9f9f;
-	}
-	/* .mt-15{
-		margin-top: 15px;
-	}
-	.mb-15{
-		margin-bottom: 15px;
 	} */
 </style>
+@stack('style')
