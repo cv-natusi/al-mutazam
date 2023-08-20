@@ -39,6 +39,10 @@
 		background-color: var(--custom-bg-section);
 	}
 
+	.text-color{
+		color: var(--text-color)
+	}
+
 	/* Section 2 start */
 		.color-a{
 			color: #307cc1;
@@ -47,6 +51,10 @@
 			color: #0F4C81;
 		}
 	/* Section 2 end */
+	.img-shadow{
+		box-shadow: 3px 3px 10px #ccc;
+		border-radius: 10px;
+	}
 	</style>
 @endpush
 @section('content')
@@ -184,7 +192,7 @@
 	<section id="about-2" class="second-section wide-60 about-section division">
 		<div class="container">
 			<div class="row d-flex align-items-center">
-				<div class="col-md-5 col-lg-4">
+				<div class="col-md-5">
 					<div class="txt-block pc-25 mb-40">
 						<p class="h3-sm fw7 m-0" style="font-size: 14px; color: #0F4C81;">MTs AL-MUTAZAM</p>
 						<h3 class="h3-sm" style="line-height: 1">Sambutan<br>Kepala Madrasah</h3>
@@ -202,7 +210,7 @@
 					</div>
 				</div>
 
-				<div class="col-md-7 col-lg-8">
+				<div class="col-md-7">
 					<div class="embed-responsive embed-responsive-16by9" style="height:100%">
 						<div id="playerId"></div>
 					</div>
@@ -212,16 +220,67 @@
 	</section>
 	<!-- End ABOUT-2 -->
 
+	<section id="team-3" class="pt-100 team-section division">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h3>Berita Terbaru</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					{{-- <div class="team-3-photo"> --}}
+						<div class="t-3-photo mb-25">
+							<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="https://www.quipper.com/id/blog/wp-content/uploads/2023/03/Apa-Itu-Peringkat-Sekolah-Ini-Penjelasannya-Lengkap-dengan-Cara-Melihat-Peringkat-Sekolah.webp" alt="team-member-foto">
+							<h4 class="mt-3">Judul</h4>
+							<p class="text-color">Lorem ipsum, atau ringkasnya lipsum, adalah teks standar yang ditempatkan untuk mendemostrasikan elemen grafis atau <a href="javascript:void(0)" class="color-a">[selengkapnya]</a></p>
+						</div>
+						{{-- <div class="tm-3-social clearfix">
+							<ul class="text-center clearfix">																			
+								<li><a href="#" class="ico-facebook"><i class="fab fa-facebook-f"></i></a></li>
+								<li><a href="#" class="ico-twitter"><i class="fab fa-twitter"></i></a></li>
+								<li><a href="#" class="ico-google-plus"><i class="fab fa-google-plus-g"></i></a></li>	
+								<li><a href="#" class="ico-linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+							</ul>
+						</div>
+						<div class="t-3-links">
+							<a href="#" class="btn btn-md btn-tra-grey rose-hover">Website</a>
+							<a href="mailto:yourdomain@mail.com" class="btn btn-md btn-tra-grey rose-hover">hello@yourdomain.com</a>
+						</div> --}}
+					{{-- </div> --}}
+				</div>
+				<div class="col-md-4">
+						<div class="t-3-photo mb-25">
+							<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="https://www.quipper.com/id/blog/wp-content/uploads/2023/03/Apa-Itu-Peringkat-Sekolah-Ini-Penjelasannya-Lengkap-dengan-Cara-Melihat-Peringkat-Sekolah.webp" alt="team-member-foto">
+							<h4 class="mt-3">Judul</h4>
+							<p class="text-color">Lorem ipsum, atau ringkasnya lipsum, adalah teks standar yang ditempatkan untuk mendemostrasikan elemen grafis atau <a href="javascript:void(0)" class="color-a">[selengkapnya]</a></p>
+						</div>
+				</div>
+				<div class="col-md-4">
+						<div class="t-3-photo mb-25">
+							<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="https://www.quipper.com/id/blog/wp-content/uploads/2023/03/Apa-Itu-Peringkat-Sekolah-Ini-Penjelasannya-Lengkap-dengan-Cara-Melihat-Peringkat-Sekolah.webp" alt="team-member-foto">
+							<h4 class="mt-3">Judul</h4>
+							<p class="text-color">Lorem ipsum, atau ringkasnya lipsum, adalah teks standar yang ditempatkan untuk mendemostrasikan elemen grafis atau <a href="javascript:void(0)" class="color-a">[selengkapnya]</a></p>
+						</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<a href="javascript:void(0)" class="color-a fw6"><i>LIHAT BERITA TERBARU LAINNYA >></i></a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
 	<!-- COURSES-3 ============================================= -->
-	<section id="courses-3" class="bg-lightgrey wide-60 courses-section division">
+	{{-- <section id="courses-3" class="bg-lightgrey wide-60 courses-section division">
 		<div class="container">
 			<!-- SECTION TITLE -->
 			<div class="row">	
 				<div class="col-md-12">
-					<div class="section-title mb-60">
-						<h3 class="h3-sm">Most Popular Courses</h3>
-						<p class="p-md">Aliquam a augue suscipit, luctus neque purus ipsum neque dolor primis libero tempus, blandit posuere and ligula varius magna a porta</p>
-						<div class="title-btn"><a href="javascript:void(0)" class="btn btn-tra-grey rose-hover">View All Courses</a></div>
+					<div class="section-title mb-10">
+						<h3 class="h3-sm">Berita Terbaru</h3>
 					</div>	
 				</div>
 			</div>
@@ -332,7 +391,7 @@
 			<!-- END COURSES HOLDER -->
 		</div>
 		<!-- End container -->
-	</section>
+	</section> --}}
 	<!-- END COURSES-3 -->
 
 	<!-- ABOUT-3 ============================================= -->
@@ -1077,32 +1136,32 @@
 <script type="text/javascript">
 // https://youtu.be/ysNDDrG9PtI
 	var player;
-	function onYouTubeIframeAPIReady(){
-		player = new YT.Player('playerId',{
-			videoId: 'ysNDDrG9PtI', // Video id
-			playerVars: {
-				'autoplay': 1,
-				'controls': 1,
-				'showinfo': 0,
-				'modestbranding': 0,
-				'loop': 1,
-				'fs': 0,
-				'cc_load_policty': 0,
-				'iv_load_policy': 3
-			},
-			events:{
-				onReady: function(event){
-					// event.target.mute();
-					event.target.setVolume(2);
-					event.target.playVideo();
-				},
-				onStateChange: function(e){
-					if(e.data === YT.PlayerState.ENDED){
-						e.target.playVideo();
-					}
-				}
-			}
-		})
-	}
+	// function onYouTubeIframeAPIReady(){
+	// 	player = new YT.Player('playerId',{
+	// 		videoId: 'ysNDDrG9PtI', // Video id
+	// 		playerVars: {
+	// 			'autoplay': 1,
+	// 			'controls': 1,
+	// 			'showinfo': 0,
+	// 			'modestbranding': 0,
+	// 			'loop': 1,
+	// 			'fs': 0,
+	// 			'cc_load_policty': 0,
+	// 			'iv_load_policy': 3
+	// 		},
+	// 		events:{
+	// 			onReady: function(event){
+	// 				// event.target.mute();
+	// 				event.target.setVolume(2);
+	// 				event.target.playVideo();
+	// 			},
+	// 			onStateChange: function(e){
+	// 				if(e.data === YT.PlayerState.ENDED){
+	// 					e.target.playVideo();
+	// 				}
+	// 			}
+	// 		}
+	// 	})
+	// }
 </script>
 @endpush

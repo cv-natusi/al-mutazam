@@ -36,7 +36,7 @@
 
 <style>
 	:root{
-		--custom-color: #9f9f9f;
+		--text-color: #7b7b7b;
 		--custom-bg-section: #E6F5E0;
 	}
 	.fw3{
@@ -159,7 +159,7 @@
 		padding-bottom: 0;
 	}
 	.f-color{
-		color: var(--custom-color);
+		color: var(--text-color);
 	}
 	/* Footer end */
 
