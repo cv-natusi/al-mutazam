@@ -35,7 +35,7 @@
 		}
 	/* Slider end */
 
-	.second-section{
+	.bg-second-section{
 		background-color: var(--custom-bg-section);
 	}
 
@@ -54,6 +54,26 @@
 	.img-shadow{
 		box-shadow: 3px 3px 10px #ccc;
 		border-radius: 10px;
+	}
+
+
+	.overlay {
+		position: absolute; 
+		background: rgba(57, 57, 57, 0.5);
+		/* background: rgb(178,182,218);
+		background: linear-gradient(0deg, rgba(178,182,218,1) 0%, rgba(255,255,255,1) 100%); */
+		/* #B2B6DA */
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.overlay_1 {
+		left: 20px;
+		right: 20px;
+		margin-bottom: 30px;
+		bottom: 0;
+		border-radius: 0px 0px 5px 5px;
+		padding: 10px;
 	}
 	</style>
 @endpush
@@ -189,7 +209,7 @@
 	<!-- END HERO-1 -->
 
 	<!-- ABOUT-2 ============================================= -->
-	<section id="about-2" class="second-section wide-60 about-section division">
+	<section id="about-2" class="bg-second-section wide-60 about-section division">
 		<div class="container">
 			<div class="row d-flex align-items-center">
 				<div class="col-md-5">
@@ -220,7 +240,7 @@
 	</section>
 	<!-- End ABOUT-2 -->
 
-	<section id="team-3" class="pt-100 team-section division">
+	<section id="team-3" class="pt-50 pb-50 team-section division">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
@@ -395,33 +415,60 @@
 	<!-- END COURSES-3 -->
 
 	<!-- ABOUT-3 ============================================= -->
-	<section id="about-3" class="pt-100 about-section division">
+	<section id="about-3" class="bg-second-section pt-50 pb-50 about-section division">
 		<div class="container">
-			<div class="row d-flex align-items-center">
-				<!-- ABOUT TEXT -->
-					<div class="col-md-7 col-lg-6">
-						<div class="txt-block pc-25">
-						<h3 class="h3-sm">Learn new personal & professional skills online</h3>
-						<p>
-							An enim nullam tempor sapien gravida donec porta and blandit ipsum enim justo integer velna vitae 
-							auctor integer congue magna and purus pretium risus ligula rutrum luctus ultrice 
-						</p>
-						<ul class="txt-list mb-15">
-							<li>Nullam rutrum eget nunc varius etiam mollis risus undo</li>
-							<li>Integer congue magna at pretium purus pretium ligula at rutrum risus luctus dolor auctor ipsum blandit purus</li>
-							<li>Risus at congue etiam aliquam sapien egestas posuere</li>
-						</ul>
-						<a href="categories-list.html" class="btn btn-md btn-rose tra-black-hover">Start Learning Now</a>
+			<div class="row mb-2">
+				<div class="col-md-12">
+					<h3>Event Terbaru<br>MTs Al-Mutazam</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="t-3-photo mb-25">
+						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="https://www.quipper.com/id/blog/wp-content/uploads/2023/03/Apa-Itu-Peringkat-Sekolah-Ini-Penjelasannya-Lengkap-dengan-Cara-Melihat-Peringkat-Sekolah.webp" alt="team-member-foto">
+						<div class="overlay overlay_1">
+						  <h3>Image title</h3> 
 						</div>
 					</div>
-				<!-- END ABOUT TEXT -->
-
+				</div>
+				<div class="col-md-4">
+					<div class="t-3-photo mb-25">
+						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="https://www.quipper.com/id/blog/wp-content/uploads/2023/03/Apa-Itu-Peringkat-Sekolah-Ini-Penjelasannya-Lengkap-dengan-Cara-Melihat-Peringkat-Sekolah.webp" alt="team-member-foto">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="t-3-photo mb-25">
+						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="https://www.quipper.com/id/blog/wp-content/uploads/2023/03/Apa-Itu-Peringkat-Sekolah-Ini-Penjelasannya-Lengkap-dengan-Cara-Melihat-Peringkat-Sekolah.webp" alt="team-member-foto">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<a href="javascript:void(0)" class="color-a fw6"><i>LIHAT EVENT LAINNYA >></i></a>
+				</div>
+			</div>
+			{{-- <div class="row d-flex align-items-center">
+				<div class="col-md-7 col-lg-6">
+					<div class="txt-block pc-25">
+					<h3 class="h3-sm">Event Mendatang<br>MTs Al-Mutazam</h3>
+					<p>
+						An enim nullam tempor sapien gravida donec porta and blandit ipsum enim justo integer velna vitae 
+						auctor integer congue magna and purus pretium risus ligula rutrum luctus ultrice 
+					</p>
+					<ul class="txt-list mb-15">
+						<li>Nullam rutrum eget nunc varius etiam mollis risus undo</li>
+						<li>Integer congue magna at pretium purus pretium ligula at rutrum risus luctus dolor auctor ipsum blandit purus</li>
+						<li>Risus at congue etiam aliquam sapien egestas posuere</li>
+					</ul>
+					<a href="categories-list.html" class="btn btn-md btn-rose tra-black-hover">Start Learning Now</a>
+					</div>
+				</div>
 				<div class="col-md-5 col-lg-6">
 					<div class="img-block">
 						<img class="img-fluid" src="{{asset('landing-page/images/image-02.png')}}" alt="about-image">
-						</div>
+					</div>
 				</div>
-			</div>
+			</div> --}}
 		</div>
 	</section>
 	<!-- End ABOUT-3 -->
