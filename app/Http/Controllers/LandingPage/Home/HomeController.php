@@ -12,7 +12,7 @@ class HomeController extends Controller{
 		return view('content.landing-page.home.main');
 	}
 	public function berita(Request $request){
-		$berita = Berita::all();
+		$berita = Berita::getBeritaPaginate();
 		return view('content.landing-page.home.berita',compact('berita'));
 	}
 	public function event(Request $request){

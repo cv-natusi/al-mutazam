@@ -2,7 +2,17 @@
 
 @push('style')
 	<style>
+		/* .pagination li{
+			float: left;
+			list-style-type: none;
+			margin:5px;
+		} */
+		.content .more-text{
+        display: none;
+    }
 	</style>
+        {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"> --}}
+		  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 @endpush
 
 @section('content')
@@ -16,82 +26,29 @@
 			</div>
 			<div class="row mt-4">
 				<div class="col-lg-8">
-					<div class="row d-flex align-items-center mb-4">
-						{{-- <div class="contact-box"> --}}
-						<div class="col-md-3 mtb-auto">
-							<img class="mx-auto d-block responsive img-fluid" src="{{asset('landing-page/images/berita/terbaru-1.png')}}" alt="team-member-foto">
-						</div>
-						<div class="col-md-9 mtb-auto text-left">
-							<div class="row">
-								<div class="col-md-12">
-									<h5><b>Tes Calon Santri Baru Gelombang 1 Al-Multazam 1 (Putri)</b></h5>
-									<p><i>Senin, 22 Mei 2022</i></p>
-									<p class="text-justify m-0">
-										Pada tanggal 06/03/22 Al-Multazam puri menyelenggarakan tes penerimaan santri baru ( PSB) gelombang 1. Kegiatan ini dilakukan pada pukul 07.00 sampai 12.00. Calon Santri datang dari berbagai macam daerah. Mereka melaksanakan 3 tes yaitu ; tes tulis MIPA, tes tulis Psikotes, tes wawancara calon santri, serta tes lisan yang meliputi membaca Al-Qur'an besrta hafalan juz amma. Tidak hanya calon santri yang melakukan tes wawancara, tetapi ...
-									</p>
-									<p class="m-0">
-										<a href="javascript:void(0)" class="color-a">[Baca Selengkapnya]</a>
-									</p>
+					@foreach ($berita as $key => $val)
+						<div class="row d-flex align-items-center mb-4">
+							<div class="col-md-3 mtb-auto">
+								<img class="mx-auto d-block responsive img-fluid" src="{{asset('landing-page/images/berita/terbaru-1.png')}}" alt="team-member-foto">
+							</div>
+							<div class="col-md-9 mtb-auto text-left">
+								<div class="row">
+									<div class="col-md-12">
+										<h5><b>{{$val->judul}}</b></h5>
+										<p><i>{{$val->date_indo}}</i></p>
+										<div class="text-justify content" id="content-{{$val->id_berita}}" data-id="{{$val->id_berita}}">
+											{!!$val->isi!!}
+										</div>
+										<p class="m-0">
+											<a href="javascript:void(0)" id="read-more-{{$val->id_berita}}" onclick="readMore('{{$val->id_berita}}')" class="color-a">[Baca Selengkapnya]</a>
+										</p>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="row d-flex align-items-center mb-4">
-						<div class="col-md-3 mtb-auto">
-							<img class="mx-auto d-block responsive img-fluid" src="{{asset('landing-page/images/berita/terbaru-2.png')}}" alt="team-member-foto">
-						</div>
-						<div class="col-md-9 mtb-auto text-left">
-							<div class="row">
-								<div class="col-md-12">
-									<h5><b>Tes Calon Santri Baru Gelombang 1 Al-Multazam 1 (Putri)</b></h5>
-									<p><i>Senin, 22 Mei 2022</i></p>
-									<p class="text-justify m-0">
-										Pada tanggal 06/03/22 Al-Multazam puri menyelenggarakan tes penerimaan santri baru ( PSB) gelombang 1. Kegiatan ini dilakukan pada pukul 07.00 sampai 12.00. Calon Santri datang dari berbagai macam daerah. Mereka melaksanakan 3 tes yaitu ; tes tulis MIPA, tes tulis Psikotes, tes wawancara calon santri, serta tes lisan yang meliputi membaca Al-Qur'an besrta hafalan juz amma. Tidak hanya calon santri yang melakukan tes wawancara, tetapi ...
-									</p>
-									<p class="m-0">
-										<a href="javascript:void(0)" class="color-a">[Baca Selengkapnya]</a>
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row d-flex align-items-center mb-4">
-						<div class="col-md-3 mtb-auto">
-							<img class="mx-auto d-block responsive img-fluid" src="{{asset('landing-page/images/berita/terbaru-3.png')}}" alt="team-member-foto">
-						</div>
-						<div class="col-md-9 mtb-auto text-left">
-							<div class="row">
-								<div class="col-md-12">
-									<h5><b>Tes Calon Santri Baru Gelombang 1 Al-Multazam 1 (Putri)</b></h5>
-									<p><i>Senin, 22 Mei 2022</i></p>
-									<p class="text-justify m-0">
-										Pada tanggal 06/03/22 Al-Multazam puri menyelenggarakan tes penerimaan santri baru ( PSB) gelombang 1. Kegiatan ini dilakukan pada pukul 07.00 sampai 12.00. Calon Santri datang dari berbagai macam daerah. Mereka melaksanakan 3 tes yaitu ; tes tulis MIPA, tes tulis Psikotes, tes wawancara calon santri, serta tes lisan yang meliputi membaca Al-Qur'an besrta hafalan juz amma. Tidak hanya calon santri yang melakukan tes wawancara, tetapi ...
-									</p>
-									<p class="m-0">
-										<a href="javascript:void(0)" class="color-a">[Baca Selengkapnya]</a>
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row d-flex align-items-center mb-4">
-						<div class="col-md-3 mtb-auto">
-							<img class="mx-auto d-block responsive img-fluid" src="{{asset('landing-page/images/berita/terbaru-4.png')}}" alt="team-member-foto">
-						</div>
-						<div class="col-md-9 mtb-auto text-left">
-							<div class="row">
-								<div class="col-md-12">
-									<h5><b>Tes Calon Santri Baru Gelombang 1 Al-Multazam 1 (Putri)</b></h5>
-									<p><i>Senin, 22 Mei 2022</i></p>
-									<p class="text-justify m-0">
-										Pada tanggal 06/03/22 Al-Multazam puri menyelenggarakan tes penerimaan santri baru ( PSB) gelombang 1. Kegiatan ini dilakukan pada pukul 07.00 sampai 12.00. Calon Santri datang dari berbagai macam daerah. Mereka melaksanakan 3 tes yaitu ; tes tulis MIPA, tes tulis Psikotes, tes wawancara calon santri, serta tes lisan yang meliputi membaca Al-Qur'an besrta hafalan juz amma. Tidak hanya calon santri yang melakukan tes wawancara, tetapi ...
-									</p>
-									<p class="m-0">
-										<a href="javascript:void(0)" class="color-a">[Baca Selengkapnya]</a>
-									</p>
-								</div>
-							</div>
-						</div>
+					@endforeach
+					<div class="d-flex justify-content-center">
+						{!! $berita->links() !!}
 					</div>
 				</div>
 
@@ -129,74 +86,6 @@
 									</div>
 									<div class="col-md-9 mtb-auto text-left">
 										<span class="fw4">
-											10 Besar Finalis Lomba KSM ( Kompetisi Sains Madrasah) Mojokerto<br>
-											<a href="javascript:void(0)" class="color-a">[Baca Selengkapnya]</a>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row d-flex align-items-center">
-						<div class="col-lg-12">
-							<div class="contact-box">
-								<div class="row">
-									<div class="col-md-3 mtb-auto">
-										<img class="img-80" src="{{asset('landing-page/images/pengumuman.png')}}" alt="contacts-icon">
-									</div>
-									<div class="col-md-9 mtb-auto text-left">
-										<span class="fw4">
-											Juara Harapan 2 Kompetisi Bahasa Arab Nasional (KOMBANAS)<br>
-											<a href="javascript:void(0)" class="color-a">[Baca Selengkapnya]</a>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row d-flex align-items-center">
-						<div class="col-lg-12">
-							<div class="contact-box">
-								<div class="row">
-									<div class="col-md-3 mtb-auto">
-										<img class="img-80" src="{{asset('landing-page/images/pengumuman.png')}}" alt="contacts-icon">
-									</div>
-									<div class="col-md-9 mtb-auto text-left">
-										<span class="fw4">
-											Pendaftaran Tes Gelombang 2 Pondok Pesantren Al-Multazam 1 dan 2<br>
-											<a href="javascript:void(0)" class="color-a">[Baca Selengkapnya]</a>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row d-flex align-items-center">
-						<div class="col-lg-12">
-							<div class="contact-box">
-								<div class="row">
-									<div class="col-md-3 mtb-auto">
-										<img class="img-80" src="{{asset('landing-page/images/pengumuman.png')}}" alt="contacts-icon">
-									</div>
-									<div class="col-md-9 mtb-auto text-left">
-										<span class="fw4">
-											Pendaftaran Tes Gelombang 2 Pondok Pesantren Al-Multazam 1 dan 2<br>
-											<a href="javascript:void(0)" class="color-a">[Baca Selengkapnya]</a>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row d-flex align-items-center">
-						<div class="col-lg-12">
-							<div class="contact-box">
-								<div class="row">
-									<div class="col-md-3 mtb-auto">
-										<img class="img-80" src="{{asset('landing-page/images/pengumuman.png')}}" alt="contacts-icon">
-									</div>
-									<div class="col-md-9 mtb-auto text-left">
-										<span class="fw4">
 											Pemenang Lomba Poster, Karikatur dan Mading<br>
 											<a href="javascript:void(0)" class="color-a">[Baca Selengkapnya]</a>
 										</span>
@@ -210,73 +99,56 @@
 		</div>
 	</section>
 @endsection
-@push('script')
-	<script src="{{asset('plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
-	<script src="{{asset('plugins/datatable/js/dataTables.bootstrap5.min.js')}}"></script>
 
-	<script type='text/javascript' src='http://www.youtube.com/iframe_api'></script>
+@push('script')
 	<script type="text/javascript">
 		$(document).ready(() => {
-			var data = [
-				{
-					'no': '1',
-					'tanggal': 'Senin',
-					'kegiatan': 'Ekstra',
-					'aksi': 'detail'
-				},
-			]
-			$('#agendaTable').DataTable({
-				// dom: 'lfrtip', // Default
-				dom: 'rtp',
-				data:data,
-				columns: [
-					{
-						name: 'no',
-						data: 'no'
-					},
-					{
-						name: 'tanggal',
-						data: 'tanggal'
-					},
-					{
-						name: 'kegiatan',
-						data: 'kegiatan'
-					},
-					{
-						name: 'aksi',
-						data: 'aksi'
-					},
-				]
-			});
+			var maxWord = 40;
+			$(".content").each(function(){
+				var myStr = $(this).html()
+				var id = $(this).data('id')
+				if(myStr.split(' ').length > maxWord){
+					var arrStr = myStr.split(' ')
+
+					var newStr = filterArray(arrStr,maxWord,`first`)
+					var removedStr = filterArray(arrStr,maxWord,'second')
+
+					newStr = newStr.join(' ')
+					removedStr = removedStr.join(' ')
+
+					$(this).empty().html(newStr+'...')
+					$(this).data('first',newStr+'...')
+					$(this).data('second',' '+removedStr)
+				}
+			})
 		})
-		// https://youtu.be/ysNDDrG9PtI
-		var player;
-		function onYouTubeIframeAPIReady(){
-			player = new YT.Player('playerId',{
-				videoId: 'ysNDDrG9PtI', // Video id
-				playerVars: {
-					'autoplay': 1,
-					'controls': 1,
-					'showinfo': 0,
-					'modestbranding': 0,
-					'loop': 1,
-					'fs': 0,
-					'cc_load_policty': 0,
-					'iv_load_policy': 3
-				},
-				events:{
-					onReady: function(event){
-						// event.target.mute();
-						event.target.setVolume(2);
-						event.target.playVideo();
-					},
-					onStateChange: function(e){
-						if(e.data === YT.PlayerState.ENDED){
-							e.target.playVideo();
-						}
+
+		function filterArray(array,num,prefix){
+			var arrStr = $.grep(array, function(v,i) {
+				if(prefix==='first'){
+					if(i<num){
+						return v.indexOf('1');
+					}
+				}else{
+					if(i>=num){
+						return v.indexOf('1');
 					}
 				}
 			})
+			return arrStr
+		}
+
+		function readMore(id){
+			var textButton = $(`#read-more-${id}`).text()
+			var firstText = $(`#content-${id}`).data('first')
+			var secondText = $(`#content-${id}`).data('second')
+			if(textButton==='[Baca Selengkapnya]'){
+				$(`#content-${id}`).empty().html(firstText.slice(0,-3)+secondText)
+				$(`#read-more-${id}`).text('[Baca Lebih Sedikit]')
+			}else{
+				$(`#content-${id}`).empty().html(firstText)
+				$(`#read-more-${id}`).text('[Baca Selengkapnya]')
+			}
 		}
 	</script>
 @endpush
