@@ -1,6 +1,7 @@
 @extends('layout.landing-page.main')
+
 @push('style')
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css"/>
+	<link href="{{asset('plugins/datatable/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet">
 	<style>
 	/* Slider start */
 		.slider-clink{
@@ -81,6 +82,7 @@
 	}
 	</style>
 @endpush
+
 @section('content')
 	<section id="hero-1" class="hero-section division">
 		<div class="row">
@@ -210,11 +212,11 @@
 		</div>
 	</section>
 
-	<section id="about-2" class="bg-second-section wide-60 about-section division">
+	<section class="bg-second-section about-section division padding-section">
 		<div class="container">
 			<div class="row d-flex align-items-center">
 				<div class="col-md-5">
-					<div class="txt-block pc-25 mb-40">
+					<div class="txt-block pc-25">
 						<p class="h3-sm fw7 m-0" style="font-size: 14px; color: #0F4C81;">MTs AL-MUTAZAM</p>
 						<h3 class="h3-sm" style="line-height: 1">Sambutan<br>Kepala Madrasah</h3>
 						<p class="text-justify">
@@ -278,128 +280,7 @@
 		</div>
 	</section>
 
-
-	{{-- <section id="courses-3" class="bg-lightgrey wide-60 courses-section division">
-		<div class="container">
-			<!-- SECTION TITLE -->
-			<div class="row">	
-				<div class="col-md-12">
-					<div class="section-title mb-10">
-						<h3 class="h3-sm">Berita Terbaru</h3>
-					</div>	
-				</div>
-			</div>
-
-			<!-- COURSES HOLDER -->
-			<div class="row courses-grid">
-				<!-- COURSE #1 -->
-				<div class="col-md-6 col-lg-4 col-xl-3">
-					<div class="cbox-1">
-						<a href="course-details.html">
-							<img class="img-fluid" src="{{asset('landing-page/images/courses/course-1-img.jpg')}}" alt="course-preview">
-							<div class="cbox-4-txt">
-								<p class="course-tags">
-									<span>Languages</span>
-									<span>English</span>
-								</p>
-								<h5 class="h5-xs">Beginner Level English - Foundations</h5>
-								<div class="course-rating clearfix">
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star-half-alt"></i>
-									<span>4.5 (26 Ratings)</span>
-								</div>
-								<span class="course-price"><span class="old-price">$149.99</span> $138.99</span>
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- END COURSE #1 -->
-
-				<!-- COURSE #2 -->
-				<div class="col-md-6 col-lg-4 col-xl-3">
-					<div class="cbox-1">
-						<a href="course-details.html">
-							<img class="img-fluid" src="{{asset('landing-page/images/courses/course-2-img.jpg')}}" alt="course-preview">
-							<div class="cbox-4-txt">
-								<p class="course-tags">
-									<span>Languages</span>
-									<span>English</span>
-								</p>
-								<h5 class="h5-xs">Diploma in Basic English Grammar - Revised 2019</h5>
-								<div class="course-rating clearfix">
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star"></i>
-									<span>5 (118 Ratings)</span>
-								</div>
-								<span class="course-price"><span class="old-price">$174.99</span> $59.99</span>
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- END COURSE #2 -->
-
-				<!-- COURSE #3 -->
-				<div class="col-md-6 col-lg-4 col-xl-3">
-					<div class="cbox-1">
-						<a href="course-details.html">
-							<img class="img-fluid" src="{{asset('landing-page/images/courses/course-3-img.jpg')}}" alt="course-preview">
-							<div class="cbox-4-txt">
-								<p class="course-tags"><span>IT Managment</span></p>
-								<h5 class="h5-xs">Diploma in Information Technology Management</h5>
-								<div class="course-rating clearfix">
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star-half-alt"></i>
-									<span>4.5 (72 Ratings)</span>
-								</div>
-								<span class="course-price"><span class="old-price">$119.99</span> $34.99</span>
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- END COURSE #3 -->
-
-				<!-- COURSE #4 -->
-				<div class="col-md-6 col-lg-4 col-xl-3">
-					<div class="cbox-1">
-						<a href="course-details.html">
-							<img class="img-fluid" src="{{asset('landing-page/images/courses/course-4-img.jpg')}}" alt="course-preview">
-							<div class="cbox-4-txt">
-								<p class="course-tags">
-									<span>SEO</span>
-									<span>Marketing</span>
-								</p>
-								<h5 class="h5-xs">Google AdWords for Beginners 2020</h5>
-								<div class="course-rating clearfix">
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star"></i>
-									<i class="fas fa-star"></i>
-									<span>5 (281 Ratings)</span>
-								</div>
-								<span class="course-price">Free Course</span>
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- END COURSE #4 -->
-			</div>
-			<!-- END COURSES HOLDER -->
-		</div>
-		<!-- End container -->
-	</section> --}}
-
-
-	<section id="about-3" class="bg-second-section pt-50 pb-50 about-section division">
+	<section id="about-3" class="bg-second-section about-section division padding-section">
 		<div class="container">
 			<div class="row mb-2">
 				<div class="col-md-12">
@@ -463,10 +344,7 @@
 		</div>
 	</section>
 
-
-
-
-	<section id="courses-5" class="bg-lightgrey courses-section division">
+	<section class="bg-lightgrey courses-section division padding-section">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8">
@@ -475,45 +353,22 @@
 							<h1>Agenda</h1>
 						</div>
 					</div>
-					<table id="agendaTable" style="width: 100%;" border="solid">
-						<thead>
-							<tr>
-								<th>Firstname</th>
-								<th>Lastname</th>
-								<th>Savings</th>
-							</tr>
-						</thead>
-						{{-- <tr>
-							<td>Peter</td>
-							<td>Griffin</td>
-							<td>$100</td>
-						</tr> --}}
-					</table>
-					{{-- <div class="cbox-5 b-bottom">
-						<a href="course-details.html">
-							<div class="row">
-								<div class="col-sm-7 cbox-5-txt">
-									<h5 class="h5-xs">English for Beginners: Intensive English Speaking Course</h5>
-									<p class="p-sm grey-color">54 Total Hours - Updated 2/2020</p>
-									<div class="course-rating">
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star"></i>
-										<i class="fas fa-star"></i>
-										<span class="cr-rating">4.89 (331 Reviews)</span>
-									</div>
-								</div>
-								<div class="col-sm-3 cbox-5-data text-center clearfix">
-									<p class="grey-color"><i class="fas fa-users"></i> 7348</p>
-								</div>
-								<div class="col-sm-2 cbox-5-price text-right clearfix">
-									<span class="course-price">$34.99</span>
-									<span class="old-price">$64.99</span>
-								</div>
+					<div class="row mt-3">
+						<div class="col-md-12">
+							<div class="table-responsive pr-30">
+								<table id="agendaTable" class="table table-striped table-bordered" style="width:100%; font-size: 14px;">
+									<thead>
+										<tr>
+											<th>No</th>
+											<th>Hari/Tanggal</th>
+											<th>Kegiatan</th>
+											<th>Aksi</th>
+										</tr>
+									</thead>
+								</table>
 							</div>
-						</a>
-					</div> --}}
+						</div>
+					</div>
 				</div>
 
 				<div class="col-lg-4">
@@ -655,68 +510,72 @@
 	</section>
 @endsection
 @push('script')
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
-<script type='text/javascript' src='http://www.youtube.com/iframe_api'></script>
-<script type="text/javascript">
-	$(document).ready(() => {
-		var data = [
-			{
-				'tanggal': 'Senin',
-				'kegiatan': 'Ekstra',
-				'aksi': 'detail'
-			},
-			{
-				'tanggal': 'Senin',
-				'kegiatan': 'Ekstra',
-				'aksi': 'detail'
-			},
-		]
-		$('#agendaTable').DataTable({
-			data:data,
-			columns: [
+	<script src="{{asset('plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
+	<script src="{{asset('plugins/datatable/js/dataTables.bootstrap5.min.js')}}"></script>
+
+	<script type='text/javascript' src='http://www.youtube.com/iframe_api'></script>
+	<script type="text/javascript">
+		$(document).ready(() => {
+			var data = [
 				{
-					name: 'tanggal',
-					data: 'tanggal'
-				},
-				{
-					name: 'kegiatan',
-					data: 'kegiatan'
-				},
-				{
-					name: 'aksi',
-					data: 'aksi'
+					'no': '1',
+					'tanggal': 'Senin',
+					'kegiatan': 'Ekstra',
+					'aksi': 'detail'
 				},
 			]
-		});
-	})
-// https://youtu.be/ysNDDrG9PtI
-	var player;
-	// function onYouTubeIframeAPIReady(){
-	// 	player = new YT.Player('playerId',{
-	// 		videoId: 'ysNDDrG9PtI', // Video id
-	// 		playerVars: {
-	// 			'autoplay': 1,
-	// 			'controls': 1,
-	// 			'showinfo': 0,
-	// 			'modestbranding': 0,
-	// 			'loop': 1,
-	// 			'fs': 0,
-	// 			'cc_load_policty': 0,
-	// 			'iv_load_policy': 3
-	// 		},
-	// 		events:{
-	// 			onReady: function(event){
-	// 				// event.target.mute();
-	// 				event.target.setVolume(2);
-	// 				event.target.playVideo();
-	// 			},
-	// 			onStateChange: function(e){
-	// 				if(e.data === YT.PlayerState.ENDED){
-	// 					e.target.playVideo();
-	// 				}
-	// 			}
-	// 		}
-	// 	})
-	// }
-</script>
+			$('#agendaTable').DataTable({
+				// dom: 'lfrtip', // Default
+				dom: 'rtp',
+				data:data,
+				columns: [
+					{
+						name: 'no',
+						data: 'no'
+					},
+					{
+						name: 'tanggal',
+						data: 'tanggal'
+					},
+					{
+						name: 'kegiatan',
+						data: 'kegiatan'
+					},
+					{
+						name: 'aksi',
+						data: 'aksi'
+					},
+				]
+			});
+		})
+		// https://youtu.be/ysNDDrG9PtI
+		var player;
+		function onYouTubeIframeAPIReady(){
+			player = new YT.Player('playerId',{
+				videoId: 'ysNDDrG9PtI', // Video id
+				playerVars: {
+					'autoplay': 1,
+					'controls': 1,
+					'showinfo': 0,
+					'modestbranding': 0,
+					'loop': 1,
+					'fs': 0,
+					'cc_load_policty': 0,
+					'iv_load_policy': 3
+				},
+				events:{
+					onReady: function(event){
+						// event.target.mute();
+						event.target.setVolume(2);
+						event.target.playVideo();
+					},
+					onStateChange: function(e){
+						if(e.data === YT.PlayerState.ENDED){
+							e.target.playVideo();
+						}
+					}
+				}
+			})
+		}
+	</script>
 @endpush

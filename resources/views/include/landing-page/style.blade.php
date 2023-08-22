@@ -138,6 +138,9 @@
 	}
 	/* Header end */
 
+   .padding-section{
+      padding: 50px 0;
+   }
 
 	/* Footer start */
 	.img-40{
