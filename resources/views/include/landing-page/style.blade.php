@@ -66,6 +66,12 @@
 		margin-bottom: auto;
 	}
 
+	.color-a{
+		color: #307cc1;
+	}
+	.color-a:hover{
+		color: #0F4C81;
+	}
 	/* .white-menu .wsmainfull{
 		padding: 5px 0;
 	}
@@ -138,9 +144,9 @@
 	}
 	/* Header end */
 
-   .padding-section{
-      padding: 50px 0;
-   }
+	.padding-section{
+		padding: 50px 0;
+	}
 
 	/* Footer start */
 	.img-40{

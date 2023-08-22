@@ -11,7 +11,7 @@
 			<div class="wsmainwp clearfix">
 				<nav class="wsmenu clearfix">
 					<ul class="wsmenu-list">
-						<li class="nl-simple" aria-haspopup="true"><a href="javascript:void(0)">HOME</a></li>
+						<li class="nl-simple" aria-haspopup="true"><a href="{{route('home.main')}}">HOME</a></li>
 						<li class="nl-simple" aria-haspopup="true"><a href="javascript:void(0)">AMTV</a></li>
 						<li aria-haspopup="true"><a href="javascript:void(0)">PROFIL<span class="wsarrow"></span></a>
 							<ul class="sub-menu">
