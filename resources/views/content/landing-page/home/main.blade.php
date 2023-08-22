@@ -230,14 +230,19 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-4">
-					<div class="t-3-photo mb-25">
-						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/berita/1.png')}}" alt="team-member-foto">
-						<h4 class="mt-3">Judul</h4>
-						<p class="text-color">Lorem ipsum, atau ringkasnya lipsum, adalah teks standar yang ditempatkan untuk mendemostrasikan elemen grafis atau <a href="javascript:void(0)" class="color-a">[selengkapnya]</a></p>
-					</div>
-				</div>
-				<div class="col-md-4">
+				@if(count($berita)>0)
+					@foreach ($berita as $key => $val)
+						<div class="col-md-4">
+							<div class="t-3-photo mb-25">
+								<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/berita/1.png')}}" alt="team-member-foto">
+								<h5 class="mt-3">{{$val->judul}}</h5>
+								<div class="text-justify text-color content" id="content-{{$val->id_berita}}">{!!$val->isi!!}</div>
+								<a href="javascript:void(0)" id="read-more-{{$val->id_berita}}" onclick="readMore('{{$val->id_berita}}')" class="color-a">[Baca Selengkapnya]</a>
+							</div>
+						</div>
+					@endforeach
+				@endif
+				{{-- <div class="col-md-4">
 					<div class="t-3-photo mb-25">
 						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/berita/2.png')}}" alt="team-member-foto">
 						<h4 class="mt-3">Judul</h4>
@@ -250,7 +255,7 @@
 						<h4 class="mt-3">Judul</h4>
 						<p class="text-color">Lorem ipsum, atau ringkasnya lipsum, adalah teks standar yang ditempatkan untuk mendemostrasikan elemen grafis atau <a href="javascript:void(0)" class="color-a">[selengkapnya]</a></p>
 					</div>
-				</div>
+				</div> --}}
 			</div>
 			<div class="row">
 				<div class="col-md-12">
@@ -268,16 +273,20 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-4">
-					<div class="t-3-photo mb-25">
-						{{-- <img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="https://www.quipper.com/id/blog/wp-content/uploads/2023/03/Apa-Itu-Peringkat-Sekolah-Ini-Penjelasannya-Lengkap-dengan-Cara-Melihat-Peringkat-Sekolah.webp" alt="team-member-foto"> --}}
-						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/event/1.png')}}" alt="team-member-foto">
-						<div class="overlay-content overlay-card text-center">
-						  <p class="text-overlay fw7">Bedah IASP Bersama Narasumber Pengawas Cabdin Kota/Kabupaten Mojokerto</p>
+				@if(count($event)>0)
+					@foreach($event as $key => $val)
+						<div class="col-md-4">
+							<div class="t-3-photo mb-25">
+								{{-- <img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="https://www.quipper.com/id/blog/wp-content/uploads/2023/03/Apa-Itu-Peringkat-Sekolah-Ini-Penjelasannya-Lengkap-dengan-Cara-Melihat-Peringkat-Sekolah.webp" alt="team-member-foto"> --}}
+								<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/event/1.png')}}" alt="team-member-foto">
+								<div class="overlay-content overlay-card text-center">
+								<p class="text-overlay fw7">{{$val->judul}}</p>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
+					@endforeach
+				@endif
+				{{-- <div class="col-md-4">
 					<div class="t-3-photo mb-25">
 						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/event/2.png')}}" alt="team-member-foto">
 						<div class="overlay-content overlay-card fw7">
@@ -292,7 +301,7 @@
 						  <p class="text-overlay">PTS Genap Kelas X dan XI</p>
 						</div>
 					</div>
-				</div>
+				</div> --}}
 			</div>
 			<div class="row">
 				<div class="col-md-12">
@@ -357,26 +366,30 @@
 							<h1>Pengumuman</h1>
 						</div>
 					</div>
-					<div class="row d-flex align-items-center">
-						<div class="col-lg-12">
-							<div class="contact-box">
-								<div class="row">
-									<div class="col-md-3 mtb-auto">
-										<img class="img-80" src="{{asset('landing-page/images/pengumuman.png')}}" alt="contacts-icon">
-									</div>
-									<div class="col-md-9 mtb-auto text-left">
-										{{-- <span class="fw5">Sekolah:</span><br> --}}
-										{{-- <span class="fw4 f-color">Final MA Permata Festival 2021 [Baca Selengkapnya]</span> --}}
-										<span class="fw4">
-											Final MA Permata Festival 2021<br>
-											<a href="{{route('home.pengumuman')}}" class="color-a">[Baca Selengkapnya]</a>
-										</span>
+					@if(count($pengumuman)>0)
+						@foreach($pengumuman as $key => $val)
+							<div class="row d-flex align-items-center">
+								<div class="col-lg-12">
+									<div class="contact-box">
+										<div class="row">
+											<div class="col-md-3 mtb-auto">
+												<img class="img-80" src="{{asset('landing-page/images/pengumuman.png')}}" alt="contacts-icon">
+											</div>
+											<div class="col-md-9 mtb-auto text-left">
+												{{-- <span class="fw5">Sekolah:</span><br> --}}
+												{{-- <span class="fw4 f-color">Final MA Permata Festival 2021 [Baca Selengkapnya]</span> --}}
+												<span class="fw4">
+													{{$val->judul}}<br>
+													<a href="{{route('home.pengumuman')}}" class="color-a">[Baca Selengkapnya]</a>
+												</span>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-					<div class="row d-flex align-items-center">
+						@endforeach
+					@endif
+					{{-- <div class="row d-flex align-items-center">
 						<div class="col-lg-12">
 							<div class="contact-box">
 								<div class="row">
@@ -460,7 +473,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> --}}
 				</div>
 			</div>
 		</div>
@@ -473,6 +486,25 @@
 	<script type='text/javascript' src='http://www.youtube.com/iframe_api'></script>
 	<script type="text/javascript">
 		$(document).ready(() => {
+			var maxWord = 15;
+			$(".content").each(function(){
+				var myStr = $(this).html()
+				var id = $(this).data('id')
+				if(myStr.split(' ').length > maxWord){
+					var arrStr = myStr.split(' ')
+
+					var newStr = filterArray(arrStr,maxWord,`first`)
+					var removedStr = filterArray(arrStr,maxWord,'second')
+
+					newStr = newStr.join(' ')
+					removedStr = removedStr.join(' ')
+
+					$(this).empty().html(newStr+'...')
+					$(this).data('first',newStr+'...')
+					$(this).data('second',' '+removedStr)
+				}
+			})
+
 			var data = [
 				{
 					'no': '1',
@@ -505,6 +537,35 @@
 				]
 			});
 		})
+
+
+		function filterArray(array,num,prefix){
+			var arrStr = $.grep(array, function(v,i) {
+				if(prefix==='first'){
+					if(i<num){
+						return v.indexOf('1');
+					}
+				}else{
+					if(i>=num){
+						return v.indexOf('1');
+					}
+				}
+			})
+			return arrStr
+		}
+		function readMore(id){
+			var textButton = $(`#read-more-${id}`).text()
+			var firstText = $(`#content-${id}`).data('first')
+			var secondText = $(`#content-${id}`).data('second')
+			if(textButton==='[Baca Selengkapnya]'){
+				$(`#content-${id}`).empty().html(firstText.slice(0,-3)+secondText)
+				$(`#read-more-${id}`).text('[Baca Lebih Sedikit]')
+			}else{
+				$(`#content-${id}`).empty().html(firstText)
+				$(`#read-more-${id}`).text('[Baca Selengkapnya]')
+			}
+		}
+
 		// https://youtu.be/ysNDDrG9PtI
 		var player;
 		function onYouTubeIframeAPIReady(){

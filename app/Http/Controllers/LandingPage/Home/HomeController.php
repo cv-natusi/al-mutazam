@@ -9,7 +9,10 @@ use App\Models\Berita;
 
 class HomeController extends Controller{
 	public function main(Request $request){
-		return view('content.landing-page.home.main');
+		$berita = Berita::getBeritaLimit(3);
+		$event = Berita::getEventLimit(3);
+		$pengumuman = Berita::getPengumumanLimit(6);
+		return view('content.landing-page.home.main',compact('berita','event','pengumuman'));
 	}
 	public function berita(Request $request){
 		$berita = Berita::getBeritaPaginate();
