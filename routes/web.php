@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LandingPage\LandingPageController;
+use App\Http\Controllers\LandingPage\Home\HomeController;
 use App\Http\Controllers\Admin\AdminController as Admin;
 use App\Http\Controllers\Dashboard\DashboardController as Dashboard;
 use App\Http\Controllers\Auth\AuthController as Auth;
@@ -16,10 +16,17 @@ use App\Http\Controllers\Auth\AuthController as Auth;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::controller(LandingPageController::class)
-	// ->prefix('webhook')
+Route::get('/',function(){
+   return redirect('home');
+});
+Route::controller(HomeController::class)
+	->prefix('home')
+   ->as('home.')
 	->group(function(){
-	Route::get('/','index');
+	Route::get('/','main')->name('main');
+	Route::get('berita','berita')->name('berita');
+	Route::get('event','event')->name('event');
+	Route::get('pengumuman','pengumuman')->name('pengumuman');
 });
 #Start Auth
 Route::get('/login', [Auth::class, 'login'])->name('login');

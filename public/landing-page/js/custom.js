@@ -98,7 +98,8 @@
 			// Create element
 			$('<a/>', {
 				id: o.scrollName,
-				href: '#top',
+				// href: '#top',
+				href: 'javascript:void(0)',
 				title: o.scrollText
 			}).appendTo('body');
 			
