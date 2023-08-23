@@ -20,7 +20,7 @@ class AuthController extends Controller
                 return redirect()->route('dashboardGuru');
             }
         }
-        return view('master.login.index');
+        return view('content.login.index');
     }
 
     public function proses_login(Request $request)

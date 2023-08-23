@@ -14,14 +14,14 @@ class DashboardController extends Controller
 
     public function mainAdmin() {
         $data['title'] = $this->title;
-        return view('admin.dashboard.main', $data);
+        return view('content.admin.dashboard.main', $data);
     }
     public function mainPetugas() {
         $data['title'] = $this->title;
-        return view('petugas.dashboard.main', $data);
+        return view('content.petugas.dashboard.main', $data);
     }
     public function MainGuru() {
         $data['title'] = $this->title;
-        return view('guru.dashboard.main', $data);
+        return view('content.guru.dashboard.main', $data);
     }
 }

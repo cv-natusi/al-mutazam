@@ -1,4 +1,4 @@
-@extends('master.layouts.main')
+@extends('layout.master.main')
 
 @push('style')
 <style>
@@ -10,11 +10,11 @@
 
 @section('content')
 	<div class="page-content">
-		@include('master.include.breadcrumb')
+		@include('include.master.breadcrumb')
 
 		<div class="row">
 			<div class="col-md-12">
-				<div class="card" style="background: #CEE6F3">
+				<div class="card" style="background: #ffffff">
 					<div class="card-body">
 						<span><b id="date" style="font-size: 10pt;"></b></span>&nbsp;
 						<span id="time" style="font-size: 10pt"></span>
@@ -28,8 +28,8 @@
 				<div class="row">
 					<div class="col-md-4">
 						<div class="card text-white mb-3 text-center" style="width: 100%;">
-							<div class="card-header" style="color: #000; background: #CEE6F3;">Berita Sekolah</div>
-							<div class="card-body" style="background: #CEE6F3">
+							<div class="card-header" style="color: #000; background: #ffffff;">Berita Sekolah</div>
+							<div class="card-body" style="background: #ffffff">
 								<div class="row">
 									<div class="col-md-12">
 										<h1 class="card-title">
@@ -38,15 +38,15 @@
 									</div>
 								</div>
 							</div>
-                            <div class="card-footer" style="background: #CEE6F3">
+                            <div class="card-footer" style="background: #ffffff">
                                 <button class="btn btn-primary" onclick="alert('Maintenance!')">More Info</button>
                             </div>
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="card text-white mb-3 text-center" style="width: 100%;">
-							<div class="card-header" style="color: #000; background: #CEE6F3;">Event</div>
-							<div class="card-body" style="background: #CEE6F3;">
+							<div class="card-header" style="color: #000; background: #ffffff;">Event</div>
+							<div class="card-body" style="background: #ffffff;">
 								<div class="row">
 									<div class="col-md-12">
 										<h1 class="card-title">
@@ -55,15 +55,15 @@
 									</div>
 								</div>
 							</div>
-                            <div class="card-footer" style="background: #CEE6F3;">
+                            <div class="card-footer" style="background: #ffffff;">
                                 <button class="btn btn-primary" onclick="alert('Maintenance!')">More Info</button>
                             </div>
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="card text-white mb-3 text-center" style="width: 100%;">
-							<div class="card-header" style="color: #000; background: #CEE6F3;">Pengumuman</div>
-							<div class="card-body" style="background: #CEE6F3;">
+							<div class="card-header" style="color: #000; background: #ffffff;">Pengumuman</div>
+							<div class="card-body" style="background: #ffffff;">
 								<div class="row">
 									<div class="col-md-12">
 										<h1 class="card-title">
@@ -72,7 +72,7 @@
 									</div>
 								</div>
 							</div>
-                            <div class="card-footer" style="color: #000; background: #CEE6F3;">
+                            <div class="card-footer" style="color: #000; background: #ffffff;">
                                 <button class="btn btn-primary" onclick="alert('Maintenance!')">More Info</button>
                             </div>
 						</div>

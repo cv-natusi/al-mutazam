@@ -6,11 +6,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="csrf-token" content="{{csrf_token()}}"><!--csrfToken-->
 	<title>{{ $title }} | MTS AL-MUTAZAM</title>
-	@include('master.include.style')<!--importCSS-->
+	@include('include.master.style')<!--importCSS-->
 	<style>
 		.sidebar-header {
 			height: 80px !important;
-			background: #CEE6F3 !important;
+			background: #ffffff !important;
 			/* margin-top: -50px !important; */
 		}
 
@@ -38,7 +38,7 @@
 		}
 
 		.mm-active {
-			background: #CEE6F3;
+			background: #ffffff;
 		}
 		
 		.sidebar-header-profile {
@@ -50,9 +50,9 @@
 <body>
 	<!--startWrapper-->
 	<div class="wrapper">
-		@include('master.include.sidebar')<!--importSidebar-->
+		@include('include.master.sidebar')<!--importSidebar-->
 
-		@include('master.include.header')<!--importHeader-->
+		@include('include.master.header')<!--importHeader-->
 
 		<div class="page-wrapper">
 			@yield('content')<!--includeContent-->
@@ -62,11 +62,11 @@
 
 		<a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a><!--backToTopButton-->
 
-		@include('master.include.footer')<!--importFooter-->
+		@include('include.master.footer')<!--importFooter-->
 	</div>
 	<!--endWrapper-->
 
-	@include('master.include.script') <!--importJavaScript-->
+	@include('include.master.script') <!--importJavaScript-->
 </body>
 
 </html>
