@@ -97,11 +97,12 @@
                             <div class="input-group-text" id="btnGroupAddon"><i class='bx bxs-low-vision'></i></div>
                         </div>
                     </div> --}}
-                        <div>
-                            <button type="submit" class="btn btn-ctk"
-                                style="background-color: #62A044; margin-top: 15px;">Simpan</button>
-                        </div>
-                    </form>
+                </div>
+                <div>
+                    <div>
+                        <button type="button" class="btn btn-ctk"
+                            style="background-color: #62A044; margin-top: 15px;">Simpan</button>
+                    </div>
                 </div>
             </div>
         </div>
