@@ -2,6 +2,7 @@
 
 @push('style')
     <style>
+<<<<<<< HEAD
         .tbl-container {
             width: 100%;
             margin-top: 10px;
@@ -17,6 +18,8 @@
             overflow: hidden;
         }
 
+=======
+>>>>>>> e26faf8 (guru data primer)
         .btn-ctk {
             text-align: center;
             color: white;
@@ -76,6 +79,7 @@
                             </div>
                         </div>
                         <div class="input-group">
+<<<<<<< HEAD
                             <div class="input-group mb-3 me-3">
                                 <input type="text" class="form-control" aria-label="Text input with dropdown button"
                                     placeholder="Filter Berdasarkan">
@@ -90,6 +94,21 @@
                                     </li>
                                     <li><a class="dropdown-item" href="#">Separated link</a></li>
                                 </ul>
+=======
+
+                            <div class="dropdown">
+                                <div class="btn-group me-3">
+                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown" aria-expanded="false" style="border-color: black">
+                                        Filter Berdasarkan
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item" href="#">Action</a></li>
+                                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    </ul>
+                                </div>
+>>>>>>> e26faf8 (guru data primer)
                             </div>
                             <div class="h-25 input-group">
                                 <div class="input-group-text" id="btnGroupAddon2"><i class='bx bxs-calendar'></i></div>
