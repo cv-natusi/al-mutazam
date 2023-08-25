@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingPage\Home\HomeController;
 use App\Http\Controllers\Admin\AdminController as Admin;
 use App\Http\Controllers\Dashboard\DashboardController as Dashboard;
+use App\Http\Controllers\Guru\DataPrimerController as DataPrimer;
+use App\Http\Controllers\Guru\DataSekunderController as DataSekunder;
+use App\Http\Controllers\Guru\PengaturanGuruController as PengaturanGuru;
 use App\Http\Controllers\Auth\AuthController as Auth;
 use App\Http\Controllers\Guru\ProfilController as Profil;
 use App\Http\Controllers\Petugas\DataPelajaranController as DataPelajaran;
@@ -138,6 +141,9 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 	Route::group(array('prefix' => 'guru-pengajar'), function () { #Web petugas sekolah
 		Route::get('/', [Dashboard::class, 'mainGuru'])->name('dashboardGuru');
+		Route::get('/data-primer', [DataPrimer::class, 'mainDataPrimer'])->name('dataprimerGuru');
+		Route::get('/data-sekunder', [DataSekunder::class, 'mainDataSekunder'])->name('datasekunderGuru');
+		Route::get('/pengaturan-guru', [PengaturanGuru::class, 'mainPengaturanGuru'])->name('pengaturanGuru');
 		Route::get('/profil', [Profil::class, 'mainProfil'])->name('profilGuru');
 		Route::get('/edit-profilguru', [Profil::class, 'editProfil'])->name('editprofilGuru');
 	});
