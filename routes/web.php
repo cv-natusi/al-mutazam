@@ -194,5 +194,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::post('/file-store', [UploadPrimerGuru::class, 'fileUpload'])->name('file.store');
 		Route::get('/pengaturan-guru', [PengaturanGuru::class, 'mainPengaturanGuru'])->name('pengaturanGuru'); //ganti password
 		Route::post('/pengaturan-guru', [Auth::class, 'prosesChangePassword'])->name('pengaturanGuru');
+		Route::get('/profil', [Profil::class, 'mainProfil'])->name('profilGuru');
+		Route::get('/edit-profilguru', [Profil::class, 'editProfil'])->name('editprofilGuru');
 	});
 });
