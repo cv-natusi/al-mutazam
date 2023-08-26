@@ -9,78 +9,78 @@
 @endpush
 
 @section('content')
-	<div class="page-content">
-		@include('include.master.breadcrumb')
+<div class="page-content">
+	@include('include.master.breadcrumb')
 
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card" style="background: #ffffff">
-					<div class="card-body">
-						<span><b id="date" style="font-size: 10pt;"></b></span>&nbsp;
-						<span id="time" style="font-size: 10pt"></span>
-					</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card" style="background: #ffffff">
+				<div class="card-body">
+					<span><b id="date" style="font-size: 10pt;"></b></span>&nbsp;
+					<span id="time" style="font-size: 10pt"></span>
 				</div>
 			</div>
-			<div class="col-md-12">
-                <div class="row">
-                    <h5>Selamat Datang Di halaman Guru Pengajar!</h5>
-                </div>
-				<div class="row">
-					<div class="col-md-4">
-						<div class="card text-white mb-3 text-center" style="width: 100%;">
-							<div class="card-header" style="color: #000; background: #ffffff;">Berita Sekolah</div>
-							<div class="card-body" style="background: #ffffff">
-								<div class="row">
-									<div class="col-md-12">
-										<h1 class="card-title">
-											<b>11</b>
-										</h1>
-									</div>
+		</div>
+		<div class="col-md-12">
+			<div class="row">
+				<h5>Selamat Datang Di halaman Guru Pengajar!</h5>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="card text-white mb-3 text-center" style="width: 100%;">
+						<div class="card-header" style="color: #000; background: #ffffff;">Berita Sekolah</div>
+						<div class="card-body" style="background: #ffffff">
+							<div class="row">
+								<div class="col-md-12">
+									<h1 class="card-title">
+										<b>11</b>
+									</h1>
 								</div>
 							</div>
-                            <div class="card-footer" style="background: #ffffff">
-                                <button class="btn btn-primary" onclick="alert('Maintenance!')">More Info</button>
-                            </div>
+						</div>
+						<div class="card-footer" style="background: #ffffff">
+							<button class="btn btn-primary" onclick="alert('Maintenance!')">More Info</button>
 						</div>
 					</div>
-					<div class="col-md-4">
-						<div class="card text-white mb-3 text-center" style="width: 100%;">
-							<div class="card-header" style="color: #000; background: #ffffff;">Event</div>
-							<div class="card-body" style="background: #ffffff;">
-								<div class="row">
-									<div class="col-md-12">
-										<h1 class="card-title">
-											<b>11</b>
-										</h1>
-									</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card text-white mb-3 text-center" style="width: 100%;">
+						<div class="card-header" style="color: #000; background: #ffffff;">Event</div>
+						<div class="card-body" style="background: #ffffff;">
+							<div class="row">
+								<div class="col-md-12">
+									<h1 class="card-title">
+										<b>11</b>
+									</h1>
 								</div>
 							</div>
-                            <div class="card-footer" style="background: #ffffff;">
-                                <button class="btn btn-primary" onclick="alert('Maintenance!')">More Info</button>
-                            </div>
+						</div>
+						<div class="card-footer" style="background: #ffffff;">
+							<button class="btn btn-primary" onclick="alert('Maintenance!')">More Info</button>
 						</div>
 					</div>
-					<div class="col-md-4">
-						<div class="card text-white mb-3 text-center" style="width: 100%;">
-							<div class="card-header" style="color: #000; background: #ffffff;">Pengumuman</div>
-							<div class="card-body" style="background: #ffffff;">
-								<div class="row">
-									<div class="col-md-12">
-										<h1 class="card-title">
-											<b>11</b>
-										</h1>
-									</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card text-white mb-3 text-center" style="width: 100%;">
+						<div class="card-header" style="color: #000; background: #ffffff;">Pengumuman</div>
+						<div class="card-body" style="background: #ffffff;">
+							<div class="row">
+								<div class="col-md-12">
+									<h1 class="card-title">
+										<b>11</b>
+									</h1>
 								</div>
 							</div>
-                            <div class="card-footer" style="color: #000; background: #ffffff;">
-                                <button class="btn btn-primary" onclick="alert('Maintenance!')">More Info</button>
-                            </div>
+						</div>
+						<div class="card-footer" style="color: #000; background: #ffffff;">
+							<button class="btn btn-primary" onclick="alert('Maintenance!')">More Info</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 @endsection
 
 @push('script')
@@ -90,7 +90,7 @@
 <script>
 	$(document).ready(function() {
 		$(".knob").knob()
-		arrbulan = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+		arrbulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 		date = new Date();
 		hari = date.getDay();
 		tanggal = date.getDate();
@@ -98,31 +98,31 @@
 		tahun = date.getFullYear();
 		// document.write(tanggal+"-"+arrbulan[bulan]+"-"+tahun+"<br/>"+jam+" : "+menit+" : "+detik+"."+millisecond);
 
-		$('#date').html(tanggal+" "+arrbulan[bulan]+" "+tahun)
+		$('#date').html(tanggal + " " + arrbulan[bulan] + " " + tahun)
 	});
-	
-	function renderTime(){
+
+	function renderTime() {
 		var currentTime = new Date();
 		var h = currentTime.getHours();
 		var m = currentTime.getMinutes();
 		var s = currentTime.getSeconds();
-		if (h == 0){
+		if (h == 0) {
 			h = 24;
 		}
-		if (h < 10){
+		if (h < 10) {
 			h = "0" + h;
 		}
-		if (m < 10){
+		if (m < 10) {
 			m = "0" + m;
 		}
-		if (s < 10){
+		if (s < 10) {
 			s = "0" + s;
 		}
 		// var myClock = document.getElementById('time');
-		$('#time').html("<b>"+h+" : " + m + " : " + s + " WIB</b>");
-		setTimeout ('renderTime()',1000);
+		$('#time').html("<b>" + h + " : " + m + " : " + s + " WIB</b>");
+		setTimeout('renderTime()', 1000);
 	}
-	
+
 	renderTime();
 </script>
 @endpush
