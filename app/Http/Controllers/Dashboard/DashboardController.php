@@ -10,7 +10,9 @@ class DashboardController extends Controller
 {
 
     public function mainAdmin() {
-        $data['title'] = 'Dashboard';
+        $data['title'] = $this->title;
+        $data['menuActive'] = 'dashboard';
+        $data['subMenuActive'] = '';
         return view('content.admin.dashboard.main', $data);
     }
     public function getDashboard() {
