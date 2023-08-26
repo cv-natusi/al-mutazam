@@ -18,6 +18,7 @@ use App\Http\Controllers\Petugas\DataKelasController as DataKelas;
 use App\Http\Controllers\Petugas\DataPelajaranController as DataPelajaran;
 use App\Http\Controllers\Petugas\UbahPasswordController as UbahPassword;
 use App\Http\Controllers\Petugas\ResetPasswordController as ResetPassword;
+use App\Http\Controllers\Guru\ProfilController as Profil;
 use GuzzleHttp\Psr7\UploadedFile;
 
 /*
