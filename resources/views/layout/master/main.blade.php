@@ -10,7 +10,7 @@
 	<style>
 		.sidebar-header {
 			height: 80px !important;
-			background: #ffffff !important;
+			background: #EAFDFC !important;
 			/* margin-top: -50px !important; */
 		}
 
@@ -38,7 +38,7 @@
 		}
 
 		.mm-active {
-			background: #ffffff;
+			background: #EAFDFC;
 		}
 		
 		.sidebar-header-profile {

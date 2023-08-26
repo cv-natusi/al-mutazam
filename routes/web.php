@@ -36,91 +36,92 @@ Route::get('/logout', [Auth::class, 'logout'])->name('logout');
 Route::group(['middleware' => 'auth'], function() {
 	Route::group(array('prefix'=>'admin'), function(){ #Web admin
 		Route::get('/', [Dashboard::class, 'mainAdmin'])->name('dashboardAdmin'); #Dashboard admin
-
+		Route::get('/get-dashboard', [Dashboard::class, 'getDashboard'])->name('getDashboard');
+		
 		Route::group(array('prefix'=>'identitas'), function(){ #Modul identitas
-			Route::get('/', 'AdminController@identitas')->name('identitas');
-			Route::post('/identitas/changeIdentity', 'AdminController@changeIdentity')->name('changeIdentity');
+			Route::get('/', [Admin::class, 'identitas'])->name('identitas');
+			Route::post('/identitas/changeIdentity', [Admin::class, 'changeIdentity'])->name('changeIdentity');
 		});
 		Route::group(array('prefix'=>'modul-web'), function(){ #Modul Web
 			Route::group(array('prefix'=>'logo'), function(){
-				Route::get('/', 'AdminController@logo')->name('logo');
-				Route::post('/update', 'AdminController@formUpdateLogo')->name('formUpdateLogo');
-				Route::post('/doupdate', 'AdminController@UpdateLogo')->name('UpdateLogo');
+				Route::get('/', [Admin::class, 'logo'])->name('logo');
+				Route::post('/update', [Admin::class, 'formUpdateLogo'])->name('formUpdateLogo');
+				Route::post('/doupdate', [Admin::class, 'updateLogo'])->name('UpdateLogo');
 			});
 			Route::group(array('prefix'=>'slider'), function(){
-				Route::get('/', 'AdminController@slider')->name('slider');
-				Route::post('/getSlider', 'AdminController@tampilSlider')->name('tampilSlider');
-				Route::post('/formUpdate', 'AdminController@formUpdateSlider')->name('formUpdateSlider');
-				Route::post('/update', 'AdminController@updateSlider')->name('updateSlider');
+				Route::get('/', [Admin::class, 'slider'])->name('slider');
+				Route::post('/getSlider', [Admin::class, 'tampilSlider'])->name('tampilSlider');
+				Route::post('/formUpdate', [Admin::class, 'formUpdateSlider'])->name('formUpdateSlider');
+				Route::post('/update', [Admin::class, 'updateSlider'])->name('updateSlider');
 			});
 		});
 		Route::group(array('prefix'=>'modul-sekolah'), function(){ #Modul Sekolah
 			Route::group(array('prefix'=>'sejarah'), function(){
-				Route::get('/', 'AdminController@sejarah')->name('sejarah');
-				Route::post('/update', 'AdminController@updatesejarah')->name('updateSejarah');
+				Route::get('/', [Admin::class, 'sejarah'])->name('sejarah');
+				Route::post('/update', [Admin::class, 'updateSejarah'])->name('updateSejarah');
 			});
 			Route::group(array('prefix'=>'visimisi'), function(){
-				Route::get('/', 'AdminController@visimisi')->name('visimisi');
-				Route::post('/update', 'AdminController@updateVisimisi')->name('updateVisimisi');
+				Route::get('/', [Admin::class, 'visimisi'])->name('visimisi');
+				Route::post('/update', [Admin::class, 'updateVisimisi'])->name('updateVisimisi');
 			});
 			Route::group(array('prefix'=>'kepsek'), function(){
-				Route::get('/', 'AdminController@kepsek')->name('kepsek');
-				Route::post('/update', 'AdminController@updateKepsek')->name('updateKepsek');
+				Route::get('/', [Admin::class, 'kepsek'])->name('kepsek');
+				Route::post('/update', [Admin::class, 'updateKepsek'])->name('updateKepsek');
 			});
 			Route::group(array('prefix'=>'uks'), function(){
-				Route::get('/', 'AdminController@uks')->name('uks');
-				Route::post('/update', 'AdminController@updateUks')->name('updateUks');
+				Route::get('/', [Admin::class, 'uks'])->name('uks');
+				Route::post('/update', [Admin::class, 'updateUks'])->name('updateUks');
 			});
 			Route::group(array('prefix'=>'organisasi'), function(){
-				Route::get('/', 'AdminController@organisasi')->name('organisasi');
-				Route::post('/update', 'AdminController@updateOrganisasi')->name('updateOrganisasi');
+				Route::get('/', [Admin::class, 'organisasi'])->name('organisasi');
+				Route::post('/update', [Admin::class, 'updateOrganisasi'])->name('updateOrganisasi');
 			});
 			Route::group(array('prefix'=>'ekskul'), function(){
-				Route::get('/', 'AdminController@ekskul')->name('ekskul');
-				Route::post('/formAddEkskul','AdminController@formAddEkskul')->name('formAddEkskul');
-				Route::post('/formUpdateEkskul','AdminController@formUpdateEkskul')->name('formUpdateEkskul');
-				Route::post('/getEkskul', 'AdminController@tampilEkskul')->name('tampilEkskul');
-				Route::post('/upload', 'AdminController@uploadEkskul')->name('uploadEkskul');
-				Route::post('/update', 'AdminController@updateEkskul')->name('updateEkskul');
+				Route::get('/', [Admin::class, 'ekskul'])->name('ekskul');
+				Route::post('/formAddEkskul', [Admin::class, 'formAddEkskul'])->name('formAddEkskul');
+				Route::post('/formUpdateEkskul', [Admin::class, 'formUpdateEkskul'])->name('formUpdateEkskul');
+				Route::post('/getEkskul', [Admin::class, 'tampilEkskul'])->name('tampilEkskul');
+				Route::post('/upload', [Admin::class, 'uploadEkskul'])->name('uploadEkskul');
+				Route::post('/update', [Admin::class, 'updateEkskul'])->name('updateEkskul');
 			});
 			Route::group(array('prefix'=>'fasilitas'), function(){
-				Route::get('/', 'AdminController@fasilitas')->name('fasilitas');
-				Route::post('/formAddFasilitas','AdminController@formAddFasilitas')->name('formAddFasilitas');
-				Route::post('/formUpdateFasilitas','AdminController@formUpdateFasilitas')->name('formUpdateFasilitas');
-				Route::post('/getFasilitas', 'AdminController@tampilFasilitas')->name('tampilFasilitas');
-				Route::post('/upload', 'AdminController@uploadFasilitas')->name('uploadFasilitas');
-				Route::post('/update', 'AdminController@updateFasilitas')->name('updateFasilitas');
+				Route::get('/', [Admin::class, 'fasilitas'])->name('fasilitas');
+				Route::post('/formAddFasilitas', [Admin::class, 'formAddFasilitas'])->name('formAddFasilitas');
+				Route::post('/formUpdateFasilitas', [Admin::class, 'formUpdateFasilitas'])->name('formUpdateFasilitas');
+				Route::post('/getFasilitas', [Admin::class, 'tampilFasilitas'])->name('tampilFasilitas');
+				Route::post('/upload', [Admin::class, 'uploadFasilitas'])->name('uploadFasilitas');
+				Route::post('/update', [Admin::class, 'updateFasilitas'])->name('updateFasilitas');
 			});
 		});
 		Route::group(array('prefix'=>'modul-media'), function(){ #Modul media
 			Route::group(array('prefix'=>'amtv'), function(){
-				Route::get('/', 'AdminController@amtv')->name('amtv');
-				Route::post('/getAMtv', 'AdminController@tampilAmtv')->name('tampilAmtv');
-				Route::post('/formAddAMtv', 'AdminController@formAddAmtv')->name('formAddAmtv');
-				Route::post('/formUpdateAmtv', 'AdminController@formUpdateAmtv')->name('formUpdateAmtv');
-				Route::post('/uploadAMtv', 'AdminController@uploadAmtv')->name('uploadAmtv');
-				Route::post('/updateAMtv', 'AdminController@updateAmtv')->name('updateAmtv');
-				Route::post('/deleteAMtv', 'AdminController@deleteAmtv')->name('deleteAmtv');
+				Route::get('/', [Admin::class, 'amtv'])->name('amtv');
+				Route::post('/getAMtv', [Admin::class, 'tampilAmtv'])->name('tampilAmtv');
+				Route::post('/formAddAMtv', [Admin::class, 'formAddAmtv'])->name('formAddAmtv');
+				Route::post('/formUpdateAmtv', [Admin::class, 'formUpdateAmtv'])->name('formUpdateAmtv');
+				Route::post('/uploadAMtv', [Admin::class, 'uploadAmtv'])->name('uploadAmtv');
+				Route::post('/updateAMtv', [Admin::class, 'updateAmtv'])->name('updateAmtv');
+				Route::post('/deleteAMtv', [Admin::class, 'deleteAmtv'])->name('deleteAmtv');
 			});
 			Route::group(array('prefix'=>'galeri'), function(){
-				Route::get('/', 'AdminController@galeri')->name('galeri');
-				Route::post('/getGaleri', 'AdminController@tampilGaleri')->name('tampilGaleri');
-				Route::post('/formAddGaleri', 'AdminController@formAddGaleri')->name('formAddGaleri');
-				Route::post('/formUpdateGaleri', 'AdminController@formUpdateGaleri')->name('formUpdateGaleri');
-				Route::post('/uploadGaleri', 'AdminController@uploadGaleri')->name('uploadGaleri');
-				Route::post('/updateGaleri', 'AdminController@updateGaleri')->name('updateGaleri');
-				Route::post('/deleteGaleri', 'AdminController@deleteGaleri')->name('deleteGaleri');
+				Route::get('/', [Admin::class, 'galeri'])->name('galeri');
+				Route::post('/getGaleri', [Admin::class, 'tampilGaleri'])->name('tampilGaleri');
+				Route::post('/formAddGaleri', [Admin::class, 'formAddGaleri'])->name('formAddGaleri');
+				Route::post('/formUpdateGaleri', [Admin::class, 'formUpdateGaleri'])->name('formUpdateGaleri');
+				Route::post('/uploadGaleri', [Admin::class, 'uploadGaleri'])->name('uploadGaleri');
+				Route::post('/updateGaleri', [Admin::class, 'updateGaleri'])->name('updateGaleri');
+				Route::post('/deleteGaleri', [Admin::class, 'deleteGaleri'])->name('deleteGaleri');
 			});
 		});
 		Route::group(array('prefix'=>'berita'),function(){ #modul Berita
 			Route::group(array('prefix'=>'beritaSekolah'), function(){
-				Route::get('/{id}', 'AdminController@beritaSekolah')->name('beritaSekolah');
-				Route::post('/formAddBeritaSekolah','AdminController@formAddBeritaSekolah')->name('formAddBeritaSekolah');
-				Route::post('/formUpdateBeritaSekolah','AdminController@formUpdateBeritaSekolah')->name('formUpdateBeritaSekolah');
-				Route::post('/getBeritaSekolah', 'AdminController@tampilBeritaSekolah')->name('tampilBeritaSekolah');
-				Route::post('/upload', 'AdminController@uploadBeritaSekolah')->name('uploadBeritaSekolah');
-				Route::post('/update', 'AdminController@updateBeritaSekolah')->name('updateBeritaSekolah');
-				Route::post('/delete', 'AdminController@deleteBeritaSekolah')->name('deleteBeritaSekolah');
+				Route::get('/{id}', [Admin::class, 'beritaSekolah'])->name('beritaSekolah');
+				Route::post('/formAddBeritaSekolah', [Admin::class, 'formAddBeritaSekolah'])->name('formAddBeritaSekolah');
+				Route::post('/formUpdateBeritaSekolah', [Admin::class, 'formUpdateBeritaSekolah'])->name('formUpdateBeritaSekolah');
+				Route::post('/getBeritaSekolah', [Admin::class, 'tampilBeritaSekolah'])->name('tampilBeritaSekolah');
+				Route::post('/upload', [Admin::class, 'uploadBeritaSekolah'])->name('uploadBeritaSekolah');
+				Route::post('/update', [Admin::class, 'updateBeritaSekolah'])->name('updateBeritaSekolah');
+				Route::post('/delete', [Admin::class, 'deleteBeritaSekolah'])->name('deleteBeritaSekolah');
 			});
 		});
 	});

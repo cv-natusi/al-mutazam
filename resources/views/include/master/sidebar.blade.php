@@ -21,7 +21,7 @@
 	<!--navigation-->
 	<ul class="metismenu" id="menu">
 		@if (Auth::User()->level=='1') <!-- Admin -->
-		<li class="{{ ($title == 'Dashboard') ? 'mm-active' : ''}}">
+		<li class="{{ ($menuActive == 'dashboard') ? 'mm-active' : ''}}">
 			<a href="{{route('dashboardAdmin')}}">
 				<div class="parent-icon">
 					<i style="color: #000" class='bx bx-home-circle'></i>
@@ -29,7 +29,7 @@
 				<div class="menu-title">Dashboard</div>
 			</a>
 		</li>
-		<li class="{{ ($title == 'identitas') ? 'mm-active' : ''}}">
+		<li class="@if($menuActive == 'identitas') mm-active @endif">
 			<a href="{{route('identitas')}}">
 				<div class="parent-icon">
 					<i style="color: #000" class='bx bxs-institution'></i>
@@ -37,7 +37,7 @@
 				<div class="menu-title">Modul Identitas</div>
 			</a>
 		</li>
-		<li class="">
+		<li class="{{ ($menuActive == 'modulWeb') ? 'mm-active' : ''}}">
 			<a href="javascript:;" class="has-arrow">
 			  <div class="parent-icon">
 				<i style="color: #000" class='bx bxs-grid'></i>
@@ -45,15 +45,15 @@
 			  <div class="menu-title">Modul Web</div>
 			</a>
 			<ul>
-			  <li class="">
-				<a style="color: #000" href="#"><i class="bx bx-right-arrow-alt"></i>Logo</a>
+			  <li class="{{ ($subMenuActive == 'logo') ? 'mm-active' : ''}}">
+				<a style="color: #000" href="{{ route('logo') }}"><i class="bx bx-right-arrow-alt"></i>Logo</a>
 			  </li>
-			  <li class="">
-				<a style="color: #000" href="#"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Slide Gambar</a>
+			  <li class="{{ ($subMenuActive == 'slider') ? 'mm-active' : ''}}">
+				<a style="color: #000" href="{{ route('slider') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Slide Gambar</a>
 			  </li>
 			</ul>
 		</li>
-		<li class="">
+		<li class="@if($menuActive == 'modulSekolah') mm-active @endif">
 			<a href="javascript:;" class="has-arrow">
 			  <div class="parent-icon">
 				<i style="color: #000" class='bx bx-category'></i>
@@ -61,65 +61,65 @@
 			  <div class="menu-title">Modul Sekolah</div>
 			</a>
 			<ul>
-			  <li class="">
-				<a style="color: #000"  href="#"><i style="color: #000"  class="bx bx-right-arrow-alt"></i>Sejarah</a>
+			  <li class="{{ ($subMenuActive == 'sejarah') ? 'mm-active' : ''}}">
+				<a style="color: #000"  href="{{ route('sejarah') }}"><i style="color: #000"  class="bx bx-right-arrow-alt"></i>Sejarah</a>
 			  </li>
-			  <li class="">
-				<a style="color: #000"  href="#"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Visi Misi</a>
+			  <li class="{{ ($subMenuActive == 'visimisi') ? 'mm-active' : ''}}">
+				<a style="color: #000"  href="{{ route('visimisi') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Visi Misi</a>
 			  </li>
-			  <li class="">
-				<a style="color: #000"  href="#"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Sambutan Kepala Madrasah</a>
+			  <li class="{{ ($subMenuActive == 'sambutan') ? 'mm-active' : ''}}">
+				<a style="color: #000"  href="{{ route('kepsek') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Sambutan Kepala Madrasah</a>
 			  </li>
-			  <li class="">
-				<a style="color: #000"  href="#"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Struktur Organisasi</a>
+			  <li class="{{ ($subMenuActive == 'organisasi') ? 'mm-active' : ''}}">
+				<a style="color: #000"  href="{{ route('organisasi') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Struktur Organisasi</a>
 			  </li>
-			  <li class="">
-				<a style="color: #000"  href="#"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Fasilitas Sekolah</a>
+			  <li class="{{ ($subMenuActive == 'fasilitas') ? 'mm-active' : ''}}">
+				<a style="color: #000"  href="{{ route('fasilitas') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Fasilitas Sekolah</a>
 			  </li>
-			  <li class="">
-				<a style="color: #000"  href="#"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Ekstrakurikuler</a>
+			  <li class="{{ ($subMenuActive == 'ekstrakurikuler') ? 'mm-active' : ''}}">
+				<a style="color: #000"  href="{{ route('ekskul') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Ekstrakurikuler</a>
 			  </li>
-			  <li class="">
-				<a style="color: #000" href="#"><i style="color: #000" class="bx bx-right-arrow-alt"></i>UKS</a>
+			  <li class="{{ ($subMenuActive == 'uks') ? 'mm-active' : ''}}">
+				<a style="color: #000" href="{{ route('uks') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>UKS</a>
 			  </li>
 			</ul>
 		</li>
-		<li class="">
+		<li class="{{ ($menuActive == 'modulMedia') ? 'mm-active' : ''}}">
 			<a href="javascript:;" class="has-arrow">
 			  <div class="parent-icon"><i style="color: #000" class='bx bx-desktop'></i>
 			  </div>
 			  <div class="menu-title">Modul Media</div>
 			</a>
 			<ul>
-			  <li class="">
-				<a style="color: #000" href="#"><i style="color: #000" class="bx bx-right-arrow-alt"></i>AMTV</a>
+			  <li class="{{ ($subMenuActive == 'amtv') ? 'mm-active' : ''}}">
+				<a style="color: #000" href="{{ route('amtv') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>AMTV</a>
 			  </li>
-			  <li class="">
-				<a style="color: #000" href="#"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Galeri</a>
+			  <li class="{{ ($subMenuActive == 'galeri') ? 'mm-active' : ''}}">
+				<a style="color: #000" href="{{ route('galeri') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Galeri</a>
 			  </li>
 			</ul>
 		</li>
-		<li class="">
+		<li class="{{ ($subMenuActive == 'modulBerita') ? 'mm-active' : ''}}">
 			<a href="javascript:;" class="has-arrow">
 			  <div class="parent-icon"><i style="color: #000" class='bx bx-news'></i>
 			  </div>
 			  <div class="menu-title">Modul Berita</div>
 			</a>
 			<ul>
-			  <li class="">
-				<a style="color: #000" href="#"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Berita Sekolah</a>
+			  <li class="{{ ($subMenuActive == 'beritaSekolah') ? 'mm-active' : ''}}">
+				<a style="color: #000" href="{{ url('admin/berita/beritaSekolah/1') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Berita Sekolah</a>
 			  </li>
-			  <li class="">
-				<a style="color: #000" href="#"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Event</a>
+			  <li class="{{ ($subMenuActive == 'event') ? 'mm-active' : ''}}">
+				<a style="color: #000" href="{{ url('admin/berita/beritaSekolah/2') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Event</a>
 			  </li>
-			  <li class="">
-				<a style="color: #000" href="#"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Pengumuman</a>
+			  <li class="{{ ($subMenuActive == 'pengumuman') ? 'mm-active' : ''}}">
+				<a style="color: #000" href="{{ url('admin/berita/beritaSekolah/3') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Pengumuman</a>
 			  </li>
-			  <li class="">
-				<a style="color: #000" href="#"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Prestasi Siswa</a>
+			  <li class="{{ ($subMenuActive == 'prestasiSiswa') ? 'mm-active' : ''}}">
+				<a style="color: #000" href="{{ url('admin/berita/beritaSekolah/4') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Prestasi Siswa</a>
 			  </li>
-			  <li class="">
-				<a style="color: #000" href="#"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Program Unggulan</a>
+			  <li class="{{ ($subMenuActive == 'programUnggulan') ? 'mm-active' : ''}}">
+				<a style="color: #000" href="{{ url('admin/berita/beritaSekolah/5') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Program Unggulan</a>
 			  </li>
 			</ul>
 		</li>
