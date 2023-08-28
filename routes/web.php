@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminController as Admin;
 use App\Http\Controllers\Dashboard\DashboardController as Dashboard;
 use App\Http\Controllers\Auth\AuthController as Auth;
 use App\Http\Controllers\Guru\ProfilController as Profil;
+use App\Http\Controllers\Petugas\DataPelajaranController as DataPelajaran;
 
 /*
 |--------------------------------------------------------------------------
@@ -128,6 +129,12 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 	Route::group(array('prefix' => 'petugas-sekolah'), function () { #Web petugas sekolah
 		Route::get('/', [Dashboard::class, 'mainPetugas'])->name('dashboardPetugas');
+		Route::get('/data-Pelajaran', [DataPelajaran::class, 'dataPelajaran'])->name('dataPelajaran');
+		Route::get('/tambah-data-Pelajaran', [DataPelajaran::class, 'tambahdataPelajaran'])->name('tambahdataPelajaran');
+		Route::post('/simpan-data-Pelajaran', [DataPelajaran::class, 'simpandataPelajaran'])->name('simpandataPelajaran');
+		Route::get('/edit-data-Pelajaran/{id}', [DataPelajaran::class, 'editdataPelajaran'])->name('editdataPelajaran');
+		Route::post('/update-data-Pelajaran/{id}', [DataPelajaran::class, 'updatedataPelajaran'])->name('updatedataPelajaran');
+		Route::get('/hapus-data-Pelajaran/{id}', [DataPelajaran::class, 'hapusdataPelajaran'])->name('hapusdataPelajaran');
 	});
 	Route::group(array('prefix' => 'guru-pengajar'), function () { #Web petugas sekolah
 		Route::get('/', [Dashboard::class, 'mainGuru'])->name('dashboardGuru');
