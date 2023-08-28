@@ -11,7 +11,6 @@
 		.sidebar-header {
 			height: 80px !important;
 			background: #EAFDFC !important;
-			/* margin-top: -50px !important; */
 		}
 
 		.sidebar-wrapper .metismenu {
@@ -37,9 +36,9 @@
 			color: #000;
 		}
 
-		.mm-active {
+		/* .mm-active {
 			background: #EAFDFC;
-		}
+		} */
 		
 		.sidebar-header-profile {
 			margin-top: 70px;
