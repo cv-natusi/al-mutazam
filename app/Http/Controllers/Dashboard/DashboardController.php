@@ -8,15 +8,9 @@ use DB;
 
 class DashboardController extends Controller
 {
-    function __construct()
-	{
-		$this->title = 'Dashboard';
-	}
 
     public function mainAdmin() {
-        $data['title'] = $this->title;
-        $data['menuActive'] = 'dashboard';
-        $data['subMenuActive'] = '';
+        $data['title'] = 'Dashboard';
         return view('content.admin.dashboard.main', $data);
     }
     public function getDashboard() {
@@ -29,11 +23,11 @@ class DashboardController extends Controller
         return $data;
     }
     public function mainPetugas() {
-        $data['title'] = $this->title;
+        $data['title'] = 'Dashboard Petugas';
         return view('content.petugas.dashboard.main', $data);
     }
     public function MainGuru() {
-        $data['title'] = $this->title;
+        $data['title'] = 'Dasboard Guru';
         return view('content.guru.dashboard.main', $data);
     }
 }
