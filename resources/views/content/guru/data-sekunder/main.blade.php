@@ -3,6 +3,9 @@
 @push('style')
     <style>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 3c6dee7 (bank data)
         .tbl-container {
             width: 100%;
             margin-top: 10px;
@@ -18,8 +21,11 @@
             overflow: hidden;
         }
 
+<<<<<<< HEAD
 =======
 >>>>>>> e26faf8 (guru data primer)
+=======
+>>>>>>> 3c6dee7 (bank data)
         .btn-ctk {
             text-align: center;
             color: white;
