@@ -10,7 +10,7 @@
 	</div>
 	{{-- <div class="sidebar-header">
         <div>
-          <img src="{{url('assets/images/logo-profile.png')}}" width="60">
+            <img src="{{ url('assets/images/logo-profile.png') }}" width="60">
         </div>
         <div>
 		  <div class="logo-text">
@@ -19,7 +19,7 @@
 		  </div>
         </div>
         <div class="toggle-icon ms-auto">
-			<i style="color: #000" class='bx bx-arrow-to-left'></i>
+            <i style="color: #000" class='bx bx-arrow-to-left'></i>
         </div>
 	</div> --}}
 	<!--navigation-->
