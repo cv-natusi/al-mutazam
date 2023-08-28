@@ -115,7 +115,7 @@
 </div>
 @endsection
 
-<!-- @push('script')
+@push('script')
     {{-- <script src="{{ url('assets/js/index.js') }}"></script> --}}
     <script src="{{ url('assets/plugins/jquery-knob/jquery.knob.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -159,8 +159,4 @@
 
         renderTime();
     </script>
-<<<<<<< HEAD
 @endpush
-=======
-@endpush -->
->>>>>>> 7c2b83e (data pelajaran)
