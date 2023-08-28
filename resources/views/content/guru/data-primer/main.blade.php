@@ -2,7 +2,6 @@
 
 @push('style')
     <style>
-<<<<<<< HEAD
         .tbl-container {
             width: 100%;
             margin-top: 10px;
@@ -18,8 +17,6 @@
             overflow: hidden;
         }
 
-=======
->>>>>>> e26faf8 (guru data primer)
         .btn-ctk {
             text-align: center;
             color: white;
