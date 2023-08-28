@@ -62,7 +62,7 @@
             <div class="card" style="background: #ffffff:">
                 <div class="row">
                     <div class="row">
-                        <h6 class="h6-titlecard"><b>Data Primer</b></h6>
+                        <h6 class="h6-titlecard"><b>Data Sekunder</b></h6>
                     </div>
                     <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-toolbar mb-3" role="toolbar">
@@ -76,33 +76,25 @@
                             </div>
                         </div>
                         <div class="input-group">
-                            <div class="input-group mb-3 me-3">
-                                <input type="text" class="form-control" aria-label="Text input with dropdown button"
-                                    placeholder="Filter Berdasarkan">
-                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false"></button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Separated link</a></li>
-                                </ul>
-                            </div>
-                            <div class="h-25 input-group">
-                                <div class="input-group-text" id="btnGroupAddon2"><i class='bx bxs-calendar'></i></div>
-                                <input type="text" class="form-control" placeholder="-" aria-label="Input group example"
-                                    aria-describedby="btnGroupAddon2">
-                            </div>
-                            <div style="font-size: 25px; margin-left: 5px; margin-right: 5px"><b> - </b></div>
-                            <div class="h-25 input-group">
-                                <input type="text" class="form-control" placeholder="-" aria-label="Input group example"
-                                    aria-describedby="btnGroupAddon2">
-                                <div class="input-group-text" id="btnGroupAddon2"><i class='bx bxs-calendar'></i>
+                            <div class="dropdown">
+                                <div class="btn-group me-3">
+                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown" aria-expanded="false" style="border-color: black">
+                                        Filter Berdasarkan
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item" href="#">Action</a></li>
+                                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    </ul>
                                 </div>
                             </div>
+                            <div class="h-25 input-group">
+                                <div class="input-group-text" id="btnGroupAddon2"><i class='bx bx-search-alt'></i></div>
+                                <input type="text" class="form-control" placeholder="-" aria-label="Input group example"
+                                    aria-describedby="btnGroupAddon2">
+                            </div>
+
                         </div>
                     </div>
                     <div>
@@ -111,7 +103,7 @@
                                 <thead class="bg-tbl">
                                     <tr>
                                         <th scope="col">No</th>
-                                        <th scope="col">Nama Data Primer</th>
+                                        <th scope="col">Nama Data Sekunder</th>
                                         <th scope="col">Tahun</th>
                                         <th scope="col">Batas Upload</th>
                                         <th scope="col">Keterangan</th>
@@ -121,15 +113,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($dataprimers as $dataprimer)
+                                    @foreach ($datasekunders as $datasekunder)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $dataprimer->namadataprimer_guru }}</td>
-                                            <td>{{ $dataprimer->tahun }}</td>
-                                            <td>{{ $dataprimer->batas_upload }}</td>
-                                            <td>{{ $dataprimer->keterangan }}</td>
-                                            <td>{{ $dataprimer->status }}</td>
-                                            <td>{{ $dataprimer->tgl_upload }}</td>
+                                            <td>{{ $datasekunder->namadatasekunder_guru }}</td>
+                                            <td>{{ $datasekunder->tahun }}</td>
+                                            <td>{{ $datasekunder->batas_upload }}</td>
+                                            <td>{{ $datasekunder->keterangan }}</td>
+                                            <td>{{ $datasekunder->status }}</td>
+                                            <td>{{ $datasekunder->tgl_upload }}</td>
                                             <td>
                                                 <div class="btn-toolbar" role="toolbar">
                                                     <div class="btn-group me-0" role="group">
@@ -153,7 +145,17 @@
                 </div>
             </div>
         </div>
-    </div>
+        <ul class="pagination justify-content-end">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
     </div>
 @endsection
 

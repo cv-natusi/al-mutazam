@@ -132,11 +132,7 @@
                                             <td>{{ $dataprimer->tgl_upload }}</td>
                                             <td>
                                                 <div class="btn-toolbar" role="toolbar">
-                                                    <div class="btn-group me-0" role="group">
-                                                        <button type="button" class="btn btn-ctk" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalCreate"
-                                                            style="background-color: #8282F2; border-radius: 10px">Upload</button>
-                                                    </div>
+
                                                     <div>
                                                         <button type="button" class="btn btn-ctk"
                                                             style="background-color: #D5E497; border-radius: 10px; color: black">Lihat</button>

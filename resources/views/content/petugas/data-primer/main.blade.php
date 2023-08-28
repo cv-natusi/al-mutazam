@@ -19,7 +19,6 @@
 
         .btn-ctk {
             text-align: center;
-            color: white;
             margin-left: 12px;
         }
 
@@ -67,12 +66,9 @@
                     <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-toolbar mb-3" role="toolbar">
                             <div class="btn-group me-0" role="group">
-                                <button type="button" class="btn btn-ctk" style="background-color: #6FA4DD;"><i
-                                        class='bx bx-printer' style='color:#ffffff'></i> CETAK</button>
-                            </div>
-                            <div>
-                                <button type="button" class="btn btn-ctk" style="background-color: #6B9E5E;"><i
-                                        class='bx bx-file' style='color:#ffffff'></i> EXCEL</button>
+                                <a href="{{ route('createdataprimerPetugas') }}" button type="button" class="btn btn-ctk"
+                                    style="background-color: #6FA4DD; color: white;">
+                                    Tambah Data Primer</a>
                             </div>
                         </div>
                         <div class="input-group">
@@ -92,17 +88,11 @@
                                 </ul>
                             </div>
                             <div class="h-25 input-group">
-                                <div class="input-group-text" id="btnGroupAddon2"><i class='bx bxs-calendar'></i></div>
+                                <div class="input-group-text" id="btnGroupAddon2"><i class='bx bx-search-alt'></i></div>
                                 <input type="text" class="form-control" placeholder="-" aria-label="Input group example"
                                     aria-describedby="btnGroupAddon2">
                             </div>
-                            <div style="font-size: 25px; margin-left: 5px; margin-right: 5px"><b> - </b></div>
-                            <div class="h-25 input-group">
-                                <input type="text" class="form-control" placeholder="-" aria-label="Input group example"
-                                    aria-describedby="btnGroupAddon2">
-                                <div class="input-group-text" id="btnGroupAddon2"><i class='bx bxs-calendar'></i>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                     <div>
@@ -115,8 +105,7 @@
                                         <th scope="col">Tahun</th>
                                         <th scope="col">Batas Upload</th>
                                         <th scope="col">Keterangan</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Tgl.Upload</th>
+                                        <th scope="col">Terupload</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -128,18 +117,18 @@
                                             <td>{{ $dataprimer->tahun }}</td>
                                             <td>{{ $dataprimer->batas_upload }}</td>
                                             <td>{{ $dataprimer->keterangan }}</td>
-                                            <td>{{ $dataprimer->status }}</td>
-                                            <td>{{ $dataprimer->tgl_upload }}</td>
+                                            <td></td>
                                             <td>
                                                 <div class="btn-toolbar" role="toolbar">
                                                     <div class="btn-group me-0" role="group">
                                                         <button type="button" class="btn btn-ctk" data-bs-toggle="modal"
                                                             data-bs-target="#ModalCreate"
-                                                            style="background-color: #8282F2; border-radius: 10px">Upload</button>
+                                                            style="background-color: #D5E497; border-radius: 10px">Lihat</button>
                                                     </div>
                                                     <div>
-                                                        <button type="button" class="btn btn-ctk"
-                                                            style="background-color: #D5E497; border-radius: 10px; color: black">Lihat</button>
+                                                        <a href="{{ route('editdataprimerPetugas', $dataprimer->id) }}"
+                                                            button type="button" class="btn btn-ctk"
+                                                            style="background-color: #D9D9D9; border-radius: 10px; color: black">Edit</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -153,7 +142,17 @@
                 </div>
             </div>
         </div>
-    </div>
+        <ul class="pagination justify-content-end">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
     </div>
 @endsection
 
