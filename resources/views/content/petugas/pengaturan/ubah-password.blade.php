@@ -48,9 +48,9 @@
                     <div class="row">
                         <h6 class="h6-titlecard"><b>Ubah Password</b></h6>
                     </div>
-                    <form action="pengaturan-guru" method="post">
-                        @csrf
-                        <label for="inputPassword5" class="form-label" style="margin-left: 15px">Password saat ini</label>
+                    {{-- <form action="pengaturan-guru" method="post">
+                        @csrf --}}
+                    {{-- <label for="inputPassword5" class="form-label" style="margin-left: 15px">Password saat ini</label>
                         <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups"
                             style="margin-left: 15px">
                             <div class="input-group">
@@ -59,10 +59,9 @@
                                     aria-describedby="btnGroupAddon">
                                 <div class="input-group-text" id="btnGroupAddon"><i class='bx bxs-low-vision'></i></div>
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="row">
-
+                    {{-- <div class="row">
                             <label for="inputPassword5" class="form-label" style="margin-left: 15px">Password
                                 baru</label>
                             <div class="col-lg-6 mb-2">
@@ -82,21 +81,51 @@
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <button type="submit" class="btn btn-ctk"
+                                style="background-color: #62A044; margin-top: 15px;">Simpan</button>
+                        </div>
+                    </form> --}}
 
-                        {{-- <label for="inputPassword5" class="form-label" style="margin-left: 15px">Password baru</label>
-                    <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups"
-                        style="margin-left: 15px">
-                        <div class="input-group me-4">
-                            <input type="text" class="form-control" placeholder="Input group example"
-                                aria-label="Input group example" aria-describedby="btnGroupAddon">
-                            <div class="input-group-text" id="btnGroupAddon"><i class='bx bxs-low-vision'></i></div>
+                    {{-- coba --}}
+                    <form class="row g-3" style="margin-top: -20px; margin-left: 10px;" action="" method="post">
+                        @csrf
+                        <div class="col-md-6">
+                            <label for="inputPassword" class="form-label">NIK</label>
+                            <div class="input-group me-4">
+                                <input type="password" id="" name="nik" class="form-control"
+                                    placeholder="Input group example" aria-label="Input group example"
+                                    aria-describedby="btnGroupAddon">
+                            </div>
                         </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Input group example"
-                                aria-label="Input group example" aria-describedby="btnGroupAddon">
-                            <div class="input-group-text" id="btnGroupAddon"><i class='bx bxs-low-vision'></i></div>
+                        <div class="col-md-6">
+                            <label for="inputPassword4" class="form-label">Password Saat Ini</label>
+                            <div class="input-group me-4">
+                                <input type="password" id="oldPassword" name="old_password" class="form-control"
+                                    placeholder="Input group example" aria-label="Input group example"
+                                    aria-describedby="btnGroupAddon">
+                                <div class="input-group-text" id="btnGroupAddon"><i class='bx bxs-low-vision'></i></div>
+                            </div>
                         </div>
-                    </div> --}}
+
+                        <div class="col-md-6">
+                            <label for="inputEmail4" class="form-label">Password Baru</label>
+                            <div class="input-group me-4">
+                                <input type="password" id="newPassword" name="new_password" class="form-control"
+                                    placeholder="Input group example" aria-label="Input group example"
+                                    aria-describedby="btnGroupAddon">
+                                <div class="input-group-text" id="btnGroupAddon"><i class='bx bxs-low-vision'></i></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputPassword4" class="form-label">Ulangi Password Baru</label>
+                            <div class="input-group me-4">
+                                <input type="password" id="repeatPassword" name="repeat_password" class="form-control"
+                                    placeholder="Input group example" aria-label="Input group example"
+                                    aria-describedby="btnGroupAddon">
+                                <div class="input-group-text" id="btnGroupAddon"><i class='bx bxs-low-vision'></i></div>
+                            </div>
+                        </div>
                         <div>
                             <button type="submit" class="btn btn-ctk"
                                 style="background-color: #62A044; margin-top: 15px;">Simpan</button>
