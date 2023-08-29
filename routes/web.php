@@ -185,6 +185,19 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/reset-petugas', [PengaturanPetugas::class, 'mainResetPetugas'])->name('resetPetugas');
 		Route::get('/pengaturan-petugas', [PengaturanPetugas::class, 'mainPengaturanPetugas'])->name('pengaturanPetugas'); //ganti password
 		Route::post('/pengaturan-petugas', [Auth::class, 'prosesChangePassword'])->name('pengaturanPetugas');
+
+		Route::group(array('prefix'=>'data-guru'), function(){#Data guru
+			Route::get('/', [PengaturanPetugas::class, 'dataGuru'])->name('dataGuru');
+		});
+		Route::group(array('prefix'=>'data-tugas-pegawai'), function(){#Data guru
+			Route::get('/', [PengaturanPetugas::class, 'dataTugasPegawai'])->name('dataTugasPegawai');
+		});
+		Route::group(array('prefix'=>'data-kelas'), function(){#Data guru
+			Route::get('/', [PengaturanPetugas::class, 'dataKelas'])->name('dataKelas');
+		});
+		Route::group(array('prefix'=>'data-pelajaran'), function(){#Data guru
+			Route::get('/', [PengaturanPetugas::class, 'dataPelajaran'])->name('dataPelajaran');
+		});
 	});
 	Route::group(array('prefix' => 'guru-pengajar'), function () { #Web petugas sekolah
 		Route::get('/', [Dashboard::class, 'mainGuru'])->name('dashboardGuru');
