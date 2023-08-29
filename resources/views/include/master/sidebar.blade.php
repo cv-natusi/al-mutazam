@@ -1,5 +1,14 @@
 <div class="sidebar-wrapper" data-simplebar="true">
-    <div class="sidebar-header">
+	<div class="sidebar-header">
+		<div>
+			<img src="{{url('assets/images/logo-profile.png')}}" width="30" alt="logo icon">
+		</div>
+		<div>
+			<h5 class="logo-text" style="font-size: 14px;">MTS AL-MUTAZAM</h5>
+		</div>
+		<div class="toggle-icon ms-auto"><i class='bx bx-chevron-left-circle'></i></div>
+	</div>
+	{{-- <div class="sidebar-header">
         <div>
             <img src="{{ url('assets/images/logo-profile.png') }}" width="60">
         </div>
@@ -12,12 +21,7 @@
         <div class="toggle-icon ms-auto">
             <i style="color: #000" class='bx bx-arrow-to-left'></i>
         </div>
-	</div>
-	<div class="sidebar-header-profile text-center">
-		<div class="header-profile">	
-			<hr>
-		</div>
-	</div>
+	</div> --}}
 	<!--navigation-->
 	<ul class="metismenu" id="menu">
 		@if (Auth::User()->level=='1') <!-- Admin -->
@@ -132,11 +136,43 @@
 				<div class="menu-title">Dashboard</div>
 			</a>
 		</li>
+		<li class="{{ ($title == 'Data Guru') ? 'mm-active' : ''}}">
+			<a href="{{route('dataGuru')}}">
+				<div class="parent-icon">
+					<i style="color: #000" class='bx bxs-user'></i>
+				</div>
+				<div class="menu-title">Data Guru</div>
+			</a>
+		</li>
+		<li class="{{ ($title == 'Dashboard Petugas') ? 'mm-active' : ''}}">
+			<a href="{{route('dataTugasPegawai')}}">
+				<div class="parent-icon">
+					<i style="color: #000" class='bx bx-data'></i>
+				</div>
+				<div class="menu-title">Data Tugas Pegawai</div>
+			</a>
+		</li>
+		<li class="{{ ($title == 'Data Kelas') ? 'mm-active' : ''}}">
+			<a href="{{route('dataKelas')}}">
+				<div class="parent-icon">
+					<i style="color: #000" class='bx bx-data'></i>
+				</div>
+				<div class="menu-title">Data Kelas</div>
+			</a>
+		</li>
+		<li class="{{ ($title == 'Data Pelajaran') ? 'mm-active' : ''}}">
+			<a href="{{route('dataPelajaran')}}">
+				<div class="parent-icon">
+					<i style="color: #000" class='bx bx-data'></i>
+				</div>
+				<div class="menu-title">Data Pelajaran</div>
+			</a>
+		</li>
 		@elseif(Auth::User()->level=='3') <!-- Guru Pengajar -->
 		<li class="{{ ($title == 'Dashboard Guru') ? 'mm-active' : ''}}">
 			<a href="{{route('dashboardGuru')}}">
 				<div class="parent-icon">
-					<i style="color: #000" class='bx bx-home-circle'></i>
+					<i style="color: #000" class='bx bx-data'></i>
 				</div>
 				<div class="menu-title">Dashboard</div>
 			</a>

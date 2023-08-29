@@ -9,39 +9,13 @@
 	@include('include.master.style')<!--importCSS-->
 	<style>
 		.sidebar-header {
-			height: 80px !important;
-			background: #EAFDFC !important;
+			background: #32762C80 !important;
 		}
-
-		.sidebar-wrapper .metismenu {
-			margin-top: 0px !important;
-		}
-		
 		.wrapper {
 			color: black;
 		}
-
-		.header-image {
-			position: absolute;
-			margin-top: 0px;	
-		}
-
-		.header-text {
-			position: absolute;
-			margin-top: 0px;
-			margin-left: 70px;
-		}
-
 		.menu-title {
 			color: #000;
-		}
-
-		/* .mm-active {
-			background: #EAFDFC;
-		} */
-		
-		.sidebar-header-profile {
-			margin-top: 70px;
 		}
 	</style>
 </head>

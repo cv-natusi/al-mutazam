@@ -23,7 +23,7 @@
 	<title>MTS | AL-MUTAZAM</title>
 	<style>
 		.bg-login {
-			background-image: url(../public/assets/images/login-images/forgot-password-frent-img.jpg);
+			background-image: url(../public/assets/images/bg-login.png);
 		}
 	</style>
 </head>
