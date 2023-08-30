@@ -230,6 +230,30 @@
                     </div>
                     <div class="menu-title">Dashboard</div>
                 </a>
+                <a href="{{route('profilGuru')}}">
+                  <div class="parent-icon">
+                     <i style="color: #000" class='bx bx-user'></i>
+                  </div>
+                  <div class="menu-title">Profil Guru</div>
+               </a>
+               <a href="{{route('dashboardGuru')}}">
+                  <div class="parent-icon">
+                     <i style="color: #000" class='bx bx-folder'></i>
+                  </div>
+                  <div class="menu-title">Data Primer</div>
+               </a>
+               <a href="{{route('dashboardGuru')}}">
+                  <div class="parent-icon">
+                     <i style="color: #000" class='bx bx-folder'></i>
+                  </div>
+                  <div class="menu-title">Data Sekunder</div>
+               </a>
+               <a href="{{route('dashboardGuru')}}">
+                  <div class="parent-icon">
+                     <i style="color: #000" class='bx bx-cog'></i>
+                  </div>
+                  <div class="menu-title">Pengaturan</div>
+               </a>
             </li>
         @endif
     </ul>
