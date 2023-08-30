@@ -140,46 +140,18 @@ Route::group(['middleware' => 'auth'], function () {
 		});
 	});
 	Route::group(array('prefix' => 'petugas-sekolah'), function () { #Web petugas sekolah
-		Route::get('/', [Dashboard::class, 'mainPetugas'])->name('dashboardPetugas');
-<<<<<<< HEAD
-		Route::group(array('prefix'=>'data-guru'), function(){
-			Route::get('/', [DataGuru::class, 'dataGuru'])->name('dataGuru');
-			Route::get('/tambah', [DataGuru::class, 'tambahGuru'])->name('tambahGuru');
-			Route::get('/update', [DataGuru::class, 'editGuru'])->name('editGuru');
-			Route::get('/detail', [DataGuru::class, 'detailGuru'])->name('detailGuru');
-			Route::get('/data-primer', [DataGuru::class, 'primerGuru'])->name('primerGuru');
-			Route::get('/data-sekunder', [DataGuru::class, 'sekunderGuru'])->name('sekunderGuru');
-		});
-		Route::group(array('prefix'=>'data-tugas-pegawai'), function(){
-			Route::get('/', [DataTugasPegawai::class, 'dataTugasPegawai'])->name('dataTugasPegawai');
-			Route::get('/tambah', [DataTugasPegawai::class, 'tambahTugasPegawai'])->name('tambahTugas');
-			Route::get('/update', [DataTugasPegawai::class, 'editTugasPegawai'])->name('editTugas');
-		});
-		Route::group(array('prefix'=>'data-kelas'), function(){
-			Route::get('/', [DataKelas::class, 'dataKelas'])->name('dataKelas');
-			Route::get('/tambah', [DataKelas::class, 'tambahDataKelas'])->name('tambahKelas');
-			Route::get('/update', [DataKelas::class, 'editDataKelas'])->name('editKelas');
-		});
 		Route::get('/data-Pelajaran', [DataPelajaran::class, 'dataPelajaran'])->name('dataPelajaran');
-		Route::get('/data-Primer', [DataPrimer::class, 'dataPrimer'])->name('dataPrimer');
-		Route::get('/data-Sekunder', [DataSekunder::class, 'dataSekunder'])->name('dataSekunder');
-		Route::get('/Ubah-Password', [UbahPassword::class, 'ubahPassword'])->name('ubahPassword');
-		Route::get('/Reset-Password', [ResetPassword::class, 'resetPassword'])->name('resetPassword');
-
-	});
-	Route::group(array('prefix' => 'guru-pengajar'), function () { #Web petugas sekolah
-		Route::get('/', [Dashboard::class, 'mainGuru'])->name('dashboardGuru');
-		Route::get('/data-primer', [DataPrimer::class, 'mainDataPrimer'])->name('dataprimerGuru');
-		Route::get('/data-sekunder', [DataSekunder::class, 'mainDataSekunder'])->name('datasekunderGuru');
-		Route::get('/pengaturan-guru', [PengaturanGuru::class, 'mainPengaturanGuru'])->name('pengaturanGuru');
-=======
+		Route::get('/tambah-data-Pelajaran', [DataPelajaran::class, 'tambahdataPelajaran'])->name('tambahdataPelajaran');
+		Route::post('/simpan-data-Pelajaran', [DataPelajaran::class, 'simpandataPelajaran'])->name('simpandataPelajaran');
+		Route::get('/edit-data-Pelajaran/{id}', [DataPelajaran::class, 'editdataPelajaran'])->name('editdataPelajaran');
+		Route::post('/update-data-Pelajaran/{id}', [DataPelajaran::class, 'updatedataPelajaran'])->name('updatedataPelajaran');
+		Route::get('/hapus-data-Pelajaran/{id}', [DataPelajaran::class, 'hapusdataPelajaran'])->name('hapusdataPelajaran');
 		Route::get('/datapetugas-primer', [DataPetugasPrimer::class, 'dataPetugasPrimer'])->name('dataprimerPetugas');
 		Route::get('/bankdatapetugas-primer', [DataPetugasPrimer::class, 'bankdataPetugasPrimer'])->name('bankdataprimerPetugas');
 		Route::get('/tambahdataprimer-petugas', [DataPetugasPrimer::class, 'create'])->name('createdataprimerPetugas');
 		Route::post('/savedataprimer-petugas', [DataPetugasPrimer::class, 'store'])->name('savedataprimerPetugas');
 		Route::get('/editdataprimer-petugas/{id}', [DataPetugasPrimer::class, 'edit'])->name('editdataprimerPetugas');
 		Route::patch('/updatedataprimer-petugas/{id}', [DataPetugasPrimer::class, 'update'])->name('updatedataprimerPetugas');
-
 		Route::get('/datapetugas-sekunder', [DataPetugasSekunder::class, 'dataPetugasSekunder'])->name('datasekunderPetugas');
 		Route::get('/bankdatapetugas-sekunder', [DataPetugasSekunder::class, 'bankdataPetugasSekunder'])->name('bankdatasekunderPetugas');
 		Route::get('/tambahdatasekunder-petugas', [DataPetugasSekunder::class, 'create'])->name('createdatasekunderPetugas');
@@ -196,6 +168,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::post('/file-store', [UploadPrimerGuru::class, 'fileUpload'])->name('file.store');
 		Route::get('/pengaturan-guru', [PengaturanGuru::class, 'mainPengaturanGuru'])->name('pengaturanGuru'); //ganti password
 		Route::post('/pengaturan-guru', [Auth::class, 'prosesChangePassword'])->name('pengaturanGuru');
->>>>>>> master
+		Route::get('/profil', [Profil::class, 'mainProfil'])->name('profilGuru');
+		Route::get('/edit-profilguru', [Profil::class, 'editProfil'])->name('editprofilGuru');
 	});
 });
