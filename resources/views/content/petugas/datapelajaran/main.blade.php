@@ -1,44 +1,6 @@
 @extends('layout.master.main')
 
 @push('style')
-<<<<<<< HEAD
-    <style>
-        .card-title {
-            margin-top: 40px;
-        }
-
-		.btn-card {
-			text-align: left;
-			width: 100%;
-			color: white;
-		}
-    </style>
-@endpush
-
-@section('content')
-    <div class="page-content">
-        @include('include.master.breadcrumb')
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card" style="background: #ffffff">
-                    <div class="card-body">
-                        <span><b id="date" style="font-size: 10pt;"></b></span>&nbsp;
-                        <span id="time" style="font-size: 10pt"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="row">
-                    <h5>Halaman Data Pelajaran!!</h5>
-             
-            </div>
-        </div>
-    </div>
-@endsection
-
-@push('script')
-=======
 <style>
     .card-title {
         margin-top: 40px;
@@ -153,8 +115,7 @@
 </div>
 @endsection
 
-<!-- @push('script')
->>>>>>> azizah
+@push('script')
     {{-- <script src="{{ url('assets/js/index.js') }}"></script> --}}
     <script src="{{ url('assets/plugins/jquery-knob/jquery.knob.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -198,8 +159,4 @@
 
         renderTime();
     </script>
-<<<<<<< HEAD
 @endpush
-=======
-@endpush -->
->>>>>>> azizah

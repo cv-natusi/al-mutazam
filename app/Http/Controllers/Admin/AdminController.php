@@ -23,9 +23,11 @@ use Illuminate\Support\Facades\Session;
 class AdminController extends Controller
 {   #Modul identitas
     public function identitas(Request $request) {#identitas
+        $data['menuActive'] = 'identitas';
+        $data['subMenuActive'] = '';
         $data['title'] = 'Identitas';
         $data['identity'] = Identity::find(1);
-        return view('content.Admin.identitas.main', $data);
+        return view('content.admin.identitas.main', $data);
     }
     public function changeIdentity(Request $request)
     {
@@ -83,6 +85,8 @@ class AdminController extends Controller
     }
     #Modul web
     public function logo(Request $request) {#Logo
+        $data['menuActive'] = 'modulWeb';
+        $data['subMenuActive'] = 'logo';
         $data['title'] = 'Logo';
         $data['identity'] = Identity::find(1);
         return view('content.admin.logo.main', $data);
@@ -133,6 +137,8 @@ class AdminController extends Controller
         }
     }
     public function slider(Request $request) {#Slider
+        $data['menuActive'] = 'modulWeb';
+        $data['subMenuActive'] = 'slider';
         $data['title'] = 'Slider Gambar';
         $data['identity'] = Identity::find(1);
         return view('content.admin.slider.main', $data);
@@ -186,6 +192,8 @@ class AdminController extends Controller
     }
     #Modul sekolah
     public function sejarah(Request $request) {#Sejarah
+        $data['menuActive'] = 'modulSekolah';
+        $data['subMenuActive'] = 'sejarah';
         $data['title'] = 'Sejarah';
         $data['identity'] = Identity::find(1);
         return view('content.admin.sejarah.main', $data);
@@ -228,6 +236,8 @@ class AdminController extends Controller
         }
     }
     public function visimisi(Request $request) {#Visimisi
+        $data['menuActive'] = 'modulSekolah';
+        $data['subMenuActive'] = 'visimisi';
         $data['title'] = 'Visi dan Misi';
         $data['identity'] = Identity::find(1);
         return view('content.admin.visimisi.main', $data);
@@ -270,6 +280,8 @@ class AdminController extends Controller
         }
     }
     public function kepsek(Request $request) {#Kepsek
+        $data['menuActive'] = 'modulSekolah';
+        $data['subMenuActive'] = 'sambutan';
         $data['title'] = 'Sambutan Kepala Sekolah';
         $data['identity'] = Identity::find(1);
         return view('content.admin.kepsek.main', $data);
@@ -312,6 +324,8 @@ class AdminController extends Controller
         }
     }
     public function uks(Request $request) {#Uks
+        $data['menuActive'] = 'modulSekolah';
+        $data['subMenuActive'] = 'uks';
         $data['title'] = 'UKS';
         $data['identity'] = Identity::find(1);
         return view('content.admin.uks.main', $data);
@@ -354,6 +368,8 @@ class AdminController extends Controller
         }
     }
     public function organisasi(Request $request) {#Struktur organisasi
+        $data['menuActive'] = 'modulSekolah';
+        $data['subMenuActive'] = 'organisasi';
         $data['title'] = 'Struktur Organisasi';
         $data['identity'] = Identity::find(1);
         return view('content.admin.organisasi.main', $data);
@@ -396,6 +412,8 @@ class AdminController extends Controller
         }
     }
     public function ekskul(Request $request) {#Ekstrakurikuler
+        $data['menuActive'] = 'modulSekolah';
+        $data['subMenuActive'] = 'ekstrakurikuler';
         $data['title'] = 'Ekstra Kulikuler';
         $data['identity'] = Identity::find(1);
         return view('content.admin.ekskul.main', $data);
@@ -497,6 +515,8 @@ class AdminController extends Controller
         }
     }
     public function fasilitas(Request $request) {#Fasilitas sekolah
+        $data['menuActive'] = 'modulSekolah';
+        $data['subMenuActive'] = 'fasilitas';
         $data['title'] = 'Fasilitas Sekolah';
         $data['identity'] = Identity::find(1);
         return view('content.admin.fasilitas.main', $data);
@@ -599,6 +619,8 @@ class AdminController extends Controller
     }
     #Modul media
     public function amtv() {#Amtv
+        $data['menuActive'] = 'modulMedia';
+        $data['subMenuActive'] = 'amtv';
         $data['title'] = 'AMTV';
         return view('content.admin.amtv.main', $data);
     }
@@ -652,6 +674,8 @@ class AdminController extends Controller
         }
     }
     public function galeri() {#Galeri
+        $data['menuActive'] = 'modulMedia';
+        $data['subMenuActive'] = 'galeri';
         $data['title'] = 'Galeri';
         return view('content.admin.galeri.main', $data);
     }
@@ -791,16 +815,22 @@ class AdminController extends Controller
         $data['menuActive'] = 'modulBerita';
         if($request->id==1){
             $data['title'] = 'Berita Sekolah';
+            $data['subMenuActive'] = 'beritaSekolah';
         }else if($request->id==2){
             $data['title'] = 'Event';
+            $data['subMenuActive'] = 'event';
         }else if($request->id==3){
             $data['title'] = 'Pengumuman';
+            $data['subMenuActive'] = 'pengumuman';
         }else if($request->id==4){
             $data['title'] = 'Prestasi Siswa';
+            $data['subMenuActive'] = 'prestasiSiswa';
         }else if($request->id==5){
             $data['title'] = 'Program Unggulan';
+            $data['subMenuActive'] = 'programUnggulan';
         }else{
             $data['title'] = '';
+            $data['subMenuActive'] = '';
         }
         $data['identity'] = Identity::find(1);
         return view('content.admin.berita_sekolah.main', $data);

@@ -24,4 +24,10 @@ class HomeController extends Controller{
 	public function pengumuman(Request $request){
 		return view('content.landing-page.home.pengumuman');
 	}
+	public function programUnggulan(Request $request){
+		return view('content.landing-page.program.program-unggulan');
+	}
+	public function prestasiSiswa(Request $request){
+		return view('content.landing-page.program.prestasi-siswa');
+	}
 }

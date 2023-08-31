@@ -8,7 +8,8 @@ use App\Http\Controllers\Auth\AuthController as Auth;
 use App\Http\Controllers\Guru\DataPrimerController as DataPrimer;
 use App\Http\Controllers\Guru\DataSekunderController as DataSekunder;
 use App\Http\Controllers\Guru\PengaturanGuruController as PengaturanGuru;
-use App\Http\Controllers\Guru\UploadFIleController as UploadPrimerGuru;
+use App\Http\Controllers\Guru\UploadFileController as UploadPrimerGuru;
+use App\Http\Controllers\Guru\ProfilController as Profil;
 use App\Http\Controllers\Petugas\DataPrimerPetugasController as DataPetugasPrimer;
 use App\Http\Controllers\Petugas\DataSekunderPetugasController as DataPetugasSekunder;
 use App\Http\Controllers\Petugas\PengaturanPetugasController as PengaturanPetugas;
@@ -34,20 +35,28 @@ use GuzzleHttp\Psr7\UploadedFile;
 Route::get('/', function () {
 	return redirect('home');
 });
-Route::controller(HomeController::class)
-	->prefix('home')
-	->as('home.')
-	->group(function () {
+
+# Landing page start
+Route::controller(HomeController::class)->group(function () {
+	Route::group(['prefix'=>'home','as'=>'home.'],function(){ # Home menu
 		Route::get('/', 'main')->name('main');
 		Route::get('berita', 'berita')->name('berita');
 		Route::get('event', 'event')->name('event');
 		Route::get('pengumuman', 'pengumuman')->name('pengumuman');
 	});
-#Start Auth
-Route::get('/login', [Auth::class, 'login'])->name('login');
-Route::post('/proses_login', [Auth::class, 'proses_login'])->name('proses_login');
-Route::get('/logout', [Auth::class, 'logout'])->name('logout');
-#End Auth
+	Route::group(['prefix'=>'program','as'=>'program.'],function(){ # Program menu
+		Route::get('unggulan', 'programUnggulan')->name('unggulan');
+		Route::get('prestasi-siswa', 'prestasiSiswa')->name('prestasi-siswa');
+	});
+});
+# Landing page end
+
+# Auth start
+Route::get('login', [Auth::class, 'login'])->name('login');
+Route::post('proses_login', [Auth::class, 'proses_login'])->name('proses_login');
+Route::get('logout', [Auth::class, 'logout'])->name('logout');
+# Auth end
+
 Route::group(['middleware' => 'auth'], function () {
 	Route::group(array('prefix' => 'admin'), function () { #Web admin
 		Route::get('/', [Dashboard::class, 'mainAdmin'])->name('dashboardAdmin'); #Dashboard admin
@@ -141,7 +150,31 @@ Route::group(['middleware' => 'auth'], function () {
 		});
 	});
 	Route::group(array('prefix' => 'petugas-sekolah'), function () { #Web petugas sekolah
+		Route::get('/', [Dashboard::class, 'mainPetugas'])->name('dashboardPetugas');
+		Route::group(array('prefix'=>'data-guru'), function(){
+			Route::get('/', [DataGuru::class, 'dataGuru'])->name('dataGuru');
+			Route::get('/tambah', [DataGuru::class, 'tambahGuru'])->name('tambahGuru');
+			Route::get('/update', [DataGuru::class, 'editGuru'])->name('editGuru');
+			Route::get('/detail', [DataGuru::class, 'detailGuru'])->name('detailGuru');
+			Route::get('/data-primer', [DataGuru::class, 'primerGuru'])->name('primerGuru');
+			Route::get('/data-sekunder', [DataGuru::class, 'sekunderGuru'])->name('sekunderGuru');
+		});
+		Route::group(array('prefix'=>'data-tugas-pegawai'), function(){
+			Route::get('/', [DataTugasPegawai::class, 'dataTugasPegawai'])->name('dataTugasPegawai');
+			Route::get('/tambah', [DataTugasPegawai::class, 'tambahTugasPegawai'])->name('tambahTugas');
+			Route::get('/update', [DataTugasPegawai::class, 'editTugasPegawai'])->name('editTugas');
+		});
+		Route::group(array('prefix'=>'data-kelas'), function(){
+			Route::get('/', [DataKelas::class, 'dataKelas'])->name('dataKelas');
+			Route::get('/tambah', [DataKelas::class, 'tambahDataKelas'])->name('tambahKelas');
+			Route::get('/update', [DataKelas::class, 'editDataKelas'])->name('editKelas');
+		});
 		Route::get('/data-Pelajaran', [DataPelajaran::class, 'dataPelajaran'])->name('dataPelajaran');
+		Route::get('/data-Primer', [DataPrimer::class, 'dataPrimer'])->name('dataPrimer');
+		Route::get('/data-Sekunder', [DataSekunder::class, 'dataSekunder'])->name('dataSekunder');
+		Route::get('/Ubah-Password', [UbahPassword::class, 'ubahPassword'])->name('ubahPassword');
+		Route::get('/Reset-Password', [ResetPassword::class, 'resetPassword'])->name('resetPassword');
+
 		Route::get('/tambah-data-Pelajaran', [DataPelajaran::class, 'tambahdataPelajaran'])->name('tambahdataPelajaran');
 		Route::post('/simpan-data-Pelajaran', [DataPelajaran::class, 'simpandataPelajaran'])->name('simpandataPelajaran');
 		Route::get('/edit-data-Pelajaran/{id}', [DataPelajaran::class, 'editdataPelajaran'])->name('editdataPelajaran');
@@ -160,19 +193,6 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/reset-petugas', [PengaturanPetugas::class, 'mainResetPetugas'])->name('resetPetugas');
 		Route::get('/pengaturan-petugas', [PengaturanPetugas::class, 'mainPengaturanPetugas'])->name('pengaturanPetugas'); //ganti password
 		Route::post('/pengaturan-petugas', [Auth::class, 'prosesChangePassword'])->name('pengaturanPetugas');
-
-		Route::group(array('prefix'=>'data-guru'), function(){#Data guru
-			Route::get('/', [PengaturanPetugas::class, 'dataGuru'])->name('dataGuru');
-		});
-		Route::group(array('prefix'=>'data-tugas-pegawai'), function(){#Data guru
-			Route::get('/', [PengaturanPetugas::class, 'dataTugasPegawai'])->name('dataTugasPegawai');
-		});
-		Route::group(array('prefix'=>'data-kelas'), function(){#Data guru
-			Route::get('/', [PengaturanPetugas::class, 'dataKelas'])->name('dataKelas');
-		});
-		Route::group(array('prefix'=>'data-pelajaran'), function(){#Data guru
-			Route::get('/', [PengaturanPetugas::class, 'dataPelajaran'])->name('dataPelajaran');
-		});
 	});
 	Route::group(array('prefix' => 'guru-pengajar'), function () { #Web petugas sekolah
 		Route::get('/', [Dashboard::class, 'mainGuru'])->name('dashboardGuru');

@@ -28,10 +28,10 @@
 		</li>
 		<li class="{{ (in_array($title, ['Logo','Slider Gambar'])) ? 'mm-active' : ''}}">
 			<a href="javascript:;" class="has-arrow">
-			  <div class="parent-icon">
-				<i style="color: #000" class='bx bxs-grid'></i>
-			  </div>
-			  <div class="menu-title">Modul Web</div>
+				<div class="parent-icon">
+					<i style="color: #000" class='bx bxs-grid'></i>
+				</div>
+				<div class="menu-title">Modul Web</div>
 			</a>
 			<ul>
 			  <li class="{{ ($title == 'Logo') ? 'mm-active' : ''}}">
@@ -44,10 +44,10 @@
 		</li>
 		<li class="{{ (in_array($title, ['Sejarah','Visi dan Misi','Sambutan Kepala Sekolah','Struktur Organisasi', 'Fasilitas Sekolah','Ekstra Kulikuler','UKS'])) ? 'mm-active' : ''}}">
 			<a href="javascript:;" class="has-arrow">
-			  <div class="parent-icon">
-				<i style="color: #000" class='bx bx-category'></i>
-			  </div>
-			  <div class="menu-title">Modul Sekolah</div>
+				<div class="parent-icon">
+					<i style="color: #000" class='bx bx-category'></i>
+				</div>
+				<div class="menu-title">Modul Sekolah</div>
 			</a>
 			<ul>
 				<li class="{{ ($title == 'Sejarah') ? 'mm-active' : ''}}">
@@ -75,9 +75,9 @@
 		</li>
 		<li class="{{ (in_array($title, ['AMTV','Galeri'])) ? 'mm-active' : ''}}">
 			<a href="javascript:;" class="has-arrow">
-			  <div class="parent-icon"><i style="color: #000" class='bx bx-desktop'></i>
-			  </div>
-			  <div class="menu-title">Modul Media</div>
+				<div class="parent-icon"><i style="color: #000" class='bx bx-desktop'></i>
+				</div>
+				<div class="menu-title">Modul Media</div>
 			</a>
 			<ul>
 				<li class="{{ ($title == 'AMTV') ? 'mm-active' : ''}}">
@@ -90,9 +90,9 @@
 		</li>
 		<li class="{{ (in_array($title, ['Berita Sekolah','Event','Pengumuman','Prestasi Siswa','Program Unggulan'])) ? 'mm-active' : ''}}">
 			<a href="javascript:;" class="has-arrow">
-			  <div class="parent-icon"><i style="color: #000" class='bx bx-news'></i>
-			  </div>
-			  <div class="menu-title">Modul Berita</div>
+				<div class="parent-icon"><i style="color: #000" class='bx bx-news'></i>
+				</div>
+				<div class="menu-title">Modul Berita</div>
 			</a>
 			<ul>
 			  <li class="{{ ($title == 'Berita Sekolah') ? 'mm-active' : ''}}">
@@ -204,28 +204,28 @@
 			</a>
 			<a href="{{route('profilGuru')}}">
 				<div class="parent-icon">
-				   <i style="color: #000" class='bx bx-user'></i>
+					<i style="color: #000" class='bx bx-user'></i>
 				</div>
 				<div class="menu-title">Profil Guru</div>
-			 </a>
-			 <a href="{{route('dashboardGuru')}}">
+			</a>
+			<a href="{{route('dashboardGuru')}}">
 				<div class="parent-icon">
-				   <i style="color: #000" class='bx bx-folder'></i>
+					<i style="color: #000" class='bx bx-folder'></i>
 				</div>
 				<div class="menu-title">Data Primer</div>
-			 </a>
-			 <a href="{{route('dashboardGuru')}}">
+			</a>
+			<a href="{{route('dashboardGuru')}}">
 				<div class="parent-icon">
-				   <i style="color: #000" class='bx bx-folder'></i>
+					<i style="color: #000" class='bx bx-folder'></i>
 				</div>
 				<div class="menu-title">Data Sekunder</div>
-			 </a>
-			 <a href="{{route('dashboardGuru')}}">
+			</a>
+			<a href="{{route('dashboardGuru')}}">
 				<div class="parent-icon">
-				   <i style="color: #000" class='bx bx-cog'></i>
+					<i style="color: #000" class='bx bx-cog'></i>
 				</div>
 				<div class="menu-title">Pengaturan</div>
-			 </a>
+			</a>
 		</li>
 		@endif
 	</ul>
