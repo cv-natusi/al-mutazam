@@ -27,7 +27,7 @@ class AdminController extends Controller
         $data['subMenuActive'] = '';
         $data['title'] = 'Identitas';
         $data['identity'] = Identity::find(1);
-        return view('content.Admin.identitas.main', $data);
+        return view('content.admin.identitas.main', $data);
     }
     public function changeIdentity(Request $request)
     {

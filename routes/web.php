@@ -8,7 +8,8 @@ use App\Http\Controllers\Auth\AuthController as Auth;
 use App\Http\Controllers\Guru\DataPrimerController as DataPrimer;
 use App\Http\Controllers\Guru\DataSekunderController as DataSekunder;
 use App\Http\Controllers\Guru\PengaturanGuruController as PengaturanGuru;
-use App\Http\Controllers\Guru\UploadFIleController as UploadPrimerGuru;
+use App\Http\Controllers\Guru\UploadFileController as UploadPrimerGuru;
+use App\Http\Controllers\Guru\ProfilController as Profil;
 use App\Http\Controllers\Petugas\DataPrimerPetugasController as DataPetugasPrimer;
 use App\Http\Controllers\Petugas\DataSekunderPetugasController as DataPetugasSekunder;
 use App\Http\Controllers\Petugas\PengaturanPetugasController as PengaturanPetugas;
@@ -18,7 +19,6 @@ use App\Http\Controllers\Petugas\DataKelasController as DataKelas;
 use App\Http\Controllers\Petugas\DataPelajaranController as DataPelajaran;
 use App\Http\Controllers\Petugas\UbahPasswordController as UbahPassword;
 use App\Http\Controllers\Petugas\ResetPasswordController as ResetPassword;
-use App\Http\Controllers\Guru\ProfilController as Profil;
 use GuzzleHttp\Psr7\UploadedFile;
 
 /*
@@ -35,20 +35,28 @@ use GuzzleHttp\Psr7\UploadedFile;
 Route::get('/', function () {
 	return redirect('home');
 });
-Route::controller(HomeController::class)
-	->prefix('home')
-	->as('home.')
-	->group(function () {
+
+# Landing page start
+Route::controller(HomeController::class)->group(function () {
+	Route::group(['prefix'=>'home','as'=>'home.'],function(){ # Home menu
 		Route::get('/', 'main')->name('main');
 		Route::get('berita', 'berita')->name('berita');
 		Route::get('event', 'event')->name('event');
 		Route::get('pengumuman', 'pengumuman')->name('pengumuman');
 	});
-#Start Auth
-Route::get('/login', [Auth::class, 'login'])->name('login');
-Route::post('/proses_login', [Auth::class, 'proses_login'])->name('proses_login');
-Route::get('/logout', [Auth::class, 'logout'])->name('logout');
-#End Auth
+	Route::group(['prefix'=>'program','as'=>'program.'],function(){ # Program menu
+		Route::get('unggulan', 'programUnggulan')->name('unggulan');
+		Route::get('prestasi-siswa', 'prestasiSiswa')->name('prestasi-siswa');
+	});
+});
+# Landing page end
+
+# Auth start
+Route::get('login', [Auth::class, 'login'])->name('login');
+Route::post('proses_login', [Auth::class, 'proses_login'])->name('proses_login');
+Route::get('logout', [Auth::class, 'logout'])->name('logout');
+# Auth end
+
 Route::group(['middleware' => 'auth'], function () {
 	Route::group(array('prefix' => 'admin'), function () { #Web admin
 		Route::get('/', [Dashboard::class, 'mainAdmin'])->name('dashboardAdmin'); #Dashboard admin
