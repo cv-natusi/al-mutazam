@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Petugas;
 
 use App\Http\Controllers\Controller;
 use App\Models\Petugas\DataGuru;
+use App\Models\Provinsi;
 use App\Models\Petugas\DataPrimerGuru;
 use App\Models\Petugas\DataSekunderGuru;
 use Illuminate\Http\Request;
+use DataTables, Validator, DB, Auth;
 
 class DataGuruController extends Controller
 {
@@ -16,14 +18,38 @@ class DataGuruController extends Controller
 	}
 
     public function dataGuru() {
+        if(request()->ajax()){
+            $data = DataGuru::orderBy('id_guru','ASC')->get();
+			
+			return DataTables::of($data)
+				->addIndexColumn()
+				->addColumn('actions', function($row){
+					$txt = "
+                      <button class='btn btn-sm btn-info' title='Detail' onclick='Edit(`$row->id_guru`)'><i class='fadeIn animated bx bx-show' aria-hidden='true'></i></button>
+                      <button class='btn btn-sm btn-primary' title='Edit' onclick='Detail(`$row->id_guru`)'><i class='fadeIn animated bx bxs-file' aria-hidden='true'></i></button>
+					";
+					return $txt;
+				})
+				->rawColumns(['actions'])
+				->toJson();
+		}
+
         $data['title'] = $this->title;
-        $dataguru = DataGuru::all();
-        return view('content.petugas.dataguru.main', compact('dataguru'), $data);
+        return view('content.petugas.dataguru.main', $data);
     }
     
     public function tambahGuru() {
-        $data['title'] = $this->title;
-        return view('content.petugas.dataguru.tambahguru', $data);
+        $data['title'] = "Tambah ".$this->title;
+        $data['provinsi'] = Provinsi::all();
+        if (empty($request->id)) {
+            $data['page'] = 'Tambah';
+            $data['guru'] = '';
+		}else{
+            $data['page'] = 'Edit';
+			$data['guru'] = DataGuru::where('id_guru',$request->id)->first();
+		}
+        $content = view('content.petugas.dataguru.form', $data)->render();
+		return ['status' => 'success', 'content' => $content, 'data' => $data];
     }
     
     public function editGuru() {

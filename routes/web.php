@@ -56,12 +56,22 @@ Route::get('login', [Auth::class, 'login'])->name('login');
 Route::post('proses_login', [Auth::class, 'proses_login'])->name('proses_login');
 Route::get('logout', [Auth::class, 'logout'])->name('logout');
 # Auth end
-
+# Split master wilayah from table wilayah start
+Route::get('provinsi',[loker::class, 'provinsi'])->name('provinsi');
+Route::get('kabupaten',[loker::class, 'kabupaten'])->name('kabupaten');
+Route::get('kecamatan',[loker::class, 'kecamatan'])->name('kecamatan');
+Route::get('desa',[loker::class, 'desa'])->name('desa');
+# Split master wilayah from table wilayah end
 Route::group(['middleware' => 'auth'], function () {
 	Route::group(array('prefix' => 'admin'), function () { #Web admin
 		Route::get('/', [Dashboard::class, 'mainAdmin'])->name('dashboardAdmin'); #Dashboard admin
 		Route::get('/get-dashboard', [Dashboard::class, 'getDashboard'])->name('getDashboard');
 		
+		Route::post('getProv', [mstWilayah::class, 'getProv'])->name('getProv');
+		Route::post('getKab', [mstWilayah::class, 'getKab'])->name('getKab');
+		Route::post('getKec', [mstWilayah::class, 'getKec'])->name('getKec');
+		Route::post('getDesa', [mstWilayah::class, 'getDesa'])->name('getDesa');
+
 		Route::group(array('prefix'=>'identitas'), function(){ #Modul identitas
 			Route::get('/', [Admin::class, 'identitas'])->name('identitas');
 			Route::post('/identitas/changeIdentity', [Admin::class, 'changeIdentity'])->name('changeIdentity');
@@ -153,7 +163,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/', [Dashboard::class, 'mainPetugas'])->name('dashboardPetugas');
 		Route::group(array('prefix'=>'data-guru'), function(){
 			Route::get('/', [DataGuru::class, 'dataGuru'])->name('dataGuru');
-			Route::get('/tambah', [DataGuru::class, 'tambahGuru'])->name('tambahGuru');
+			Route::post('/tambah', [DataGuru::class, 'tambahGuru'])->name('tambahGuru');
 			Route::get('/update', [DataGuru::class, 'editGuru'])->name('editGuru');
 			Route::get('/detail', [DataGuru::class, 'detailGuru'])->name('detailGuru');
 			Route::get('/data-primer', [DataGuru::class, 'primerGuru'])->name('primerGuru');

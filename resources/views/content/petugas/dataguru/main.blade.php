@@ -39,130 +39,101 @@
     <div class="page-content">
         @include('include.master.breadcrumb')
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card" style="background: #ffffff">
-                    <div class="card-body">
-                        <span><b id="date" style="font-size: 10pt;"></b></span>&nbsp;
-                        <span id="time" style="font-size: 10pt"></span>
+        <div class="card main-layer">
+            <div class="card-body">
+                <div class="row mb-3" style="margin-top: 1rem">
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="formAdd()"><i class="bx bxs-plus-square"></i> TAMBAH GURU BARU</button>
+                    </div>
+                    <div class="col-md-7"></div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-primary btn-sm float-end" style="width: 100%" onclick="print()"><i class="bx bxs-printer"></i> PRINT</button>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-12">
-                <div class="card" style="width: 100%; background-color:#ffffff">
-                    <div class="card-body">
-                        <div class="position-relative">
-                            <div class="position-absolute top-0 start-0">
-                                <a href="{{ route('tambahGuru') }}" type="button" class="btn btn-ctk"
-                                    style="background-color: #5C9DED">
-                                    <i class='bx bxs-plus-circle'></i> Tambah Guru Baru</a>
-                            </div>
-                            <div class="position-absolute top-0 end-0">
-                                <a href="#" type="button" class="btn btn-ctk" style="background-color: #A4C7E7">
-                                    <i class='bx bx-printer'></i> Print</a>
-                            </div>
-                        </div>
-                        <br>
-                        <br>
-                        <div>
-                            <div class="tbl-container bdr">
-                                <table class="table">
-                                    <thead class="bg-tbl">
-                                        <tr>
-                                            <th class="text-center" scope="col">No</th>
-                                            <th class="text-center" scope="col">NIK</th>
-                                            <th class="text-center" scope="col">Nama Guru</th>
-                                            <th class="text-center" scope="col">Tugas Utama</th>
-                                            <th class="text-center" scope="col">No. Telpon</th>
-                                            <th class="text-center" scope="col">Status</th>
-                                            <th class="text-center" scope="col" colspan="2">Bank Data</th>
-                                            <th class="text-center" scope="col" colspan="2">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($dataguru as $g)
-                                            <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $g->nik }}</td>
-                                                <td>{{ $g->nama_guru }}</td>
-                                                <td>{{ $g->tugas_utama }}</td>
-                                                <td>{{ $g->telepon }}</td>
-                                                <td>{{ $g->status }}</td>
-                                                <td class="text-center">
-                                                    <a href="{{ route('primerGuru') }}" type="button" class="btn btn-ctk"
-                                                        style="background-color:#9BDE67">
-                                                        Primer</a>
-                                                </td>
-                                                <td class="text-center">
-                                                    <a href="{{ route('sekunderGuru') }}" type="button" class="btn btn-ctk"
-                                                        style="background-color:#62A044">
-                                                        Sekunder</a>
-                                                </td>
-                                                <td class="text-center">
-                                                    <a href="{{ route('editGuru') }}" type="button" class="btn btn-ctk"
-                                                        style="background-color:#D9D9D9; color:black">
-                                                        <i class='bx bx-edit-alt'></i> Edit</a>
-                                                </td>
-                                                <td class="text-center">
-                                                    <a href="{{ route('detailGuru') }}" type="button" class="btn btn-ctk"
-                                                        style="background-color:#4C8CA0;">
-                                                        <i class='bx bx-detail' ></i> Detail</a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+
+                <div class="row" style="margin-top: 2rem">
+                    <div class="table-responsive">
+                        <table id="datatabel" class="table table-striped table-bordered" width="100%">
+                            <thead>
+                                <tr>
+                                    <td>No</td>
+                                    <td>NIK</td>
+                                    <td>Nama Guru</td>
+                                    <td>Tugas Utama</td>
+                                    <td>NO.Telepon</td>
+                                    <td>Status</td>
+                                    <td>Bank Data</td>
+                                    <td>Aksi</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="other-page"></div>
     </div>
 @endsection
 
 @push('script')
-    {{-- <script src="{{ url('assets/js/index.js') }}"></script> --}}
-    <script src="{{ url('assets/plugins/jquery-knob/jquery.knob.js') }}"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        $(document).ready(function() {
-            $(".knob").knob()
-            arrbulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September",
-                "Oktober", "November", "Desember"
-            ];
-            date = new Date();
-            hari = date.getDay();
-            tanggal = date.getDate();
-            bulan = date.getMonth();
-            tahun = date.getFullYear();
-            // document.write(tanggal+"-"+arrbulan[bulan]+"-"+tahun+"<br/>"+jam+" : "+menit+" : "+detik+"."+millisecond);
-
-            $('#date').html(tanggal + " " + arrbulan[bulan] + " " + tahun)
-        });
-
-        function renderTime() {
-            var currentTime = new Date();
-            var h = currentTime.getHours();
-            var m = currentTime.getMinutes();
-            var s = currentTime.getSeconds();
-            if (h == 0) {
-                h = 24;
-            }
-            if (h < 10) {
-                h = "0" + h;
-            }
-            if (m < 10) {
-                m = "0" + m;
-            }
-            if (s < 10) {
-                s = "0" + s;
-            }
-            // var myClock = document.getElementById('time');
-            $('#time').html("<b>" + h + " : " + m + " : " + s + " WIB</b>");
-            setTimeout('renderTime()', 1000);
-        }
-
-        renderTime();
-    </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js" integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{ url('assets/plugins/jquery-knob/jquery.knob.js') }}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function() {
+        $(".knob").knob()
+        loadTable();
+    });
+    function loadTable(filterBy='', filter = ''){
+        var table = $('#datatabel').DataTable({
+            scrollX: true,
+            searching: false, 
+            // paging: false,
+            processing: true,
+            serverSide: true,
+            columnDefs: [
+                {
+                    sortable: false,
+                    'targets': [0]
+                }, {
+                    searchable: false,
+                    'targets': [0]
+                },
+            ],
+            ajax: {
+                url: "{{route('dataGuru')}}",
+            },
+            columns: [
+                { data: "DT_RowIndex", name: "DT_RowIndex"},
+                { data: "no_rekening", name: "no_rekening"},
+                { data: "nama_siswa", name: "nama_siswa"},
+                { data: "nama_kelas", name: "nama_kelas"},
+                { data: "registrasi", name: "registrasi"},
+                { data: "format", name: "format"},
+                { data: "actions", name: "actions", class: "text-center"},
+            ],
+        })
+    }
+    function formAdd(id='') {
+        $('.main-layer').hide();
+        $.post("{{route('tambahGuru')}}", {id:id})
+        .done(function(data){
+			if(data.status == 'success'){
+				$('.other-page').html(data.content).fadeIn();
+			} else {
+				$('.main-layer').show();
+			}
+		})
+        .fail(() => {
+            $('.other-page').empty();
+            $('.main-layer').show();
+        })
+    }
+    function hideForm(){
+        $('#otherPage').empty()
+        $('#mainLayer').show()
+    }
+</script>
 @endpush
