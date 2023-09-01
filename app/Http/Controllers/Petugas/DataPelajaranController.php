@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Petugas;
 use App\Http\Controllers\Controller;
 use App\Models\Guru;
 use App\Models\Kelas;
-use App\Models\Pelajaran;
+use App\Models\MstPelajaran;
 use Illuminate\Http\Request;
+use DataTables, Validator, DB, Auth;
 
 class DataPelajaranController extends Controller
 {
@@ -15,25 +16,45 @@ class DataPelajaranController extends Controller
         $this->title = 'Data Pelajaran';
     }
 
-    public function dataPelajaran()
+    public function main(Request $request)
     {
+        if(request()->ajax()){
+            $data = MstPelajaran::orderBy('id_pelajaran','ASC')->get();
+			
+			return DataTables::of($data)
+				->addIndexColumn()
+				->addColumn('actions', function($row){
+					$txt = "
+                    <button class='btn btn-sm btn-secondary' title='Edit' onclick='editData(`$row->id_tugas_pegawai`)'><i class='fadeIn animated bx bxs-file' aria-hidden='true'></i></button>
+                    <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusData(`$row->id_tugas_pegawai`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>
+					";
+					return $txt;
+				})
+                ->addColumn('kelas', function($row){
+					return "Testinggg";
+				})
+                ->addColumn('guru', function($row){
+					return "Testinggg";
+				})
+				->rawColumns(['actions'])
+				->toJson();
+		}
+
         $data['title'] = $this->title;
-        $pelajaran = Pelajaran::Join('datakelas', 'datakelas.id', '=', 'datapelajaran.id_kelas')
-            ->Join('guru', 'guru.id_guru', '=', 'datapelajaran.id_guru')
-            ->orderBy('id_kelas', 'asc')->get();
-        // return response()->json([
-        //     'pelajaran' => $pelajaran
-        // ]);
-        return view('content.petugas.datapelajaran.main', compact('pelajaran'), $data);
+        return view('content.petugas.datapelajaran.main', $data);
     }
 
-    public function tambahdataPelajaran()
+    public function form()
     {
-        $kelas = Kelas::orderBy('id', 'asc')->get();
-        $guru = Guru::orderBy('id_guru', 'asc')->get();
-        $pelajaran = Pelajaran::orderBy('id', 'asc')->get();
-        $data['title'] = $this->title;
-        return view('content.petugas.datapelajaran.tambahpelajaran', compact('guru', 'kelas', 'pelajaran'), $data);
+        if (empty($request->id)) {
+            $data['title'] = "Tambah ".$this->title;
+            $data['data'] = '';    
+		}else{
+            $data['title'] = "Edit ".$this->title;
+            $data['data'] = MstPelajaran::where('id_pelajaran',$request->id)->first();
+		}
+        $content = view('content.petugas.datapelajaran.form', $data)->render();
+		return ['status' => 'success', 'content' => $content, 'data' => $data];
     }
 
     public function simpandataPelajaran(Request $request)

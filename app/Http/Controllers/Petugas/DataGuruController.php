@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Petugas;
 use App\Http\Controllers\Controller;
 use App\Models\Petugas\DataGuru;
 use App\Models\Provinsi;
+use App\Models\Kabupaten;
+use App\Models\Kecamatan;
+use App\Models\Desa;
 use App\Models\Petugas\DataPrimerGuru;
 use App\Models\Petugas\DataSekunderGuru;
 use Illuminate\Http\Request;
@@ -25,8 +28,15 @@ class DataGuruController extends Controller
 				->addIndexColumn()
 				->addColumn('actions', function($row){
 					$txt = "
-                      <button class='btn btn-sm btn-info' title='Detail' onclick='Edit(`$row->id_guru`)'><i class='fadeIn animated bx bx-show' aria-hidden='true'></i></button>
-                      <button class='btn btn-sm btn-primary' title='Edit' onclick='Detail(`$row->id_guru`)'><i class='fadeIn animated bx bxs-file' aria-hidden='true'></i></button>
+                      <button class='btn btn-sm btn-secondary' title='Detail' onclick='Edit(`$row->id_guru`)'><i class='fadeIn animated bx bx-show' aria-hidden='true'></i></button>
+                      <button class='btn btn-sm btn-info' title='Edit' onclick='Detail(`$row->id_guru`)'><i class='fadeIn animated bx bxs-file' aria-hidden='true'></i></button>
+					";
+					return $txt;
+				})
+                ->addColumn('bankData', function($row){
+					$txt = "
+                      <button class='btn btn-sm btn-info' title='Bank Primer'><i class='fadeIn animated bx bx-credit-card' aria-hidden='true'></i></button>
+                      <button class='btn btn-sm btn-primary' title='Bank Sekunder'><i class='fadeIn animated bx-credit-card' aria-hidden='true'></i></button>
 					";
 					return $txt;
 				})
@@ -39,24 +49,35 @@ class DataGuruController extends Controller
     }
     
     public function tambahGuru() {
-        $data['title'] = "Tambah ".$this->title;
-        $data['provinsi'] = Provinsi::all();
         if (empty($request->id)) {
-            $data['page'] = 'Tambah';
-            $data['guru'] = '';
+            $data['data'] = '';
 		}else{
-            $data['page'] = 'Edit';
-			$data['guru'] = DataGuru::where('id_guru',$request->id)->first();
+            $data['data'] = DataGuru::where('id_guru',$request->id)->first();
 		}
+        $data['title'] = "Tambah ".$this->title;
+        $data['data_provinsi'] = Provinsi::all();
+        if(!empty($data['data'])){
+            $namaProv = !empty(Provinsi::where('id', $data['data']->provinsi)->first()) ? Provinsi::where('id', $data['data']->provinsi)->first()->name : "";
+            $namaKab = !empty(Kabupaten::where('id', $data['data']->kabupaten)->first()) ? Kabupaten::where('id', $data['data']->kabupaten)->first()->id : "";
+            $namaKec = !empty(Kecamatan::where('id', $data['data']->kecamatan)->first()) ? Kecamatan::where('id', $data['data']->kecamatan)->first()->id : "";
+            $namaKel = !empty(Desa::where('id', $data['data']->kelurahan)->first()) ? Desa::where('id', $data['data']->kelurahan)->first()->id : "";
+            $this->data['prov'] = $namaProv;
+            $this->data['kab'] = $namaKab;
+            $this->data['kec'] = $namaKec;
+            $this->data['kel'] = $namaKel;
+        }else{
+            $this->data['prov'] = "";
+            $this->data['kab'] = "";
+            $this->data['kec'] = "";
+            $this->data['kel'] = "";
+        }
         $content = view('content.petugas.dataguru.form', $data)->render();
 		return ['status' => 'success', 'content' => $content, 'data' => $data];
     }
-    
-    public function editGuru() {
-        $data['title'] = $this->title;
-        return view('content.petugas.dataguru.updateguru', $data);
-    }
 
+    public function save(Request $request){
+        return $request->all();        
+    }
     public function detailGuru() {
         $data['title'] = $this->title;
         $guru = DataGuru::all();

@@ -1,6 +1,9 @@
 @extends('layout.master.main')
 
 @push('style')
+    <link href="{{asset('assets/plugins/datetimepicker/css/classic.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/plugins/datetimepicker/css/classic.date.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
     <style>
         .card-title {
             margin-top: 40px;
@@ -43,11 +46,11 @@
             <div class="card-body">
                 <div class="row mb-3" style="margin-top: 1rem">
                     <div class="col-md-3">
-                        <button type="button" class="btn btn-primary btn-sm" onclick="formAdd()"><i class="bx bxs-plus-square"></i> TAMBAH GURU BARU</button>
+                        <button type="button" class="btn btn-primary btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> TAMBAH GURU BARU</button>
                     </div>
                     <div class="col-md-7"></div>
                     <div class="col-md-2">
-                        <button type="button" class="btn btn-primary btn-sm float-end" style="width: 100%" onclick="print()"><i class="bx bxs-printer"></i> PRINT</button>
+                        <button type="button" class="btn btn-info btn-sm float-end" style="width: 100%" onclick="print()"><i class="bx bxs-printer"></i> PRINT</button>
                     </div>
                 </div>
 
@@ -60,7 +63,7 @@
                                     <td>NIK</td>
                                     <td>Nama Guru</td>
                                     <td>Tugas Utama</td>
-                                    <td>NO.Telepon</td>
+                                    <td>No.Telepon</td>
                                     <td>Status</td>
                                     <td>Bank Data</td>
                                     <td>Aksi</td>
@@ -78,9 +81,11 @@
 @endsection
 
 @push('script')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js" integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="{{ url('assets/plugins/jquery-knob/jquery.knob.js') }}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{asset('assets/plugins/datetimepicker/js/picker.js')}}"></script>
+<script src="{{asset('assets/plugins/datetimepicker/js/picker.date.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js" integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     $(document).ready(function() {
         $(".knob").knob()
@@ -107,11 +112,12 @@
             },
             columns: [
                 { data: "DT_RowIndex", name: "DT_RowIndex"},
-                { data: "no_rekening", name: "no_rekening"},
-                { data: "nama_siswa", name: "nama_siswa"},
-                { data: "nama_kelas", name: "nama_kelas"},
-                { data: "registrasi", name: "registrasi"},
-                { data: "format", name: "format"},
+                { data: "nik", name: "nik"},
+                { data: "nama_guru", name: "nama_guru"},
+                { data: "tugas_utama", name: "tugas_utama"},
+                { data: "telepon", name: "telepon"},
+                { data: "status", name: "status"},
+                { data: "status", name: "status"},
                 { data: "actions", name: "actions", class: "text-center"},
             ],
         })
