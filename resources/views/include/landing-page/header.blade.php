@@ -32,8 +32,8 @@
 							<ul class="sub-menu">
 								<li aria-haspopup="true"><a href="javascript:void(0)">Ekstrakulikuler</a></li>
 								<li aria-haspopup="true"><a href="javascript:void(0)">UKS</a></li>
-								<li aria-haspopup="true"><a href="javascript:void(0)">Prestasi Siswa</a></li>
-								<li aria-haspopup="true"><a href="javascript:void(0)">Program Unggulan</a></li>
+								<li aria-haspopup="true"><a href="{{route('program.prestasi-siswa')}}">Prestasi Siswa</a></li>
+								<li aria-haspopup="true"><a href="{{route('program.unggulan')}}">Program Unggulan</a></li>
 							</ul>
 						</li>
 						<li class="nl-simple" aria-haspopup="true"><a href="javascript:void(0)">GALERI</a></li>

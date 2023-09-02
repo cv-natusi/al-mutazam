@@ -19,16 +19,16 @@
         @include('include.master.breadcrumb')
 
         <div class="row">
-            <div class="col-md-12">
+            <!-- <div class="col-md-12">
                 <div class="card" style="background: #ffffff">
                     <div class="card-body">
                         <span><b id="date" style="font-size: 10pt;"></b></span>&nbsp;
                         <span id="time" style="font-size: 10pt"></span>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="col-md-12">
-                <div class="row">
+                <!-- <div class="row">
                     <h5>Selamat Datang Di halaman Petugas Sekolah!</h5>
                 </div>
                 <div class="row">
@@ -83,7 +83,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="row" style="margin-top: 10px">
                     <h6>Data - 2022/2023</h6>
                 </div>

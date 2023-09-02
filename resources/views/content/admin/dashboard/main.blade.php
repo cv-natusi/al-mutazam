@@ -26,55 +26,61 @@
                     <h5>Selamat Datang Di halaman Administrator!</h5>
                 </div>
 				<div class="row">
-					<div class="col-md-4">
-						<div class="card text-white mb-3 text-center" style="width: 100%;">
-							<div class="card-header" style="color: #000; background: #ffffff;">Berita Sekolah</div>
-							<div class="card-body" style="background: #ffffff">
-								<div class="row">
-									<div class="col-md-12">
-										<h1 class="card-title">
-											<b>11</b>
-										</h1>
+					<div class="col">
+						<div class="card radius-10 bg-gradient-deepblue">
+							<div class="card-body">
+								<div class="d-flex align-items-center">
+									<h5 class="mb-0 text-white" id="beritaSekolah">0</h5>
+									<div class="ms-auto">
+										<i class="bx bx-news fs-3 text-white"></i>
 									</div>
 								</div>
+								<div class="progress my-2 bg-opacity-25 bg-white" style="height:4px;">
+									<div class="progress-bar bg-white" role="progressbar" style="width: 55%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<div class="d-flex align-items-center text-white">
+									<p class="mb-0">Berita Sekolah</p>
+									<a href="{{ url('admin/berita/beritaSekolah/1') }}" class="btn btn-light btn-sm mb-0 ms-auto">Selengkapnya</a>
+								</div>
 							</div>
-                            <div class="card-footer" style="background: #ffffff">
-                                <button class="btn btn-primary" onclick="alert('Maintenance!')">More Info</button>
-                            </div>
 						</div>
 					</div>
-					<div class="col-md-4">
-						<div class="card text-white mb-3 text-center" style="width: 100%;">
-							<div class="card-header" style="color: #000; background: #ffffff;">Event</div>
-							<div class="card-body" style="background: #ffffff;">
-								<div class="row">
-									<div class="col-md-12">
-										<h1 class="card-title">
-											<b>11</b>
-										</h1>
-									</div>
+					<div class="col">
+						<div class="card radius-10 bg-gradient-ohhappiness">
+						<div class="card-body">
+							<div class="d-flex align-items-center">
+								<h5 class="mb-0 text-white" id="event">0</h5>
+								<div class="ms-auto">
+									<i class="bx bx-news fs-3 text-white"></i>
 								</div>
 							</div>
-                            <div class="card-footer" style="background: #ffffff;">
-                                <button class="btn btn-primary" onclick="alert('Maintenance!')">More Info</button>
-                            </div>
+							<div class="progress my-2 bg-opacity-25 bg-white" style="height:4px;">
+								<div class="progress-bar bg-white" role="progressbar" style="width: 55%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+							<div class="d-flex align-items-center text-white">
+								<p class="mb-0">Event</p>
+								<a href="{{ url('admin/berita/beritaSekolah/2') }}" class="btn btn-light btn-sm mb-0 ms-auto">Selengkapnya</a>
+							</div>
+						</div>
 						</div>
 					</div>
-					<div class="col-md-4">
-						<div class="card text-white mb-3 text-center" style="width: 100%;">
-							<div class="card-header" style="color: #000; background: #ffffff;">Pengumuman</div>
-							<div class="card-body" style="background: #ffffff;">
-								<div class="row">
-									<div class="col-md-12">
-										<h1 class="card-title">
-											<b>11</b>
-										</h1>
+					<div class="col">
+						<div class="card radius-10 bg-gradient-ibiza">
+							<div class="card-body">
+								<div class="d-flex align-items-center">
+									<h5 class="mb-0 text-white" id="pengumuman">0</h5>
+									<div class="ms-auto">
+										<i class="bx bx-news fs-3 text-white"></i>
 									</div>
 								</div>
+								<div class="progress my-2 bg-opacity-25 bg-white" style="height:4px;">
+									<div class="progress-bar bg-white" role="progressbar" style="width: 55%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<div class="d-flex align-items-center text-white">
+									<p class="mb-0">Pengumuman</p>
+									<a href="{{ url('admin/berita/beritaSekolah/3') }}" class="btn btn-light btn-sm mb-0 ms-auto">Selengkapnya</a>
+								</div>
 							</div>
-                            <div class="card-footer" style="color: #000; background: #ffffff;">
-                                <button class="btn btn-primary" onclick="alert('Maintenance!')">More Info</button>
-                            </div>
 						</div>
 					</div>
 				</div>
@@ -84,7 +90,6 @@
 @endsection
 
 @push('script')
-{{-- <script src="{{ url('assets/js/index.js') }}"></script> --}}
 <script src="{{url('assets/plugins/jquery-knob/jquery.knob.js')}}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
@@ -96,10 +101,18 @@
 		tanggal = date.getDate();
 		bulan = date.getMonth();
 		tahun = date.getFullYear();
-		// document.write(tanggal+"-"+arrbulan[bulan]+"-"+tahun+"<br/>"+jam+" : "+menit+" : "+detik+"."+millisecond);
-
 		$('#date').html(tanggal+" "+arrbulan[bulan]+" "+tahun)
+		getDashboard();
 	});
+
+	function getDashboard() {
+		$.get("{{ route('getDashboard') }}",{jenis:'gudang'}).done(function(result){
+			console.log(result)
+            $('#beritaSekolah').text(result.beritaSekolah);
+            $('#event').text(result.event);
+            $('#pengumuman').text(result.pengumuman);
+        });
+	}
 	
 	function renderTime(){
 		var currentTime = new Date();
@@ -118,7 +131,6 @@
 		if (s < 10){
 			s = "0" + s;
 		}
-		// var myClock = document.getElementById('time');
 		$('#time').html("<b>"+h+" : " + m + " : " + s + " WIB</b>");
 		setTimeout ('renderTime()',1000);
 	}

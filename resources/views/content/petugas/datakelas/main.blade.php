@@ -1,158 +1,109 @@
 @extends('layout.master.main')
 
 @push('style')
-    <style>
-        .card-title {
-            margin-top: 40px;
-        }
-
-        .btn-ctk {
-            text-align: center;
-            color: white;
-            border-radius: 10px;
-        }
-
-        .btn-card {
-            text-align: left;
-            width: 100%;
-            color: white;
-        }
-
-        .tbl-container {
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .bg-tbl {
-            background-color: #5C9DED;
-            color: white;
-        }
-
-        .bdr {
-            border-radius: 6px;
-            overflow: hidden;
-        }
-    </style>
+    <link href="{{asset('assets/plugins/datetimepicker/css/classic.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/plugins/datetimepicker/css/classic.date.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 @endpush
 
 @section('content')
     <div class="page-content">
         @include('include.master.breadcrumb')
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card" style="background: #ffffff">
-                    <div class="card-body">
-                        <span><b id="date" style="font-size: 10pt;"></b></span>&nbsp;
-                        <span id="time" style="font-size: 10pt"></span>
+        <div class="card main-layer">
+            <div class="card-body">
+                <div class="row mb-3" style="margin-top: 1rem">
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-primary btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> Tambah Kelas Baru</button>
+                    </div>
+                    <div class="col-md-7"></div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-info btn-sm float-end" style="width: 100%; color: #fff" onclick="print()"><i class="bx bxs-printer"></i> Print</button>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-12">
-                <div class="card" style="width: 100%; background-color:#ffffff">
-                    <div class="card-body">
-                        <div class="position-relative">
-                            <div class="position-absolute top-0 start-0">
-                                <a href="{{route('tambahKelas')}}" type="button" class="btn btn-ctk" style="background-color: #5C9DED">
-                                    <i class='bx bxs-plus-circle'></i> Tambah Kelas Baru</a>
-                            </div>
-                            <div class="position-absolute top-0 end-0">
-                                <a href="#" type="button" class="btn btn-ctk" style="background-color: #A4C7E7">
-                                    <i class='bx bx-printer'></i> Print</a>
-                            </div>
-                        </div>
-                        <br>
-                        <br>
-                        <div>
-                            <div class="tbl-container bdr">
-                                <table class="table">
-                                    <thead class="bg-tbl">
-                                        <tr>
-                                            <th class="text-center" scope="col">No</th>
-                                            <th class="text-center" scope="col">Kelas</th>
-                                            <th class="text-center" scope="col">Kode Kelas</th>
-                                            <th class="text-center" scope="col">Nama Kelas</th>
-                                            <th class="text-center" scope="col">Guru Wali Kelas</th>
-                                            <th class="text-center" scope="col">Created_at</th>
-                                            <th class="text-center" scope="col">Updated_at</th>
-                                            <th class="text-center" scope="col" colspan="2">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($datakelas as $k)
-                                            <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $k->kelas }}</td>
-                                                <td>{{ $k->kodekelas }}</td>
-                                                <td>{{ $k->namakelas }}</td>
-                                                <td>{{ $k->id_guru }}</td>
-                                                <td>{{ $k->created_at }}</td>
-                                                <td>{{ $k->updated_at }}</td>
-                                                <td class="text-center">
-                                                    <a href="{{route('editKelas')}}" type="button" class="btn btn-ctk" style="background-color:#D9D9D9; color:black">
-                                                        <i class='bx bx-edit-alt' ></i> Edit</a>
-                                                </td>
-                                                <td class="text-center">
-                                                    <button type="button" class="btn btn-danger btn-ctk">
-                                                        <i class='bx bx-trash'></i> Delete</button>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
 
-                            </div>
-
-                        </div>
+                <div class="row" style="margin-top: 2rem">
+                    <div class="table-responsive">
+                        <table id="datatabel" class="table table-striped table-bordered" width="100%">
+                            <thead>
+                                <tr>
+                                    <td>No</td>
+                                    <td>Kelas</td>
+                                    <td>Kode Kelas</td>
+                                    <td>Nama Kelas</td>
+                                    <td>Guru Wali Kelas</td>
+                                    <td>Aksi</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="other-page"></div>
     </div>
 @endsection
 
 @push('script')
-    {{-- <script src="{{ url('assets/js/index.js') }}"></script> --}}
-    <script src="{{ url('assets/plugins/jquery-knob/jquery.knob.js') }}"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        $(document).ready(function() {
-            $(".knob").knob()
-            arrbulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September",
-                "Oktober", "November", "Desember"
-            ];
-            date = new Date();
-            hari = date.getDay();
-            tanggal = date.getDate();
-            bulan = date.getMonth();
-            tahun = date.getFullYear();
-            // document.write(tanggal+"-"+arrbulan[bulan]+"-"+tahun+"<br/>"+jam+" : "+menit+" : "+detik+"."+millisecond);
-
-            $('#date').html(tanggal + " " + arrbulan[bulan] + " " + tahun)
-        });
-
-        function renderTime() {
-            var currentTime = new Date();
-            var h = currentTime.getHours();
-            var m = currentTime.getMinutes();
-            var s = currentTime.getSeconds();
-            if (h == 0) {
-                h = 24;
-            }
-            if (h < 10) {
-                h = "0" + h;
-            }
-            if (m < 10) {
-                m = "0" + m;
-            }
-            if (s < 10) {
-                s = "0" + s;
-            }
-            // var myClock = document.getElementById('time');
-            $('#time').html("<b>" + h + " : " + m + " : " + s + " WIB</b>");
-            setTimeout('renderTime()', 1000);
-        }
-
-        renderTime();
-    </script>
+<script src="{{ url('assets/plugins/jquery-knob/jquery.knob.js') }}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{asset('assets/plugins/datetimepicker/js/picker.js')}}"></script>
+<script src="{{asset('assets/plugins/datetimepicker/js/picker.date.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js" integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function() {
+        $(".knob").knob()
+        loadTable();
+    });
+    function loadTable(filterBy='', filter = ''){
+        var table = $('#datatabel').DataTable({
+            scrollX: true,
+            searching: false, 
+            // paging: false,
+            processing: true,
+            serverSide: true,
+            columnDefs: [
+                {
+                    sortable: false,
+                    'targets': [0]
+                }, {
+                    searchable: false,
+                    'targets': [0]
+                },
+            ],
+            ajax: {
+                url: "{{route('dataKelas')}}",
+            },
+            columns: [
+                { data: "DT_RowIndex", name: "DT_RowIndex"},
+                { data: "kelas", name: "kelas"},
+                { data: "kodekelas", name: "kodekelas"},
+                { data: "namakelas", name: "namakelas"},
+                { data: "guru", name: "guru"},
+                { data: "actions", name: "actions", class: "text-center"},
+            ],
+        })
+    }
+    function formAdd(id='') {
+        $('.main-layer').hide();
+        $.post("{{route('tambahKelas')}}", {id:id})
+        .done(function(data){
+			if(data.status == 'success'){
+				$('.other-page').html(data.content).fadeIn();
+			} else {
+				$('.main-layer').show();
+			}
+		})
+        .fail(() => {
+            $('.other-page').empty();
+            $('.main-layer').show();
+        })
+    }
+    function hideForm(){
+        $('#otherPage').empty()
+        $('#mainLayer').show()
+    }
+</script>
 @endpush

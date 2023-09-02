@@ -6,7 +6,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--favicon-->
-	<link rel="icon" href="{{ url('assets/images/login-images/logo.png') }}" type="image/png" />
+	<link rel="icon" href="{{ url('assets/images/logo-profile.png') }}" type="image/png" />
 	<!--plugins-->
 	<link href="{{ asset('assets/plugins/simplebar/css/simplebar.css')}}" rel="stylesheet" />
 	<link href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css')}}" rel="stylesheet" />
@@ -23,7 +23,7 @@
 	<title>MTS | AL-MUTAZAM</title>
 	<style>
 		.bg-login {
-			background-image: url(../public/assets/images/login-images/forgot-password-frent-img.jpg);
+			background-image: url(../public/assets/images/bg-login.png);
 		}
 	</style>
 </head>
@@ -44,7 +44,7 @@
 										<h3 class="">MTS | AL-MUTAZAM</h3>
 									</div>
 									<div class="d-grid text-center">
-										<img src="{{ asset('landing-page/images/logo.png')}}" class="center" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
+										<img src="{{ asset('assets/images/logo-profile.png')}}" class="center" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
 									</div>
 									<div class="login-separater text-center mb-4"> <span>SILAHKAN MASUK</span>
 										<hr/>
