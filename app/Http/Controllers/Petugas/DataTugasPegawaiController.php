@@ -38,7 +38,7 @@ class DataTugasPegawaiController extends Controller
         return view('content.petugas.datatugaspegawai.main', $data);
     }
 
-    public function tambahTugasPegawai() {
+    public function tambahTugasPegawai(Request $request) {
         if (empty($request->id)) {
             $data['title'] = "Tambah ".$this->title;
             $data['data'] = '';    
@@ -64,10 +64,5 @@ class DataTugasPegawaiController extends Controller
         } else {
             return ['code'=>201,'status'=>'error','message'=>'Data Gagal Disimpan.'];
         }
-    }
-    
-    public function editTugasPegawai() {
-        $data['title'] = $this->title;
-        return view('content.petugas.datatugaspegawai.updatetugas', $data);
     }
 }

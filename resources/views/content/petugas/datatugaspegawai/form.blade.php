@@ -20,38 +20,36 @@
                 </form>
             </div>
             <div class="card-footer">
-                <button type="button" class="btn btn-sm btn-success" id="btnSimpan">Simpan</button>
+                <button type="button" class="btn btn-sm btn-success btnSimpan">Simpan</button>
                 <button type="button" class="btn btn-sm btn-secondary btnCancel">Kembali</button>
             </div>
         </div>
     </div>
 </div>
 
-@push('script')
 <script type="text/javascript">
-    $('#btnSimpan').click(()=>{
-        alert('test')
+    $('.btnSimpan').click(()=>{
 		var data = new FormData($('.formSave')[0])
-		$('#btnSimpan').attr('disabled',true).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>LOADING...')
 		var kode = $('#kode_tugas').val();
         var nama = $('#nama_tugas').val();
         if(!kode){
             Swal.fire({
                 icon: 'warning',
                 title: 'Whoops',
-                text: 'Kode Tugas Wajin Diisi!',
+                text: 'Kode Tugas Wajib Diisi!',
                 showConfirmButton: false,
                 timer: 1300,
             })
-        }elseif(!nama){
+        }else if(!nama){
             Swal.fire({
                 icon: 'warning',
                 title: 'Whoops',
-                text: 'Nama Tugas Wajin Diisi!',
+                text: 'Nama Tugas Wajib Diisi!',
                 showConfirmButton: false,
                 timer: 1300,
             })
         }else{
+            $('.btnSimpan').attr('disabled',true).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>LOADING...')
             $.ajax({
                 url: '{{route("saveTugasPegawai")}}',
                 type: 'POST',
@@ -70,11 +68,12 @@
                             timer: 1200
                         })
                         setTimeout(()=>{
-                            $('#otherPage').fadeOut(()=>{
-                                $('#dataTable').DataTable().ajax.reload()
+                            $('.other-page').fadeOut(()=>{
+                                $('#datatabel').DataTable().ajax.reload()
                                 hideForm()
                             })
                         }, 1100);
+                        // location.reload()
                     }else{
                         Swal.fire({
                             icon: 'warning',
@@ -84,7 +83,7 @@
                             timer: 1300,
                         })
                     }
-                    $('#btnSimpan').attr('disabled',false).html('SIMPAN')
+                    $('.btnSimpan').attr('disabled',false).html('SIMPAN')
                 }
             }).fail(()=>{
                 Swal.fire({
@@ -94,7 +93,7 @@
                     showConfirmButton: false,
                     timer: 1300,
                 })
-                $('#btnSimpan').attr('disabled',false).html('SIMPAN')
+                $('.btnSimpan').attr('disabled',false).html('SIMPAN')
             })
         }
 	})
@@ -104,4 +103,3 @@
 		})
 	})
 </script>
-@endpush
