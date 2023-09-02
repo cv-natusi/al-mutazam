@@ -30,13 +30,13 @@
 						</li>
 						<li aria-haspopup="true"><a href="javascript:void(0)">PROGRAM<span class="wsarrow"></span></a>
 							<ul class="sub-menu">
-								<li aria-haspopup="true"><a href="javascript:void(0)">Ekstrakulikuler</a></li>
-								<li aria-haspopup="true"><a href="javascript:void(0)">UKS</a></li>
+								<li aria-haspopup="true"><a href="{{route('program.ekskul')}}">Ekstrakulikuler</a></li>
+								<li aria-haspopup="true"><a href="{{route('program.uks')}}">UKS</a></li>
 								<li aria-haspopup="true"><a href="{{route('program.prestasi-siswa')}}">Prestasi Siswa</a></li>
 								<li aria-haspopup="true"><a href="{{route('program.unggulan')}}">Program Unggulan</a></li>
 							</ul>
 						</li>
-						<li class="nl-simple" aria-haspopup="true"><a href="javascript:void(0)">GALERI</a></li>
+						<li class="nl-simple" aria-haspopup="true"><a href="{{route('galeri.galeri')}}">GALERI</a></li>
 						<li aria-haspopup="true"><a href="javascript:void(0)">APLIKASI<span class="wsarrow"></span></a>
 							<ul class="sub-menu">
 								<li aria-haspopup="true"><a href="javascript:void(0)">RDM</a></li>
