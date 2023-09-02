@@ -46,4 +46,29 @@ class Helpers{
 		return $hari;
 	}
 	# Date end
+
+	public static function resAjax($data=[]){
+		$keyData = ['message','code','response'];
+		$arr = [];
+		foreach($keyData as $key => $val){
+			$arr[$val] = isset($data[$val]) ? $data[$val] : ( # Cek key, apakah sudah di set
+				$val=='code' ? 500 : (
+					$val=='message' ? '-' : []
+				)
+			);
+		}
+
+		$code = $arr['code'];
+		$msg = $arr['message'];
+
+		$metadata = [
+			'code'    => $arr['code'],
+			'message' => $arr['message'],
+		];
+		$payload['metadata'] = $metadata;
+		if($code>=200 && $code<250){
+			$payload['response'] = $arr['response'];
+		}
+		return response()->json($payload,$code);
+	}
 }

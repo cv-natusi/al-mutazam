@@ -38,6 +38,7 @@
 	:root{
 		--text-color: #7b7b7b;
 		--custom-bg-section: #E6F5E0;
+      --color-menu: #5A79CB!important;
 	}
 	.fw3{
 		font-weight: 300;

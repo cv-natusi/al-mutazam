@@ -20,4 +20,11 @@
 
 <!-- Custom Script -->
 <script src="{{asset('landing-page/js/custom.js')}}"></script>
+<script>
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	})
+</script>
 @stack('script')

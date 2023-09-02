@@ -41,12 +41,20 @@ Route::controller(HomeController::class)->group(function () {
 	Route::group(['prefix'=>'home','as'=>'home.'],function(){ # Home menu
 		Route::get('/', 'main')->name('main');
 		Route::get('berita', 'berita')->name('berita');
+		Route::post('search-berita', 'berita')->name('searchBerita');
 		Route::get('event', 'event')->name('event');
+		Route::post('search-event', 'event')->name('searchEvent');
 		Route::get('pengumuman', 'pengumuman')->name('pengumuman');
 	});
 	Route::group(['prefix'=>'program','as'=>'program.'],function(){ # Program menu
 		Route::get('unggulan', 'programUnggulan')->name('unggulan');
+		Route::get('galeri', 'galeri')->name('galeri');
 		Route::get('prestasi-siswa', 'prestasiSiswa')->name('prestasi-siswa');
+		Route::get('uks', 'uks')->name('uks');
+		Route::get('ekskul', 'ekskul')->name('ekskul');
+	});
+	Route::group(['prefix'=>'galeri','as'=>'galeri.'],function(){ # Galeri Menu
+		Route::get('galeri', 'galeri')->name('galeri');
 	});
 });
 # Landing page end

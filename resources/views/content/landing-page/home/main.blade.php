@@ -568,32 +568,32 @@
 
 		// https://youtu.be/ysNDDrG9PtI
 		var player;
-		function onYouTubeIframeAPIReady(){
-			player = new YT.Player('playerId',{
-				videoId: 'ysNDDrG9PtI', // Video id
-				playerVars: {
-					'autoplay': 1,
-					'controls': 1,
-					'showinfo': 0,
-					'modestbranding': 0,
-					'loop': 1,
-					'fs': 0,
-					'cc_load_policty': 0,
-					'iv_load_policy': 3
-				},
-				events:{
-					onReady: function(event){
-						// event.target.mute();
-						event.target.setVolume(2);
-						event.target.playVideo();
-					},
-					onStateChange: function(e){
-						if(e.data === YT.PlayerState.ENDED){
-							e.target.playVideo();
-						}
-					}
-				}
-			})
-		}
+		// function onYouTubeIframeAPIReady(){
+		// 	player = new YT.Player('playerId',{
+		// 		videoId: 'ysNDDrG9PtI', // Video id
+		// 		playerVars: {
+		// 			'autoplay': 1,
+		// 			'controls': 1,
+		// 			'showinfo': 0,
+		// 			'modestbranding': 0,
+		// 			'loop': 1,
+		// 			'fs': 0,
+		// 			'cc_load_policty': 0,
+		// 			'iv_load_policy': 3
+		// 		},
+		// 		events:{
+		// 			onReady: function(event){
+		// 				// event.target.mute();
+		// 				event.target.setVolume(2);
+		// 				event.target.playVideo();
+		// 			},
+		// 			onStateChange: function(e){
+		// 				if(e.data === YT.PlayerState.ENDED){
+		// 					e.target.playVideo();
+		// 				}
+		// 			}
+		// 		}
+		// 	})
+		// }
 	</script>
 @endpush
