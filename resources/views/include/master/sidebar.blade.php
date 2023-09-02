@@ -8,21 +8,6 @@
 		</div>
 		<div class="toggle-icon ms-auto"><i class='bx bx-chevron-left-circle'></i></div>
 	</div>
-	{{-- <div class="sidebar-header">
-        <div>
-            <img src="{{ url('assets/images/logo-profile.png') }}" width="60">
-        </div>
-        <div>
-		  <div class="logo-text">
-			<h5 class="text" style="font-size: 13px; margin-left: 0px; color: #000; ">MTS-ALMUTAZAM</h5>
-			<h5 class="text" style="font-size: 11px; margin-left: 0px; color: #000; ">Mojokerto, Jawa Timur</h5>
-		  </div>
-        </div>
-        <div class="toggle-icon ms-auto">
-            <i style="color: #000" class='bx bx-arrow-to-left'></i>
-        </div>
-	</div> --}}
-	<!--navigation-->
 	<ul class="metismenu" id="menu">
 		@if (Auth::User()->level=='1') <!-- Admin -->
 		<li class="{{ ($title == 'Dashboard') ? 'mm-active' : ''}}">
@@ -144,7 +129,7 @@
 				<div class="menu-title">Data Guru</div>
 			</a>
 		</li>
-		<li class="{{ ($title == 'Dashboard Petugas') ? 'mm-active' : ''}}">
+		<li class="{{ ($title == 'Dashboard Tugas Pegawai') ? 'mm-active' : ''}}">
 			<a href="{{route('dataTugasPegawai')}}">
 				<div class="parent-icon">
 					<i style="color: #000" class='bx bx-data'></i>
@@ -167,6 +152,47 @@
 				</div>
 				<div class="menu-title">Data Pelajaran</div>
 			</a>
+		</li>
+		
+		<li>
+			<button class="dropdown-btn"><i style="color: #000000; font-size:24.5px;" class='bx bx-folder-open'></i>
+				Bank Data
+				<i class='bx bx-chevron-right'></i>
+			</button>
+			<div class="dropdown-container">
+				<a href="{{ route('dataPrimer') }}">
+					<div class="parent-icon">
+						<i style="color: #000000" class='bx bx-radio-circle-marked'></i>
+					</div>
+					<div class="menu-title">Data Primer</div>
+				</a>
+				<a href="{{ route('dataSekunder') }}">
+					<div class="parent-icon">
+						<i style="color: #000000" class='bx bx-radio-circle-marked'></i>
+					</div>
+					<div class="menu-title">Data Sekunder</div>
+				</a>
+			</div>
+		</li>
+		<li>
+			<button class="dropdown-btn"><i style="color: #000000; font-size:24.5px;" class='bx bx-cog' ></i>
+				Pengaturan
+				<i class='bx bx-chevron-right'></i>
+			</button>
+			<div class="dropdown-container">
+				<a href="{{ route('ubahPassword') }}">
+					<div class="parent-icon">
+						<i style="color: #000" class='bx bx-radio-circle-marked'></i>
+					</div>
+					<div class="menu-title">Ubah Password</div>
+				</a>
+				<a href="{{ route('resetPassword') }}">
+					<div class="parent-icon">
+						<i style="color: #000" class='bx bx-radio-circle-marked'></i>
+					</div>
+					<div class="menu-title">Reset Password</div>
+				</a>
+			</div>
 		</li>
 		@elseif(Auth::User()->level=='3') <!-- Guru Pengajar -->
 		<li class="{{ ($title == 'Dashboard Guru') ? 'mm-active' : ''}}">

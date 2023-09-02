@@ -19,6 +19,7 @@ use App\Http\Controllers\Petugas\DataKelasController as DataKelas;
 use App\Http\Controllers\Petugas\DataPelajaranController as DataPelajaran;
 use App\Http\Controllers\Petugas\UbahPasswordController as UbahPassword;
 use App\Http\Controllers\Petugas\ResetPasswordController as ResetPassword;
+use App\Http\Controllers\mstWilayah\mstWilayahController as mstWilayah;
 use GuzzleHttp\Psr7\UploadedFile;
 
 /*
@@ -35,7 +36,14 @@ use GuzzleHttp\Psr7\UploadedFile;
 Route::get('/', function () {
 	return redirect('home');
 });
-
+Route::get('/clear', function() {
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('view:clear');
+    $exitCode = Artisan::call('config:clear');
+    $exitCode = Artisan::call('route:clear');
+    $exitCode = Artisan::call('config:cache');
+    return 'Has been cleared!';
+});
 # Landing page start
 Route::controller(HomeController::class)->group(function () {
 	Route::group(['prefix'=>'home','as'=>'home.'],function(){ # Home menu
@@ -64,12 +72,16 @@ Route::get('login', [Auth::class, 'login'])->name('login');
 Route::post('proses_login', [Auth::class, 'proses_login'])->name('proses_login');
 Route::get('logout', [Auth::class, 'logout'])->name('logout');
 # Auth end
-
+# Start Wilayah
+Route::post('getKabupaten',[mstWilayah::class, 'getKabupaten'])->name('get_kabupaten');
+Route::post('getKecamatan',[mstWilayah::class, 'getKecamatan'])->name('get_kecamatan');
+Route::post('getDesa',[mstWilayah::class, 'getDesa'])->name('get_desa');
+# End Wilayah
 Route::group(['middleware' => 'auth'], function () {
 	Route::group(array('prefix' => 'admin'), function () { #Web admin
 		Route::get('/', [Dashboard::class, 'mainAdmin'])->name('dashboardAdmin'); #Dashboard admin
 		Route::get('/get-dashboard', [Dashboard::class, 'getDashboard'])->name('getDashboard');
-		
+
 		Route::group(array('prefix'=>'identitas'), function(){ #Modul identitas
 			Route::get('/', [Admin::class, 'identitas'])->name('identitas');
 			Route::post('/identitas/changeIdentity', [Admin::class, 'changeIdentity'])->name('changeIdentity');
@@ -161,23 +173,28 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/', [Dashboard::class, 'mainPetugas'])->name('dashboardPetugas');
 		Route::group(array('prefix'=>'data-guru'), function(){
 			Route::get('/', [DataGuru::class, 'dataGuru'])->name('dataGuru');
-			Route::get('/tambah', [DataGuru::class, 'tambahGuru'])->name('tambahGuru');
+			Route::post('/tambah', [DataGuru::class, 'tambahGuru'])->name('tambahGuru');
 			Route::get('/update', [DataGuru::class, 'editGuru'])->name('editGuru');
 			Route::get('/detail', [DataGuru::class, 'detailGuru'])->name('detailGuru');
+			Route::post('/store', [DataGuru::class, 'save'])->name('saveGuru');
 			Route::get('/data-primer', [DataGuru::class, 'primerGuru'])->name('primerGuru');
 			Route::get('/data-sekunder', [DataGuru::class, 'sekunderGuru'])->name('sekunderGuru');
 		});
 		Route::group(array('prefix'=>'data-tugas-pegawai'), function(){
 			Route::get('/', [DataTugasPegawai::class, 'dataTugasPegawai'])->name('dataTugasPegawai');
-			Route::get('/tambah', [DataTugasPegawai::class, 'tambahTugasPegawai'])->name('tambahTugas');
-			Route::get('/update', [DataTugasPegawai::class, 'editTugasPegawai'])->name('editTugas');
+			Route::post('/tambah', [DataTugasPegawai::class, 'tambahTugasPegawai'])->name('tambahTugasPegawai');
+			Route::post('/store', [DataTugasPegawai::class, 'save'])->name('saveTugasPegawai');
 		});
 		Route::group(array('prefix'=>'data-kelas'), function(){
-			Route::get('/', [DataKelas::class, 'dataKelas'])->name('dataKelas');
-			Route::get('/tambah', [DataKelas::class, 'tambahDataKelas'])->name('tambahKelas');
-			Route::get('/update', [DataKelas::class, 'editDataKelas'])->name('editKelas');
+			Route::get('/', [DataKelas::class, 'main'])->name('dataKelas');
+			Route::post('/tambah', [DataKelas::class, 'tambahDataKelas'])->name('tambahKelas');
+			Route::get('/store', [DataKelas::class, 'save'])->name('saveKelas');
 		});
-		Route::get('/data-Pelajaran', [DataPelajaran::class, 'dataPelajaran'])->name('dataPelajaran');
+		Route::group(array('prefix'=>'data-pelajaran'), function(){
+			Route::get('/', [DataPelajaran::class, 'main'])->name('dataPelajaran');
+			Route::post('/form', [DataPelajaran::class, 'form'])->name('formDataPelajaran');
+			Route::post('/store', [DataPelajaran::class, 'save'])->name('saveDataPelajaran');
+		});
 		Route::get('/data-Primer', [DataPrimer::class, 'dataPrimer'])->name('dataPrimer');
 		Route::get('/data-Sekunder', [DataSekunder::class, 'dataSekunder'])->name('dataSekunder');
 		Route::get('/Ubah-Password', [UbahPassword::class, 'ubahPassword'])->name('ubahPassword');
