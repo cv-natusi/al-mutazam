@@ -188,7 +188,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::group(array('prefix'=>'data-kelas'), function(){
 			Route::get('/', [DataKelas::class, 'main'])->name('dataKelas');
 			Route::post('/tambah', [DataKelas::class, 'tambahDataKelas'])->name('tambahKelas');
-			Route::get('/store', [DataKelas::class, 'save'])->name('saveKelas');
+			Route::post('/store', [DataKelas::class, 'save'])->name('saveKelas');
 		});
 		Route::group(array('prefix'=>'data-pelajaran'), function(){
 			Route::get('/', [DataPelajaran::class, 'main'])->name('dataPelajaran');

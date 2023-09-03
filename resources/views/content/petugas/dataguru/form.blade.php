@@ -27,25 +27,26 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label>Nomor Induk Kependudukan (NIK) <small>*</small></label>
-                            <input autocomplete="off" type="text" name="nik" class="form-control" maxlength="16" pattern="/^-?\d+\.?\d*$/" placeholder="000000000000" autocomplete="off" value="{{ !empty($data) ? $data->nik : ''}}">
+                            <input autocomplete="off" type="text" name="nik" class="form-control" maxlength="16" pattern="/^-?\d+\.?\d*$/" placeholder="000000000000" autocomplete="off" value="{{ !empty($data) ? $data->nik : ''}}" required>
                             <div id="errKtp"></div>
                         </div>
                         <div class="col-md-6">
                             <label>NIP</label>
                             <input autocomplete="off" class="form-control" type="text" name="nip" id="nip" value="{{ !empty($data->nip)? $data->nip : ''}}" placeholder="NIP">
+                            <div id="errnip"></div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-12">
                             <label>Nama Lengkap<small>*</small></label>
-                            <input autocomplete="off" class="form-control" type="text" name="nama" id="nama" value="{{ !empty($data->nama)? $data->nama : ''}}" placeholder="Nama Lengkap">
+                            <input autocomplete="off" class="form-control" type="text" name="nama" id="nama" value="{{ !empty($data->nama)? $data->nama : ''}}" placeholder="Nama Lengkap" required>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
 							<label>Tanggal Lahir <small>*</small></label>
                             <div class="input-group date">
-                                <input autocomplete="off" type="text" class="form-control datepicker" name="tanggal_lahir" id="tanggal_lahir" placeholder="00-00-0000" value="{{isset($data->tanggal_lahir) ? date("Y-m-d",strtotime($data->tanggal_lahir)):''}}">
+                                <input autocomplete="off" type="date" class="form-control" name="tanggal_lahir" id="tanggal_lahir" placeholder="00-00-0000" value="{{isset($data->tanggal_lahir) ? date("Y-m-d",strtotime($data->tanggal_lahir)):''}}" required>
                                 <span class="input-group-append">
                                     <span class="input-group-text bg-white d-block">
                                         <i class="bx bx-calendar"></i>
@@ -54,20 +55,20 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label>Foto <small>*</small></label>
+                            <label>Foto</label>
                             <input class="form-control" type="file" name="foto" id="foto" value="{{ !empty($data->foto)? $data->foto : ''}}" placeholder="Upload Foto">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-12">
                             <label>Alamat <small>*</small></label>
-                            <input autocomplete="off" class="form-control" type="text" name="alamat" id="alamat" value="{{ !empty($data->alamat)? $data->alamat : ''}}" placeholder="Alamat">
+                            <input autocomplete="off" class="form-control" type="text" name="alamat" id="alamat" value="{{ !empty($data->alamat)? $data->alamat : ''}}" placeholder="Alamat" required>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label>Provinsi <small>*</small></label>
-                            <select class="form-control select-2" name="provinsi" id="provinsi_id">
+                            <select class="form-control select-2" name="provinsi_id" id="provinsi" required>
                                 <option value="">.:: Pilih ::.</option>
 								@if (!empty($prov))
 									@foreach ($provinsi as $row)
@@ -82,7 +83,7 @@
                         </div>
                         <div class="col-md-6">
                             <label>Kabupaten <small>*</small></label>
-                            <select class="form-control select-2" name="kabupaten" id="kabupaten_id">
+                            <select class="form-control select-2" name="kabupaten_id" id="kabupaten" required>
                                 <option value="">.:: Pilih ::.</option>
                             </select>
                         </div>
@@ -90,13 +91,13 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label>Kecamatan <small>*</small></label>
-                            <select class="form-control select-2" name="kecamatan" id="kecamatan_id">
+                            <select class="form-control select-2" name="kecamatan_id" id="kecamatan" required>
                                 <option value="">.:: Pilih ::.</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label>Desa/Kelurahan <small>*</small></label>
-                            <select class="form-control select-2" name="desa" id="desa_id">
+                            <select class="form-control select-2" name="desa_id" id="desa" required>
                                 <option value="">.:: Pilih ::.</option>
                             </select>
                         </div>
@@ -104,7 +105,7 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label>No. Telepon <small>*</small></label>
-                            <input autocomplete="off" class="form-control" type="text" name="telepon" id="telepon" value="{{ !empty($data->telepon)? $data->telepon : ''}}" placeholder="No. Telepon">
+                            <input autocomplete="off" class="form-control" type="text" name="telepon" id="telepon" value="{{ !empty($data->telepon)? $data->telepon : ''}}" placeholder="No. Telepon" required>
                         </div>
                         <div class="col-md-6">
                             <label>Email <small>*</small></label>
@@ -114,14 +115,24 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label>Tugas Utama <small>*</small></label>
-                            <select class="form-control" name="tugas_utama" id="tugas_utama">
+                            <select class="form-control" name="tugas_utama" id="tugas_utama" required>
                                 <option value="">.:: Pilih ::.</option>
+                                @if (count($tugas)>0)
+                                    @foreach ($tugas as $item)
+                                        <option value="{{$item->id_tugas_pegawai}}">{{$item->nama_tugas}}</option>
+                                    @endforeach
+                                @endif
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label>Tugas Tambahan <small>*</small></label>
+                            <label>Tugas Tambahan</label>
                             <select class="form-control" name="tugas_tambahan[]" id="tugas_tambahan">
                                 <option value="">.:: Pilih ::.</option>
+                                @if (count($tugas)>0)
+                                    @foreach ($tugas as $i)
+                                        <option value="{{$i->id_tugas_pegawai}}">{{$i->nama_tugas}}</option>
+                                    @endforeach
+                                @endif
                             </select>
                         </div>
                     </div>
@@ -137,7 +148,7 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-12">
-                            <label>Status Guru</label>
+                            <label>Status Guru <small>*</small></label>
                             <div>
                                 <input type="radio" id="status_guru" name="status_guru" value="aktif" checked />
                                 <label>Aktif</label>
@@ -150,17 +161,14 @@
                 </form>
             </div>
             <div class="card-footer">
-                <button class="btn btn-success btnSimpan">Simpan</button>
-                <button class="btn btn-secondary btnCancel">Kembali</button>
+                <button class="btn btn-success btnSimpan" type="button">Simpan</button>
+                <button class="btn btn-secondary btnCancel" type="button">Kembali</button>
             </div>
         </div>
     </div>
 </div>
-
-@push('script')
 <script>
     $(document).ready(function () {
-        $(".select-2").select2();
         $('#nip').keypress(function(e){
 			var nip = $('#nip').val()
 			var res = nip.toString().replace(/[^,\d]/g, "")
@@ -171,124 +179,109 @@
 				return false;
 			}
 		})
+        $('#provinsi').select2();
+		$('#kabupaten').select2();
+		$('#kecamatan').select2();
+		$('#desa').select2();
+
 		loadDaerah();
-		// START DAERAH
-        $('#provinsi').change(function(){
-            var id = $('#provinsi').val();
-            $.post("{{route('get_kabupaten')}}",{id:id},function(data){
-                var kabupaten = '<option value="">..:: Pilih Kabupaten ::..</option>';
-                if(data.status=='success'){
-                    if(data.data.length>0){
-                        $.each(data.data,function(v,k){
-                            kabupaten+='<option value="'+k.id+'">'+k.name+'</option>';
-                        });
-                    }
-                }
-                $('#kabupaten').html(kabupaten);
-            });
-        });
-        $('#kabupaten').change(function(){
-            var id = $('#kabupaten').val();
-            $.post("{{route('get_kecamatan')}}",{id:id},function(data){
-                var kecamatan = '<option value="">..:: Pilih Kecamatan ::..</option>';
-                if(data.status=='success'){
-                    if(data.data.length>0){
-                        $.each(data.data,function(v,k){
-                            kecamatan+='<option value="'+k.id+'">'+k.name+'</option>';
-                        });
-                    }
-                }
-                $('#kecamatan').html(kecamatan);
-            });
-        });
-        $('#kecamatan').change(function(){
-            var id = $('#kecamatan').val();
-            $.post("{{route('get_desa')}}",{id:id},function(data){
-                var desa = '<option value="">..:: Pilih Desa ::..</option>';
-                if(data.status=='success'){
-                    if(data.data.length>0){
-                        $.each(data.data,function(v,k){
-                            desa+='<option value="'+k.id+'">'+k.name+'</option>';
-                        });
-                    }
-                }
-                $('#desa').html(desa);
-            });
-        });
-        // END DAERAH
-    });
-    $('.datepicker').pickadate({
-		selectMonths: true,
-		selectYears: true
-	})
+
+		$('#provinsi').change(function(){
+			var id = $('#provinsi').val();
+			$.post("{{route('get_kabupaten')}}",{id:id},function(data){
+				var kabupaten = '<option value="">..:: Pilih ::..</option>';
+				if(data.status=='success'){
+					if(data.data.length>0){
+						$.each(data.data,function(v,k){
+							kabupaten+='<option value="'+k.id+'">'+k.name+'</option>';
+						});
+					}
+				}
+				$('#kabupaten').html(kabupaten);
+			});
+		});
+
+		$('#kabupaten').change(function(){
+			var id = $('#kabupaten').val();
+			$.post("{{route('get_kecamatan')}}",{id:id},function(data){
+				var kecamatan = '<option value="">..:: Pilih ::..</option>';
+				if(data.status=='success'){
+					if(data.data.length>0){
+						$.each(data.data,function(v,k){
+							kecamatan+='<option value="'+k.id+'">'+k.name+'</option>';
+						});
+					}
+				}
+				$('#kecamatan').html(kecamatan);
+			});
+		});
+
+		$('#kecamatan').change(function(){
+			var id = $('#kecamatan').val();
+			$.post("{{route('get_desa')}}",{id:id},function(data){
+				var desa = '<option value="">..:: Pilih ::..</option>';
+				if(data.status=='success'){
+					if(data.data.length>0){
+						$.each(data.data,function(v,k){
+							desa+='<option value="'+k.id+'">'+k.name+'</option>';
+						});
+					}
+				}
+				$('#desa').html(desa);
+			});
+		});
+	});
     $('.btnSimpan').click(()=>{
 		var data = new FormData($('.formSave')[0])
 		$('.btnSimpan').attr('disabled',true).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>LOADING...')
-		$.ajax({
-			url: '{{route("saveGuru")}}',
-			type: 'POST',
-			data: data,
-			async: true,
-			cache: false,
-			contentType: false,
-			processData: false,
-			success: function(data){
-				if(data.code==201 || data.code==200){
-					Swal.fire({
-						icon: 'success',
-						title: 'Berhasil',
-						text: data.message,
-						showConfirmButton: false,
-						timer: 1200
-					})
-					setTimeout(()=>{
-						$('#otherPage').fadeOut(()=>{
-							$('#dataTable').DataTable().ajax.reload()
-							hideForm()
-						})
-					}, 1100);
-				}else{
-					arr = []
-					if(typeof(data.code) != 'undefined' && data.code !== null && data.code == 400){
-						$.each(data.message,(i)=>{
-							if(arr.length==0){
-								arr.push(i)
-							}
-							return false
-						})
-						Swal.fire({
-							icon: 'warning',
-							title: 'Validasi gagal',
-							text: data.message[arr],
-							showConfirmButton: false,
-							timer: 1300,
-						})
-					}else{
-						Swal.fire({
-							icon: 'warning',
-							title: 'Whoops',
-							text: data.message,
-							showConfirmButton: false,
-							timer: 1300,
-						})
-					}
-				}
-				$('.btnSimpan').attr('disabled',false).html('SIMPAN')
-			}
-		}).fail(()=>{
-			Swal.fire({
-				icon: 'error',
-				title: 'Whoops..',
-				text: 'Terjadi kesalahan silahkan ulangi kembali',
-				showConfirmButton: false,
-				timer: 1300,
-			})
-			$('.btnSimpan').attr('disabled',false).html('SIMPAN')
-		})
+        $.ajax({
+            url: '{{route("saveGuru")}}',
+            type: 'POST',
+            data: data,
+            async: true,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data){
+                if(data.code==200){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: data.message,
+                        showConfirmButton: false,
+                        timer: 1200
+                    })
+                    setTimeout(()=>{
+                        $('.other-page').fadeOut(()=>{
+                            $('#datatabel').DataTable().ajax.reload()
+                            hideForm()
+                        })
+                    }, 1100);
+                    // location.reload()
+                }else{
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Whoops',
+                        text: data.message,
+                        showConfirmButton: false,
+                        timer: 1300,
+                    })
+                }
+                $('.btnSimpan').attr('disabled',false).html('SIMPAN')
+            }
+        }).fail(()=>{
+            Swal.fire({
+                icon: 'error',
+                title: 'Whoops..',
+                text: 'Terjadi kesalahan silahkan ulangi kembali',
+                showConfirmButton: false,
+                timer: 1300,
+            })
+            $('.btnSimpan').attr('disabled',false).html('SIMPAN')
+        })
 	})
 	function loadDaerah(kab='',kec='',kel='') {
 		var id = $('#provinsi').val();
-
 		// SELECTED KABUPATEN
 		var selectedkab = "{{ !empty($kab) ? $kab:'' }}";
 		setTimeout(()=>{
@@ -297,23 +290,20 @@
 			}else if(kab){
 				selectedkab = kab
 			}
-			// if (selectedkab != "" && selectedkab != null) {
-				$.post("{{route('get_kabupaten')}}",{id:id},(data)=>{
-					var kabupaten = '<option value="first">..:: Pilih Kabupaten ::..</option>';
-					if(data.status=='success'){
-						if(data.data.length>0){
-							$.each(data.data,function(v,k){
-								kabupaten+='<option value="'+k.id+'">'+k.name+'</option>';
-							});
-						}
+            $.post("{{route('get_kabupaten')}}",{id:id},(data)=>{
+                var kabupaten = '<option value="first">..:: Pilih ::..</option>';
+                if(data.status=='success'){
+                    if(data.data.length>0){
+                        $.each(data.data,function(v,k){
+                            kabupaten+='<option value="'+k.id+'">'+k.name+'</option>';
+                        });
+                    }
 
-						$('#kabupaten').html(kabupaten);
-						$('#kabupaten').val((selectedkab?selectedkab:'first')).trigger('change');
-					}
-				});
-			// }
+                    $('#kabupaten').html(kabupaten);
+                    $('#kabupaten').val((selectedkab?selectedkab:'first')).trigger('change');
+                }
+            });
 		},200)
-
 		var selectedkec = "{{ !empty($kec) ? $kec:'' }}";
 		setTimeout(() => {
 			// SELECTED KECAMATAN
@@ -322,23 +312,20 @@
 			}else if(kec){
 				selectedkec = kec
 			}
-			// if (selectedkec != "" && selectedkec != null) {
-				$.post("{{route('get_kecamatan')}}",{id:selectedkab},(data)=>{
-					var kecamatan = '<option value="first">..:: Pilih Kecamatan ::..</option>';
-					if(data.status=='success'){
-						if(data.data.length>0){
-							$.each(data.data,function(v,k){
-								kecamatan+='<option value="'+k.id+'">'+k.name+'</option>';
-							});
-						}
-					}
+            $.post("{{route('get_kecamatan')}}",{id:selectedkab},(data)=>{
+                var kecamatan = '<option value="first">..:: Pilih ::..</option>';
+                if(data.status=='success'){
+                    if(data.data.length>0){
+                        $.each(data.data,function(v,k){
+                            kecamatan+='<option value="'+k.id+'">'+k.name+'</option>';
+                        });
+                    }
+                }
 
-					$('#kecamatan').html(kecamatan);
-					$('#kecamatan').val((selectedkec?selectedkec:'first')).trigger('change');
-				});
-			// }
+                $('#kecamatan').html(kecamatan);
+                $('#kecamatan').val((selectedkec?selectedkec:'first')).trigger('change');
+            });
 		}, 600);
-
 		var selectedkel = "{{ !empty($kel) ? $kel:'' }}";
 		setTimeout(() => {
 			// SELECTED DESA/KELURAHAN
@@ -347,21 +334,19 @@
 			}else if(kel){
 				selectedkel = kel
 			}
-			// if (selectedkel != "" && selectedkel != null) {
-				$.post("{{route('get_desa')}}",{id:selectedkec},function(data){
-					var desa = '<option value="first">..:: Pilih Desa ::..</option>';
-					if(data.status=='success'){
-						if(data.data.length>0){
-							$.each(data.data,function(v,k){
-								desa+='<option value="'+k.id+'">'+k.name+'</option>';
-							});
-						}
-					}
+            $.post("{{route('get_desa')}}",{id:selectedkec},function(data){
+                var desa = '<option value="first">..:: Pilih ::..</option>';
+                if(data.status=='success'){
+                    if(data.data.length>0){
+                        $.each(data.data,function(v,k){
+                            desa+='<option value="'+k.id+'">'+k.name+'</option>';
+                        });
+                    }
+                }
 
-					$('#desa').html(desa);
-					$('#desa').val((selectedkel?selectedkel:'first')).trigger('change');
-				});
-			// }
+                $('#desa').html(desa);
+                $('#desa').val((selectedkel?selectedkel:'first')).trigger('change');
+            });
 		}, 1200);
 	}
     $('input[name="nik"]').keyup(() => {
@@ -381,4 +366,3 @@
 		})
 	})
 </script>
-@endpush

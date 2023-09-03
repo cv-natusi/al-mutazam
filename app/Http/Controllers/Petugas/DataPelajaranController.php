@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Petugas;
 
 use App\Http\Controllers\Controller;
 use App\Models\Guru;
-use App\Models\Kelas;
+use App\Models\MstKelas;
 use App\Models\MstPelajaran;
 use Illuminate\Http\Request;
 use DataTables, Validator, DB, Auth;
@@ -31,10 +31,12 @@ class DataPelajaranController extends Controller
 					return $txt;
 				})
                 ->addColumn('kelas', function($row){
-					return "Testinggg";
+                    $txt = MstKelas::where('id_kelas', $row->kelas_id)->first()->nama_kelas;
+                    return $txt;
 				})
                 ->addColumn('guru', function($row){
-					return "Testinggg";
+					$txt = Guru::where('id_guru', $row->guru_id)->first()->nama;
+                    return $txt;
 				})
 				->rawColumns(['actions'])
 				->toJson();
@@ -53,43 +55,34 @@ class DataPelajaranController extends Controller
             $data['title'] = "Edit ".$this->title;
             $data['data'] = MstPelajaran::where('id_pelajaran',$request->id)->first();
 		}
+        $data['kelas'] = MstKelas::all();
+        $data['guru'] = Guru::all();
         $content = view('content.petugas.datapelajaran.form', $data)->render();
 		return ['status' => 'success', 'content' => $content, 'data' => $data];
     }
 
-    public function simpandataPelajaran(Request $request)
+    public function save(Request $request)
     {
-        Pelajaran::create([
-            'id_kelas' => $request->id_kelas,
-            'id_guru' => $request->id_guru,
-            'mapel' => $request->mapel,
-            'ta' => $request->ta,
-            'semester' => $request->semester
-        ]);
-        return redirect('petugas-sekolah/data-Pelajaran')->with('toast_success', 'Data Berhasil Ditambahkan');
-    }
-
-    public function editdataPelajaran($id)
-    {
-        $kelas = Kelas::orderBy('id', 'asc')->get();
-        $guru = Guru::orderBy('id_guru', 'asc')->get();
-        $pelajaran = Pelajaran::findorfail($id);
-        $data['title'] = $this->title;
-        return view('content.petugas.datapelajaran.editpelajaran', compact('guru', 'kelas', 'pelajaran'), $data);
-    }
-
-    public function updatedataPelajaran(Request $request, $id)
-    {
-        $this->validate($request, [
-            'id_kelas' => 'required',
-            'id_guru' => 'required',
-            'mapel' => 'required',
-            'ta' => 'required',
-            'semester' => 'required'
-        ]);
-        $pelajaran = Pelajaran::findorfail($id);
-        $pelajaran->update($request->all());
-        return redirect('petugas-sekolah/data-Pelajaran')->with('toast_success', 'Data Berhasil Diubah');
+        if (empty($request->id)) {
+            $data = new MstPelajaran;
+        } else {
+            $data = MstPelajaran::find($request->id);
+        }
+        try {
+            $data->nama_mapel = $request->nama_mapel;
+            $data->kelas_id = $request->kelas_id;
+            $data->ta = $request->ta;
+            $data->semester = $request->semester;
+            $data->guru_id = $request->guru_id;
+            $data->save();
+            if ($data) {
+                return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Disimpan.'];
+            } else {
+                return ['code'=>201,'status'=>'error','message'=>'Data Gagal Disimpan.'];
+            }
+        } catch (\Throwable $th) {
+           return $th->getMessage();
+        }
     }
 
     public function hapusdataPelajaran($id)

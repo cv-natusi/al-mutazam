@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('mst_pelajaran', function (Blueprint $table) {
             $table->bigIncrements('id_pelajaran');
             $table->string('nama_mapel');
-            $table->string('kelas_id');
+            $table->integer('kelas_id');
             $table->string('ta');
             $table->string('semester');
-            $table->string('guru_id');
+            $table->integer('guru_id');
             $table->timestamps();
         });
     }

@@ -79,8 +79,8 @@
             columns: [
                 { data: "DT_RowIndex", name: "DT_RowIndex"},
                 { data: "kelas", name: "kelas"},
-                { data: "kodekelas", name: "kodekelas"},
-                { data: "namakelas", name: "namakelas"},
+                { data: "kode_kelas", name: "kode_kelas"},
+                { data: "nama_kelas", name: "nama_kelas"},
                 { data: "guru", name: "guru"},
                 { data: "actions", name: "actions", class: "text-center"},
             ],

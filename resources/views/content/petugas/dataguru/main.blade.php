@@ -91,7 +91,7 @@
         $(".knob").knob()
         loadTable();
     });
-    function loadTable(filterBy='', filter = ''){
+    function loadTable(){
         var table = $('#datatabel').DataTable({
             scrollX: true,
             searching: false, 
@@ -113,11 +113,11 @@
             columns: [
                 { data: "DT_RowIndex", name: "DT_RowIndex"},
                 { data: "nik", name: "nik"},
-                { data: "nama_guru", name: "nama_guru"},
-                { data: "tugas_utama", name: "tugas_utama"},
+                { data: "nama", name: "nama"},
+                { data: "tugas", name: "tugas"},
                 { data: "telepon", name: "telepon"},
                 { data: "status", name: "status"},
-                { data: "status", name: "status"},
+                { data: "bank", name: "bank"},
                 { data: "actions", name: "actions", class: "text-center"},
             ],
         })
@@ -138,8 +138,8 @@
         })
     }
     function hideForm(){
-        $('#otherPage').empty()
-        $('#mainLayer').show()
+        $('.other-page').empty()
+        $('.main-layer').show()
     }
 </script>
 @endpush

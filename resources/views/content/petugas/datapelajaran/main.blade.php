@@ -104,8 +104,8 @@
         })
     }
     function hideForm(){
-        $('#otherPage').empty()
-        $('#mainLayer').show()
+        $('.other-page').empty()
+        $('.main-layer').show()
     }
 </script>
 @endpush
