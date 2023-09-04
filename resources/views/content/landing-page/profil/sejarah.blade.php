@@ -89,7 +89,7 @@
 				<div class="col-lg-9">
 					<div class="row">
 						<div class="col-md-12">
-							<h3 class="h3-sm mt-4"><b>UKS</b></h3>
+							<h3 class="h3-sm mt-4"><b>SEJARAH</b></h3>
 						<h4 class="m-0 fw7">MTs Al-Multazam</h4>
 						</div>
 					</div>
@@ -97,7 +97,7 @@
 				<div class="col-lg-3 justify-content-end">
 					<div class="row">
 						<div class="col-md-12">
-							<h1 class="h3-sm mt-4" style="font-size: 60px; color: #D9D9D9"><b>PROGRAM</b></h1>
+							<h1 class="h3-sm mt-4" style="font-size: 60px; color: #D9D9D9"><b>PROFIL</b></h1>
 						</div>
 					</div>
 				</div>
@@ -105,35 +105,45 @@
 			<div class="row">
 				<div class="col-md-8 mt-4">
 					
-                    <img class="img" src="{{asset('uploads/identitas/'.$ekskul->foto_uks)}}" alt="contacts-icon" style="margin-bottom: 30px; width: 100%; border-radius: 15px">
+                    <img class="img" src="{{asset('uploads/identitas/'.$identity->foto_sejarah)}}" alt="contacts-icon" style="margin-bottom: 30px; width: 100%; border-radius: 15px">
 					<section id="contacts-2" class="contacts-section division">
-						{{-- <p>
-							Usaha Kesehatan Sekolah disingkat UKS adalah program pemerintah untuk meningkatkan pelayanan 
-							kesehatan, pendidikan kesehatan dan pembinaan lingkungan sekolah sehat atau kemampuan hidup sehat 
-							bagi warga sekolah. Melalui Program UKS diharapkan dapat meningkatkan pertumbuhan dan perkembangan
-							peserta didik yang harmonis dan optimal, agar menjadi sumber daya manusia yang berkualitas. Pada 
-							tahun 1956 Usaha Kesehatan Sekolah mulai dirintis melalui project pilot di Jakarta dan Bekasi yang 
-							merupakan kerjasama antara Departemen Kesehatan, Departemen Pendidikan dan Kebudayaan dan Departemen 
-							Dalam Negeri. Proyek ini dilaksankan dalam dua bentuk yaitu UKS perkotaan di Jakarta dan UKS 
-							pedesaan di Bekasi. 15 tahun kemudian, tepatnya pada tahun 1970 dibentuk Panitia Bersama UKS antara 
-							Departemen Kesehatan dan Departemen Pendidikan dan Kebudayaan. 10 Tahun kemudian (1980) karena
-							manfaat dan perkembangnnya yang dibutuhkan maka program UKS dikuatkan dengan Keputusan Bersama 
-							Menteri Pendidikan dan Kebudayaan dan Menteri Kesehatan tentang pembentukan kelompok kerja UKS. Tahun
-							1982 sampai 2003 Tahun 1982 ditandatangani Piagam Kerjasama antara Direktur Jenderal Pembinaan 
-							Kesehatan Masyarakat Departemen Kesehatan dan Direktur Jenderal Pembinaan Kelembagaan Agama Islam 
-							Departemen Agama, tentang Pembinaan Kesehatan Anak dan Perguruan Agama Islam. Guna memantapkan 
-							pembinaan UKS secara terpadu, maka Tahun 1984 diterbitkanlah Surat Keputusan Bersama (SKB 4 Menteri) 
-							antara Menteri Pendidikan Dan Kebudayaan, Menteri Kesehatan, Menteri Agama dan Menteri Dalam Negeri
-							Republik Indonesia. Pada tahun 2003, seiring dengan perubahan system pemerintahan di Indonesia dari
-							sentralisasi menjadi desentralisasi dan perkembangan di bidang pendidikan dan kesehatan, maka dilakuk </p> --}}
-						<p>{!! $ekskul->uks !!}</p>
+						<p>{!! $identity->sejarah !!}</p>
 					</section>
 				</div>
 							
 				<div class="col-md-4 mt-4" style="padding-left: 30px;">
-					<div class="row gradient">
+					<div class="row gradient"><!-- Menu Profil -->
 						<div class="col-md-12 my-3">
-							<h1>Pengumuman Guru</h1>
+							<h1>Menu Profil</h1>
+						</div>
+					</div>
+					<div class="row d-flex align-items-center">
+						<div class="col-lg-12">
+							<div class="contact-box">
+								<div class="row">
+									<li>Sejarah</li>
+								</div>
+								<div class="row">
+									<li>Visi dan Misi</li>
+								</div>
+								<div class="row">
+									<li>Sambutan Kepada Kepala Madrasah</li>
+								</div>
+								<div class="row">
+									<li>Struktur Organisasi</li>
+								</div>
+								<div class="row">
+									<li>Profil Struktural</li>
+								</div>
+								<div class="row">
+									<li>Fasilitas Madrasah</li>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row gradient"><!-- AMTV -->
+						<div class="col-md-12 my-3">
+							<h1>AMTV Terbaru</h1>
 						</div>
 					</div>
 					<div class="row d-flex align-items-center">
@@ -141,7 +151,87 @@
 							<div class="contact-box">
 								<div class="row">
 									<div class="col-md-3 mtb-auto">
-										<img class="img-80" src="{{asset('landing-page/images/pengumuman.png')}}" alt="contacts-icon">
+										<img class="img-80" src="{{asset('landing-page/images/amtv.png')}}" alt="contacts-icon">
+									</div>
+									<div class="col-md-9 mtb-auto text-left">
+										<span class="fw4">Sosialisasi Kegiatan Visi dan Misi SMAS Al-Multazam
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row d-flex align-items-center">
+						<div class="col-lg-12">
+							<div class="contact-box">
+								<div class="row">
+									<div class="col-md-3 mtb-auto">
+										<img class="img-80" src="{{asset('landing-page/images/amtv.png')}}" alt="contacts-icon">
+									</div>
+									<div class="col-md-9 mtb-auto text-left">
+										<span class="fw4">Sosialisasi Kegiatan Visi dan Misi SMAS Al-Multazam
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row d-flex align-items-center">
+						<div class="col-lg-12">
+							<div class="contact-box">
+								<div class="row">
+									<div class="col-md-3 mtb-auto">
+										<img class="img-80" src="{{asset('landing-page/images/amtv.png')}}" alt="contacts-icon">
+									</div>
+									<div class="col-md-9 mtb-auto text-left">
+										<span class="fw4">Sosialisasi Kegiatan Visi dan Misi SMAS Al-Multazam
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row d-flex align-items-center">
+						<div class="col-lg-12">
+							<div class="contact-box">
+								<div class="row">
+									<div class="col-md-3 mtb-auto">
+										<img class="img-80" src="{{asset('landing-page/images/amtv.png')}}" alt="contacts-icon">
+									</div>
+									<div class="col-md-9 mtb-auto text-left">
+										<span class="fw4">Sosialisasi Kegiatan Visi dan Misi SMAS Al-Multazam
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row d-flex align-items-center">
+						<div class="col-lg-12">
+							<div class="contact-box">
+								<div class="row">
+									<div class="col-md-3 mtb-auto">
+										<img class="img-80" src="{{asset('landing-page/images/amtv.png')}}" alt="contacts-icon">
+									</div>
+									<div class="col-md-9 mtb-auto text-left">
+										<span class="fw4">Sosialisasi Kegiatan Visi dan Misi SMAS Al-Multazam
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row gradient"><!--Dokumen-->
+						<div class="col-md-12 my-3">
+							<h1>Dokumen</h1>
+						</div>
+					</div>
+					<div class="row d-flex align-items-center">
+						<div class="col-lg-12">
+							<div class="contact-box">
+								<div class="row">
+									<div class="col-md-3 mtb-auto">
+										<img class="img-80" src="{{asset('landing-page/images/mask.png')}}" alt="contacts-icon">
 									</div>
 									<div class="col-md-9 mtb-auto text-left">
 										<span class="fw4">Panduan Pembuatan Soal Ujian Tahun 2036/2027 Link Download File<br>
@@ -157,7 +247,7 @@
 							<div class="contact-box">
 								<div class="row">
 									<div class="col-md-3 mtb-auto">
-										<img class="img-80" src="{{asset('landing-page/images/pengumuman.png')}}" alt="contacts-icon">
+										<img class="img-80" src="{{asset('landing-page/images/mask.png')}}" alt="contacts-icon">
 									</div>
 									<div class="col-md-9 mtb-auto text-left">
 										<span class="fw4">Panduan Pembuatan Soal Ujian Tahun 2036/2027 Link Download File<br>
@@ -173,7 +263,7 @@
 							<div class="contact-box">
 								<div class="row">
 									<div class="col-md-3 mtb-auto">
-										<img class="img-80" src="{{asset('landing-page/images/pengumuman.png')}}" alt="contacts-icon">
+										<img class="img-80" src="{{asset('landing-page/images/mask.png')}}" alt="contacts-icon">
 									</div>
 									<div class="col-md-9 mtb-auto text-left">
 										<span class="fw4">Panduan Pembuatan Soal Ujian Tahun 2036/2027 Link Download File<br>
@@ -189,7 +279,7 @@
 							<div class="contact-box">
 								<div class="row">
 									<div class="col-md-3 mtb-auto">
-										<img class="img-80" src="{{asset('landing-page/images/pengumuman.png')}}" alt="contacts-icon">
+										<img class="img-80" src="{{asset('landing-page/images/mask.png')}}" alt="contacts-icon">
 									</div>
 									<div class="col-md-9 mtb-auto text-left">
 										<span class="fw4">Panduan Pembuatan Soal Ujian Tahun 2036/2027 Link Download File<br>
@@ -205,7 +295,7 @@
 							<div class="contact-box">
 								<div class="row">
 									<div class="col-md-3 mtb-auto">
-										<img class="img-80" src="{{asset('landing-page/images/pengumuman.png')}}" alt="contacts-icon">
+										<img class="img-80" src="{{asset('landing-page/images/mask.png')}}" alt="contacts-icon">
 									</div>
 									<div class="col-md-9 mtb-auto text-left">
 										<span class="fw4">Panduan Pembuatan Soal Ujian Tahun 2036/2027 Link Download File<br>

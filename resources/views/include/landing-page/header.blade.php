@@ -15,19 +15,15 @@
 						<li class="nl-simple" aria-haspopup="true"><a href="javascript:void(0)">AMTV</a></li>
 						<li aria-haspopup="true"><a href="javascript:void(0)">PROFIL<span class="wsarrow"></span></a>
 							<ul class="sub-menu">
-								<li aria-haspopup="true"><a href="javascript:void(0)">Sejarah</a></li>
+								<li aria-haspopup="true"><a href="{{route('profil.sejarah')}}">Sejarah</a></li>
 								<li aria-haspopup="true"><a href="javascript:void(0)">Visi Misi</a></li>
-								<li aria-haspopup="true"><a href="javascript:void(0)">Sambutan Kepala Sekolah</a></li>
+								<li aria-haspopup="true"><a href="javascript:void(0)">Sambutan Kepala Madrasah</a></li>
 								<li aria-haspopup="true"><a href="javascript:void(0)">Struktur Organisasi</a></li>
-								<li aria-haspopup="true"><a href="javascript:void(0)">Profil Struktural</a></li>
-								<li aria-haspopup="true"><a href="javascript:void(0)">Fasilitas Sekolah</a></li>
+								<li aria-haspopup="true"><a href="{{route('profil.struktural')}}">Profil Struktural</a></li>
+								<li aria-haspopup="true"><a href="{{route('profil.fasilitas')}}">Fasilitas Madrasah</a></li>
 							</ul>
 						</li>
-						<li aria-haspopup="true"><a href="javascript:void(0)">SIM<span class="wsarrow"></span></a>
-							<ul class="sub-menu">
-								<li aria-haspopup="true"><a href="javascript:void(0)">Link Eksternal</a></li>
-							</ul>
-						</li>
+						<li aria-haspopup="true"><a href="{{route('sim.main')}}">SIM</a></li>
 						<li aria-haspopup="true"><a href="javascript:void(0)">PROGRAM<span class="wsarrow"></span></a>
 							<ul class="sub-menu">
 								<li aria-haspopup="true"><a href="{{route('program.ekskul')}}">Ekstrakulikuler</a></li>

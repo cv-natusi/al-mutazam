@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingPage\Home\HomeController;
+use App\Http\Controllers\LandingPage\Profil\ProfilController;
+use App\Http\Controllers\LandingPage\Sim\SimController as SIM;
 use App\Http\Controllers\Admin\AdminController as Admin;
 use App\Http\Controllers\Dashboard\DashboardController as Dashboard;
 use App\Http\Controllers\Auth\AuthController as Auth;
@@ -63,6 +65,21 @@ Route::controller(HomeController::class)->group(function () {
 	});
 	Route::group(['prefix'=>'galeri','as'=>'galeri.'],function(){ # Galeri Menu
 		Route::get('galeri', 'galeri')->name('galeri');
+	});
+});
+Route::controller(ProfilController::class)->group(function () {# Profil Menu
+	Route::group(['prefix'=>'profil','as'=>'profil.'],function(){
+		Route::get('/sejarah', 'sejarah')->name('sejarah');
+		Route::get('/visi-misi', 'visiMisi')->name('visiMisi');
+		Route::get('/sambutan-kepsek', 'sambutanKepsek')->name('sambutanKepsek');
+		Route::get('/struktur-organisasi', 'strukturOrganisasi')->name('strukturOrganisasi');
+		Route::get('/profil-struktural', 'struktural')->name('struktural');
+		Route::get('/fasilitas-sekolah', 'fasilitas')->name('fasilitas');
+	});
+});
+Route::controller(SIM::class)->group(function () {# SIM Menu
+	Route::group(['prefix'=>'sim','as'=>'sim.'],function(){
+		Route::get('/', 'main')->name('main');
 	});
 });
 # Landing page end

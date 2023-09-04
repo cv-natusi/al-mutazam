@@ -78,103 +78,102 @@
 @endpush
 @section('content')
 <section id="hero-1" class="hero-section division">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-9">
-					<div class="row">
-						<div class="col-md-12">
-							<h3 class="h3-sm mt-4"><b>UNGGULAN</b></h3>
-						<h4 class="m-0 fw7">MTs Al-Multazam</h4>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 justify-content-end">
-					<div class="row">
-						<div class="col-md-12">
-							<h1 class="h3-sm mt-4" style="font-size: 60px; color: #D9D9D9"><b>PROGRAM</b></h1>
-						</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-9">
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="h3-sm mt-4"><b>UNGGULAN</b></h3>
+					<h4 class="m-0 fw7">MTs Al-Multazam</h4>
 					</div>
 				</div>
 			</div>
-			<div class="row row-cols-1 row-cols-md-2 g-4 mt-20 ">
-				<div class="col-md-4">
-					<div class="t-3-photo mb-25">
-						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background" data-toggle="modal" data-target="#modal-detail">
-							<h5 class="mt-3">Study Tour Bahasa Arab dan Inggris </h5>
-						</div>
-					</div>
-				<div class="col-md-4">
-					<div class="t-3-photo mb-25">
-						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
-						<h5 class="mt-3">Study Ekskursi</h5>
-						{{-- <a href="javascript:void(0)" id="read-more-319" onclick="readMore('319')" class="color-a">[Baca Selengkapnya]</a> --}}
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="t-3-photo mb-25">
-						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
-						<h5 class="mt-3">Program Tahfidhul Qur'an</h5>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="t-3-photo mb-25">
-						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
-						<h5 class="mt-3">Program Tahfidhul Qur'an</h5>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="t-3-photo mb-25">
-						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
-						<h5 class="mt-3">Study Ekskursi</h5>
-						{{-- <a href="javascript:void(0)" id="read-more-319" onclick="readMore('319')" class="color-a">[Baca Selengkapnya]</a> --}}
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="t-3-photo mb-25">
-						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
-						<h5 class="mt-3">Program Tahfidhul Qur'an</h5>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="t-3-photo mb-25">
-						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
-						<h5 class="mt-3">Program Tahfidhul Qur'an</h5>
-					</div>
-				</div>	
-				<div class="col-md-4">
-					<div class="t-3-photo mb-25">
-						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
-						<h5 class="mt-3">Program Tahfidhul Qur'an</h5>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="t-3-photo mb-25">
-						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
-						<h5 class="mt-3">Program Tahfidhul Qur'an</h5>
+			<div class="col-lg-3 justify-content-end">
+				<div class="row">
+					<div class="col-md-12">
+						<h1 class="h3-sm mt-4" style="font-size: 60px; color: #D9D9D9"><b>PROGRAM</b></h1>
 					</div>
 				</div>
 			</div>
-			<nav aria-label="Page navigation example">
-				<ul class="pagination justify-content-center">
-					<li class="page-item disabled">
-						<a class="page-link" href="#" tabindex="-1" aria-disabled="true">‹</a>
-					</li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item">
-						<a class="page-link" href="#">›</a>
-					</li>
-				</ul>
-			</nav>
 		</div>
+		<div class="row row-cols-1 row-cols-md-2 g-4 mt-20 ">
+			@foreach ($beritas as $index => $berita)
+			<div class="col-md-4">
+				<div class="t-3-photo mb-25">
+					<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('uploads/berita/'.$berita->gambar)}}" alt="slide-background" data-toggle="modal" data-target="#modal-detail">
+					<h5 class="mt-3">{{$berita->judul}}</h5>
+				</div>
+			</div>
+			@endforeach
+			{{-- <div class="col-md-4">
+				<div class="t-3-photo mb-25">
+					<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
+					<h5 class="mt-3">Study Ekskursi</h5>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="t-3-photo mb-25">
+					<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
+					<h5 class="mt-3">Program Tahfidhul Qur'an</h5>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="t-3-photo mb-25">
+					<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
+					<h5 class="mt-3">Program Tahfidhul Qur'an</h5>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="t-3-photo mb-25">
+					<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
+					<h5 class="mt-3">Study Ekskursi</h5>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="t-3-photo mb-25">
+					<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
+					<h5 class="mt-3">Program Tahfidhul Qur'an</h5>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="t-3-photo mb-25">
+					<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
+					<h5 class="mt-3">Program Tahfidhul Qur'an</h5>
+				</div>
+			</div>	
+			<div class="col-md-4">
+				<div class="t-3-photo mb-25">
+					<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
+					<h5 class="mt-3">Program Tahfidhul Qur'an</h5>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="t-3-photo mb-25">
+					<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
+					<h5 class="mt-3">Program Tahfidhul Qur'an</h5>
+				</div>
+			</div> --}}
+		</div>
+		<nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center">
+				<li class="page-item disabled">
+					<a class="page-link" href="#" tabindex="-1" aria-disabled="true">‹</a>
+				</li>
+				<li class="page-item"><a class="page-link" href="#">1</a></li>
+				<li class="page-item"><a class="page-link" href="#">2</a></li>
+				<li class="page-item"><a class="page-link" href="#">3</a></li>
+				<li class="page-item">
+					<a class="page-link" href="#">›</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
 	<div class="modal fade" id="modal-detail" tabindex="-1" aria-labelledby="modal-detailLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header"  style="background-color: #5A79CB;">
 					<h5 class="modal-title fs-5" id="modal-detail" style="color: white;">Study Tour Bahasa Arab dan Inggris </h5>
-					{{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					<a href=""><i class="fa-regular fa-circle-xmark" style="color: #ffffff;"></i></a> --}}
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				</div>
 				<div class="modal-body">
 					<div class="contact-box">

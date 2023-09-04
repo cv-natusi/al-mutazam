@@ -135,17 +135,18 @@
 				</div>
 			</div>
 			<div class="row row-cols-1 row-cols-md-2 g-4 mt-20 ">
+				@foreach ($galeries as $index => $galeri)
 				<div class="col-md-4 galery">
 					<div class="t-3-photo mb-25 image">
-						<img class="span img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background" data-toggle="modal" data-target="#modal-detail">
-							<h5 class="mt-3">Study Tour Bahasa Arab dan Inggris </h5>
-						</div>
+						<img class="span img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('uploads/galeri/'.$galeri->file_galeri)}}" alt="slide-background" data-toggle="modal" data-target="#modal-detail">
+						<h5 class="mt-3">{{$galeri->deskripsi_galeri}}</h5>
 					</div>
-				<div class="col-md-4">
+				</div>
+				@endforeach
+				{{-- <div class="col-md-4">
 					<div class="t-3-photo mb-25">
 						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
 						<h5 class="mt-3">Study Ekskursi</h5>
-						{{-- <a href="javascript:void(0)" id="read-more-319" onclick="readMore('319')" class="color-a">[Baca Selengkapnya]</a> --}}
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -164,7 +165,6 @@
 					<div class="t-3-photo mb-25">
 						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
 						<h5 class="mt-3">Study Ekskursi</h5>
-						{{-- <a href="javascript:void(0)" id="read-more-319" onclick="readMore('319')" class="color-a">[Baca Selengkapnya]</a> --}}
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -190,7 +190,7 @@
 						<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background">
 						<h5 class="mt-3">Program Tahfidhul Qur'an</h5>
 					</div>
-				</div>
+				</div> --}}
 			</div>
 		</div>
         <nav aria-label="Page navigation example">

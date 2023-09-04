@@ -10,6 +10,26 @@
 					<h3 class="h3-sm">Ada pertanyaan? Hubungi kami dengan bebas dan kami akan segera merespon Anda</h3>
 				</div>
 			</div>
+			<div class="col-md-12">
+				<a class="image-container" href="https://www.facebook.com/username" target="_blank">
+					<img src="{{asset('landing-page/images/sosmed/facebook.png')}}" alt="Facebook Profile" width="50">
+				</a>
+				<a class="image-container" href="https://www.facebook.com/username" target="_blank">
+					<img src="{{asset('landing-page/images/sosmed/instagram.png')}}" alt="Instagram Profile" width="50">
+				</a>
+				<a class="image-container" href="https://www.facebook.com/username" target="_blank">
+					<img src="{{asset('landing-page/images/sosmed/twitter.png')}}" alt="Twitter Profile" width="50">
+				</a>
+				<a class="image-container" href="https://www.facebook.com/username" target="_blank">
+					<img src="{{asset('landing-page/images/sosmed/youtube.png')}}" alt="Youtube Profile" width="50">
+				</a>
+				<a class="image-container" href="https://www.facebook.com/username" target="_blank">
+					<img src="{{asset('landing-page/images/sosmed/google.png')}}" alt="Google+ Profile" width="50">
+				</a>
+				<a class="image-container" href="https://www.facebook.com/username" target="_blank">
+					<img src="{{asset('landing-page/images/sosmed/tiktok.png')}}" alt="Tiktok Profile" width="50">
+				</a>
+			</div>
 		</div>
 	</div>
 </section>

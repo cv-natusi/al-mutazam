@@ -6,15 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Helpers\Helpers;
-
+use App\Models\Identity;
 use App\Models\Berita;
+use DB;
 
 class HomeController extends Controller{
 	public function main(Request $request){
 		$berita = Berita::getBeritaLimit(3);
 		$event = Berita::getEventLimit(3);
 		$pengumuman = Berita::getPengumumanLimit(6);
-		return view('content.landing-page.home.main',compact('berita','event','pengumuman'));
+		$slider = DB::table('slider')->get();
+		$beritaSlider = Berita::where('kategori',1)->orderBy('tanggal','ASC')->limit(3)->get();
+		return view('content.landing-page.home.main',compact('berita','event','pengumuman','slider','beritaSlider'));
 	}
 	public function berita(Request $request){
 		if($request->ajax()){
@@ -55,15 +58,21 @@ class HomeController extends Controller{
 		return view('content.landing-page.program.ekskul');
 	}
 	public function programUnggulan(Request $request){
-		return view('content.landing-page.program.program-unggulan');
+		$beritas = DB::table('berita')->where('kategori','5')->where('status','1')->limit('10')->orderBy('id_berita','DESC')->get();
+		return view('content.landing-page.program.program-unggulan', compact('beritas'));
 	}
 	public function prestasiSiswa(Request $request){
-		return view('content.landing-page.program.prestasi-siswa');
+		$beritas1 = DB::table('berita')->where('kategori','4')->where('status','1')->orderBy('id_berita','DESC')->take(5)->get();
+		$lastBeritas1 = $beritas1->last()->id_berita;
+		$beritas2 = DB::table('berita')->where('kategori','4')->where('status','1')->where('id_berita', '<', $lastBeritas1)->orderBy('id_berita','DESC')->take(5)->get();
+		return view('content.landing-page.program.prestasi-siswa', compact('beritas1', 'beritas2'));
 	}
 	public function galeri(Request $request){
-		return view('content.landing-page.galeri.galeri');
+		$galeries = DB::table('galeri')->where('status_galeri','1')->orderBy('id_galeri','DESC')->limit('9')->get();
+		return view('content.landing-page.galeri.galeri', compact('galeries'));
 	}
 	public function uks(Request $request){
-		return view('content.landing-page.program.uks');
+		$ekskul = Identity::find(1);
+		return view('content.landing-page.program.uks', compact('ekskul'));
 	}
 }
