@@ -70,9 +70,9 @@ Route::controller(HomeController::class)->group(function () {
 Route::controller(ProfilController::class)->group(function () {# Profil Menu
 	Route::group(['prefix'=>'profil','as'=>'profil.'],function(){
 		Route::get('/sejarah', 'sejarah')->name('sejarah');
-		Route::get('/visi-misi', 'visiMisi')->name('visiMisi');
-		Route::get('/sambutan-kepsek', 'sambutanKepsek')->name('sambutanKepsek');
-		Route::get('/struktur-organisasi', 'strukturOrganisasi')->name('strukturOrganisasi');
+		Route::get('/visi-misi', 'visimisi')->name('visimisi');
+		Route::get('/sambutan-kepsek', 'sambutan')->name('sambutan');
+		Route::get('/struktur-organisasi', 'struktur')->name('struktur');
 		Route::get('/profil-struktural', 'struktural')->name('struktural');
 		Route::get('/fasilitas-sekolah', 'fasilitas')->name('fasilitas');
 	});

@@ -45,14 +45,7 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
 							<label>Tanggal Lahir <small>*</small></label>
-                            <div class="input-group date">
-                                <input autocomplete="off" type="date" class="form-control" name="tanggal_lahir" id="tanggal_lahir" placeholder="00-00-0000" value="{{isset($data->tanggal_lahir) ? date("Y-m-d",strtotime($data->tanggal_lahir)):''}}" required>
-                                <span class="input-group-append">
-                                    <span class="input-group-text bg-white d-block">
-                                        <i class="bx bx-calendar"></i>
-                                    </span>
-                                </span>
-                            </div>
+                            <input autocomplete="off" type="date" class="form-control" name="tanggal_lahir" id="tanggal_lahir" placeholder="00-00-0000" value="{{isset($data->tanggal_lahir) ? date("Y-m-d",strtotime($data->tanggal_lahir)):''}}" required>
                         </div>
                         <div class="col-md-6">
                             <label>Foto</label>
@@ -126,7 +119,7 @@
                         </div>
                         <div class="col-md-6">
                             <label>Tugas Tambahan</label>
-                            <select class="form-control" name="tugas_tambahan[]" id="tugas_tambahan">
+                            <select class="form-control" name="tugas_tambahan[]" id="tugas_tambahan" multiple>
                                 <option value="">.:: Pilih ::.</option>
                                 @if (count($tugas)>0)
                                     @foreach ($tugas as $i)
@@ -183,6 +176,8 @@
 		$('#kabupaten').select2();
 		$('#kecamatan').select2();
 		$('#desa').select2();
+        $('#tugas_utama').select2();
+        $('#tugas_tambahan').select2();
 
 		loadDaerah();
 

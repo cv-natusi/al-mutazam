@@ -16,9 +16,9 @@
 						<li aria-haspopup="true"><a href="javascript:void(0)">PROFIL<span class="wsarrow"></span></a>
 							<ul class="sub-menu">
 								<li aria-haspopup="true"><a href="{{route('profil.sejarah')}}">Sejarah</a></li>
-								<li aria-haspopup="true"><a href="javascript:void(0)">Visi Misi</a></li>
-								<li aria-haspopup="true"><a href="javascript:void(0)">Sambutan Kepala Madrasah</a></li>
-								<li aria-haspopup="true"><a href="javascript:void(0)">Struktur Organisasi</a></li>
+								<li aria-haspopup="true"><a href="{{route('profil.visimisi')}}">Visi Misi</a></li>
+								<li aria-haspopup="true"><a href="{{route('profil.sambutan')}}">Sambutan Kepala Madrasah</a></li>
+								<li aria-haspopup="true"><a href="{{route('profil.struktur')}}">Struktur Organisasi</a></li>
 								<li aria-haspopup="true"><a href="{{route('profil.struktural')}}">Profil Struktural</a></li>
 								<li aria-haspopup="true"><a href="{{route('profil.fasilitas')}}">Fasilitas Madrasah</a></li>
 							</ul>

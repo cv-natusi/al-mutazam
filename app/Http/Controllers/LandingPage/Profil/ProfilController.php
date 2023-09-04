@@ -14,6 +14,18 @@ class ProfilController extends Controller
         $identity = Identity::find(1);
         return view('content.landing-page.profil.sejarah', compact('identity'));
     }
+    public function visimisi() {
+        $identity = Identity::find(1);
+        return view('content.landing-page.profil.visimisi', compact('identity'));
+    }
+    public function sambutan() {
+        $identity = Identity::find(1);
+        return view('content.landing-page.profil.sambutan', compact('identity'));
+    }
+    public function struktur() {
+        $identity = Identity::find(1);
+        return view('content.landing-page.profil.struktur', compact('identity'));
+    }
     public function struktural() {
         $guru = Guru::orderBy('id_guru')->limit(12)->get();
         return view('content.landing-page.profil.struktural', compact('guru'));

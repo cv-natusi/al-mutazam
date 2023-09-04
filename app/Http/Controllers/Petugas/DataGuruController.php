@@ -98,10 +98,10 @@ class DataGuruController extends Controller
         try {
             $data->nik = $request->nik;
             $data->nip = $request->nip;
-            $data->nama = $request->nama;
+            $data->nama = strtoupper($request->nama);
             $data->tanggal_lahir = date('Y-m-d',strtotime($request->tgl_lahir));
             if ($image = $request->file('foto')) {
-                $destinationPath = 'images/';
+                $destinationPath = 'images/guru';
                 $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
                 $image->move($destinationPath, $profileImage);
                 $data->foto = "$profileImage";
