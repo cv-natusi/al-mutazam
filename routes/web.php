@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingPage\Home\HomeController;
 use App\Http\Controllers\LandingPage\Profil\ProfilController;
+use App\Http\Controllers\LandingPage\AMTV\AmtvController as AMTV;
 use App\Http\Controllers\LandingPage\Sim\SimController as SIM;
 use App\Http\Controllers\Admin\AdminController as Admin;
 use App\Http\Controllers\Dashboard\DashboardController as Dashboard;
@@ -67,6 +68,11 @@ Route::controller(HomeController::class)->group(function () {
 		Route::get('galeri', 'galeri')->name('galeri');
 	});
 });
+Route::controller(AMTV::class)->group(function () {# AMTV Menu
+	Route::group(['prefix'=>'amtv','as'=>'amtv.'],function(){
+		Route::get('/', 'main')->name('main');
+	});
+});
 Route::controller(ProfilController::class)->group(function () {# Profil Menu
 	Route::group(['prefix'=>'profil','as'=>'profil.'],function(){
 		Route::get('/sejarah', 'sejarah')->name('sejarah');
@@ -107,13 +113,13 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::group(array('prefix'=>'logo'), function(){
 				Route::get('/', [Admin::class, 'logo'])->name('logo');
 				Route::post('/update', [Admin::class, 'formUpdateLogo'])->name('formUpdateLogo');
-				Route::post('/doupdate', [Admin::class, 'updateLogo'])->name('UpdateLogo');
+				Route::post('/save', [Admin::class, 'saveLogo'])->name('saveLogo');
 			});
 			Route::group(array('prefix'=>'slider'), function(){
 				Route::get('/', [Admin::class, 'slider'])->name('slider');
 				Route::post('/getSlider', [Admin::class, 'tampilSlider'])->name('tampilSlider');
 				Route::post('/formUpdate', [Admin::class, 'formUpdateSlider'])->name('formUpdateSlider');
-				Route::post('/update', [Admin::class, 'updateSlider'])->name('updateSlider');
+				Route::post('/save', [Admin::class, 'saveSlider'])->name('saveSlider');
 			});
 		});
 		Route::group(array('prefix'=>'modul-sekolah'), function(){ #Modul Sekolah

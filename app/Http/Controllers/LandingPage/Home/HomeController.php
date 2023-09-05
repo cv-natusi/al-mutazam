@@ -17,7 +17,8 @@ class HomeController extends Controller{
 		$pengumuman = Berita::getPengumumanLimit(6);
 		$slider = DB::table('slider')->get();
 		$beritaSlider = Berita::where('kategori',1)->orderBy('tanggal','ASC')->limit(3)->get();
-		return view('content.landing-page.home.main',compact('berita','event','pengumuman','slider','beritaSlider'));
+		$agendas = DB::table('berita')->where('status','1')->where('tanggal_acara','>=',date('Y-m-d'))->where('kategori','2')->orderBy('tanggal_acara','ASC')->limit(10)->get();
+		return view('content.landing-page.home.main',compact('berita','event','pengumuman','slider','beritaSlider','agendas'));
 	}
 	public function berita(Request $request){
 		if($request->ajax()){
@@ -55,7 +56,8 @@ class HomeController extends Controller{
 		return view('content.landing-page.home.pengumuman');
 	}
 	public function ekskul(Request $request){
-		return view('content.landing-page.program.ekskul');
+		$ekskul = DB::table('exkul')->where('status_exkul','1')->where('type_exkul',1)->get();
+		return view('content.landing-page.program.ekskul', compact('ekskul'));
 	}
 	public function programUnggulan(Request $request){
 		$beritas = DB::table('berita')->where('kategori','5')->where('status','1')->limit('10')->orderBy('id_berita','DESC')->get();
@@ -72,7 +74,6 @@ class HomeController extends Controller{
 		return view('content.landing-page.galeri.galeri', compact('galeries'));
 	}
 	public function uks(Request $request){
-		$ekskul = Identity::find(1);
-		return view('content.landing-page.program.uks', compact('ekskul'));
+		return view('content.landing-page.program.uks');
 	}
 }

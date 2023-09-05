@@ -1,6 +1,7 @@
 @extends('layout.master.main')
 
 @push('style')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 <style>
 	.card-title {
 		margin-top: 40px;
@@ -12,50 +13,92 @@
 	<div class="page-content">
 		@include('include.master.breadcrumb')
         
-		<div class="row main-layer">
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th class="text-center" width='10px'>No</th>
-                        <th class="text-center">Logo</th>
-                        <th class="text-center">Edit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="text-center">1</td>
-                        <td class="text-center">
-                            <?php if ($identity->logo_kiri != null) { ?>
-                                <img src="{!! url('uploads/identitas/'.$identity->logo_kiri) !!}" width="200">
-                            <?php }else{ ?>
-                                <img src="{!! url('AssetsSite/img/icon/default_logo.jpg') !!}" width="200">
-                            <?php } ?>
-                        </td>
-                        <td class="text-center">
-                            <a onclick="updated('Kiri')" href="javascript:void(0);" class='btn btn-primary btn-sm'><i class="fa fa-pencil"></i> Edit</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="other-page"></div>
-            <div class="modal-dialog"></div>
+        <div class="card main-layer">
+            <div class="card-header bg-card">
+                <h5 class="text-card">Logo</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table id="datatabel" class="table table-striped table-bordered" width="100%">
+                            <thead>
+                                <tr>
+                                    <td>No</td>
+                                    <td class="text-center">Logo</td>
+                                    <td class="text-center">Aksi</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
+        <div class="other-page"></div>
 	</div>
 @endsection
 
 @push('script')
 <script src="{{url('assets/plugins/jquery-knob/jquery.knob.js')}}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js" integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
-	function updated(posisi){
-		$('.main-layer').hide();
-		$.post("{!! route('formUpdateLogo') !!}", {posisi:posisi}).done(function(data){
+	$(document).ready(function() {
+        $(".knob").knob()
+        loadTable();
+    });
+    function loadTable(){
+        var table = $('#datatabel').DataTable({
+            scrollX: true,
+            searching: false, 
+            // paging: false,
+            processing: true,
+            serverSide: true,
+            columnDefs: [
+                {
+                    sortable: false,
+                    'targets': [0]
+                }, {
+                    searchable: false,
+                    'targets': [0]
+                },
+            ],
+            ajax: {
+                url: "{{route('logo')}}",
+            },
+            columns: [
+                { data: "DT_RowIndex", name: "DT_RowIndex"},
+                { 
+                    data: 'logo_kiri', // Kolom Gambar
+                    class: "text-center",
+                    render: function(data, type, row) {
+                        var image = '{{URL::asset('/uploads/identitas')}}'
+                        return `<img src="${image}/${data}" width="100" height="100" />`;
+                    }
+                },
+                { data: "actions", name: "actions", class: "text-center"},
+            ],
+        })
+    }
+    function formAdd(id='') {
+        $('.main-layer').hide();
+        $.post("{{route('formUpdateLogo')}}", {id:id,posisi:'Kiri'})
+        .done(function(data){
 			if(data.status == 'success'){
-				$('.loading').hide();
 				$('.other-page').html(data.content).fadeIn();
 			} else {
 				$('.main-layer').show();
 			}
-		});
-	}
+		})
+        .fail(() => {
+            $('.other-page').empty();
+            $('.main-layer').show();
+        })
+    }
+    function hideForm(){
+        $('.other-page').empty()
+        $('.main-layer').show()
+    }
 </script>
 @endpush

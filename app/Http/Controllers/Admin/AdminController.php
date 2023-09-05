@@ -6,24 +6,24 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Identity;
 use App\Http\Libraries\compressFile;
-use App\Http\Models\Menus;
-use App\Http\Models\Slider;
-use App\Http\Models\Berita;
-use App\Http\Models\Berita_pilihan;
-use App\Http\Models\Users;
-use App\Http\Models\Iklan;
-use App\Http\Models\Galeri;
-use App\Http\Models\Amtv;
-use App\Http\Models\Exkul;
-use App\Http\Models\Tags;
-use App\Http\Models\KataJorok;
-use Redirect, File, Sentinel;
+use App\Models\Menus;
+use App\Models\Slider;
+use App\Models\Berita;
+use App\Models\Berita_pilihan;
+use App\Models\Users;
+use App\Models\Iklan;
+use App\Models\Galeri;
+use App\Models\Amtv;
+use App\Models\Exkul;
+use App\Models\Tags;
+use App\Models\KataJorok;
+use Redirect, File, Sentinel, DataTables, Validator, DB, Auth;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {   #Modul identitas
     public function identitas(Request $request) {#identitas
-        $data['menuActive'] = 'identitas';
+        $data['mn_active'] = 'identitas';
         $data['subMenuActive'] = '';
         $data['title'] = 'Identitas';
         $data['identity'] = Identity::find(1);
@@ -85,10 +85,20 @@ class AdminController extends Controller
     }
     #Modul web
     public function logo(Request $request) {#Logo
-        $data['menuActive'] = 'modulWeb';
-        $data['subMenuActive'] = 'logo';
+        if(request()->ajax()){
+            $data = Identity::get();
+			return DataTables::of($data)
+				->addIndexColumn()
+				->addColumn('actions', function($row){
+					$txt = "
+                      <button style='color: #fff' class='btn btn-sm btn-secondary' title='Detail' onclick='formAdd(`$row->id_identitas`)'><i class='fadeIn animated bx bx-file' aria-hidden='true'></i></button>
+					";
+					return $txt;
+				})
+				->rawColumns(['actions'])
+				->toJson();
+		}
         $data['title'] = 'Logo';
-        $data['identity'] = Identity::find(1);
         return view('content.admin.logo.main', $data);
     }
     public function formUpdateLogo(Request $request)
@@ -98,7 +108,7 @@ class AdminController extends Controller
         $content = view('content.admin.logo.form', $data)->render();
         return ['status' => 'success', 'content' => $content];
     }
-    public function UpdateLogo(Request $request)
+    public function saveLogo(Request $request)
     {
         $identity = Identity::find(1);
         if ($request->position == "Kiri") {
@@ -131,29 +141,35 @@ class AdminController extends Controller
         }
         $identity->save();
         if ($identity) {
-            return Redirect::route('logo')->with('title', 'Success !')->with('message', 'Logo Successfully Updated !!')->with('type', 'success');
+            return ['code'=>200,'status'=>'success','message'=>'Data berhasil diperbarui.'];
         } else {
-            return Redirect::route('logo')->with('title', 'Whoops!!!')->with('message', 'Logo Failed to Update !!')->with('type', 'error');
+            return ['code'=>201,'status'=>'error','message'=>'Data gagal diperbarui.'];
         }
     }
     public function slider(Request $request) {#Slider
-        $data['menuActive'] = 'modulWeb';
-        $data['subMenuActive'] = 'slider';
+        if(request()->ajax()){
+            $data = Slider::orderBy('id_slider','ASC')->get();
+			return DataTables::of($data)
+				->addIndexColumn()
+				->addColumn('actions', function($row){
+					$txt = "
+                      <button style='color: #fff' class='btn btn-sm btn-secondary' title='Detail' onclick='formAdd(`$row->id_slider`)'><i class='fadeIn animated bx bx-file' aria-hidden='true'></i></button>
+					";
+					return $txt;
+				})
+				->rawColumns(['actions'])
+				->toJson();
+		}
         $data['title'] = 'Slider Gambar';
-        $data['identity'] = Identity::find(1);
         return view('content.admin.slider.main', $data);
-    }
-    public function tampilSlider(Request $request){
-        $data = Slider::getSlider($request);
-        return response()->json($data);
     }
     public function formUpdateSlider(Request $request)
     {
         $data['slider'] = Slider::find($request->id);
-        $content = view('Admin.web.slider.formEdit',$data)->render();
+        $content = view('content.admin.slider.form',$data)->render();
         return ['status' => 'success', 'content' => $content];
     }
-    public function updateSlider(Request $request)
+    public function saveSlider(Request $request)
     {
         $slider = Slider::find($request->id_slider);
         $foto = date('YmdHis');
@@ -185,14 +201,14 @@ class AdminController extends Controller
         }
         $slider->save();
         if ($slider) {
-            return Redirect::route('slider')->with('title', 'Success !')->with('message', 'Slider Successfully Update !!')->with('type', 'success');
+            return ['code'=>200,'status'=>'success','message'=>'Data berhasil diperbarui.'];
         } else {
-            return Redirect::route('slider')->with('title', 'Whoops!!!')->with('message', 'Slider Failed to Update !!')->with('type', 'error');
+            return ['code'=>201,'status'=>'error','message'=>'Data gagal diperbarui.'];
         }
     }
     #Modul sekolah
     public function sejarah(Request $request) {#Sejarah
-        $data['menuActive'] = 'modulSekolah';
+        $data['mn_active'] = 'modulSekolah';
         $data['subMenuActive'] = 'sejarah';
         $data['title'] = 'Sejarah';
         $data['identity'] = Identity::find(1);
@@ -236,7 +252,7 @@ class AdminController extends Controller
         }
     }
     public function visimisi(Request $request) {#Visimisi
-        $data['menuActive'] = 'modulSekolah';
+        $data['mn_active'] = 'modulSekolah';
         $data['subMenuActive'] = 'visimisi';
         $data['title'] = 'Visi dan Misi';
         $data['identity'] = Identity::find(1);
@@ -280,7 +296,7 @@ class AdminController extends Controller
         }
     }
     public function kepsek(Request $request) {#Kepsek
-        $data['menuActive'] = 'modulSekolah';
+        $data['mn_active'] = 'modulSekolah';
         $data['subMenuActive'] = 'sambutan';
         $data['title'] = 'Sambutan Kepala Sekolah';
         $data['identity'] = Identity::find(1);
@@ -324,7 +340,7 @@ class AdminController extends Controller
         }
     }
     public function uks(Request $request) {#Uks
-        $data['menuActive'] = 'modulSekolah';
+        $data['mn_active'] = 'modulSekolah';
         $data['subMenuActive'] = 'uks';
         $data['title'] = 'UKS';
         $data['identity'] = Identity::find(1);
@@ -368,7 +384,7 @@ class AdminController extends Controller
         }
     }
     public function organisasi(Request $request) {#Struktur organisasi
-        $data['menuActive'] = 'modulSekolah';
+        $data['mn_active'] = 'modulSekolah';
         $data['subMenuActive'] = 'organisasi';
         $data['title'] = 'Struktur Organisasi';
         $data['identity'] = Identity::find(1);
@@ -412,7 +428,7 @@ class AdminController extends Controller
         }
     }
     public function ekskul(Request $request) {#Ekstrakurikuler
-        $data['menuActive'] = 'modulSekolah';
+        $data['mn_active'] = 'modulSekolah';
         $data['subMenuActive'] = 'ekstrakurikuler';
         $data['title'] = 'Ekstra Kulikuler';
         $data['identity'] = Identity::find(1);
@@ -515,7 +531,7 @@ class AdminController extends Controller
         }
     }
     public function fasilitas(Request $request) {#Fasilitas sekolah
-        $data['menuActive'] = 'modulSekolah';
+        $data['mn_active'] = 'modulSekolah';
         $data['subMenuActive'] = 'fasilitas';
         $data['title'] = 'Fasilitas Sekolah';
         $data['identity'] = Identity::find(1);
@@ -619,7 +635,7 @@ class AdminController extends Controller
     }
     #Modul media
     public function amtv() {#Amtv
-        $data['menuActive'] = 'modulMedia';
+        $data['mn_active'] = 'modulMedia';
         $data['subMenuActive'] = 'amtv';
         $data['title'] = 'AMTV';
         return view('content.admin.amtv.main', $data);
@@ -674,7 +690,7 @@ class AdminController extends Controller
         }
     }
     public function galeri() {#Galeri
-        $data['menuActive'] = 'modulMedia';
+        $data['mn_active'] = 'modulMedia';
         $data['subMenuActive'] = 'galeri';
         $data['title'] = 'Galeri';
         return view('content.admin.galeri.main', $data);
@@ -812,7 +828,7 @@ class AdminController extends Controller
     #Modul berita
     public function beritaSekolah(Request $request) {#Berita sekolah
         $data['id'] = $request->id;
-        $data['menuActive'] = 'modulBerita';
+        $data['mn_active'] = 'modulBerita';
         if($request->id==1){
             $data['title'] = 'Berita Sekolah';
             $data['subMenuActive'] = 'beritaSekolah';
@@ -986,7 +1002,7 @@ class AdminController extends Controller
     #Iklan
     public function iklanAtas(Request $request)
     {
-        $data['menuActive'] = 'iklan';
+        $data['mn_active'] = 'iklan';
         $data['title'] = 'Iklan';
         $data['subMenuActive'] = 'dashboard';
         $data['smallTitle'] = 'Atas';
@@ -995,7 +1011,7 @@ class AdminController extends Controller
     }
     public function iklanTengah(Request $request)
     {
-        $data['menuActive'] = 'iklan';
+        $data['mn_active'] = 'iklan';
         $data['title'] = 'Iklan';
         $data['subMenuActive'] = 'dashboard';
         $data['smallTitle'] = 'Bawah';
@@ -1004,7 +1020,7 @@ class AdminController extends Controller
     }
     public function iklanBawah(Request $request)
     {
-        $data['menuActive'] = 'iklan';
+        $data['mn_active'] = 'iklan';
         $data['title'] = 'Iklan';
         $data['subMenuActive'] = 'dashboard';
         $data['smallTitle'] = 'Samping';
@@ -1013,7 +1029,7 @@ class AdminController extends Controller
     }
     public function iklanSamping(Request $request)
     {
-        $data['menuActive'] = 'iklan';
+        $data['mn_active'] = 'iklan';
         $data['title'] = 'Iklan';
         $data['subMenuActive'] = 'dashboard';
         $data['smallTitle'] = 'Samping';
@@ -1022,7 +1038,7 @@ class AdminController extends Controller
     }
     public function profileGambar(Request $request)
     {
-        $data['menuActive'] = 'modulWeb';
+        $data['mn_active'] = 'modulWeb';
         $data['subMenuActive'] = 'dashboard';
         $data['title'] = 'Profile';
         $data['smallTitle'] = '';
@@ -1090,7 +1106,7 @@ class AdminController extends Controller
     #Kata jorok
     public function kataJorok(Request $request)
     {
-        $data['menuActive'] = 'kataJorok';
+        $data['mn_active'] = 'kataJorok';
         $data['subMenuActive'] = 'dashboard';
         $data['title'] = 'Kata Jorok';
         $data['kataJorok'] = KataJorok::all();
@@ -1149,13 +1165,13 @@ class AdminController extends Controller
     }
     #Profile
     public function profile(){
-        $data['menuActive']="";
+        $data['mn_active']="";
         $data['title'] = 'Detail Profile';
         return view('Admin.profile.main',$data);
     }
 
     public function form_ubah_password(){
-        $data['menuActive']="berita";
+        $data['mn_active']="berita";
         $data['title'] = 'Detail Profile';
         $content = view('Admin.profile.form',$data)->render();
         return ['status'=>'success','content'=>$content];
@@ -1176,7 +1192,7 @@ class AdminController extends Controller
     }
     #Menu
     public function menu(Request $request) {#Menu
-        $data['menuActive'] = 'modulWeb';
+        $data['mn_active'] = 'modulWeb';
         $data['subMenuActive'] = 'dashboard';
         $data['title'] = 'Menu';
         $data['menus'] = Menus::where('parent_id','0')->get();

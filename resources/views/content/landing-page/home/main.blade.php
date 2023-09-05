@@ -234,6 +234,20 @@
 											<th>Aksi</th>
 										</tr>
 									</thead>
+									<tbody>
+										@if (count($agendas)>0)
+										@foreach ($agendas as $index => $agenda)
+											<tr>
+												<td>{{$index+1}}</td>
+												<td>{{$agenda->judul}}</td>
+												<td>{{date('d/M/Y',strtotime($agenda->tanggal_acara))}}</td>
+												<td>
+													<a href="#" onclick="alert('Maintenance!')" class="text-center" style="text-align: center; color: #000">Detail</a>
+												</td>
+											</tr>
+										@endforeach
+										@endif
+									</tbody>
 								</table>
 							</div>
 						</div>
@@ -336,37 +350,37 @@
 				}
 			})
 
-			var data = [
-				{
-					'no': '1',
-					'tanggal': 'Senin',
-					'kegiatan': 'Ekstra',
-					'aksi': 'detail'
-				},
-			]
-			$('#agendaTable').DataTable({
-				// dom: 'lfrtip', // Default
-				dom: 'rtp',
-				data:data,
-				columns: [
-					{
-						name: 'no',
-						data: 'no'
-					},
-					{
-						name: 'tanggal',
-						data: 'tanggal'
-					},
-					{
-						name: 'kegiatan',
-						data: 'kegiatan'
-					},
-					{
-						name: 'aksi',
-						data: 'aksi'
-					},
-				]
-			});
+			// var data = [
+			// 	{
+			// 		'no': '1',
+			// 		'tanggal': 'Senin',
+			// 		'kegiatan': 'Ekstra',
+			// 		'aksi': 'detail'
+			// 	},
+			// ]
+			// $('#agendaTable').DataTable({
+			// 	// dom: 'lfrtip', // Default
+			// 	dom: 'rtp',
+			// 	data:data,
+			// 	columns: [
+			// 		{
+			// 			name: 'no',
+			// 			data: 'no'
+			// 		},
+			// 		{
+			// 			name: 'tanggal',
+			// 			data: 'tanggal'
+			// 		},
+			// 		{
+			// 			name: 'kegiatan',
+			// 			data: 'kegiatan'
+			// 		},
+			// 		{
+			// 			name: 'aksi',
+			// 			data: 'aksi'
+			// 		},
+			// 	]
+			// });
 		})
 
 

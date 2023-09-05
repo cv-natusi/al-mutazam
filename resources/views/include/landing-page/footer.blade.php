@@ -11,24 +11,24 @@
 				</div>
 			</div>
 			<div class="col-md-12">
-				<a class="image-container" href="https://www.facebook.com/username" target="_blank">
+				<a class="image-container" href="{{$identity->fb}}" target="_blank">
 					<img src="{{asset('landing-page/images/sosmed/facebook.png')}}" alt="Facebook Profile" width="50">
 				</a>
-				<a class="image-container" href="https://www.facebook.com/username" target="_blank">
+				<a class="image-container" href="{{$identity->instagram}}" target="_blank">
 					<img src="{{asset('landing-page/images/sosmed/instagram.png')}}" alt="Instagram Profile" width="50">
 				</a>
-				<a class="image-container" href="https://www.facebook.com/username" target="_blank">
+				<a class="image-container" href="{{$identity->twitter}}" target="_blank">
 					<img src="{{asset('landing-page/images/sosmed/twitter.png')}}" alt="Twitter Profile" width="50">
 				</a>
-				<a class="image-container" href="https://www.facebook.com/username" target="_blank">
+				<a class="image-container" href="{{$identity->youtube}}" target="_blank">
 					<img src="{{asset('landing-page/images/sosmed/youtube.png')}}" alt="Youtube Profile" width="50">
 				</a>
-				<a class="image-container" href="https://www.facebook.com/username" target="_blank">
+				<a class="image-container" href="{{$identity->gplus}}" target="_blank">
 					<img src="{{asset('landing-page/images/sosmed/google.png')}}" alt="Google+ Profile" width="50">
 				</a>
-				<a class="image-container" href="https://www.facebook.com/username" target="_blank">
+				{{-- <a class="image-container" href="{{$identity->fb}}" target="_blank">
 					<img src="{{asset('landing-page/images/sosmed/tiktok.png')}}" alt="Tiktok Profile" width="50">
-				</a>
+				</a> --}}
 			</div>
 		</div>
 	</div>
@@ -107,7 +107,8 @@
 							<div class="col-md-12">
 								<div class="google-map">
 									<!-- Embedded Google Map using an iframe - to select your location find it on Google maps and paste the link as the iframe src. If you want to use the Google Maps API instead then have at it! -->					
-									<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.838357620288!2d144.95358331497258!3d-37.81725497975171!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d4dd5a05d97%3A0x3e64f855a564844d!2zMTIxIEtpbmcgU3QsIE1lbGJvdXJuZSBWSUMgMzAwMCwg0JDQstGB0YLRgNCw0LvQuNGP!5e0!3m2!1sru!2sua!4v1584204664155!5m2!1sru!2sua"></iframe>
+									{{-- <iframe src="https://www.google.com/maps?q=mts%20al%20mutazam&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed"></iframe> --}}
+									{!! $identity->lokasi !!}
 								</div>
 							</div>
 						</div>
@@ -118,22 +119,9 @@
 	</div>
 	<div class="bottom-footer">
 		<div class="row">
-			<div class="col-md-10 text-center">
-			{{-- <div class="col-md-12"> --}}
-				{{-- <div style="padding: auto;" class="text-center"> --}}
-					<ul class="bottom-footer-list">
-						<li><p>&copy; 2022</p></li>
-						<li><p class="last-li"><b>MTs Al-Mutazam Mojokerto</b></p></li>
-					</ul>
-				{{-- </div> --}}
-			</div>
-
-			<div class="col-md-2 text-center">
-				{{-- <ul class="foo-socials text-center clearfix"> --}}
-				<ul class="foo-socials clearfix">
-					<li><a href="javascript:void(0)" class="ico-linkedin"><i class="fab fa-linkedin" style="color: white;"></i></a></li>
-					<li><a href="javascript:void(0)" class="ico-facebook"><i class="fab fa-facebook-f" style="color: white;"></i></a></li>
-				</ul>
+			<div class="col-md-12 text-center">
+				<p><b>- Berilmu yang berguna bagi agama, bangsa dan negara serta bermanfaat bagi masyarakat -</b></p>
+				<p>© 2022 | Mts Al-Multazam - Mojokerto</p>
 			</div>
 		</div>
 	</div>

@@ -5,16 +5,6 @@
 			</div>
 			<div class="top-menu ms-auto">
 				<ul class="navbar-nav align-items-center">
-					<!-- <li class="nav-item mobile-search-icon">
-						<a class="nav-link" href="#"> <i class='bx bx-search'></i>
-						</a>
-					</li> -->
-					<div class="container-fluid" style="text-align:left">
-						<form class="d-flex">
-							<input type="text" class="form-control" placeholder="Search here" style="border-radius: 30px;">
-							<button class="btn" type="submit"><i class="bx bx-search"></i></button>
-						</form>
-					</div>
 					<li class="nav-item dropdown dropdown-large">
 						<div class="dropdown-menu dropdown-menu-end">
 							<div class="header-notifications-list">

@@ -17,6 +17,19 @@
 		.menu-title {
 			color: #000;
 		}
+		.bg-card{
+			background: #32762C80 !important;
+		}
+		.text-card{
+			color: #ffffff;
+		}
+		.button-custome{
+			background: #32762C80 !important;
+			color: #ffffff !important;
+		}
+		.button-custome:hover{
+			background: #18391680 !important;
+		}
 	</style>
 </head>
 

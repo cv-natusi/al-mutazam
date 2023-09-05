@@ -7,12 +7,12 @@
 @section('content')
 	<section id="hero-1" class="hero-section division">
 		<div class="container">
-		<div class="row">
+			<div class="row">
 				<div class="col-lg-9">
 					<div class="row">
 						<div class="col-md-12">
 							<h3 class="h3-sm mt-4"><b>STRUKTUR ORGANISASI</b></h3>
-						<h4 class="m-0 fw7">MTs Al-Multazam</h4>
+							<h4 class="m-0 fw7">MTs Al-Multazam</h4>
 						</div>
 					</div>
 				</div>

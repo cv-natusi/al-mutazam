@@ -21,7 +21,7 @@ class DataGuruController extends Controller
 		$this->title = 'Data Guru';
 	}
 
-    public function dataGuru() {
+    public function dataGuru(Request $request) {
         if(request()->ajax()){
             $data = Guru::orderBy('id_guru','ASC')->get();
 			
@@ -61,7 +61,7 @@ class DataGuruController extends Controller
         return view('content.petugas.dataguru.main', $data);
     }
     
-    public function tambahGuru() {
+    public function tambahGuru(Request $request) {
         if (empty($request->id)) {
             $data['data'] = '';
 		}else{

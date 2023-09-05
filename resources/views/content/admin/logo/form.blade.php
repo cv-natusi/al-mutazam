@@ -1,65 +1,114 @@
-<div class="box box-warning" id='panel-add'>
-	<button type="button" class="btn btn-warning btn-cancel"><span class="fa fa-chevron-left"></span> Kembali</button>
-	<hr>
-	<form method='post' action="{{ route('UpdateLogo') }}" enctype='multipart/form-data'>
-		{{ csrf_field() }}
-		<div class="box-body">
-			<div class='col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-2' style='padding:0px'>
-				<div class="form-group">
-					<input type="hidden" name='position' value='{!! $position !!}' class="form-control" required='required'>
-					<label class="control-label col-lg-3 col-md-3 col-sm-12 col-xs-12" id='label-input'>
-					Logo : 
-					</label>
-					<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-						<input type="file" class="upload" onchange="loadFilePhoto(event)" name="logo" accept="image/*" class="form-control customInput input-sm col-md-7 col-xs-12">
-							<i>* Rekomendasi Ukuran Logo 514x600 pixel</i>
-					</div>
-					<div class='clearfix' style='padding-bottom:5px'></div>
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="crop-edit">
-							<center>
-								@if(!empty($identity->logo_kiri))
-									@if(file_exists('uploads/identitas/'.$identity->logo_kiri))
-									<img id="preview-photo" src="{!! url('uploads/identitas/'.$identity->logo_kiri) !!}" class="img-polaroid" width="200">
-									@else
-									<img id="preview-photo" src="{!! url('AssetsSite/img/icon/default_logo.jpg') !!}" class="img-polaroid" width="200">
-									@endif
-								@else
-									<img id="preview-photo" src="{!! url('AssetsSite/img/icon/default_logo.jpg') !!}" class="img-polaroid" width="200">
-								@endif
-							</center>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" style="width: 100%; background-color:#ffffff">
+            <div class="card-header bg-card">	
+                <h5 class="text-card">Edit Slider</h5>
+            </div>
+            <div class="card-body">
+                <form class="formSave">
+                    <div class="form-group">
+						<input type="hidden" name='position' value='{!! $position !!}' class="form-control" required='required'>
+						<div class="row">
+							<div class="col-md-12">
+								<label>Logo </label>
+								<input type="file" class="upload form-control" onchange="loadFilePhoto(event)" name="logo" accept="image/*" class="form-control customInput input-sm col-md-7 col-xs-12">
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col-md-12">
+								<i>* Rekomendasi Ukuran Logo 514x600 pixel</i>
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col-md-4">
+								<div class="crop-edit">
+									<center>
+										@if(!empty($identity->logo_kiri))
+											@if(file_exists('uploads/identitas/'.$identity->logo_kiri))
+											<img id="preview-photo" src="{!! url('uploads/identitas/'.$identity->logo_kiri) !!}" class="img-polaroid" width="200">
+											@else
+											<img id="preview-photo" src="{!! url('AssetsSite/img/icon/default_logo.jpg') !!}" class="img-polaroid" width="200">
+											@endif
+										@else
+											<img id="preview-photo" src="{!! url('AssetsSite/img/icon/default_logo.jpg') !!}" class="img-polaroid" width="200">
+										@endif
+									</center>
+								</div>
+							</div>
+							<div class="col-md-8"></div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class='clearfix' style='padding-bottom:5px'></div>
-		</div>
-		<div class="box-footer">
-			<button type="submit" class="btn btn-primary pull-right">Simpan <span class="fa fa-save"></span></button>
-		</div>
-	</form>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-success btnSimpan" type="button">Simpan</button>
+                <button class="btn btn-secondary btnCancel" type="button">Kembali</button>
+            </div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
-	var onLoad = (function() {
-		$('#panel-add').animateCss('bounceInUp');
-	})();
-
-	$('.btn-cancel').click(function(e){
-    	e.preventDefault();
-    	$('#panel-add').animateCss('bounceOutDown');
-    	$('.other-page').fadeOut(function(){
-    		$('.other-page').empty();
-            $('.main-layer').fadeIn();
-        });
-    });
-
+	$('.btnCancel').click(()=>{
+		$('.other-page').fadeOut(function(){
+			hideForm()
+		})
+	})
+	$('.btnSimpan').click(()=>{
+		var data = new FormData($('.formSave')[0])
+		$('.btnSimpan').attr('disabled',true).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>LOADING...')
+        $.ajax({
+            url: '{{route("saveLogo")}}',
+            type: 'POST',
+            data: data,
+            async: true,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data){
+                if(data.code==200){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: data.message,
+                        showConfirmButton: false,
+                        timer: 1200
+                    })
+                    setTimeout(()=>{
+                        $('.other-page').fadeOut(()=>{
+                            $('#datatabel').DataTable().ajax.reload()
+                            hideForm()
+                        })
+                    }, 1100);
+                    // location.reload()
+                }else{
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Whoops',
+                        text: data.message,
+                        showConfirmButton: false,
+                        timer: 1300,
+                    })
+                }
+                $('.btnSimpan').attr('disabled',false).html('SIMPAN')
+            }
+        }).fail(()=>{
+            Swal.fire({
+                icon: 'error',
+                title: 'Whoops..',
+                text: 'Terjadi kesalahan silahkan ulangi kembali',
+                showConfirmButton: false,
+                timer: 1300,
+            })
+            $('.btnSimpan').attr('disabled',false).html('SIMPAN')
+        })
+	})
     function loadFilePhoto(event) {
         var image = URL.createObjectURL(event.target.files[0]);
-            $('#preview-photo').fadeOut(function(){
-                $(this).attr('src', image).fadeIn().css({
-                    '-webkit-animation' : 'showSlowlyElement 700ms',
-                    'animation'         : 'showSlowlyElement 700ms'
-                });
-            });
+		$('#preview-photo').fadeOut(function(){
+			$(this).attr('src', image).fadeIn().css({
+				'-webkit-animation' : 'showSlowlyElement 700ms',
+				'animation'         : 'showSlowlyElement 700ms'
+			});
+		});
     };
 </script>

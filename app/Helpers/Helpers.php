@@ -1,5 +1,6 @@
 <?php
 namespace App\Helpers;
+use App\Models\Identity;
 
 class Helpers{
 	# Date start
@@ -46,7 +47,6 @@ class Helpers{
 		return $hari;
 	}
 	# Date end
-
 	public static function resAjax($data=[]){
 		$keyData = ['message','code','response'];
 		$arr = [];
@@ -70,5 +70,8 @@ class Helpers{
 			$payload['response'] = $arr['response'];
 		}
 		return response()->json($payload,$code);
+	}
+	public static function getIdentity(){
+		return $data = Identity::first();
 	}
 }

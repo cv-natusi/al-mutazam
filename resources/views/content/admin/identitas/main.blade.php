@@ -28,8 +28,8 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="card">
-                                <div class="card-header">
-                                    <h5>Data Umum</h5>
+                                <div class="card-header bg-card">
+                                    <h5 class="text-card">Data Umum</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="row mb-3">
@@ -101,8 +101,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="card">
-                                <div class="card-header">
-                                    <h5>Detail Kontak</h5>
+                                <div class="card-header bg-card">
+                                    <h5 class="text-card">Detail Kontak</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="row mb-3">
@@ -165,10 +165,10 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <input type="submit" name="edit" id="btn_simpan" class="btn btn-primary btn-block" style="width: 100%" value="Simpan">
+                            <input type="submit" name="edit" id="btn_simpan" class="btn button-custome btn-block" style="width: 100%" value="Simpan">
                         </div>
                         <div class="col-md-6">
-                            <input type="reset" class="btn btn-warning btn-block" style="width: 100%" value="Reset">
+                            <input type="reset" class="btn btn-secondary btn-block" style="width: 100%" value="Reset">
                         </div>
                     </div>
                 </div>

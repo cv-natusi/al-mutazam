@@ -12,7 +12,7 @@
 				<nav class="wsmenu clearfix">
 					<ul class="wsmenu-list">
 						<li class="nl-simple" aria-haspopup="true"><a href="{{route('home.main')}}">HOME</a></li>
-						<li class="nl-simple" aria-haspopup="true"><a href="javascript:void(0)">AMTV</a></li>
+						<li class="nl-simple" aria-haspopup="true"><a href="{{route('amtv.main')}}">AMTV</a></li>
 						<li aria-haspopup="true"><a href="javascript:void(0)">PROFIL<span class="wsarrow"></span></a>
 							<ul class="sub-menu">
 								<li aria-haspopup="true"><a href="{{route('profil.sejarah')}}">Sejarah</a></li>
@@ -33,12 +33,12 @@
 							</ul>
 						</li>
 						<li class="nl-simple" aria-haspopup="true"><a href="{{route('galeri.galeri')}}">GALERI</a></li>
-						<li aria-haspopup="true"><a href="javascript:void(0)">APLIKASI<span class="wsarrow"></span></a>
+						{{-- <li aria-haspopup="true"><a href="javascript:void(0)">APLIKASI<span class="wsarrow"></span></a>
 							<ul class="sub-menu">
 								<li aria-haspopup="true"><a href="javascript:void(0)">RDM</a></li>
 								<li aria-haspopup="true"><a href="javascript:void(0)">E-Learning</a></li>
 							</ul>
-						</li>
+						</li> --}}
 					</ul>
 				</nav>
 
