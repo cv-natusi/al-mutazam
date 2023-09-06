@@ -6,6 +6,7 @@ use App\Http\Controllers\LandingPage\Profil\ProfilController;
 use App\Http\Controllers\LandingPage\AMTV\AmtvController as AMTV;
 use App\Http\Controllers\LandingPage\Sim\SimController as SIM;
 use App\Http\Controllers\Admin\AdminController as Admin;
+use App\Http\Controllers\Pengaturan\PengaturanController as Pengaturan;
 use App\Http\Controllers\Dashboard\DashboardController as Dashboard;
 use App\Http\Controllers\Auth\AuthController as Auth;
 use App\Http\Controllers\Guru\DataPrimerController as DataPrimer;
@@ -222,29 +223,51 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::post('/store', [DataPelajaran::class, 'save'])->name('saveDataPelajaran');
 			Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
 		});
-		Route::get('/data-Primer', [DataPrimer::class, 'dataPrimer'])->name('dataPrimer');
-		Route::get('/data-Sekunder', [DataSekunder::class, 'dataSekunder'])->name('dataSekunder');
-		Route::get('/Ubah-Password', [UbahPassword::class, 'ubahPassword'])->name('ubahPassword');
-		Route::get('/Reset-Password', [ResetPassword::class, 'resetPassword'])->name('resetPassword');
-
-		Route::get('/tambah-data-Pelajaran', [DataPelajaran::class, 'tambahdataPelajaran'])->name('tambahdataPelajaran');
-		Route::post('/simpan-data-Pelajaran', [DataPelajaran::class, 'simpandataPelajaran'])->name('simpandataPelajaran');
-		Route::get('/edit-data-Pelajaran/{id}', [DataPelajaran::class, 'editdataPelajaran'])->name('editdataPelajaran');
-		Route::post('/update-data-Pelajaran/{id}', [DataPelajaran::class, 'updatedataPelajaran'])->name('updatedataPelajaran');
-		Route::get('/hapus-data-Pelajaran/{id}', [DataPelajaran::class, 'hapusdataPelajaran'])->name('hapusdataPelajaran');
-		Route::get('/datapetugas-primer', [DataPetugasPrimer::class, 'dataPetugasPrimer'])->name('dataprimerPetugas');
-		Route::get('/bankdatapetugas-primer', [DataPetugasPrimer::class, 'bankdataPetugasPrimer'])->name('bankdataprimerPetugas');
-		Route::get('/tambahdataprimer-petugas', [DataPetugasPrimer::class, 'create'])->name('createdataprimerPetugas');
-		Route::post('/savedataprimer-petugas', [DataPetugasPrimer::class, 'store'])->name('savedataprimerPetugas');
-		Route::get('/editdataprimer-petugas/{id}', [DataPetugasPrimer::class, 'edit'])->name('editdataprimerPetugas');
-		Route::patch('/updatedataprimer-petugas/{id}', [DataPetugasPrimer::class, 'update'])->name('updatedataprimerPetugas');
-		Route::get('/datapetugas-sekunder', [DataPetugasSekunder::class, 'dataPetugasSekunder'])->name('datasekunderPetugas');
-		Route::get('/bankdatapetugas-sekunder', [DataPetugasSekunder::class, 'bankdataPetugasSekunder'])->name('bankdatasekunderPetugas');
-		Route::get('/tambahdatasekunder-petugas', [DataPetugasSekunder::class, 'create'])->name('createdatasekunderPetugas');
-		Route::get('/updatedatasekunder-petugas', [DataPetugasSekunder::class, 'update'])->name('updatedatasekunderPetugas');
-		Route::get('/reset-petugas', [PengaturanPetugas::class, 'mainResetPetugas'])->name('resetPetugas');
-		Route::get('/pengaturan-petugas', [PengaturanPetugas::class, 'mainPengaturanPetugas'])->name('pengaturanPetugas'); //ganti password
-		Route::post('/pengaturan-petugas', [Auth::class, 'prosesChangePassword'])->name('pengaturanPetugas');
+		Route::group(array('prefix' => 'data-pelajaran'), function () {
+			Route::get('/', [DataPelajaran::class, 'main'])->name('dataPelajaran');
+			Route::post('/form', [DataPelajaran::class, 'form'])->name('formDataPelajaran');
+			Route::post('/store', [DataPelajaran::class, 'save'])->name('saveDataPelajaran');
+			Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
+		});
+		Route::group(array('prefix' => 'data-pelajaran'), function () {
+			Route::get('/', [DataPelajaran::class, 'main'])->name('dataPelajaran');
+			Route::post('/form', [DataPelajaran::class, 'form'])->name('formDataPelajaran');
+			Route::post('/store', [DataPelajaran::class, 'save'])->name('saveDataPelajaran');
+			Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
+		});
+		Route::group(array('prefix' => 'data-pengembangan-diri'), function () {
+			Route::get('/', [DataPelajaran::class, 'main'])->name('dataPengembanganDiri');
+			// Route::post('/form', [DataPelajaran::class, 'form'])->name('formDataPelajaran');
+			// Route::post('/store', [DataPelajaran::class, 'save'])->name('saveDataPelajaran');
+			// Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
+		});
+		Route::group(array('prefix' => 'data-administrasi'), function () {
+			Route::get('/', [DataPelajaran::class, 'main'])->name('dataAdministrasi');
+			// Route::post('/form', [DataPelajaran::class, 'form'])->name('formDataPelajaran');
+			// Route::post('/store', [DataPelajaran::class, 'save'])->name('saveDataPelajaran');
+			// Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
+		});
+		Route::group(array('prefix' => 'berbagi-dokumen'), function () {
+			Route::get('/', [DataPelajaran::class, 'main'])->name('berbagiDokumen');
+			// Route::post('/form', [DataPelajaran::class, 'form'])->name('formDataPelajaran');
+			// Route::post('/store', [DataPelajaran::class, 'save'])->name('saveDataPelajaran');
+			// Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
+		});
+		Route::group(array('prefix' => 'profile'), function () {
+			Route::get('/', [DataPelajaran::class, 'main'])->name('profile');
+			// Route::post('/form', [DataPelajaran::class, 'form'])->name('formDataPelajaran');
+			// Route::post('/store', [DataPelajaran::class, 'save'])->name('saveDataPelajaran');
+			// Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
+		});
+		Route::group(array('prefix' => 'reset-akun'), function () {
+			Route::get('/', [Pengaturan::class, 'main'])->name('resetAkun');
+			Route::post('/reset', [Pengaturan::class, 'reset'])->name('resetAkunUser');
+			Route::post('/remove', [Pengaturan::class, 'remove'])->name('removeAkunUser');
+		});
+		Route::group(array('prefix' => 'pengaturan'), function () {
+			Route::get('/', [Pengaturan::class, 'form'])->name('pengaturan');
+			Route::post('/store', [Pengaturan::class, 'save'])->name('savePengaturan');
+		});
 	});
 	Route::group(array('prefix' => 'guru-pengajar'), function () { #Web petugas sekolah
 		Route::get('/', [Dashboard::class, 'mainGuru'])->name('dashboardGuru');
