@@ -14,7 +14,7 @@ class DataTugasPegawaiController extends Controller
 		$this->title = 'Data Tugas Pegawai';
 	}
 
-    public function dataTugasPegawai() {
+    public function main(Request $request) {
         if(request()->ajax()){
             $data = TugasPegawai::orderBy('id_tugas_pegawai','ASC')->get();
 			
@@ -22,13 +22,10 @@ class DataTugasPegawaiController extends Controller
 				->addIndexColumn()
 				->addColumn('actions', function($row){
 					$txt = "
-                    <button class='btn btn-sm btn-secondary' title='Edit' onclick='editData(`$row->id_tugas_pegawai`)'><i class='fadeIn animated bx bxs-file' aria-hidden='true'></i></button>
+                    <button class='btn btn-sm btn-secondary' title='Edit' onclick='formAdd(`$row->id_tugas_pegawai`)'><i class='fadeIn animated bx bxs-edit' aria-hidden='true'></i></button>
                     <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusData(`$row->id_tugas_pegawai`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>
 					";
 					return $txt;
-				})
-                ->addColumn('guru', function($row){
-					return "Testinggg";
 				})
 				->rawColumns(['actions'])
 				->toJson();
@@ -38,7 +35,8 @@ class DataTugasPegawaiController extends Controller
         return view('content.petugas.datatugaspegawai.main', $data);
     }
 
-    public function tambahTugasPegawai(Request $request) {
+    public function modalForm(Request $request)
+    {
         if (empty($request->id)) {
             $data['title'] = "Tambah ".$this->title;
             $data['data'] = '';    
@@ -46,8 +44,8 @@ class DataTugasPegawaiController extends Controller
             $data['title'] = "Edit ".$this->title;
             $data['data'] = TugasPegawai::where('id_tugas_pegawai',$request->id)->first();
 		}
-        $content = view('content.petugas.datatugaspegawai.form', $data)->render();
-		return ['status' => 'success', 'content' => $content, 'data' => $data];
+        $content = view('content.petugas.datatugaspegawai.modal', $data)->render();
+		return ['content'=>$content];
     }
 
     public function save(Request $request) {
@@ -56,13 +54,22 @@ class DataTugasPegawaiController extends Controller
         } else {
             $data = TugasPegawai::find($request->id);
         }
-        $data->kode_tugas = $request->kode_tugas;
         $data->nama_tugas = $request->nama_tugas;
         $data->save();
         if ($data) {
             return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Disimpan.'];
         } else {
             return ['code'=>201,'status'=>'error','message'=>'Data Gagal Disimpan.'];
+        }
+    }
+
+    public function delete(Request $request) {
+        $data = TugasPegawai::find($request->id);
+        $data->delete();
+        if ($data) {
+            return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Dihapus.'];
+        } else {
+            return ['code'=>201,'status'=>'error','message'=>'Data Gagal Dihapus.'];
         }
     }
 }

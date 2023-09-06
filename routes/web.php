@@ -204,21 +204,23 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::post('/store-data-penugasan', [DataGuru::class, 'saveDataPenugasan'])->name('saveDataPenugasan');
 			Route::post('/store-data-pendukung', [DataGuru::class, 'saveDataPendukung'])->name('saveDataPendukung');
 		});
-		Route::group(array('prefix' => 'data-tugas-pegawai'), function () {
-			Route::get('/', [DataTugasPegawai::class, 'dataTugasPegawai'])->name('dataTugasPegawai');
+		Route::group(array('prefix'=>'data-tugas-pegawai'), function(){
+			Route::get('/', [DataTugasPegawai::class, 'main'])->name('dataTugasPegawai');
 			Route::post('/modal-form', [DataTugasPegawai::class, 'modalForm'])->name('tugasModalForm');
-			// Route::post('/tambah', [DataTugasPegawai::class, 'tambahTugasPegawai'])->name('tambahTugasPegawai');
 			Route::post('/store', [DataTugasPegawai::class, 'save'])->name('saveTugasPegawai');
+			Route::post('/delete', [DataTugasPegawai::class, 'delete'])->name('deleteTugasPegawai');
 		});
 		Route::group(array('prefix' => 'data-kelas'), function () {
 			Route::get('/', [DataKelas::class, 'main'])->name('dataKelas');
-			Route::post('/tambah', [DataKelas::class, 'tambahDataKelas'])->name('tambahKelas');
+			Route::post('/modal-form', [DataKelas::class, 'modalForm'])->name('kelasModalForm');
 			Route::post('/store', [DataKelas::class, 'save'])->name('saveKelas');
+			Route::post('/delete', [DataKelas::class, 'delete'])->name('deleteKelas');
 		});
 		Route::group(array('prefix' => 'data-pelajaran'), function () {
 			Route::get('/', [DataPelajaran::class, 'main'])->name('dataPelajaran');
 			Route::post('/form', [DataPelajaran::class, 'form'])->name('formDataPelajaran');
 			Route::post('/store', [DataPelajaran::class, 'save'])->name('saveDataPelajaran');
+			Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
 		});
 		Route::get('/data-Primer', [DataPrimer::class, 'dataPrimer'])->name('dataPrimer');
 		Route::get('/data-Sekunder', [DataSekunder::class, 'dataSekunder'])->name('dataSekunder');
