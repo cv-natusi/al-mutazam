@@ -25,13 +25,14 @@ class DataPelajaranController extends Controller
 				->addIndexColumn()
 				->addColumn('actions', function($row){
 					$txt = "
-                    <button class='btn btn-sm btn-secondary' title='Edit' onclick='editData(`$row->id_tugas_pegawai`)'><i class='fadeIn animated bx bxs-file' aria-hidden='true'></i></button>
-                    <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusData(`$row->id_tugas_pegawai`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>
+                    <button class='btn btn-sm btn-secondary' title='Edit' onclick='formAdd(`$row->id_pelajaran`)'><i class='fadeIn animated bx bxs-file' aria-hidden='true'></i></button>
+                    <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusData(`$row->id_pelajaran`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>
 					";
 					return $txt;
 				})
                 ->addColumn('kelas', function($row){
-                    $txt = MstKelas::where('id_kelas', $row->kelas_id)->first()->nama_kelas;
+                    $kelas = MstKelas::where('id_kelas', $row->kelas_id)->first();
+                    $txt = "Kelas ".$kelas->kelas." ".$kelas->nama_kelas;
                     return $txt;
 				})
                 ->addColumn('guru', function($row){
@@ -46,7 +47,7 @@ class DataPelajaranController extends Controller
         return view('content.petugas.datapelajaran.main', $data);
     }
 
-    public function form()
+    public function form(Request $request)
     {
         if (empty($request->id)) {
             $data['title'] = "Tambah ".$this->title;
@@ -69,7 +70,7 @@ class DataPelajaranController extends Controller
             $data = MstPelajaran::find($request->id);
         }
         try {
-            $data->nama_mapel = $request->nama_mapel;
+            $data->nama_mapel = strtoupper($request->nama_mapel);
             $data->kelas_id = $request->kelas_id;
             $data->ta = $request->ta;
             $data->semester = $request->semester;
@@ -85,10 +86,13 @@ class DataPelajaranController extends Controller
         }
     }
 
-    public function hapusdataPelajaran($id)
-    {
-        $pelajaran = Pelajaran::findorfail($id);
-        $pelajaran->delete();
-        return back()->with('toast_success', 'Data Berhasil Diubah');
+    public function delete(Request $request) {
+        $data = MstPelajaran::find($request->id);
+        $data->delete();
+        if ($data) {
+            return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Dihapus.'];
+        } else {
+            return ['code'=>201,'status'=>'error','message'=>'Data Gagal Dihapus.'];
+        }
     }
 }

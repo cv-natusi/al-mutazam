@@ -29,31 +29,12 @@ class DataGuruController extends Controller
 				->addIndexColumn()
 				->addColumn('actions', function($row){
 					$txt = "
-                      <button style='color: #fff' class='btn btn-sm btn-secondary' title='Detail' onclick='Edit(`$row->id_guru`)'><i class='fadeIn animated bx bx-show' aria-hidden='true'></i></button>
-                      <button style='color: #fff' class='btn btn-sm btn-info' title='Edit' onclick='Detail(`$row->id_guru`)'><i class='fadeIn animated bx bxs-file' aria-hidden='true'></i></button>
+                    <button style='color: #fff' class='btn btn-sm btn-secondary' title='Detail' onclick='Detail(`$row->id_guru`)'><i class='fadeIn animated bx bxs-file-find' aria-hidden='true'></i></button>
+                    <button style='color: #fff' class='btn btn-sm btn-danger' title='Delete' onclick='Delete(`$row->id_guru`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>
 					";
 					return $txt;
 				})
-                ->addColumn('bank', function($row){
-					$txt = "
-                      <button style='color: #fff' class='btn btn-sm btn-info' title='Bank Primer'>Premier</button>
-                      <button style='color: #fff' class='btn btn-sm btn-primary' title='Bank Sekunder'>Sekunder</button>
-					";
-					return $txt;
-				})
-                ->addColumn('tugas', function($row){
-					$text = TugasPegawai::where('id_tugas_pegawai', $row->tugas_utama)->first()->nama_tugas;
-                    return $text;
-				})
-                ->addColumn('status', function($row){
-					if ($row->status_guru == true) {
-                        $text = 'Aktif';
-                    } else {
-                        $text = 'Tidak Aktif';
-                    }
-                    return $text;
-				})
-				->rawColumns(['actions', 'bank'])
+				->rawColumns(['actions'])
 				->toJson();
 		}
 
@@ -89,6 +70,9 @@ class DataGuruController extends Controller
 		return ['status' => 'success', 'content' => $content, 'data' => $data];
     }
 
+    public function saveDataDiri(Request $request) {
+        return $request->all();
+    }
     public function save(Request $request){
         if (empty($request->id)) {
             $data = new Guru;
