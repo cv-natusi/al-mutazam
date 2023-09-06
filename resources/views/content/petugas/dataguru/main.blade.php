@@ -66,7 +66,6 @@
                                     <td>Nama Guru</td>
                                     <td>Tanggal Lahir</td>
                                     <td>Alamat</td>
-                                    <td>No. Telp</td>
                                     <td>Aksi</td>
                                 </tr>
                             </thead>
@@ -117,8 +116,6 @@
                 { data: "nama", name: "nama"},
                 { data: "tanggal_lahir", name: "tanggal_lahir"},
                 { data: "alamat", name: "alamat"},
-                { data: "telepon", name: "telepon"},
-                { data: "bank", name: "bank"},
                 { data: "actions", name: "actions", class: "text-center"},
             ],
         })

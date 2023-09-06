@@ -14,12 +14,10 @@
             <div class="card-body">
                 <div class="row mb-3" style="margin-top: 1rem">
                     <div class="col-md-3">
-                        <button type="button" class="btn btn-primary btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> Tambah Pelajaran Baru</button>
+                        <button type="button" class="btn button-custome btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> Tambah</button>
                     </div>
                     <div class="col-md-7"></div>
-                    <div class="col-md-2">
-                        <button type="button" class="btn btn-info btn-sm float-end" style="width: 100%; color: #fff" onclick="print()"><i class="bx bxs-printer"></i> Print</button>
-                    </div>
+                    <div class="col-md-2"></div>
                 </div>
 
                 <div class="row" style="margin-top: 2rem">
@@ -30,7 +28,7 @@
                                     <td>No</td>
                                     <td>Nama Pelajaran</td>
                                     <td>Kelas</td>
-                                    <td>TA</td>
+                                    <td>Tahun Ajaran</td>
                                     <td>Semester</td>
                                     <td>Guru Pengajar</td>
                                     <td>Aksi</td>
@@ -89,6 +87,7 @@
         })
     }
     function formAdd(id='') {
+        console.log(id)
         $('.main-layer').hide();
         $.post("{{route('formDataPelajaran')}}", {id:id})
         .done(function(data){
@@ -103,6 +102,43 @@
             $('.main-layer').show();
         })
     }
+    function hapusData(id) {
+		Swal.fire({
+			title: "Apakah Anda yakin?",
+			text: "Data yang dihapus tidak dapat dikembalikan lagi.",
+			icon: 'warning',
+			showCancelButton: true,
+			cancelButtonText: 'Batal',
+			confirmButtonText: 'Hapus',
+		}).then((result) => {
+			if (result.value) {
+				$.post("{{ route('deleteDataPelajaran') }}",{id:id}).done(function(data) {
+					if(data.code==200){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1200
+                        })
+                        location.reload()
+                    }else{
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Whoops',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1300,
+                        })
+                    }
+				}).fail(function() {
+					Swal.fire("Sorry!", "Gagal menghapus data!", "error");
+				});
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				Swal.fire("Batal", "Data batal dihapus!", "error");
+			}
+		});
+	}
     function hideForm(){
         $('.other-page').empty()
         $('.main-layer').show()

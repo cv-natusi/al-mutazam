@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('mst_kelas', function (Blueprint $table) {
             $table->bigIncrements('id_kelas');
             $table->string('kelas');
-            $table->string('kode_kelas');
             $table->string('nama_kelas');
             $table->integer('guru_id');
             $table->timestamps();

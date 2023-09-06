@@ -14,7 +14,7 @@
             <div class="card-body">
                 <div class="row mb-3" style="margin-top: 1rem">
                     <div class="col-md-3">
-                        <button type="button" class="btn button-custome btn-sm" style="width: 100%" onclick="modalForm()"><i class="bx bxs-plus-square"></i> Tambah</button>
+                        <button type="button" class="btn button-custome btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> Tambah</button>
                     </div>
                     <div class="col-md-7"></div>
                     <div class="col-md-2"></div>
@@ -25,9 +25,9 @@
                         <table id="datatabel" class="table table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
-                                    <td>No</td>
-                                    <td>Nama Tugas/Jabatan</td>
-                                    <td>Aksi</td>
+                                    <td style="width: 6%">No</td>
+                                    <td style="width: 88%">Nama Tugas/Jabatan</td>
+                                    <td style="width: 6%">Aksi</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -78,28 +78,50 @@
             ],
         })
     }
-    function modalForm(id) {
-       $.post("{{route('tugasModalForm')}}",{id:id},function(data){
+    function formAdd(id) {
+        $.post("{{route('tugasModalForm')}}",{id:id},function(data){
 			$("#modalForm").html(data.content);
 		});
     }
-    function formAdd(id='') {
-        $('.main-layer').hide();
-        $.post("{{route('tambahTugasPegawai')}}", {id:id})
-        .done(function(data){
-			if(data.status == 'success'){
-				$('.other-page').html(data.content).fadeIn();
-			} else {
-				$('.main-layer').show();
+    function hapusData(id) {
+		Swal.fire({
+			title: "Apakah Anda yakin?",
+			text: "Data yang dihapus tidak dapat dikembalikan lagi.",
+			icon: 'warning',
+			showCancelButton: true,
+			cancelButtonText: 'Batal',
+			confirmButtonText: 'Hapus',
+		}).then((result) => {
+			if (result.value) {
+				$.post("{{ route('deleteTugasPegawai') }}",{id:id}).done(function(data) {
+					if(data.code==200){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1200
+                        })
+                        location.reload()
+                    }else{
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Whoops',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1300,
+                        })
+                    }
+				}).fail(function() {
+					Swal.fire("Sorry!", "Gagal menghapus data!", "error");
+				});
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				Swal.fire("Batal", "Data batal dihapus!", "error");
 			}
-		})
-        .fail(() => {
-            $('.other-page').empty();
-            $('.main-layer').show();
-        })
-    }
+		});
+	}
     function hideForm(){
-        $('.other-page').empty()
+        $('#modalForm').hide()
         $('.main-layer').show()
     }
 </script>

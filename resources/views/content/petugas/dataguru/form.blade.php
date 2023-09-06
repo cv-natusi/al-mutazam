@@ -76,7 +76,7 @@
 	});
     // Store Data Diri
     $('.simpanDataDiri').click(()=>{
-		var data = new FormData($('.formSave')[0])
+		var data = new FormData($('.formDataDiri')[0])
 		$('.simpanDataDiri').attr('disabled',true).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>LOADING...')
         $.ajax({
             url: '{{route("saveDataDiri")}}',
