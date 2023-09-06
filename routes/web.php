@@ -195,17 +195,17 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::group(array('prefix' => 'petugas-sekolah'), function () { #Web petugas sekolah
 		Route::get('/', [Dashboard::class, 'mainPetugas'])->name('dashboardPetugas');
 		Route::group(array('prefix'=>'data-guru'), function(){
-			Route::get('/', [DataGuru::class, 'dataGuru'])->name('dataGuru');
-			Route::post('/tambah', [DataGuru::class, 'tambahGuru'])->name('tambahGuru');
-			Route::get('/update', [DataGuru::class, 'editGuru'])->name('editGuru');
-			Route::get('/detail', [DataGuru::class, 'detailGuru'])->name('detailGuru');
-			Route::post('/store', [DataGuru::class, 'save'])->name('saveGuru');
-			Route::get('/data-primer', [DataGuru::class, 'primerGuru'])->name('primerGuru');
-			Route::get('/data-sekunder', [DataGuru::class, 'sekunderGuru'])->name('sekunderGuru');
+			Route::get('/', [DataGuru::class, 'main'])->name('dataGuru');
+			Route::post('/form', [DataGuru::class, 'form'])->name('tambahGuru');
+			Route::post('/store-data-diri', [DataGuru::class, 'saveDataDiri'])->name('saveDataDiri');
+			Route::post('/store-data-pendidikan', [DataGuru::class, 'saveDataPendidikan'])->name('saveDataPendidikan');
+			Route::post('/store-data-penugasan', [DataGuru::class, 'saveDataPenugasan'])->name('saveDataPenugasan');
+			Route::post('/store-data-pendukung', [DataGuru::class, 'saveDataPendukung'])->name('saveDataPendukung');
 		});
 		Route::group(array('prefix'=>'data-tugas-pegawai'), function(){
 			Route::get('/', [DataTugasPegawai::class, 'dataTugasPegawai'])->name('dataTugasPegawai');
-			Route::post('/tambah', [DataTugasPegawai::class, 'tambahTugasPegawai'])->name('tambahTugasPegawai');
+			Route::post('/modal-form', [DataTugasPegawai::class, 'modalForm'])->name('tugasModalForm');
+			// Route::post('/tambah', [DataTugasPegawai::class, 'tambahTugasPegawai'])->name('tambahTugasPegawai');
 			Route::post('/store', [DataTugasPegawai::class, 'save'])->name('saveTugasPegawai');
 		});
 		Route::group(array('prefix'=>'data-kelas'), function(){

@@ -14,12 +14,10 @@
             <div class="card-body">
                 <div class="row mb-3" style="margin-top: 1rem">
                     <div class="col-md-3">
-                        <button type="button" class="btn btn-primary btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> Tambah Tugas Pegawai</button>
+                        <button type="button" class="btn button-custome btn-sm" style="width: 100%" onclick="modalForm()"><i class="bx bxs-plus-square"></i> Tambah</button>
                     </div>
                     <div class="col-md-7"></div>
-                    <div class="col-md-2">
-                        <button type="button" class="btn btn-info btn-sm float-end" style="width: 100%; color: #fff" onclick="print()"><i class="bx bxs-printer"></i> Print</button>
-                    </div>
+                    <div class="col-md-2"></div>
                 </div>
 
                 <div class="row" style="margin-top: 2rem">
@@ -28,8 +26,7 @@
                             <thead>
                                 <tr>
                                     <td>No</td>
-                                    <td>Kode Jabatan</td>
-                                    <td>Nama Jabatan</td>
+                                    <td>Nama Tugas/Jabatan</td>
                                     <td>Aksi</td>
                                 </tr>
                             </thead>
@@ -40,7 +37,7 @@
                 </div>
             </div>
         </div>
-        <div class="other-page"></div>
+        <div id="modalForm"></div>
     </div>
 @endsection
 
@@ -76,11 +73,15 @@
             },
             columns: [
                 { data: "DT_RowIndex", name: "DT_RowIndex"},
-                { data: "kode_tugas", name: "kode_tugas"},
                 { data: "nama_tugas", name: "nama_tugas"},
                 { data: "actions", name: "actions", class: "text-center"},
             ],
         })
+    }
+    function modalForm(id) {
+       $.post("{{route('tugasModalForm')}}",{id:id},function(data){
+			$("#modalForm").html(data.content);
+		});
     }
     function formAdd(id='') {
         $('.main-layer').hide();

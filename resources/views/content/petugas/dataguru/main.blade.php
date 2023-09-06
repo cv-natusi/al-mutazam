@@ -35,6 +35,10 @@
             border-radius: 6px;
             overflow: hidden;
         }
+        .btnFormAdd{
+            background: #32762C80 !important;
+            color: #ffffff !important;
+        }
     </style>
 @endpush
 
@@ -46,12 +50,10 @@
             <div class="card-body">
                 <div class="row mb-3" style="margin-top: 1rem">
                     <div class="col-md-3">
-                        <button type="button" class="btn btn-primary btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> TAMBAH GURU BARU</button>
+                        <button type="button" class="btn btnFormAdd btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> TAMBAH</button>
                     </div>
                     <div class="col-md-7"></div>
-                    <div class="col-md-2">
-                        <button type="button" class="btn btn-info btn-sm float-end" style="width: 100%" onclick="print()"><i class="bx bxs-printer"></i> PRINT</button>
-                    </div>
+                    <div class="col-md-2"></div>
                 </div>
 
                 <div class="row" style="margin-top: 2rem">
@@ -60,12 +62,11 @@
                             <thead>
                                 <tr>
                                     <td>No</td>
-                                    <td>NIK</td>
+                                    <td>NIP</td>
                                     <td>Nama Guru</td>
-                                    <td>Tugas Utama</td>
-                                    <td>No.Telepon</td>
-                                    <td>Status</td>
-                                    <td>Bank Data</td>
+                                    <td>Tanggal Lahir</td>
+                                    <td>Alamat</td>
+                                    <td>No. Telp</td>
                                     <td>Aksi</td>
                                 </tr>
                             </thead>
@@ -112,11 +113,11 @@
             },
             columns: [
                 { data: "DT_RowIndex", name: "DT_RowIndex"},
-                { data: "nik", name: "nik"},
+                { data: "nip", name: "nip"},
                 { data: "nama", name: "nama"},
-                { data: "tugas", name: "tugas"},
+                { data: "tanggal_lahir", name: "tanggal_lahir"},
+                { data: "alamat", name: "alamat"},
                 { data: "telepon", name: "telepon"},
-                { data: "status", name: "status"},
                 { data: "bank", name: "bank"},
                 { data: "actions", name: "actions", class: "text-center"},
             ],

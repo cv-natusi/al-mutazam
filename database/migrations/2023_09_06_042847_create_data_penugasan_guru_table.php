@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('datasekunder', function (Blueprint $table) {
-            $table->id();
-            $table->string('namadataprimer_guru');
-            $table->date('tahun');
-            $table->date('batas_upload');
-            $table->date('tgl_upload');
-            $table->string('keterangan');
-            $table->string('status');
+        Schema::create('data_penugasan_guru', function (Blueprint $table) {
+            $table->bigIncrements('id_data_penugasan');
+            $table->integer('guru_id');
+            $table->integer('tugas_utama');
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('datasekunder');
+        Schema::dropIfExists('data_penugasan_guru');
     }
 };

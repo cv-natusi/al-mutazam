@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dataprimer', function (Blueprint $table) {
-            $table->id();
-            $table->string('namadataprimer_guru');
-            $table->date('tahun');
-            $table->date('batas_upload');
-            $table->date('tgl_upload');
-            $table->string('keterangan');
-            $table->string('status');
+        Schema::create('detail_data_pendidikan_guru', function (Blueprint $table) {
+            $table->bigIncrements('id_detail_data_pendidikan');
+            $table->integer('data_pendidikan_id');
+            $table->integer('mata_pelajaran');
+            $table->string('jumlah_jam');
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dataprimer');
+        Schema::dropIfExists('detail_data_pendidikan_guru');
     }
 };
