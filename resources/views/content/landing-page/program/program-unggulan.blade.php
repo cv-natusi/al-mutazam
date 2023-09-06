@@ -28,7 +28,7 @@
 			@foreach ($beritas as $index => $berita)
 			<div class="col-md-4">
 				<div class="t-3-photo mb-25">
-					<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('uploads/berita/'.$berita->gambar)}}" alt="slide-background" data-toggle="modal" data-target="#modal-detail">
+					<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" id="read-more-{{$berita->id_berita}}" onclick="modalShow(`{{$berita->id_berita}}`)" src="{{asset('uploads/berita/'.$berita->gambar)}}" alt="slide-background" data-toggle="modal" data-target="#modal-detail">
 					<h5 class="mt-3 text-center">{{$berita->judul}}</h5>
 				</div>
 			</div>
@@ -55,17 +55,17 @@
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #5A79CB;">
-					<h5 class="modal-title fs-5" id="modal-detail" style="color: white;">Study Tour Bahasa Arab dan Inggris </h5>
+					<h5 class="modal-title fs-5" id="modal-detail" style="color: white;">{{$berita->judul}}</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				</div>
 				<div class="modal-body">
 					<div class="contact-box">
 						<div class="row">
-							<div class="col-md-3 mtb-auto">
-								<img class="img-80" src="{{asset('landing-page/images/slider/slide-3.jpg')}}">
+							<div class="col-md-5 mtb-auto">
+								<img class="img-fluid" src="{{asset('uploads/berita/'.$berita->gambar)}}">
 							</div>
-							<div class="col-md-9 mtb-auto text-left">
-								<span class="fw4">Panduan Pembuatan Soal Ujian Tahun 2036/2027 Link Download File<br></span>
+							<div class="col-md-7 mtb-auto text-left">
+								<h6 class="fw4">{{$berita->isi}}</h6>
 							</div>
 						</div>
 					</div>
@@ -76,3 +76,102 @@
 </section>
 
 @endsection
+
+@push('script')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript">
+	async function modalShow(id) {
+		try {
+			await $.ajax({
+				url: '{{route("program.searchUnggulan")}}',
+				type: 'POST',
+				data: {
+					id: id
+				},
+			}).done(async (data, textStatus, xhr) => {
+				const code = xhr.status
+				const rootDir = '{{URL::asset(' / uploads / berita ')}}'
+				const defaultDir = '{{URL::asset(' / ')}}'
+				if (code !== 200) {
+					await Swal.fire({
+						icon: 'info',
+						title: 'Whoops..',
+						text: 'Data not found',
+						allowOutsideClick: false,
+						allowEscapeKey: false,
+					})
+					return false
+				}
+				await $('.modal-title').text(data.response.judul)
+				await $('#modal-img').attr('src', `${rootDir}/${data.response.gambar}`)
+				await $('#event-text').html(data.response.isi)
+				await $('#modal-img').on('error', async () => {
+					await $('#modal-img').attr('src', `${defaultDir}/default.jpg`)
+				})
+				$('.modal').fadeIn("slow")
+			})
+		} catch (error) {
+			await Swal.fire({
+				icon: 'error',
+				title: 'ERROR!',
+				text: error.responseJSON.metadata.message,
+				allowOutsideClick: false,
+				allowEscapeKey: false,
+			})
+		}
+	}
+
+	$(document).ready(() => {
+		$('.close-modal').click(() => {
+			$('.modal').fadeOut("slow")
+		})
+
+		var maxWord = 15;
+		$(".content").each(function() {
+			var myStr = $(this).html()
+			var id = $(this).data('id')
+			if (myStr.split(' ').length > maxWord) {
+				var arrStr = myStr.split(' ')
+
+				var newStr = filterArray(arrStr, maxWord, `first`)
+				var removedStr = filterArray(arrStr, maxWord, 'second')
+
+				newStr = newStr.join(' ')
+				removedStr = removedStr.join(' ')
+
+				$(this).empty().html(newStr + '...')
+				$(this).data('first', newStr + '...')
+				$(this).data('second', ' ' + removedStr)
+			}
+		})
+	})
+
+	function filterArray(array, num, prefix) {
+		var arrStr = $.grep(array, function(v, i) {
+			if (prefix === 'first') {
+				if (i < num) {
+					return v.indexOf('1');
+				}
+			} else {
+				if (i >= num) {
+					return v.indexOf('1');
+				}
+			}
+		})
+		return arrStr
+	}
+
+	function readMore(id) {
+		var textButton = $(`#read-more-${id}`).text()
+		var firstText = $(`#content-${id}`).data('first')
+		var secondText = $(`#content-${id}`).data('second')
+		if (textButton === '[Baca Selengkapnya]') {
+			$(`#content-${id}`).empty().html(firstText.slice(0, -3) + secondText)
+			$(`#read-more-${id}`).text('[Baca Lebih Sedikit]')
+		} else {
+			$(`#content-${id}`).empty().html(firstText)
+			$(`#read-more-${id}`).text('[Baca Selengkapnya]')
+		}
+	}
+</script>
+@endpush
