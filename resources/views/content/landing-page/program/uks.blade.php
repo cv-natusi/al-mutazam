@@ -27,9 +27,9 @@
 			<div class="row">
 				<div class="col-md-8 mt-4">
 					
-                    <img class="img" src="{{asset('uploads/identitas/'.$ekskul->foto_uks)}}" alt="contacts-icon" style="margin-bottom: 30px; width: 100%; border-radius: 15px">
+                    <img class="img" src="{{asset('uploads/identitas/'.$identity->foto_uks)}}" alt="contacts-icon" style="margin-bottom: 30px; width: 100%; border-radius: 15px">
 					<section id="contacts-2" class="contacts-section division">
-						<p>{!! $ekskul->uks !!}</p>
+						<p>{!! $identity->uks !!}</p>
 					</section>
 				</div>
 							
