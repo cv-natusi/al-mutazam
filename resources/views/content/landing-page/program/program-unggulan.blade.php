@@ -1,7 +1,8 @@
 @extends('layout.landing-page.main')
 
 @push('style')
-	<link href="{{asset('plugins/datatable/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet">
+<link href="{{asset('plugins/datatable/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 @endpush
 @section('content')
 <section id="hero-1" class="hero-section division">
@@ -11,7 +12,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<h3 class="h3-sm mt-4"><b>UNGGULAN</b></h3>
-					<h4 class="m-0 fw7">MTs Al-Multazam</h4>
+						<h4 class="m-0 fw7">MTs Al-Multazam</h4>
 					</div>
 				</div>
 			</div>
@@ -33,7 +34,10 @@
 			</div>
 			@endforeach
 		</div>
-		<nav aria-label="Page navigation example">
+		<div class="d-flex justify-content-center">
+			{!! $beritas->links() !!}
+		</div>
+		<!-- <nav aria-label="Page navigation example">
 			<ul class="pagination justify-content-center">
 				<li class="page-item disabled">
 					<a class="page-link" href="#" tabindex="-1" aria-disabled="true">‹</a>
@@ -45,12 +49,12 @@
 					<a class="page-link" href="#">›</a>
 				</li>
 			</ul>
-		</nav>
+		</nav> -->
 	</div>
 	<div class="modal fade" id="modal-detail" tabindex="-1" aria-labelledby="modal-detailLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
-				<div class="modal-header"  style="background-color: #5A79CB;">
+				<div class="modal-header" style="background-color: #5A79CB;">
 					<h5 class="modal-title fs-5" id="modal-detail" style="color: white;">Study Tour Bahasa Arab dan Inggris </h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				</div>
@@ -70,6 +74,5 @@
 		</div>
 	</div>
 </section>
-	
-@endsection
 
+@endsection

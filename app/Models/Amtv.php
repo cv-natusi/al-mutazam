@@ -9,30 +9,12 @@ class Amtv extends Model
 {
     use HasFactory;
     protected $table = 'amtv';
-    protected $fillable = ['id_amtv','judul_amtv','file','status_amtv'];
+    protected $fillable = ['id_amtv', 'judul_amtv', 'file', 'status_amtv'];
     protected $primaryKey = "id_amtv";
     public $timestamps = false;
 
-    public static function getAmtv($input)
+    public static function getAmtvPaginate()
     {
-        $table  = 'amtv';
-        $select = '*';
-        
-        $replace_field  = [
-            ['old_name' => 'statu', 'new_name' => 'status_amtv'],
-        ];
-
-        $param = [
-            'input'         => $input->all(),
-            'select'        => $select,
-            'table'         => $table,
-            'replace_field' => $replace_field
-        ];
-        $datagrid = new Datagrid;
-        $data = $datagrid->datagrid_query($param, function($data){
-            return $data;
-            // return $data;
-        });
-        return $data;
+        return Amtv::where('status_amtv', 1)->orderBy('id_amtv', 'DESC')->paginate(9);
     }
 }

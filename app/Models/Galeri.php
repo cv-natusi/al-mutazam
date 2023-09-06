@@ -9,7 +9,7 @@ class Galeri extends Model
 {
     use HasFactory;
     protected $table = 'galeri';
-    protected $fillable = ['id_galeri','file_galeri','deskripsi_galeri','kategori_galeri'];
+    protected $fillable = ['id_galeri', 'file_galeri', 'deskripsi_galeri', 'kategori_galeri'];
     protected $primaryKey = "id_galeri";
     public $timestamps = false;
 
@@ -17,7 +17,7 @@ class Galeri extends Model
     {
         $table  = 'galeri';
         $select = '*';
-        
+
         $replace_field  = [
             ['old_name' => 'statu', 'new_name' => 'status_galeri'],
         ];
@@ -29,10 +29,14 @@ class Galeri extends Model
             'replace_field' => $replace_field
         ];
         $datagrid = new Datagrid;
-        $data = $datagrid->datagrid_query($param, function($data){
-            return $data; 
+        $data = $datagrid->datagrid_query($param, function ($data) {
+            return $data;
             // return $data;
         });
         return $data;
+    }
+    public static function getGaleriesPaginate()
+    {
+        return Galeri::where('status_galeri', '1')->orderBy('id_galeri', 'DESC')->paginate(9);
     }
 }
