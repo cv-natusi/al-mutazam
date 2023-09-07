@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('nrg_npk')->nullable();
             $table->string('tmt_pegawai')->nullable();
             $table->string('tmt_guru')->nullable();
-            $table->boolean('email')->nullable();
+            $table->string('email')->nullable();
             $table->string('email_madrasah')->nullable();
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');

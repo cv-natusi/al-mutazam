@@ -12,29 +12,18 @@
 
         <div class="card main-layer">
             <div class="card-header bg-card">
-                <h5 class="text-card">Data Pelajaran</h5>
+                <h5 class="text-card">Reset Akun</h5>
             </div>
             <div class="card-body">
-                <div class="row mb-3" style="margin-top: 1rem">
-                    <div class="col-md-3">
-                        <button type="button" class="btn button-custome btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> Tambah</button>
-                    </div>
-                    <div class="col-md-7"></div>
-                    <div class="col-md-2"></div>
-                </div>
-
                 <div class="row" style="margin-top: 2rem">
                     <div class="table-responsive">
                         <table id="datatabel" class="table table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
-                                    <td>No</td>
-                                    <td>Nama Pelajaran</td>
-                                    <td>Kelas</td>
-                                    <td>Tahun Ajaran</td>
-                                    <td>Semester</td>
-                                    <td>Guru Pengajar</td>
-                                    <td>Aksi</td>
+                                    <td style="width: 6%">No</td>
+                                    <td style="width: 40%">Username</td>
+                                    <td style="width: 44%">Nama Pengguna</td>
+                                    <td style="width: 10%">Aksi</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,46 +65,30 @@
                 },
             ],
             ajax: {
-                url: "{{route('dataPelajaran')}}",
+                url: "{{route('resetAkun')}}",
             },
             columns: [
                 { data: "DT_RowIndex", name: "DT_RowIndex"},
-                { data: "nama_mapel", name: "nama_mapel"},
-                { data: "kelas", name: "kelas"},
-                { data: "ta", name: "ta"},
-                { data: "semester", name: "semester"},
-                { data: "guru", name: "guru"},
+                { data: "email", name: "email"},
+                { data: "name_user", name: "name_user"},
                 { data: "actions", name: "actions", class: "text-center"},
             ],
         })
     }
-    function formAdd(id='') {
-        console.log(id)
-        $('.main-layer').hide();
-        $.post("{{route('formDataPelajaran')}}", {id:id})
-        .done(function(data){
-			if(data.status == 'success'){
-				$('.other-page').html(data.content).fadeIn();
-			} else {
-				$('.main-layer').show();
-			}
-		})
-        .fail(() => {
-            $('.other-page').empty();
-            $('.main-layer').show();
-        })
+    function resetData(id) {
+        alert('Maintenance')
     }
-    function hapusData(id) {
+    function nonActiveData(id) {
 		Swal.fire({
 			title: "Apakah Anda yakin?",
-			text: "Data yang dihapus tidak dapat dikembalikan lagi.",
+			text: "User Akan Di Non-Aktifkan.",
 			icon: 'warning',
 			showCancelButton: true,
 			cancelButtonText: 'Batal',
-			confirmButtonText: 'Hapus',
+			confirmButtonText: 'Non-Aktifkan',
 		}).then((result) => {
 			if (result.value) {
-				$.post("{{ route('deleteDataPelajaran') }}",{id:id}).done(function(data) {
+				$.post("{{ route('removeAkunUser') }}",{id:id}).done(function(data) {
 					if(data.code==200){
                         Swal.fire({
                             icon: 'success',
@@ -135,10 +108,10 @@
                         })
                     }
 				}).fail(function() {
-					Swal.fire("Sorry!", "Gagal menghapus data!", "error");
+					Swal.fire("Sorry!", "Terjadi Kesalahan Sistem!", "error");
 				});
 			} else if (result.dismiss === Swal.DismissReason.cancel) {
-				Swal.fire("Batal", "Data batal dihapus!", "error");
+				Swal.fire("error", "Batal Non-Aktifkan User!", "error");
 			}
 		});
 	}

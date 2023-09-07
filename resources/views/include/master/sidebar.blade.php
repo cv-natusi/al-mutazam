@@ -153,46 +153,53 @@
 				<div class="menu-title">Data Pelajaran</div>
 			</a>
 		</li>
-		
-		<li>
-			<button class="dropdown-btn"><i style="color: #000000; font-size:24.5px;" class='bx bx-folder-open'></i>
-				Bank Data
-				<i class='bx bx-chevron-right'></i>
-			</button>
-			<div class="dropdown-container">
-				<a href="{{ route('dataPrimer') }}">
-					<div class="parent-icon">
-						<i style="color: #000000" class='bx bx-radio-circle-marked'></i>
-					</div>
-					<div class="menu-title">Data Primer</div>
-				</a>
-				<a href="{{ route('dataSekunder') }}">
-					<div class="parent-icon">
-						<i style="color: #000000" class='bx bx-radio-circle-marked'></i>
-					</div>
-					<div class="menu-title">Data Sekunder</div>
-				</a>
-			</div>
+		<li class="{{ ($title == 'Data Pengembangan Diri') ? 'mm-active' : ''}}">
+			<a href="{{route('dataPengembanganDiri')}}">
+				<div class="parent-icon">
+					<i style="color: #000" class='bx bx-data'></i>
+				</div>
+				<div class="menu-title">Data Penembangan Diri</div>
+			</a>
 		</li>
-		<li>
-			<button class="dropdown-btn"><i style="color: #000000; font-size:24.5px;" class='bx bx-cog' ></i>
-				Pengaturan
-				<i class='bx bx-chevron-right'></i>
-			</button>
-			<div class="dropdown-container">
-				<a href="{{ route('ubahPassword') }}">
-					<div class="parent-icon">
-						<i style="color: #000" class='bx bx-radio-circle-marked'></i>
-					</div>
-					<div class="menu-title">Ubah Password</div>
-				</a>
-				<a href="{{ route('resetPassword') }}">
-					<div class="parent-icon">
-						<i style="color: #000" class='bx bx-radio-circle-marked'></i>
-					</div>
-					<div class="menu-title">Reset Password</div>
-				</a>
-			</div>
+		<li class="{{ ($title == 'Data Administrasi') ? 'mm-active' : ''}}">
+			<a href="{{route('dataAdministrasi')}}">
+				<div class="parent-icon">
+					<i style="color: #000" class='bx bx-data'></i>
+				</div>
+				<div class="menu-title">Data Administrasi</div>
+			</a>
+		</li>
+		<li class="{{ ($title == 'Berbagi Dokumen') ? 'mm-active' : ''}}">
+			<a href="{{route('berbagiDokumen')}}">
+				<div class="parent-icon">
+					<i style="color: #000" class='bx bx-data'></i>
+				</div>
+				<div class="menu-title">Berbagi Dokumen</div>
+			</a>
+		</li>
+		<li class="{{ ($title == 'Profile') ? 'mm-active' : ''}}">
+			<a href="{{route('profile')}}">
+				<div class="parent-icon">
+					<i style="color: #000" class='bx bx-data'></i>
+				</div>
+				<div class="menu-title">Profile</div>
+			</a>
+		</li>
+		<li class="{{ ($title == 'Reset AKun') ? 'mm-active' : ''}}">
+			<a href="{{route('resetAkun')}}">
+				<div class="parent-icon">
+					<i style="color: #000" class='bx bx-cog'></i>
+				</div>
+				<div class="menu-title">Reset Akun</div>
+			</a>
+		</li>
+		<li class="{{ ($title == 'Data Pelajaran') ? 'mm-active' : ''}}">
+			<a href="{{route('pengaturan')}}">
+				<div class="parent-icon">
+					<i style="color: #000" class='bx bx-cog'></i>
+				</div>
+				<div class="menu-title">Pengaturan</div>
+			</a>
 		</li>
 		@elseif(Auth::User()->level=='3') <!-- Guru Pengajar -->
 		<li class="{{ ($title == 'Dashboard Guru') ? 'mm-active' : ''}}">

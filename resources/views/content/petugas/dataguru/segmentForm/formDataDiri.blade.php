@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-md-4">
                     <label>PTK ID</label>
-                    <input autocomplete="off" class="form-control" type="text" name="ptk_id" id="ptk_id" value="{{ !empty($data->ptk_id)? $data->ptk_id : ''}}" placeholder="PTK ID">
+                    <input autocomplete="off" class="form-control" type="text" name="ptkid" id="ptkid" value="{{ !empty($data->ptkid)? $data->ptkid : ''}}" placeholder="PTK ID">
                 </div>
                 <div class="col-md-4">
                     <label>NRG / NPK</label>
