@@ -194,7 +194,11 @@
 					@foreach($event as $key => $val)
 						<div class="col-md-4">
 							<div class="t-3-photo mb-25">
-								<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('uploads/berita/'.$val->gambar)}}" alt="team-member-foto">
+								@if(file_exists(public_path().'/uploads/berita/'.$val->gambar))
+								<img class="mx-auto d-block responsive img-fluid" src="{{asset('uploads/berita/'.$val->gambar)}}" alt="team-member-foto">
+								@else
+								<img class="mx-auto d-block responsive img-fluid" src="{{asset('default.jpg')}}" alt="team-member-foto">
+								@endif
 								<div class="overlay-content overlay-card text-center">
 								<p class="text-overlay fw7">{{$val->judul}}</p>
 								</div>

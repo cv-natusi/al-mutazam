@@ -177,8 +177,8 @@
 				},
 			}).done(async (data, textStatus, xhr) => {
 				const code = xhr.status
-				const rootDir = '{{URL::asset(' / uploads / berita ')}}'
-				const defaultDir = '{{URL::asset(' / ')}}'
+				const rootDir = '{{URL::asset('/uploads/berita')}}'
+				const defaultDir = '{{URL::asset('')}}'
 				if (code !== 200) {
 					await Swal.fire({
 						icon: 'info',
