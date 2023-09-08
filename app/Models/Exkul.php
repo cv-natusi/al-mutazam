@@ -37,7 +37,7 @@ class Exkul extends Model
     }
     public static function getExkulPaginate()
     {
-        return Exkul::where('type_exkul', 2)->orderBy('id_exkul', 'DESC')->paginate(12);
+        return Exkul::where('status_exkul', '1')->where('type_exkul', 1)->orderBy('id_exkul', 'DESC')->paginate(12);
     }
 
 
@@ -67,5 +67,14 @@ class Exkul extends Model
     public static function getFasilitasPaginate()
     {
         return Exkul::where('type_exkul', 2)->orderBy('id_exkul', 'DESC')->paginate(9);
+    }
+
+    public static function filterExkulById($params)
+    {
+        return Exkul::where([
+            ['status_exkul', 1],
+            ['type_exkul', 1],
+            ['id_exkul', $params->id]
+        ])->first();
     }
 }

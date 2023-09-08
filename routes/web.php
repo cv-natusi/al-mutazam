@@ -19,6 +19,8 @@ use App\Http\Controllers\Petugas\DataSekunderPetugasController as DataPetugasSek
 use App\Http\Controllers\Petugas\PengaturanPetugasController as PengaturanPetugas;
 use App\Http\Controllers\Petugas\DataGuruController as DataGuru;
 use App\Http\Controllers\Petugas\DataTugasPegawaiController as DataTugasPegawai;
+use App\Http\Controllers\Petugas\DataAdministrasiController as DataAdministrasi;
+use App\Http\Controllers\Petugas\BerbagiDokumenController as BerbagiDokumen;
 use App\Http\Controllers\Petugas\DataKelasController as DataKelas;
 use App\Http\Controllers\Petugas\DataPelajaranController as DataPelajaran;
 use App\Http\Controllers\Petugas\UbahPasswordController as UbahPassword;
@@ -57,6 +59,7 @@ Route::controller(HomeController::class)->group(function () {
 		Route::get('event', 'event')->name('event');
 		Route::post('search-event', 'event')->name('searchEvent');
 		Route::get('pengumuman', 'pengumuman')->name('pengumuman');
+		Route::post('search-pengumuman', 'pengumuman')->name('searchPengumuman');
 	});
 	Route::group(['prefix' => 'program', 'as' => 'program.'], function () { # Program menu
 		Route::get('unggulan', 'programUnggulan')->name('unggulan');
@@ -69,6 +72,7 @@ Route::controller(HomeController::class)->group(function () {
 	});
 	Route::group(['prefix' => 'galeri', 'as' => 'galeri.'], function () { # Galeri Menu
 		Route::get('galeri', 'galeri')->name('galeri');
+		Route::post('search-galeri', 'galeri')->name('searchGaleri');
 	});
 });
 Route::controller(AMTV::class)->group(function () { # AMTV Menu
@@ -200,12 +204,13 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::group(array('prefix' => 'data-guru'), function () {
 			Route::get('/', [DataGuru::class, 'main'])->name('dataGuru');
 			Route::post('/form', [DataGuru::class, 'form'])->name('tambahGuru');
+			Route::post('/cari-mapel', [DataGuru::class, 'cariMapel'])->name('cariMapel');
 			Route::post('/store-data-diri', [DataGuru::class, 'saveDataDiri'])->name('saveDataDiri');
 			Route::post('/store-data-pendidikan', [DataGuru::class, 'saveDataPendidikan'])->name('saveDataPendidikan');
 			Route::post('/store-data-penugasan', [DataGuru::class, 'saveDataPenugasan'])->name('saveDataPenugasan');
 			Route::post('/store-data-pendukung', [DataGuru::class, 'saveDataPendukung'])->name('saveDataPendukung');
 		});
-		Route::group(array('prefix'=>'data-tugas-pegawai'), function(){
+		Route::group(array('prefix' => 'data-tugas-pegawai'), function () {
 			Route::get('/', [DataTugasPegawai::class, 'main'])->name('dataTugasPegawai');
 			Route::post('/modal-form', [DataTugasPegawai::class, 'modalForm'])->name('tugasModalForm');
 			Route::post('/store', [DataTugasPegawai::class, 'save'])->name('saveTugasPegawai');
@@ -216,18 +221,6 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::post('/modal-form', [DataKelas::class, 'modalForm'])->name('kelasModalForm');
 			Route::post('/store', [DataKelas::class, 'save'])->name('saveKelas');
 			Route::post('/delete', [DataKelas::class, 'delete'])->name('deleteKelas');
-		});
-		Route::group(array('prefix' => 'data-pelajaran'), function () {
-			Route::get('/', [DataPelajaran::class, 'main'])->name('dataPelajaran');
-			Route::post('/form', [DataPelajaran::class, 'form'])->name('formDataPelajaran');
-			Route::post('/store', [DataPelajaran::class, 'save'])->name('saveDataPelajaran');
-			Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
-		});
-		Route::group(array('prefix' => 'data-pelajaran'), function () {
-			Route::get('/', [DataPelajaran::class, 'main'])->name('dataPelajaran');
-			Route::post('/form', [DataPelajaran::class, 'form'])->name('formDataPelajaran');
-			Route::post('/store', [DataPelajaran::class, 'save'])->name('saveDataPelajaran');
-			Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
 		});
 		Route::group(array('prefix' => 'data-pelajaran'), function () {
 			Route::get('/', [DataPelajaran::class, 'main'])->name('dataPelajaran');
@@ -248,10 +241,10 @@ Route::group(['middleware' => 'auth'], function () {
 			// Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
 		});
 		Route::group(array('prefix' => 'berbagi-dokumen'), function () {
-			Route::get('/', [DataPelajaran::class, 'main'])->name('berbagiDokumen');
-			// Route::post('/form', [DataPelajaran::class, 'form'])->name('formDataPelajaran');
-			// Route::post('/store', [DataPelajaran::class, 'save'])->name('saveDataPelajaran');
-			// Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
+			Route::get('/', [BerbagiDokumen::class, 'main'])->name('berbagiDokumen');
+			Route::post('/modal-form', [BerbagiDokumen::class, 'modalForm'])->name('berbagiDokumenModal');
+			Route::post('/store', [BerbagiDokumen::class, 'save'])->name('saveBerbagiDokumen');
+			Route::post('/delete', [BerbagiDokumen::class, 'delete'])->name('deleteBerbagiDokumen');
 		});
 		Route::group(array('prefix' => 'profile'), function () {
 			Route::get('/', [DataPelajaran::class, 'main'])->name('profile');

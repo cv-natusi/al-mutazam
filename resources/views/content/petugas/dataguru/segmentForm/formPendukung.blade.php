@@ -27,7 +27,7 @@
         </form>
     </div>
     <div class="card-footer">
-        <button class="btn btn-success editDataPendukung" type="button">EDIT</button>
-        <button class="btn btn-secondary simpanDataPendukung" type="button">SIMPAN</button>
+        {{-- <button class="btn btn-secondary editDataPendukung" type="button">EDIT</button> --}}
+        <button class="btn btn-success simpanDataPendukung" type="button">SIMPAN</button>
     </div>
 </div>

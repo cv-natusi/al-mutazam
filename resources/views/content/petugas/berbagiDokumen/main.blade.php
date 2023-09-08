@@ -11,9 +11,6 @@
         @include('include.master.breadcrumb')
 
         <div class="card main-layer">
-            <div class="card-header bg-card">
-                <h5 class="text-card">Data Pelajaran</h5>
-            </div>
             <div class="card-body">
                 <div class="row mb-3" style="margin-top: 1rem">
                     <div class="col-md-3">
@@ -28,12 +25,11 @@
                         <table id="datatabel" class="table table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
-                                    <td>No</td>
-                                    <td>Nama Pelajaran</td>
-                                    <td>Kelas</td>
-                                    <td>Tahun Ajaran</td>
-                                    <td>Semester</td>
-                                    <td>Aksi</td>
+                                    <td style="width: 6%">No</td>
+                                    <td style="width: 40%">Nama Dokumen</td>
+                                    <td style="width: 40%">File</td>
+                                    <td style="width: 8%">Status</td>
+                                    <td style="width: 6%">Aksi</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <div class="other-page"></div>
+        <div id="modalForm"></div>
     </div>
 @endsection
 
@@ -75,33 +71,21 @@
                 },
             ],
             ajax: {
-                url: "{{route('dataPelajaran')}}",
+                url: "{{route('berbagiDokumen')}}",
             },
             columns: [
                 { data: "DT_RowIndex", name: "DT_RowIndex"},
-                { data: "nama_mapel", name: "nama_mapel"},
-                { data: "kelas", name: "kelas"},
-                { data: "ta", name: "ta"},
-                { data: "semester", name: "semester"},
+                { data: "nama_dokumen", name: "nama_dokumen"},
+                { data: "file_dokumen", name: "file_dokumen"},
+                { data: "status", name: "status"},
                 { data: "actions", name: "actions", class: "text-center"},
             ],
         })
     }
-    function formAdd(id='') {
-        console.log(id)
-        $('.main-layer').hide();
-        $.post("{{route('formDataPelajaran')}}", {id:id})
-        .done(function(data){
-			if(data.status == 'success'){
-				$('.other-page').html(data.content).fadeIn();
-			} else {
-				$('.main-layer').show();
-			}
-		})
-        .fail(() => {
-            $('.other-page').empty();
-            $('.main-layer').show();
-        })
+    function formAdd(id) {
+        $.post("{{route('berbagiDokumenModal')}}",{id:id},function(data){
+			$("#modalForm").html(data.content);
+		});
     }
     function hapusData(id) {
 		Swal.fire({
@@ -113,7 +97,7 @@
 			confirmButtonText: 'Hapus',
 		}).then((result) => {
 			if (result.value) {
-				$.post("{{ route('deleteDataPelajaran') }}",{id:id}).done(function(data) {
+				$.post("{{ route('deleteBerbagiDokumen') }}",{id:id}).done(function(data) {
 					if(data.code==200){
                         Swal.fire({
                             icon: 'success',
@@ -141,7 +125,7 @@
 		});
 	}
     function hideForm(){
-        $('.other-page').empty()
+        $('#modalForm').hide()
         $('.main-layer').show()
     }
 </script>

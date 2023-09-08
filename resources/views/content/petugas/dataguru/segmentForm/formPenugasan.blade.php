@@ -40,7 +40,7 @@
         </form>
     </div>
     <div class="card-footer">
-        <button class="btn btn-secondary editPenugasan" type="button">EDIT</button>
+        {{-- <button class="btn btn-secondary editPenugasan" type="button">EDIT</button> --}}
         <button class="btn btn-success simpanPenugasan" type="button">SIMPAN</button>
     </div>
 </div>

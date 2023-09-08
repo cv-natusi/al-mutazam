@@ -54,9 +54,6 @@
                                             src="{{ asset('uploads/exkul/' . $eks->foto) }}" alt="slide-background"
                                             data-toggle="modal" data-target="#modal-detail"
                                             id="read-more-{{ $eks->id_exkul }}" onclick="modalShow(`{{ $eks->id_exkul }}`)">
-                                        {{-- <a href="javascript:void(0)" id="read-more-{{ $eks->id_exkul }}"
-                                            onclick="modalShow(`{{ $eks->id_exkul }}`)" class="color-a">[Baca
-                                            Selengkapnya]</a> --}}
                                         <button class="btn" type="button">{{ $eks->nama_exkul }}</button>
                                     </div>
                                 </div>
@@ -103,112 +100,58 @@
                         </div>
                     </div>
                     <div class="row d-flex align-items-center">
-                        <div class="col-lg-12">
-                            <div class="contact-box">
-                                <div class="row">
-                                    <div class="col-md-3 mtb-auto">
-                                        <img class="img-80" src="{{ asset('landing-page/images/amtv.png') }}"
-                                            alt="contacts-icon">
-                                    </div>
-                                    <div class="col-md-9 mtb-auto text-left">
-                                        <span class="fw4">Sosialisasi Kegiatan Visi dan Misi SMAS Al-Multazam
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row d-flex align-items-center">
-                        <div class="col-lg-12">
-                            <div class="contact-box">
-                                <div class="row">
-                                    <div class="col-md-3 mtb-auto">
-                                        <img class="img-80" src="{{ asset('landing-page/images/amtv.png') }}"
-                                            alt="contacts-icon">
-                                    </div>
-                                    <div class="col-md-9 mtb-auto text-left">
-                                        <span class="fw4">Sosialisasi Kegiatan Visi dan Misi SMAS Al-Multazam
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row d-flex align-items-center">
-                        <div class="col-lg-12">
-                            <div class="contact-box">
-                                <div class="row">
-                                    <div class="col-md-3 mtb-auto">
-                                        <img class="img-80" src="{{ asset('landing-page/images/amtv.png') }}"
-                                            alt="contacts-icon">
-                                    </div>
-                                    <div class="col-md-9 mtb-auto text-left">
-                                        <span class="fw4">Sosialisasi Kegiatan Visi dan Misi SMAS Al-Multazam
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row d-flex align-items-center">
-                        <div class="col-lg-12">
-                            <div class="contact-box">
-                                <div class="row">
-                                    <div class="col-md-3 mtb-auto">
-                                        <img class="img-80" src="{{ asset('landing-page/images/amtv.png') }}"
-                                            alt="contacts-icon">
-                                    </div>
-                                    <div class="col-md-9 mtb-auto text-left">
-                                        <span class="fw4">Sosialisasi Kegiatan Visi dan Misi SMAS Al-Multazam
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row d-flex align-items-center">
-                        <div class="col-lg-12">
-                            <div class="contact-box">
-                                <div class="row">
-                                    <div class="col-md-3 mtb-auto">
-                                        <img class="img-80" src="{{ asset('landing-page/images/amtv.png') }}"
-                                            alt="contacts-icon">
-                                    </div>
-                                    <div class="col-md-9 mtb-auto text-left">
-                                        <span class="fw4">Sosialisasi Kegiatan Visi dan Misi SMAS Al-Multazam
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @if (count($amtvs) > 0)
+                            @foreach ($amtvs as $idx => $amtv)
+                                @php
+                                    $url = explode('?v=', $amtv->file);
+                                    $link = $url[count($url) - 1];
+                                @endphp
+                                <div class="col-lg-12">
+                                    <div class="contact-box">
+                                        <div class="row">
+                                            <div class="col-md-3 mtb-auto">
+                                                <iframe class="img-80"
+                                                    src="http://www.youtube.com/embed/{{ $link }}" frameborder="0"
+                                                    allowfullscreen>
+                                                </iframe>
+
+                                            </div>
+                                            <div class="col-md-9 mtb-auto text-left">
+                                                <span class="fw4">{{ $amtv->judul_amtv }}
+                                                </span>
+                                            </div>
+                            @endforeach
+                        @endif
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="#" class="color-a fw6">LIHAT LAINNYA ...</a>
+                            <a href="{{ route('amtv.main') }}" class="color-a fw6">LIHAT LAINNYA ...</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="modal-detail" tabindex="-1" aria-labelledby="modal-detailLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="modal-detail" tabindex="-1" aria-labelledby="modal-detailLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #5A79CB;">
-                        {{-- <h5><b>{{$eks->nama_exkul}}</b></h5>
-								<div class="text-justify content" id="content-{{$eks->id_exkul}}" data-id="{{$eks->id_exkul}}">
-									{!!$eks->deskripsi!!}
-								</div> --}}
                         <h5 class="modal-title fs-5" id="modal-title" style="color: white;">{{ $eks->nama_exkul }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close-modal btn-x">
+                            <i class="far fa-times-circle fwhite" style="font-size: 25px;"></i>
+                        </button>
                     </div>
                     <div class="modal-body">
                         <div class="contact-box">
                             <div class="row">
                                 <div class="col-md-3 mtb-auto">
-                                    <img class="mx-auto d-block responsive img-fluid" id="modal-img" width="400"
-                                        height="auto" src="{{ asset('uploads/exkul/' . $eks->foto) }}"
-                                        alt="team-member-foto">
+                                    @if (file_exists(public_path() . '/uploads/exkul/' . $eks->foto))
+                                        <img class="mx-auto d-block responsive img-fluid" id="modal-img" width="400"
+                                            height="auto" src="{{ asset('uploads/exkul/' . $eks->foto) }}"
+                                            alt="team-member-foto">
+                                    @else
+                                        <img class="mx-auto d-block responsive img-fluid" src="{{ asset('default.jpg') }}"
+                                            alt="team-member-foto">
+                                    @endif
                                 </div>
                                 <div class="col-md-9 mtb-auto text-left" id="event-text">
                                     <span class="fw4">{{ $eks->deskripsi }}<br></span>
@@ -235,8 +178,8 @@
                     },
                 }).done(async (data, textStatus, xhr) => {
                     const code = xhr.status
-                    const rootDir = '{{ URL::asset(' / uploads / exkul ') }}'
-                    const defaultDir = '{{ URL::asset(' / ') }}'
+                    const rootDir = '{{ URL::asset('/uploads/exkul') }}'
+                    const defaultDir = '{{ URL::asset('') }}'
                     if (code !== 200) {
                         await Swal.fire({
                             icon: 'info',
@@ -269,6 +212,7 @@
         $(document).ready(() => {
             $('.close-modal').click(() => {
                 $('.modal').fadeOut("slow")
+                location.reload()
             })
 
             var maxWord = 15;

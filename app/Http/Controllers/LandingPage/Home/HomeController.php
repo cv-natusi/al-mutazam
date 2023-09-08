@@ -61,18 +61,32 @@ class HomeController extends Controller
 
 	public function pengumuman(Request $request)
 	{
-		return view('content.landing-page.home.pengumuman');
-	}
-	public function ekskul(Request $request)
-	{
-		$ekskul = DB::table('exkul')->where('status_exkul', '1')->where('type_exkul', 1)->get();
-		// return view('content.landing-page.program.ekskul', compact('ekskul'));
+		$pengumuman = Berita::getPengumumanLimit(5);
 		if ($request->ajax()) {
 			$payload = [
 				'code' => 204,
 				'message' => 'Data tidak ditemukan',
 			];
-			if ($ekskul = Berita::filterExkulById($request)) {
+			if ($event = Berita::filterPengumumanById($request)) {
+				$payload['code'] = 200;
+				$payload['message'] = 'Ok';
+				$payload['response'] = $event;
+			}
+			return Helpers::resAjax($payload);
+		}
+		$pengumuman = Berita::getPengumumanPaginate();
+		return view('content.landing-page.home.pengumuman', compact('pengumuman'));
+	}
+
+	public function ekskul(Request $request)
+	{
+		$amtvs = DB::table('amtv')->where('status_amtv', '1')->orderBy('id_amtv', 'DESC')->limit('3')->get();
+		if ($request->ajax()) {
+			$payload = [
+				'code' => 204,
+				'message' => 'Data tidak ditemukan',
+			];
+			if ($ekskul = Exkul::filterExkulById($request)) {
 				$payload['code'] = 200;
 				$payload['message'] = 'Ok';
 				$payload['response'] = $ekskul;
@@ -80,12 +94,12 @@ class HomeController extends Controller
 			return Helpers::resAjax($payload);
 		}
 		$ekskul = Exkul::getExkulPaginate();
-		return view('content.landing-page.program.ekskul', compact('ekskul'));
+		return view('content.landing-page.program.ekskul', compact('ekskul', 'amtvs'));
 	}
+
 	public function programUnggulan(Request $request)
 	{
-		$beritas = DB::table('berita')->where('kategori', '5')->where('status', '1')->limit('10')->orderBy('id_berita', 'DESC')->get();
-
+		// $beritas = DB::table('berita')->where('kategori', '5')->where('status', '1')->limit('10')->orderBy('id_berita', 'DESC')->get();
 		if ($request->ajax()) {
 			$payload = [
 				'code' => 204,
@@ -124,7 +138,7 @@ class HomeController extends Controller
 	}
 	public function galeri(Request $request)
 	{
-		$galeries = DB::table('galeri')->where('status_galeri', '1')->orderBy('id_galeri', 'DESC')->limit('9')->get();
+		// $galeries = DB::table('galeri')->where('status_galeri', '1')->orderBy('id_galeri', 'DESC')->limit('9')->get();
 		// return view('content.landing-page.galeri.galeri', compact('galeries'));
 
 		if ($request->ajax()) {
@@ -132,7 +146,7 @@ class HomeController extends Controller
 				'code' => 204,
 				'message' => 'Data tidak ditemukan',
 			];
-			if ($galeries = Berita::filterPrestasiById($request)) {
+			if ($galeries = Galeri::filterGaleriById($request)) {
 				$payload['code'] = 200;
 				$payload['message'] = 'Ok';
 				$payload['response'] = $galeries;

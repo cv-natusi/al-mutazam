@@ -31,6 +31,8 @@ class AmtvController extends Controller
         return view('content.landing-page.amtv.main', compact('amtvs'));
     }
 
+
+
     // public function amtv(Request $request)
     // {
     //     if ($request->ajax()) {

@@ -132,7 +132,7 @@
 		<li class="{{ ($title == 'Dashboard Tugas Pegawai') ? 'mm-active' : ''}}">
 			<a href="{{route('dataTugasPegawai')}}">
 				<div class="parent-icon">
-					<i style="color: #000" class='bx bx-data'></i>
+					<i style="color: #000" class='bx bxs-category'></i>
 				</div>
 				<div class="menu-title">Data Tugas Pegawai</div>
 			</a>
@@ -140,7 +140,7 @@
 		<li class="{{ ($title == 'Data Kelas') ? 'mm-active' : ''}}">
 			<a href="{{route('dataKelas')}}">
 				<div class="parent-icon">
-					<i style="color: #000" class='bx bx-data'></i>
+					<i style="color: #000" class='bx bxs-category'></i>
 				</div>
 				<div class="menu-title">Data Kelas</div>
 			</a>
@@ -148,7 +148,7 @@
 		<li class="{{ ($title == 'Data Pelajaran') ? 'mm-active' : ''}}">
 			<a href="{{route('dataPelajaran')}}">
 				<div class="parent-icon">
-					<i style="color: #000" class='bx bx-data'></i>
+					<i style="color: #000" class='bx bxs-category'></i>
 				</div>
 				<div class="menu-title">Data Pelajaran</div>
 			</a>
@@ -156,7 +156,7 @@
 		<li class="{{ ($title == 'Data Pengembangan Diri') ? 'mm-active' : ''}}">
 			<a href="{{route('dataPengembanganDiri')}}">
 				<div class="parent-icon">
-					<i style="color: #000" class='bx bx-data'></i>
+					<i style="color: #000" class='bx bxs-category'></i>
 				</div>
 				<div class="menu-title">Data Penembangan Diri</div>
 			</a>
@@ -164,7 +164,7 @@
 		<li class="{{ ($title == 'Data Administrasi') ? 'mm-active' : ''}}">
 			<a href="{{route('dataAdministrasi')}}">
 				<div class="parent-icon">
-					<i style="color: #000" class='bx bx-data'></i>
+					<i style="color: #000" class='bx bxs-category'></i>
 				</div>
 				<div class="menu-title">Data Administrasi</div>
 			</a>
@@ -172,20 +172,12 @@
 		<li class="{{ ($title == 'Berbagi Dokumen') ? 'mm-active' : ''}}">
 			<a href="{{route('berbagiDokumen')}}">
 				<div class="parent-icon">
-					<i style="color: #000" class='bx bx-data'></i>
+					<i style="color: #000" class='bx bxs-category'></i>
 				</div>
 				<div class="menu-title">Berbagi Dokumen</div>
 			</a>
 		</li>
-		<li class="{{ ($title == 'Profile') ? 'mm-active' : ''}}">
-			<a href="{{route('profile')}}">
-				<div class="parent-icon">
-					<i style="color: #000" class='bx bx-data'></i>
-				</div>
-				<div class="menu-title">Profile</div>
-			</a>
-		</li>
-		<li class="{{ ($title == 'Reset AKun') ? 'mm-active' : ''}}">
+		<li class="{{ ($title == 'Reset Akun') ? 'mm-active' : ''}}">
 			<a href="{{route('resetAkun')}}">
 				<div class="parent-icon">
 					<i style="color: #000" class='bx bx-cog'></i>
@@ -193,19 +185,11 @@
 				<div class="menu-title">Reset Akun</div>
 			</a>
 		</li>
-		<li class="{{ ($title == 'Data Pelajaran') ? 'mm-active' : ''}}">
-			<a href="{{route('pengaturan')}}">
-				<div class="parent-icon">
-					<i style="color: #000" class='bx bx-cog'></i>
-				</div>
-				<div class="menu-title">Pengaturan</div>
-			</a>
-		</li>
 		@elseif(Auth::User()->level=='3') <!-- Guru Pengajar -->
 		<li class="{{ ($title == 'Dashboard Guru') ? 'mm-active' : ''}}">
 			<a href="{{route('dashboardGuru')}}">
 				<div class="parent-icon">
-					<i style="color: #000" class='bx bx-data'></i>
+					<i style="color: #000" class='bx bxs-category'></i>
 				</div>
 				<div class="menu-title">Dashboard</div>
 			</a>
@@ -235,6 +219,22 @@
 			</a>
 		</li>
 		@endif
+		<li class="{{ ($title == 'Profile') ? 'mm-active' : ''}}">
+			<a href="{{route('profile')}}">
+				<div class="parent-icon">
+					<i style="color: #000" class='bx bxs-user-account'></i>
+				</div>
+				<div class="menu-title">Profile</div>
+			</a>
+		</li>
+		<li class="{{ ($title == 'Data Pelajaran') ? 'mm-active' : ''}}">
+			<a href="{{route('pengaturan')}}">
+				<div class="parent-icon">
+					<i style="color: #000" class='bx bx-cog'></i>
+				</div>
+				<div class="menu-title">Pengaturan</div>
+			</a>
+		</li>
 	</ul>
 	<!--end navigation-->
 </div>

@@ -17,7 +17,7 @@ class UsersSeeder extends Seeder
             'name_user' => 'Administrator',
             'email' => 'admin',
             'password' => bcrypt('admin'),
-            'lihat_password' => bcrypt('admin'),
+            'lihat_password' => 'admin',
             'level'=> '1',
             'active'=> 'active'
         ]);
@@ -25,7 +25,7 @@ class UsersSeeder extends Seeder
             'name_user' => 'Petugas Sekolah',
             'email' => 'petugas',
             'password' => bcrypt('petugas'),
-            'lihat_password' => bcrypt('petugas'),
+            'lihat_password' => 'petugas',
             'level'=> '2',
             'active'=> 'active'
         ]);
@@ -33,7 +33,7 @@ class UsersSeeder extends Seeder
             'name_user' => 'Guru Pengajar',
             'email' => 'guru',
             'password' => bcrypt('guru'),
-            'lihat_password' => bcrypt('guru'),
+            'lihat_password' => 'guru',
             'level'=> '3',
             'active'=> 'active'
         ]);

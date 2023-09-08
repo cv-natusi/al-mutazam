@@ -260,5 +260,15 @@
 	/* .ptb-16{
 		padding: 16px 0;
 	} */
+	
+	.btn-x {
+		background: transparent !important;
+		border: 0;
+		opacity: .5;
+	}
+
+	.modal-header {
+		background-color: var(--color-menu);
+	}
 </style>
 @stack('style')

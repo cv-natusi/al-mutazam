@@ -39,4 +39,13 @@ class Galeri extends Model
     {
         return Galeri::where('status_galeri', '1')->orderBy('id_galeri', 'DESC')->paginate(9);
     }
+
+    public static function filterGaleriById($params)
+    {
+        return Galeri::where([
+            ['status_galeri', 1],
+            // ['file_galeri', 1],
+            ['id_galeri', $params->id]
+        ])->first();
+    }
 }

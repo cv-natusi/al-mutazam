@@ -148,16 +148,17 @@
                         <div class="t-3-photo mb-25 image">
                             <img class="span img-shadow mx-auto d-block responsive img-thumbnail img-fluid"
                                 src="{{ asset('uploads/galeri/' . $galeri->file_galeri) }}" alt="slide-background"
-                                data-toggle="modal" data-target="#modal-detail">
+                                data-toggle="modal" data-target="#modal-detail" id="read-more-{{ $galeri->id_galeri }}"
+                                onclick="modalShow(`{{ $galeri->id_galeri }}`)">
                             <h5 class="mt-3">{{ $galeri->deskripsi_galeri }}</h5>
                         </div>
                     </div>
                 @endforeach
             </div>
         </div>
-		<div class="d-flex justify-content-center">
-                    {!! $galeries->links() !!}
-                </div>
+        <div class="d-flex justify-content-center">
+            {!! $galeries->links() !!}
+        </div>
         <div class="modal fade" id="modal-detail" tabindex="-1" aria-labelledby="modal-detailLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -173,7 +174,15 @@
                             <div class="slide next" style="margin-left: 87%">
                                 <i class="fas fa-angle-right"></i>
                             </div>
-                            <img src="{{ asset('landing-page/images/slider/slide-3.jpg') }}" alt="">
+                            {{-- <img src="{{ asset('landing-page/images/slider/slide-3.jpg') }}" alt=""> --}}
+                            @if (file_exists(public_path() . '/uploads/galeri/' . $galeri->file_galeri))
+                                <img class="mx-auto d-block responsive img-fluid" id="modal-img" width="400"
+                                    height="auto" src="{{ asset('uploads/galeri/' . $galeri->file_galeri) }}"
+                                    alt="team-member-foto">
+                            @else
+                                <img class="mx-auto d-block responsive img-fluid" src="{{ asset('default.jpg') }}"
+                                    alt="team-member-foto">
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -181,3 +190,103 @@
         </div>
     </section>
 @endsection
+
+@push('script')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript">
+        async function modalShow(id) {
+            try {
+                await $.ajax({
+                    url: '{{ route('galeri.searchGaleri') }}',
+                    type: 'POST',
+                    data: {
+                        id: id
+                    },
+                }).done(async (data, textStatus, xhr) => {
+                    const code = xhr.status
+                    const rootDir = '{{ URL::asset('/uploads/galeri') }}'
+                    const defaultDir = '{{ URL::asset('') }}'
+                    if (code !== 200) {
+                        await Swal.fire({
+                            icon: 'info',
+                            title: 'Whoops..',
+                            text: 'Data not found',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                        })
+                        return false
+                    }
+                    //await $('.modal-title').text(data.response.kategori_galeri)
+                    await $('#modal-img').attr('src', `${rootDir}/${data.response.file_galeri}`)
+                    // await $('#event-text').html(data.response.deskripsi_galeri)
+                    await $('#modal-img').on('error', async () => {
+                        await $('#modal-img').attr('src', `${defaultDir}/default.jpg`)
+                    })
+                    $('.modal').fadeIn("slow")
+                })
+            } catch (error) {
+                await Swal.fire({
+                    icon: 'error',
+                    title: 'ERROR!',
+                    text: error.responseJSON.metadata.message,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                })
+            }
+        }
+
+        $(document).ready(() => {
+            $('.close-modal').click(() => {
+                $('.modal').fadeOut("slow")
+                location.reload()
+            })
+
+            var maxWord = 15;
+            $(".content").each(function() {
+                var myStr = $(this).html()
+                var id = $(this).data('id')
+                if (myStr.split(' ').length > maxWord) {
+                    var arrStr = myStr.split(' ')
+
+                    var newStr = filterArray(arrStr, maxWord, `first`)
+                    var removedStr = filterArray(arrStr, maxWord, 'second')
+
+                    newStr = newStr.join(' ')
+                    removedStr = removedStr.join(' ')
+
+                    $(this).empty().html(newStr + '...')
+                    $(this).data('first', newStr + '...')
+                    $(this).data('second', ' ' + removedStr)
+                }
+            })
+        })
+
+        function filterArray(array, num, prefix) {
+            var arrStr = $.grep(array, function(v, i) {
+                if (prefix === 'first') {
+                    if (i < num) {
+                        return v.indexOf('1');
+                    }
+                } else {
+                    if (i >= num) {
+                        return v.indexOf('1');
+                    }
+                }
+            })
+            return arrStr
+        }
+
+        function readMore(id) {
+            var textButton = $(`#read-more-${id}`).text()
+            var firstText = $(`#content-${id}`).data('first')
+            var secondText = $(`#content-${id}`).data('second')
+            if (textButton === '[Baca Selengkapnya]') {
+                $(`#content-${id}`).empty().html(firstText.slice(0, -3) + secondText)
+                $(`#read-more-${id}`).text('[Baca Lebih Sedikit]')
+            } else {
+                $(`#content-${id}`).empty().html(firstText)
+                $(`#read-more-${id}`).text('[Baca Selengkapnya]')
+            }
+        }
+    </script>
+@endpush

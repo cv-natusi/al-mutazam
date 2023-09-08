@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mst_pelajaran', function (Blueprint $table) {
-            $table->bigIncrements('id_pelajaran');
-            $table->string('nama_mapel');
-            $table->integer('kelas_id');
-            $table->string('ta');
+        Schema::create('berbagi_dokumen', function (Blueprint $table) {
+            $table->bigIncrements('id_berbagi_dokumen');
+            $table->string('tahun_ajaran');
             $table->string('semester');
+            $table->string('nama_dokumen');
+            $table->string('file_dokumen');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mst_pelajaran');
+        Schema::dropIfExists('berbagi_dokumen');
     }
 };
