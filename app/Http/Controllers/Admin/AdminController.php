@@ -840,31 +840,66 @@ class AdminController extends Controller{
 			return ['status' => 'success'];
 		}
 	}
-	#Modul berita
-	public function beritaSekolah(Request $request) {#Berita sekolah
-		$data['id'] = $request->id;
-		$data['mn_active'] = 'modulBerita';
-		if($request->id==1){
-			$data['title'] = 'Berita Sekolah';
-			$data['subMenuActive'] = 'beritaSekolah';
-		}else if($request->id==2){
-			$data['title'] = 'Event';
-			$data['subMenuActive'] = 'event';
-		}else if($request->id==3){
-			$data['title'] = 'Pengumuman';
-			$data['subMenuActive'] = 'pengumuman';
-		}else if($request->id==4){
-			$data['title'] = 'Prestasi Siswa';
-			$data['subMenuActive'] = 'prestasiSiswa';
-		}else if($request->id==5){
-			$data['title'] = 'Program Unggulan';
-			$data['subMenuActive'] = 'programUnggulan';
-		}else{
-			$data['title'] = '';
-			$data['subMenuActive'] = '';
+
+
+	# Modul berita start
+	public function berita(Request $request) {#Berita sekolah
+		$id = $request->id;
+		if(!in_array($id,[1,2,3,4,5])){
+			abort(404);
 		}
-		$data['identity'] = Identity::find(1);
-		return view('content.admin.berita_sekolah.main', $data);
+		$data['id'] = $id;
+		$data['mn_active'] = 'modulBerita';
+		switch($id){
+			case 1:
+				$title = 'Berita Sekolah';
+				$subMenuActive = 'beritaSekolah';
+				break;
+			case 2:
+				$title = 'Event';
+				$subMenuActive = 'event';
+				break;
+			case 3:
+				$title = 'Pengumuman';
+				$subMenuActive = 'pengumuman';
+				break;
+			case 4:
+				$title = 'Prestasi Siswa';
+				$subMenuActive = 'prestasiSiswa';
+				break;
+			case 5:
+				$title = 'Program Unggulan';
+				$subMenuActive = 'programUnggulan';
+				break;
+			default:
+				$title = '';
+				$subMenuActive = '';
+				break;
+		}
+		$data['title'] = $title;
+		$data['subMenuActive'] = $subMenuActive;
+
+		if(request()->ajax()){
+			return DataTables::of(Berita::getDatatable($request))
+			->addIndexColumn()
+			->addColumn('judul', function($row){
+				$html = "<p>$row->judul</p>";
+				return $html;
+			})
+			->addColumn('tanggal', function($row){
+				$html = "<p class='text-center'>$row->date_indo</p>";
+				return $html;
+			})
+			->addColumn('actions', function($row){
+				$html = "
+				<button style='color: #fff' class='btn btn-sm btn-secondary' title='Detail' onclick='formAdd(q)'><i class='fadeIn animated bx bx-file' aria-hidden='true'></i></button>
+				";
+				return $html;
+			})
+			->rawColumns(['judul','tanggal','actions'])
+			->toJson();
+		}
+		return view('content.admin.berita.main', $data);
 	}
 	public function tampilBeritaSekolah(Request $request){
 		// return $request->kategori;
@@ -896,7 +931,7 @@ class AdminController extends Controller{
 		}else{
 			$data['title'] = 'Program Unggulan';
 		}
-		$content = view('Admin.berita.berita_sekolah.formAdd',$data)->render();
+		$content = view('Admin.berita.formAdd',$data)->render();
 		return ['status' => 'success', 'content' => $content];
 	}
 	public function formUpdateBeritaSekolah(Request $request)
@@ -914,7 +949,7 @@ class AdminController extends Controller{
 			$data['title'] = 'Program Unggulan';
 		}
 		$data['berita'] = Berita::find($request->id);
-		$content = view('Admin.berita.berita_sekolah.formEdit',$data)->render();
+		$content = view('Admin.berita.formEdit',$data)->render();
 		return ['status' => 'success', 'content' => $content];
 	}
 	public function uploadBeritaSekolah(Request $request)
@@ -1014,6 +1049,9 @@ class AdminController extends Controller{
 			return ['status' => 'success'];
 		}
 	}
+	# Modul berita end
+
+
 	#Iklan
 	public function iklanAtas(Request $request)
 	{
