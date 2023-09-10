@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('tahun_ajaran');
             $table->string('semester');
             $table->string('nama_dokumen');
-            $table->string('file_dokumen');
+            $table->string('file_dokumen')->nullable();
             $table->timestamps();
         });
     }

@@ -178,6 +178,13 @@ class Berita extends Model
             ['id_berita', $params->id]
         ])->first();
     }
+    public static function filerAgendaById($params) {
+        return Berita::where([
+            ['status', 1],
+            ['kategori', 2],
+            ['id_berita', $params->id]
+        ])->first();
+    }
     public static function filterEventById($params)
     {
         return Berita::where([

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('kelas_id');
             $table->string('ta');
             $table->string('semester');
+            $table->integer('guru_id');
             $table->timestamps();
         });
     }

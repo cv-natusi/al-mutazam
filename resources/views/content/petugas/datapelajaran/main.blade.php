@@ -16,8 +16,11 @@
             </div>
             <div class="card-body">
                 <div class="row mb-3" style="margin-top: 1rem">
+                    <input type="hidden" name="lvUser" id="lvUser" value="{{Auth::User()->level}}">
                     <div class="col-md-3">
+                        @if (Auth::User()->level=='2')
                         <button type="button" class="btn button-custome btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> Tambah</button>
+                        @endif
                     </div>
                     <div class="col-md-7"></div>
                     <div class="col-md-2"></div>
@@ -33,7 +36,9 @@
                                     <td>Kelas</td>
                                     <td>Tahun Ajaran</td>
                                     <td>Semester</td>
+                                    @if (Auth::User()->level=='2')
                                     <td>Aksi</td>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,33 +64,63 @@
         loadTable();
     });
     function loadTable(){
-        var table = $('#datatabel').DataTable({
-            scrollX: true,
-            searching: false, 
-            // paging: false,
-            processing: true,
-            serverSide: true,
-            columnDefs: [
-                {
-                    sortable: false,
-                    'targets': [0]
-                }, {
-                    searchable: false,
-                    'targets': [0]
+        var user = $('#lvUser').val();;
+        if (user=='2') {
+            var table = $('#datatabel').DataTable({
+                scrollX: true,
+                searching: false, 
+                // paging: false,
+                processing: true,
+                serverSide: true,
+                columnDefs: [
+                    {
+                        sortable: false,
+                        'targets': [0]
+                    }, {
+                        searchable: false,
+                        'targets': [0]
+                    },
+                ],
+                ajax: {
+                    url: "{{route('dataPelajaran')}}",
                 },
-            ],
-            ajax: {
-                url: "{{route('dataPelajaran')}}",
-            },
-            columns: [
-                { data: "DT_RowIndex", name: "DT_RowIndex"},
-                { data: "nama_mapel", name: "nama_mapel"},
-                { data: "kelas", name: "kelas"},
-                { data: "ta", name: "ta"},
-                { data: "semester", name: "semester"},
-                { data: "actions", name: "actions", class: "text-center"},
-            ],
-        })
+                columns: [
+                    { data: "DT_RowIndex", name: "DT_RowIndex"},
+                    { data: "nama_mapel", name: "nama_mapel"},
+                    { data: "kelas", name: "kelas"},
+                    { data: "ta", name: "ta"},
+                    { data: "semester", name: "semester"},
+                    { data: "actions", name: "actions", class: "text-center"},
+                ],
+            })
+        } else {
+            var table = $('#datatabel').DataTable({
+                scrollX: true,
+                searching: false, 
+                // paging: false,
+                processing: true,
+                serverSide: true,
+                columnDefs: [
+                    {
+                        sortable: false,
+                        'targets': [0]
+                    }, {
+                        searchable: false,
+                        'targets': [0]
+                    },
+                ],
+                ajax: {
+                    url: "{{route('dataPelajaran')}}",
+                },
+                columns: [
+                    { data: "DT_RowIndex", name: "DT_RowIndex"},
+                    { data: "nama_mapel", name: "nama_mapel"},
+                    { data: "kelas", name: "kelas"},
+                    { data: "ta", name: "ta"},
+                    { data: "semester", name: "semester"},
+                ],
+            })
+        }
     }
     function formAdd(id='') {
         console.log(id)

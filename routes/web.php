@@ -8,6 +8,7 @@ use App\Http\Controllers\LandingPage\Sim\SimController as SIM;
 use App\Http\Controllers\Admin\AdminController as Admin;
 use App\Http\Controllers\Pengaturan\PengaturanController as Pengaturan;
 use App\Http\Controllers\Dashboard\DashboardController as Dashboard;
+use App\Http\Controllers\Pengguna\PenggunaController as Pengguna;
 use App\Http\Controllers\Auth\AuthController as Auth;
 use App\Http\Controllers\Guru\DataPrimerController as DataPrimer;
 use App\Http\Controllers\Guru\DataSekunderController as DataSekunder;
@@ -54,6 +55,7 @@ Route::get('/clear', function () {
 Route::controller(HomeController::class)->group(function () {
 	Route::group(['prefix' => 'home', 'as' => 'home.'], function () { # Home menu
 		Route::get('/', 'main')->name('main');
+		Route::post('search-agenda', 'main')->name('searchAgenda');
 		Route::get('berita', 'berita')->name('berita');
 		Route::post('search-berita', 'berita')->name('searchBerita');
 		Route::get('event', 'event')->name('event');
@@ -235,16 +237,22 @@ Route::group(['middleware' => 'auth'], function () {
 			// Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
 		});
 		Route::group(array('prefix' => 'data-administrasi'), function () {
-			Route::get('/', [DataPelajaran::class, 'main'])->name('dataAdministrasi');
-			// Route::post('/form', [DataPelajaran::class, 'form'])->name('formDataPelajaran');
-			// Route::post('/store', [DataPelajaran::class, 'save'])->name('saveDataPelajaran');
-			// Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
+			Route::get('/', [DataAdministrasi::class, 'main'])->name('dataAdministrasi');
+			Route::post('/modal-form', [DataAdministrasi::class, 'modalForm'])->name('administrasiModalForm');
+			Route::post('/store', [DataAdministrasi::class, 'save'])->name('saveAdministrasi');
+			Route::post('/delete', [DataAdministrasi::class, 'delete'])->name('deleteAdministrasi');
 		});
 		Route::group(array('prefix' => 'berbagi-dokumen'), function () {
 			Route::get('/', [BerbagiDokumen::class, 'main'])->name('berbagiDokumen');
 			Route::post('/modal-form', [BerbagiDokumen::class, 'modalForm'])->name('berbagiDokumenModal');
 			Route::post('/store', [BerbagiDokumen::class, 'save'])->name('saveBerbagiDokumen');
 			Route::post('/delete', [BerbagiDokumen::class, 'delete'])->name('deleteBerbagiDokumen');
+		});
+		Route::group(array('prefix' => 'pengguna'), function () {
+			Route::get('/', [Pengguna::class, 'main'])->name('pengguna');
+			Route::post('/modal-form', [Pengguna::class, 'modalForm'])->name('penggunaModalForm');
+			Route::post('/store', [Pengguna::class, 'save'])->name('savePengguna');
+			Route::post('/delete', [Pengguna::class, 'delete'])->name('deletePengguna');
 		});
 		Route::group(array('prefix' => 'profile'), function () {
 			Route::get('/', [DataPelajaran::class, 'main'])->name('profile');
@@ -263,14 +271,11 @@ Route::group(['middleware' => 'auth'], function () {
 		});
 	});
 	Route::group(array('prefix' => 'guru-pengajar'), function () { #Web petugas sekolah
-		Route::get('/', [Dashboard::class, 'mainGuru'])->name('dashboardGuru');
-		Route::get('/data-primer', [DataPrimer::class, 'index'])->name('dataprimerGuru');
-		Route::get('/data-sekunder', [DataSekunder::class, 'index'])->name('datasekunderGuru');
-		Route::get('/upprimerguru', [UploadPrimerGuru::class, 'upprimerGuru'])->name('uploadPrimerGuru');
-		Route::post('/file-store', [UploadPrimerGuru::class, 'fileUpload'])->name('file.store');
-		Route::get('/pengaturan-guru', [PengaturanGuru::class, 'mainPengaturanGuru'])->name('pengaturanGuru'); //ganti password
-		Route::post('/pengaturan-guru', [Auth::class, 'prosesChangePassword'])->name('pengaturanGuru');
-		Route::get('/profil', [Profil::class, 'mainProfil'])->name('profilGuru');
-		Route::get('/edit-profilguru', [Profil::class, 'editProfil'])->name('editprofilGuru');
+		Route::group(array('prefix' => 'Dashboard'), function () {
+			Route::get('/', [Dashboard::class, 'mainGuru'])->name('dashboardGuru');
+		});
+		Route::group(array('prefix' => 'pengembangan-diri'), function () {
+			Route::get('/', [Dashboard::class, 'mainGuru'])->name('pengembanganDiri');
+		});
 	});
 });

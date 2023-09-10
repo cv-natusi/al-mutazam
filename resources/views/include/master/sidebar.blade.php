@@ -177,45 +177,39 @@
 				<div class="menu-title">Berbagi Dokumen</div>
 			</a>
 		</li>
-		<li class="{{ ($title == 'Reset Akun') ? 'mm-active' : ''}}">
-			<a href="{{route('resetAkun')}}">
+		<li class="{{ ($title == 'Data Pengguna') ? 'mm-active' : ''}}">
+			<a href="{{route('pengguna')}}">
 				<div class="parent-icon">
 					<i style="color: #000" class='bx bx-cog'></i>
 				</div>
-				<div class="menu-title">Reset Akun</div>
+				<div class="menu-title">Data Pengguna</div>
 			</a>
 		</li>
 		@elseif(Auth::User()->level=='3') <!-- Guru Pengajar -->
 		<li class="{{ ($title == 'Dashboard Guru') ? 'mm-active' : ''}}">
 			<a href="{{route('dashboardGuru')}}">
 				<div class="parent-icon">
-					<i style="color: #000" class='bx bxs-category'></i>
+					<i style="color: #000" class='bx bx-home-circle'></i>
 				</div>
 				<div class="menu-title">Dashboard</div>
 			</a>
-			<a href="{{route('profilGuru')}}">
+			<a href="{{route('dataPelajaran')}}">
 				<div class="parent-icon">
-					<i style="color: #000" class='bx bx-user'></i>
+					<i style="color: #000" class='bx bxs-category'></i>
 				</div>
-				<div class="menu-title">Profil Guru</div>
+				<div class="menu-title">Mata Pelajaran Diampu</div>
 			</a>
-			<a href="{{route('dashboardGuru')}}">
+			<a href="{{route('pengembanganDiri')}}">
 				<div class="parent-icon">
-					<i style="color: #000" class='bx bx-folder'></i>
+					<i style="color: #000" class='bx bxs-category'></i>
 				</div>
-				<div class="menu-title">Data Primer</div>
+				<div class="menu-title">Pengembangan Diri</div>
 			</a>
-			<a href="{{route('dashboardGuru')}}">
+			<a href="{{route('dataAdministrasi')}}">
 				<div class="parent-icon">
-					<i style="color: #000" class='bx bx-folder'></i>
+					<i style="color: #000" class='bx bx-desktop'></i>
 				</div>
-				<div class="menu-title">Data Sekunder</div>
-			</a>
-			<a href="{{route('dashboardGuru')}}">
-				<div class="parent-icon">
-					<i style="color: #000" class='bx bx-cog'></i>
-				</div>
-				<div class="menu-title">Pengaturan</div>
+				<div class="menu-title">Administrasi</div>
 			</a>
 		</li>
 		@endif

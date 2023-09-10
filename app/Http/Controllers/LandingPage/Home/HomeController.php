@@ -16,12 +16,25 @@ class HomeController extends Controller
 {
 	public function main(Request $request)
 	{
+		if ($request->ajax()) {
+			$payload = [
+				'code' => 204,
+				'message' => 'Data tidak ditemukan',
+			];
+			if ($event = Berita::filerAgendaById($request)) {
+				$payload['code'] = 200;
+				$payload['message'] = 'Ok';
+				$payload['response'] = $event;
+			}
+			return Helpers::resAjax($payload);
+		}
 		$berita = Berita::getBeritaLimit(3);
 		$event = Berita::getEventLimit(3);
 		$pengumuman = Berita::getPengumumanLimit(6);
 		$slider = DB::table('slider')->get();
 		$beritaSlider = Berita::where('kategori', 1)->orderBy('tanggal', 'ASC')->limit(3)->get();
-		$agendas = DB::table('berita')->where('status', '1')->where('tanggal_acara', '>=', date('Y-m-d'))->where('kategori', '2')->orderBy('tanggal_acara', 'ASC')->limit(10)->get();
+		// $agendas = DB::table('berita')->where('status', '1')->where('tanggal_acara', '>=', date('Y-m-d'))->where('kategori', '2')->orderBy('tanggal_acara', 'ASC')->limit(10)->get();
+		$agendas = DB::table('berita')->where('status', '1')->where('kategori', '2')->orderBy('tanggal_acara', 'ASC')->limit(10)->get();
 		return view('content.landing-page.home.main', compact('berita', 'event', 'pengumuman', 'slider', 'beritaSlider', 'agendas'));
 	}
 	public function berita(Request $request)

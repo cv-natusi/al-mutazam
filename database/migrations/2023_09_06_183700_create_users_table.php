@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('lihat_password')->nullable();
             $table->string('level');
+            $table->integer('guru_id')->nullable();
             $table->string('permissions')->nullable();
             $table->string('last_login')->nullable();
             $table->string('name_user')->nullable();

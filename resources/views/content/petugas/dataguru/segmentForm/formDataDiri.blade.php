@@ -4,6 +4,7 @@
     </div>
     <div class="card-body">
         <form class="formDataDiri">
+            <input type="hidden" name="id" id="id" value="{{!empty($data)?$data->id_guru:''}}">
             <div class="row mb-3">
                 <div class="col-md-4">
                     <label>Nama Lengkap <small>*</small></label>

@@ -149,8 +149,8 @@
 							<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('ttd-default.png')}}" alt="ttd kepsek">
 						</div>
 						<div class="col-md-9 text-left">
-							<h5>Nama Kepala Madrasah</h5>
-							<p>Kepala Sekolah</p>
+							<h5>EVI RAHMAWATI,S.T</h5>
+							<p>Kepala Madrasah</p>
 						</div>
 					</div>
 				</div>
@@ -262,7 +262,7 @@
 										<td>{{$agenda->judul}}</td>
 										<td>{{date('d/M/Y',strtotime($agenda->tanggal_acara))}}</td>
 										<td>
-											<a href="#" onclick="alert('Maintenance!')" class="text-center" style="text-align: center; color: #000">Detail</a>
+											<a href="javascript:void(0)" id="read-more-{{$agenda->id_berita}}" onclick="modalShow(`{{$agenda->id_berita}}`)" style="text-align: center; color: #000">Detail</a>
 										</td>
 									</tr>
 									@endforeach
@@ -276,7 +276,32 @@
 		</div>
 	</div>
 </section>
-
+<div class="modal" id="exampleModal" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<p class="modal-title fwhite fw7"></p>
+				<button type="button" class="close-modal btn-x">
+					<i class="far fa-times-circle fwhite" style="font-size: 25px;"></i>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12 mb-4">
+						<img class="mx-auto d-block responsive img-fluid" id="modal-img" width="400" height="auto" src="{{asset('default.jpg')}}" alt="team-member-foto">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						{{-- <div id="event-text"></div> --}}
+						<div id="event-text" class="text-justify"></div>
+						{{-- <p class="m-0" id="event-text"></p> --}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <section id="about-3" class="bg-second-section about-section division padding-section">
 	<div class="container">
 		<div class="row">
@@ -361,7 +386,51 @@
 
 <script type='text/javascript' src='http://www.youtube.com/iframe_api'></script>
 <script type="text/javascript">
+	async function modalShow(id) {
+		try {
+			await $.ajax({
+				url: '{{route("home.searchAgenda")}}',
+				type: 'POST',
+				data: {
+					id: id
+				},
+			}).done(async (data, textStatus, xhr) => {
+				const code = xhr.status
+				const rootDir = '{{URL::asset('/uploads/berita')}}'
+				const defaultDir = '{{URL::asset('')}}'
+				if (code !== 200) {
+					await Swal.fire({
+						icon: 'info',
+						title: 'Whoops..',
+						text: 'Data not found',
+						allowOutsideClick: false,
+						allowEscapeKey: false,
+					})
+					return false
+				}
+				await $('.modal-title').text(data.response.judul)
+				await $('#modal-img').attr('src', `${rootDir}/${data.response.gambar}`)
+				await $('#event-text').html(data.response.isi)
+				await $('#modal-img').on('error', async () => {
+					await $('#modal-img').attr('src', `${defaultDir}/default.jpg`)
+				})
+				$('.modal').fadeIn("slow")
+			})
+		} catch (error) {
+			await Swal.fire({
+				icon: 'error',
+				title: 'ERROR!',
+				text: error.responseJSON.metadata.message,
+				allowOutsideClick: false,
+				allowEscapeKey: false,
+			})
+		}
+	}
 	$(document).ready(() => {
+		$('.close-modal').click(() => {
+			$('.modal').fadeOut("slow")
+		})
+		
 		var maxWord = 15;
 		$(".content").each(function() {
 			var myStr = $(this).html()

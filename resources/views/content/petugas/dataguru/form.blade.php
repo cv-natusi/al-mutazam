@@ -26,7 +26,6 @@
 </style>
 <div class="row">
     <div class="col-md-12">
-        <input type="hidden" name="id" id="id" value="{{!empty($data)?$data->id_guru:''}}">
         <!-- DATA DIRI -->
         @include('content.petugas.dataguru.segmentForm.formDataDiri')
         <!-- DATA PENDIDIKAN DAN PEKERJAAN -->

@@ -4,6 +4,7 @@
     </div>
     <div class="card-body">
         <form class="row mb-3 formDataPendidikan">
+            <input type="hidden" name="id" id="id" value="{{!empty($data)?$data->id_guru:''}}">
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label>File KTP <small>*</small></label>

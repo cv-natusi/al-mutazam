@@ -72,8 +72,6 @@
             Swal.fire('Maaf!!', 'Semester Wajib Diisi.', 'warning')
         } else if(!nama) {
             Swal.fire('Maaf!!', 'Nama Dokumen Wajib Diisi.', 'warning')
-        } else if(!file) {
-            Swal.fire('Maaf!!', 'File Dokumen Wajib Diisi.', 'warning')
         } else{
             var data = new FormData($('#saveForm')[0]);
             $.ajax({

@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Petugas;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BerbagiDokumen;
-use DataTables,Validator,DB,Auth;
+use Illuminate\Support\Facades\Storage;
+use DataTables,Validator,DB,Auth,PDF;
 
 class BerbagiDokumenController extends Controller
 {
@@ -54,22 +55,11 @@ class BerbagiDokumenController extends Controller
 
     public function save(Request $request)
     {
-        $request->validate([
-            'file_dokumen' => 'required|mimes:pdf|max:2048',
-        ]);
-        if ($image = $request->file('foto')) {
-            $destinationPath = 'images/guru';
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
-            $data->foto = "$profileImage";
-        }
-        $file = $request->file('file_dokumen');
-        $filename = time() . '_' . $file->getClientOriginalName();
-        $path = $file->storeAs('uploads/pdf', $filename, 'public');
-            $pdf = PDF::loadView('pdf.invoice', $data);
-        Storage::put('public/pdf/invoice.pdf', $pdf->output());
         try {
             if(empty($request->id)) {
+                $request->validate([
+                    'file_dokumen' => 'required|mimes:pdf|max:2048',
+                ]);
                 $data = new BerbagiDokumen;
             } else {
                 $data = BerbagiDokumen::where('id_berbagi_dokumen',$request->id)->first();
@@ -77,7 +67,13 @@ class BerbagiDokumenController extends Controller
             $data->tahun_ajaran = $request->tahun_ajaran;
             $data->semester     = $request->semester;
             $data->nama_dokumen = $request->nama_dokumen;
-            $data->file_dokumen = $filename;
+            if ($request->file_dokumen) {
+                $fileName = $request->file_dokumen->getClientOriginalName();
+                $filePath = 'uploads/berbagiDokumen/' . $fileName;
+                $path = Storage::disk('public')->put($filePath, file_get_contents($request->file_dokumen));
+                $path = Storage::disk('public')->url($path);
+                $data->file_dokumen = $fileName;
+            }
             $data->save(); 
             if($data){
                 return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Disimpan.'];
@@ -86,6 +82,16 @@ class BerbagiDokumenController extends Controller
             }
         } catch (\Throwable $th) {
             return $th->getMessage();
+        }
+    }
+
+    public function delete(Request $request) {
+        $data = BerbagiDokumen::find($request->id);
+        $data->delete();
+        if ($data) {
+            return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Dihapus.'];
+        } else {
+            return ['code'=>201,'status'=>'error','message'=>'Data Gagal Dihapus.'];
         }
     }
 }
