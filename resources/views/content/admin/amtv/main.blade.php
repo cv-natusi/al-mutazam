@@ -1,186 +1,99 @@
 @extends('layout.master.main')
 
 @push('style')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 <style>
 	.card-title {
 		margin-top: 40px;
 	}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endpush
 
 @section('content')
 	<div class="page-content">
 		@include('include.master.breadcrumb')
-        
-		<div class="row">
-            <form method='post' action="{{ route('changeIdentity') }}" enctype='multipart/form-data'>
-                {{ csrf_field() }}
-                @if(session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @elseif(session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
-                @endif
-                <div class="col-md-12">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>Data Umum</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row mb-3">
-                                        <div class="col-md-3">
-                                            <label>Nama Web: </label>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <input type="text" name="nama_web"  required="required" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-3">
-                                            <label>URL: </label>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <input type="text" name="url"  required="required" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-3">
-                                            <label>Meta: </label>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <input type="text" name="meta" required="required" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-3">
-                                            <label>Alamat: </label>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <input type="text" name="alamat"  required="required" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-3">
-                                            <label>No. HP: </label>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <input type="text" name="phone"  required="required" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-3">
-                                            <label>Email: </label>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <input type="text" name="email"  required="required" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-3">
-                                            <label>Icon: </label>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="clearfix" style="padding-bottom: 10px"></div>
-                                            <input type="file" class="upload form-control" onchange="loadFilePhoto(event)" name="icon" accept="image/*" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>Detail Kontak</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row mb-3">
-                                        <div class="col-md-3">
-                                            <label>Facebook: </label>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <input type="text" name="fb"  required="required" class="form-control input-sm customInput col-md-7 col-xs-12">
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-3">
-                                            <label>Instagram: </label>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <input type="text" name="instagram"  required="required" class="form-control input-sm customInput col-md-7 col-xs-12">
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-3">
-                                            <label>Google Plus: </label>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <input type="text" name="gplus" required="required" class="form-control input-sm customInput col-md-7 col-xs-12">
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-3">
-                                            <label>Twitter: </label>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <input type="text" name="twitter"  required="required" class="form-control input-sm customInput col-md-7 col-xs-12">
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-3">
-                                            <label>Youtube: </label>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <input type="text" name="youtube"  required="required" class="form-control input-sm customInput col-md-7 col-xs-12">
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-3">
-                                            <label>peta: </label>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <input type="text" name="lokasi" class="form-control input-sm customInput col-md-7 col-xs-12">
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <input type="submit" name="edit" id="btn_simpan" class="btn btn-primary btn-block" style="width: 100%" value="Simpan">
-                        </div>
-                        <div class="col-md-6">
-                            <input type="reset" class="btn btn-warning btn-block" style="width: 100%" value="Reset">
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
+		<div class="card main-layer">
+			<div class="card-header bg-card">
+				<h5 class="text-card">Amtv</h5>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="table-responsive">
+						<table id="datatabel" class="table table-striped table-bordered" style="width: 100%;">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>Judul</th>
+									<th>Video</th>
+									<th>Status</th>
+									<th>Aksi</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="other-page"></div>
 	</div>
 @endsection
 
 @push('script')
 <script src="{{url('assets/plugins/jquery-knob/jquery.knob.js')}}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js" integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
-    function loadFilePhoto(event) {
-        var image = URL.createObjectURL(event.target.files[0]);
-            $('#preview-photo').fadeOut(function(){
-                $(this).attr('src', image).fadeIn().css({
-                    '-webkit-animation' : 'showSlowlyElement 700ms',
-                    'animation'         : 'showSlowlyElement 700ms'
-                });
-            });
-    };
-
-    $('#btn_simpan').click(function(){
-    	$('#main_content').hide();
-    	$('.loading').show();
-    });
+	$(document).ready(function() {
+		$(".knob").knob()
+		loadTable();
+	});
+	function loadTable(){
+		var table = $('#datatabel').DataTable({
+         dom: 'lftip',
+			scrollX: true,
+			processing: true,
+			serverSide: true,
+			columnDefs: [
+				{targets: [0,2,4], searchable: false},
+				{targets: [2,4], orderable: false},
+			],
+			ajax: {
+				url: "{{route('media.amtv.main')}}",
+			},
+			columns: [
+				{ data: "DT_RowIndex", name: "DT_RowIndex"},
+				{ data: "judul", name: "judul"},
+				{ data: "file", name: "file"},
+				{ data: "status", name: "status"},
+				{ data: "actions", name: "actions"},
+			],
+		})
+	}
+	function formAdd(id='') {
+		$('.main-layer').hide();
+		$.post("{{route('formUpdateSlider')}}", {id:id})
+		.done(function(data){
+			if(data.status == 'success'){
+				$('.other-page').html(data.content).fadeIn();
+			} else {
+				$('.main-layer').show();
+			}
+		})
+		.fail(() => {
+			$('.other-page').empty();
+			$('.main-layer').show();
+		})
+	}
+	function hideForm(){
+		$('.other-page').empty()
+		$('.main-layer').show()
+	}
+	function editAmtv(id){
+		alert('pengembangan')
+	}
+	function hapusAmtv(id){
+		alert('pengembangan')
+	}
 </script>
 @endpush

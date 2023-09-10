@@ -442,30 +442,59 @@ class AdminController extends Controller{
 			return Redirect::route('organisasi')->with('title', 'Whoops!!!')->with('message', 'Info Iklan Failed to Update !!')->with('type', 'error');
 		}
 	}
-	public function ekskul(Request $request) {#Ekstrakurikuler
+
+
+	# Moudul ekstrakurikuler start
+	public function ekskul(Request $request) {
+		if($request->ajax()){
+			// return Exkul::get();
+			return DataTables::of(Exkul::get())
+			->addIndexColumn()
+			->addColumn('gambar', function($row){
+				if(file_exists(public_path()."/uploads/exkul/$row->foto")){
+					$image = "/uploads/exkul/$row->foto";
+				}else{
+					$image = '/uploads/default.jpg';
+				}
+				$html = "<img class='rounded mx-auto d-block responsive img-thumbnail' src='$image' width='100' height='100'>";
+				return $html;
+			})
+			->addColumn('nama', function($row){
+				$html = "<p class='p-0'>".($row->nama_exkul ? $row->nama_exkul : "-")."</p>";
+				return $html;
+			})
+			->addColumn('status', function($row){
+				$status = $row->status_exkul==1 ? 'Aktif' : 'Non-aktif';
+				$html = "<p class='p-0'>$status</p>";
+				return $html;
+			})
+			->addColumn('actions', function($row){
+				$html = "<button class='btn btn-sm btn-primary' title='Edit' onclick='editFasilitas(`$row->id_amtv`)'><i class='fa-regular fa-pen-to-square'></i></button>";
+				// $html .= " <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusFasilitas(`$row->id_amtv`)'><i class='fa-solid fa-trash'></i></button>";
+				return $html;
+			})
+			->rawColumns(['gambar','nama','status','actions'])
+			->toJson();
+		}
 		$data['mn_active'] = 'modulSekolah';
 		$data['subMenuActive'] = 'ekstrakurikuler';
 		$data['title'] = 'Ekstra Kulikuler';
-		$data['identity'] = Identity::find(1);
 		return view('content.admin.ekskul.main', $data);
 	}
 	public function tampilEkskul(Request $request){
 		$data = Exkul::getEkskul($request);
 		return response()->json($data);
 	}
-	public function formAddEkskul()
-	{
+	public function formAddEkskul(){
 		$content = view('Admin.web.ekskul.formAdd')->render();
 		return ['status' => 'success', 'content' => $content];
 	}
-	public function formUpdateEkskul(Request $request)
-	{
+	public function formUpdateEkskul(Request $request){
 		$data['ekskul'] = Exkul::find($request->id);
 		$content = view('Admin.web.ekskul.formEdit',$data)->render();
 		return ['status' => 'success', 'content' => $content];
 	}
-	public function uploadEkskul(Request $request)
-	{
+	public function uploadEkskul(Request $request){
 		$ekskul = new Exkul;
 		$ekskul->nama_exkul = $request->nama_ekskul;
 		$ekskul->deskripsi = $request->deskripsi;
@@ -505,8 +534,7 @@ class AdminController extends Controller{
 			return Redirect::route('ekskul')->with('title', 'Whoops!!!')->with('message', 'Info Ekstra Kulikuler Failed to Upload !!')->with('type', 'error');
 		}
 	}
-	public function updateEkskul(Request $request)
-	{
+	public function updateEkskul(Request $request){
 		$ekskul = Exkul::find($request->id_ekskul);
 		$ekskul->nama_exkul = $request->nama_ekskul;
 		$ekskul->deskripsi = $request->deskripsi;
@@ -545,30 +573,59 @@ class AdminController extends Controller{
 			return Redirect::route('ekskul')->with('title', 'Whoops!!!')->with('message', 'Info Ekstra Kulikuler Failed to Update !!')->with('type', 'error');
 		}
 	}
-	public function fasilitas(Request $request) {#Fasilitas sekolah
+	# Modul ekstrakurikuler end
+
+
+	# Modul fasilitas sekolah start
+	public function fasilitas(Request $request){#Fasilitas sekolah
+		if($request->ajax()){
+			return DataTables::of(Galeri::get())
+			->addIndexColumn()
+			->addColumn('gambar', function($row){
+				if(file_exists(public_path()."/uploads/galeri/$row->file_galeri")){
+					$image = "/uploads/galeri/$row->file_galeri";
+				}else{
+					$image = '/uploads/default.jpg';
+				}
+				$html = "<img class='rounded mx-auto d-block responsive img-thumbnail' src='$image' width='100' height='100'>";
+				return $html;
+			})
+			->addColumn('deskripsi', function($row){
+				$html = "<p class='p-0'>".($row->deskripsi_galeri ? $row->deskripsi_galeri : "-")."</p>";
+				return $html;
+			})
+			->addColumn('status', function($row){
+				$status = $row->status_galeri==1 ? 'Aktif' : 'Non-aktif';
+				$html = "<p class='p-0'>$status</p>";
+				return $html;
+			})
+			->addColumn('actions', function($row){
+				$html = "<button class='btn btn-sm btn-primary' title='Edit' onclick='editFasilitas(`$row->id_amtv`)'><i class='fa-regular fa-pen-to-square'></i></button>";
+				// $html .= " <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusFasilitas(`$row->id_amtv`)'><i class='fa-solid fa-trash'></i></button>";
+				return $html;
+			})
+			->rawColumns(['gambar','deskripsi','status','actions'])
+			->toJson();
+		}
 		$data['mn_active'] = 'modulSekolah';
 		$data['subMenuActive'] = 'fasilitas';
 		$data['title'] = 'Fasilitas Sekolah';
-		$data['identity'] = Identity::find(1);
 		return view('content.admin.fasilitas.main', $data);
 	}
 	public function tampilFasilitas(Request $request){
 		$data = Exkul::getFasilitas($request);
 		return response()->json($data);
 	}
-	public function formAddFasilitas()
-	{
+	public function formAddFasilitas(){
 		$content = view('Admin.web.fasilitas.formAdd')->render();
 		return ['status' => 'success', 'content' => $content];
 	}
-	public function formUpdateFasilitas(Request $request)
-	{
+	public function formUpdateFasilitas(Request $request){
 		$data['ekskul'] = Exkul::find($request->id);
 		$content = view('Admin.web.fasilitas.formEdit',$data)->render();
 		return ['status' => 'success', 'content' => $content];
 	}
-	public function uploadFasilitas(Request $request)
-	{
+	public function uploadFasilitas(Request $request){
 		$ekskul = new Exkul;
 		$ekskul->nama_exkul = $request->nama_ekskul;
 		$ekskul->deskripsi = $request->deskripsi;
@@ -608,8 +665,7 @@ class AdminController extends Controller{
 			return Redirect::route('fasilitas')->with('title', 'Whoops!!!')->with('message', 'Info Ekstra Kulikuler Failed to Upload !!')->with('type', 'error');
 		}
 	}
-	public function updateFasilitas(Request $request)
-	{
+	public function updateFasilitas(Request $request){
 		$ekskul = Exkul::find($request->id_ekskul);
 		$ekskul->nama_exkul = $request->nama_ekskul;
 		$ekskul->deskripsi = $request->deskripsi;
@@ -648,31 +704,61 @@ class AdminController extends Controller{
 			return Redirect::route('fasilitas')->with('title', 'Whoops!!!')->with('message', 'Info Ekstra Kulikuler Failed to Update !!')->with('type', 'error');
 		}
 	}
-	#Modul media
-	public function amtv() {#Amtv
+	# Modul fasilitas sekolah end
+
+
+	#Modul media start
+	public function amtv(Request $request) { # Amtv
 		$data['mn_active'] = 'modulMedia';
 		$data['subMenuActive'] = 'amtv';
 		$data['title'] = 'AMTV';
+		if(request()->ajax()){
+			return DataTables::of(Amtv::get())
+			->addIndexColumn()
+			->addColumn('judul', function($row){
+				$html = "<p class='p-0'>$row->judul_amtv</p>";
+				return $html;
+			})
+			->addColumn('file', function($row){
+				if($row->file){
+					$uri = str_replace('watch?v=','embed/',$row->file);
+					// $html = "<iframe width='250' height='auto' src='https://www.youtube.com/embed/tgbNymZ7vqY'></iframe>";
+					$html = "<iframe width='250' height='auto' src='$uri'></iframe>";
+				}else{
+					$html = "<img class='rounded mx-auto d-block responsive img-thumbnail' src='/default.jpg' width='100' height='100'>";
+				}
+				return $html;
+			})
+			->addColumn('status', function($row){
+				$status = $row->status_amtv==1 ? 'Aktif' : 'Non-aktif';
+				$html = "<p class='p-0'>$status</p>";
+				return $html;
+			})
+			->addColumn('actions', function($row){
+				$html = "<button class='btn btn-sm btn-primary' title='Edit' onclick='editAmtv(`$row->id_amtv`)'><i class='fa-regular fa-pen-to-square'></i></button>";
+				$html .= " <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusAmtv(`$row->id_amtv`)'><i class='fa-solid fa-trash'></i></button>";
+				return $html;
+			})
+			->rawColumns(['judul','file','status','actions'])
+			->toJson();
+		}
 		return view('content.admin.amtv.main', $data);
 	}
 	public function tampilAmtv(Request $request){
 		$data = Amtv::getAmtv($request);
 		return response()->json($data);
 	}
-	public function formAddAmtv(Request $request)
-	{
+	public function formAddAmtv(Request $request){
 		$content = view('Admin.media.amtv.formAdd')->render();
 		return ['status' => 'success', 'content' => $content];
 	}
-	public function formUpdateAmtv(Request $request)
-	{
+	public function formUpdateAmtv(Request $request){
 		$data['id'] = $request->id;
 		$data['amtv'] = Amtv::find($request->id);
 		$content = view('Admin.media.amtv.formEdit',$data)->render();
 		return ['status' => 'success', 'content' => $content];
 	}
-	public function uploadAmtv(Request $request)
-	{
+	public function uploadAmtv(Request $request){
 		$amtv = new Amtv;
 		$amtv->judul_amtv = $request->judul;
 		$amtv->file = $request->youtube;
@@ -684,8 +770,7 @@ class AdminController extends Controller{
 			return Redirect::route('amtv')->with('title', 'Success !')->with('message', 'AMTV Failed to Upload !!')->with('type', 'success');
 		}
 	}
-	public function updateAmtv(Request $request)
-	{
+	public function updateAmtv(Request $request){
 		$amtv = Amtv::find($request->id_amtv);
 		$amtv->judul_amtv = $request->judul;
 		$amtv->file = $request->youtube;
@@ -697,38 +782,63 @@ class AdminController extends Controller{
 			return Redirect::route('amtv')->with('title', 'Success !')->with('message', 'AMTV Failed to Upload !!')->with('type', 'success');
 		}
 	}
-	public function deleteAmtv(Request $request)
-	{
+	public function deleteAmtv(Request $request){
 		$amtv = Amtv::where('id_amtv',$request->id)->delete();
 		if($amtv){
 			return ['status' => 'success'];
 		}
 	}
-	public function galeri() {#Galeri
+
+	public function galeri(){
 		$data['mn_active'] = 'modulMedia';
 		$data['subMenuActive'] = 'galeri';
 		$data['title'] = 'Galeri';
+		if(request()->ajax()){
+			return DataTables::of(Galeri::get())
+			->addIndexColumn()
+			->addColumn('gambar', function($row){
+				if(file_exists(public_path()."/uploads/galeri/$row->file_galeri")){
+					$image = "/uploads/galeri/$row->file_galeri";
+				}else{
+					$image = '/uploads/default.jpg';
+				}
+				$html = "<img class='rounded mx-auto d-block responsive img-thumbnail' src='$image' width='100' height='100'>";
+				return $html;
+			})
+			->addColumn('deskripsi', function($row){
+				$html = "<p class='p-0'>".($row->deskripsi_galeri ? $row->deskripsi_galeri : "-")."</p>";
+				return $html;
+			})
+			->addColumn('status', function($row){
+				$status = $row->status_galeri==1 ? 'Aktif' : 'Non-aktif';
+				$html = "<p class='p-0'>$status</p>";
+				return $html;
+			})
+			->addColumn('actions', function($row){
+				$html = "<button class='btn btn-sm btn-primary' title='Edit' onclick='editGaleri(`$row->id_amtv`)'><i class='fa-regular fa-pen-to-square'></i></button>";
+				$html .= " <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusGaleri(`$row->id_amtv`)'><i class='fa-solid fa-trash'></i></button>";
+				return $html;
+			})
+			->rawColumns(['gambar','deskripsi','status','actions'])
+			->toJson();
+		}
 		return view('content.admin.galeri.main', $data);
 	}
 	public function tampilGaleri(Request $request){
 		$data = Galeri::getGaleri($request);
 		return response()->json($data);
 	}
-	public function formAddGaleri(Request $request)
-	{
+	public function formAddGaleri(Request $request){
 		$content = view('Admin.media.galeri.formAdd')->render();
 		return ['status' => 'success', 'content' => $content];
 	}
-	public function formUpdateGaleri(Request $request)
-	{
+	public function formUpdateGaleri(Request $request){
 		$data['id'] = $request->id;
 		$data['galeri'] = Galeri::find($request->id);
 		$content = view('Admin.media.galeri.formEdit',$data)->render();
 		return ['status' => 'success', 'content' => $content];
 	}
-	public function uploadGaleri(Request $request)
-	{
-		// return $request->all();
+	public function uploadGaleri(Request $request){
 		$galeri = new Galeri;
 		$galeri->kategori_galeri = $request->kategori;
 		$galeri->deskripsi_galeri = $request->deskripsi;
@@ -768,9 +878,7 @@ class AdminController extends Controller{
 			return Redirect::route('galeri')->with('title', 'Success !')->with('message', 'Galeri Failed to Upload !!')->with('type', 'success');
 		}
 	}
-	public function updateGaleri(Request $request)
-	{
-		// return $request->all();
+	public function updateGaleri(Request $request){
 		$galeri = Galeri::find($request->id_galeri);
 		
 		if($request->kategori==1){
@@ -825,8 +933,7 @@ class AdminController extends Controller{
 			return Redirect::route('galeri')->with('title', 'Success !')->with('message', 'Galeri Failed to Update !!')->with('type', 'success');
 		}
 	}
-	public function deleteGaleri(Request $request)
-	{
+	public function deleteGaleri(Request $request){
 		$gambar = Galeri::find($request->id);
 		if($gambar->kategori_galeri=='1'){
 			if($gambar->file_galeri!=''){
@@ -840,6 +947,7 @@ class AdminController extends Controller{
 			return ['status' => 'success'];
 		}
 	}
+	# Modul media end
 
 
 	# Modul berita start

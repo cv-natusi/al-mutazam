@@ -49,9 +49,9 @@
 	});
 	function loadTable(){
 		var table = $('#datatabel').DataTable({
+         dom: 'tip',
 			scrollX: true,
-			searching: false, 
-			// paging: false,
+			searching: false,
 			processing: true,
 			serverSide: true,
 			columnDefs: [

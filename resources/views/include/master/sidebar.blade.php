@@ -51,25 +51,25 @@
 			</a>
 			<ul>
 				<li class="{{ ($title == 'Sejarah') ? 'mm-active' : ''}}">
-				<a style="color: #000"  href="{{ route('sejarah') }}"><i style="color: #000"  class="bx bx-right-arrow-alt"></i>Sejarah</a>
+				<a style="color: #000"  href="{{ route('sekolah.sejarah.main') }}"><i style="color: #000"  class="bx bx-right-arrow-alt"></i>Sejarah</a>
 			  </li>
 			  <li class="{{ ($title == 'Visi dan Misi') ? 'mm-active' : ''}}">
-				<a style="color: #000"  href="{{ route('visimisi') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Visi Misi</a>
+				<a style="color: #000"  href="{{ route('sekolah.visimisi.main') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Visi Misi</a>
 			  </li>
 			  <li class="{{ ($title == 'Sambutan Kepala Sekolah') ? 'mm-active' : ''}}">
-				<a style="color: #000"  href="{{ route('kepsek') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Sambutan Kepala Madrasah</a>
+				<a style="color: #000"  href="{{ route('sekolah.kepsek.main') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Sambutan Kepala Madrasah</a>
 			  </li>
 			  <li class="{{ ($title == 'Struktur Organisasi') ? 'mm-active' : ''}}">
-				<a style="color: #000"  href="{{ route('organisasi') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Struktur Organisasi</a>
+				<a style="color: #000"  href="{{ route('sekolah.organisasi.main') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Struktur Organisasi</a>
 			  </li>
 			  <li class="{{ ($title == 'Fasilitas Sekolah') ? 'mm-active' : ''}}">
-				<a style="color: #000"  href="{{ route('fasilitas') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Fasilitas Sekolah</a>
+				<a style="color: #000"  href="{{ route('sekolah.fasilitas.main') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Fasilitas Sekolah</a>
 			  </li>
 			  <li class="{{ ($title == 'Ekstra Kulikuler') ? 'mm-active' : ''}}">
-				<a style="color: #000"  href="{{ route('ekskul') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Ekstrakurikuler</a>
+				<a style="color: #000"  href="{{ route('sekolah.ekskul.main') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Ekstrakurikuler</a>
 			  </li>
 			  <li class="{{ ($title == 'UKS') ? 'mm-active' : ''}}">
-				<a style="color: #000" href="{{ route('uks') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>UKS</a>
+				<a style="color: #000" href="{{ route('sekolah.uks.main') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>UKS</a>
 			  </li>
 			</ul>
 		</li>
@@ -81,10 +81,10 @@
 			</a>
 			<ul>
 				<li class="{{ ($title == 'AMTV') ? 'mm-active' : ''}}">
-				<a style="color: #000" href="{{ route('amtv') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>AMTV</a>
+				<a style="color: #000" href="{{ route('media.amtv.main') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>AMTV</a>
 			  </li>
 			  <li class="{{ ($title == 'Galeri') ? 'mm-active' : ''}}">
-				<a style="color: #000" href="{{ route('galeri') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Galeri</a>
+				<a style="color: #000" href="{{ route('media.galeri.main') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Galeri</a>
 			  </li>
 			</ul>
 		</li>
