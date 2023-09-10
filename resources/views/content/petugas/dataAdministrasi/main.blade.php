@@ -10,26 +10,17 @@
 
         <div class="card main-layer">
             <div class="card-body">
-                <div class="row mb-3" style="margin-top: 1rem">
-                    <div class="col-md-3">
-                        <button type="button" class="btn button-custome btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> Tambah</button>
-                    </div>
-                    <div class="col-md-7"></div>
-                    <div class="col-md-2"></div>
-                </div>
-
                 <div class="row" style="margin-top: 2rem">
                     <div class="table-responsive">
                         <table id="datatabel" class="table table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
                                     <td>No</td>
-                                    <td>Nama Berkas Administrasi</td>
-                                    <td>Keterangan</td>
-                                    <td>Tanggal Upload</td>
-                                    <td>Upload</td>
-                                    <td class="text-center">Status</td>
+                                    <td>NIP</td>
+                                    <td>Nama Guru</td>
                                     <td class="text-center">Aksi</td>
+                                    <td class="text-center">Status</td>
+                                    <td class="text-center">Verifikasi</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -69,35 +60,58 @@
                 },
             ],
             ajax: {
-                url: "{{route('dataAdministrasi')}}",
+                url: "{{route('dataAdministrasiPetugas')}}",
             },
             columns: [
                 { data: "DT_RowIndex", name: "DT_RowIndex"},
-                { data: "nama_berkas", name: "nama_berkas"},
-                { data: "keterangan", name: "keterangan"},
-                { data: "tanggal_upload", name: "tanggal_upload"},
-                { data: "file", name: "file"},
-                { data: "btnStatus", name: "btnStatus", class: "text-center"},
+                { data: "nip", name: "nip"},
+                { data: "guru", name: "guru"},
                 { data: "actions", name: "actions", class: "text-center"},
+                { data: "btnStatus", name: "btnStatus", class: "text-center"},
+                { data: "verifikasi", name: "verifikasi", class: "text-center"},
             ],
         })
     }
-    function formAdd(id='') {
-        $.post("{{route('administrasiModalForm')}}",{id:id},function(data){
+    function lihat(id='') {
+        $.post("{{route('administrasiModalFormPetugas')}}",{id:id},function(data){
 			$("#modalForm").html(data.content);
 		});
     }
-    function hapusData(id) {
+    function verifikasi(id) {
+        $.post("{{ route('verifAdministrasiPetugas') }}",{id:id}).done(function(data) {
+            if(data.code==200){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: data.message,
+                    showConfirmButton: false,
+                    timer: 1200
+                })
+                location.reload()
+            }else{
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Whoops',
+                    text: data.message,
+                    showConfirmButton: false,
+                    timer: 1300,
+                })
+            }
+        }).fail(function() {
+            Swal.fire("Sorry!", "Gagal menghapus data!", "error");
+        });
+	}
+    function tolak(id) {
 		Swal.fire({
 			title: "Apakah Anda yakin?",
-			text: "Data yang dihapus tidak dapat dikembalikan lagi.",
+			text: "Data Akan Ditolak Dan Dikembalikan Pada Guru.",
 			icon: 'warning',
 			showCancelButton: true,
 			cancelButtonText: 'Batal',
-			confirmButtonText: 'Hapus',
+			confirmButtonText: 'Tolak',
 		}).then((result) => {
 			if (result.value) {
-				$.post("{{ route('deleteAdministrasi') }}",{id:id}).done(function(data) {
+				$.post("{{ route('tolakAdministrasiPetugas') }}",{id:id}).done(function(data) {
 					if(data.code==200){
                         Swal.fire({
                             icon: 'success',
@@ -117,10 +131,10 @@
                         })
                     }
 				}).fail(function() {
-					Swal.fire("Sorry!", "Gagal menghapus data!", "error");
+					Swal.fire("Sorry!", "Terjadi Kesalahan Sistem!", "error");
 				});
 			} else if (result.dismiss === Swal.DismissReason.cancel) {
-				Swal.fire("Batal", "Data batal dihapus!", "error");
+				Swal.fire("Batal", "Data batal ditolak!", "error");
 			}
 		});
 	}

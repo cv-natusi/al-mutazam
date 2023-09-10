@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('data_administrasi', function (Blueprint $table) {
             $table->bigIncrements('id_administrasi');
+            $table->integer('guru_id')->nullable();
             $table->string('nama_berkas');
             $table->string('keterangan');
             $table->string('tanggal_upload');

@@ -162,7 +162,7 @@
 			</a>
 		</li>
 		<li class="{{ ($title == 'Data Administrasi') ? 'mm-active' : ''}}">
-			<a href="{{route('dataAdministrasi')}}">
+			<a href="{{route('dataAdministrasiPetugas')}}">
 				<div class="parent-icon">
 					<i style="color: #000" class='bx bxs-category'></i>
 				</div>
