@@ -40,7 +40,7 @@
 								</div>
 								<div class="d-flex align-items-center text-white">
 									<p class="mb-0">Berita Sekolah</p>
-									<a href="{{ url('admin/berita/beritaSekolah/1') }}" class="btn btn-light btn-sm mb-0 ms-auto">Selengkapnya</a>
+									<a href="{{ route('berita.main',1) }}" class="btn btn-light btn-sm mb-0 ms-auto">Selengkapnya</a>
 								</div>
 							</div>
 						</div>
@@ -59,7 +59,7 @@
 							</div>
 							<div class="d-flex align-items-center text-white">
 								<p class="mb-0">Event</p>
-								<a href="{{ url('admin/berita/beritaSekolah/2') }}" class="btn btn-light btn-sm mb-0 ms-auto">Selengkapnya</a>
+								<a href="{{ route('berita.main',2) }}" class="btn btn-light btn-sm mb-0 ms-auto">Selengkapnya</a>
 							</div>
 						</div>
 						</div>
@@ -78,7 +78,7 @@
 								</div>
 								<div class="d-flex align-items-center text-white">
 									<p class="mb-0">Pengumuman</p>
-									<a href="{{ url('admin/berita/beritaSekolah/3') }}" class="btn btn-light btn-sm mb-0 ms-auto">Selengkapnya</a>
+									<a href="{{ route('berita.main',3) }}" class="btn btn-light btn-sm mb-0 ms-auto">Selengkapnya</a>
 								</div>
 							</div>
 						</div>

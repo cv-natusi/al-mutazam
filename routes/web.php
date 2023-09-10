@@ -174,17 +174,26 @@ Route::group(['middleware' => 'auth'], function () {
 				Route::post('/deleteGaleri', [Admin::class, 'deleteGaleri'])->name('deleteGaleri');
 			});
 		});
-		Route::group(array('prefix' => 'berita'), function () { #modul Berita
-			Route::group(array('prefix' => 'beritaSekolah'), function () {
-				Route::get('/{id}', [Admin::class, 'beritaSekolah'])->name('beritaSekolah');
-				Route::post('/formAddBeritaSekolah', [Admin::class, 'formAddBeritaSekolah'])->name('formAddBeritaSekolah');
-				Route::post('/formUpdateBeritaSekolah', [Admin::class, 'formUpdateBeritaSekolah'])->name('formUpdateBeritaSekolah');
-				Route::post('/getBeritaSekolah', [Admin::class, 'tampilBeritaSekolah'])->name('tampilBeritaSekolah');
-				Route::post('/upload', [Admin::class, 'uploadBeritaSekolah'])->name('uploadBeritaSekolah');
-				Route::post('/update', [Admin::class, 'updateBeritaSekolah'])->name('updateBeritaSekolah');
-				Route::post('/delete', [Admin::class, 'deleteBeritaSekolah'])->name('deleteBeritaSekolah');
-			});
+
+		# Modul berita start
+		Route::controller(Admin::class)->
+			prefix('berita')->
+			as('berita.')->
+			group(function(){
+				Route::get('{id}','berita')->name('main');
 		});
+		# Modul berita end
+		// Route::group(['prefix' => 'berita'], function () { # Modul berita
+		// 	// Route::group(['prefix' => 'sekolah'], function () {
+		// 	// 	Route::get('/{id}', [Admin::class, 'beritaSekolah'])->name('beritaSekolah');
+		// 	// 	Route::post('/formAddBeritaSekolah', [Admin::class, 'formAddBeritaSekolah'])->name('formAddBeritaSekolah');
+		// 	// 	Route::post('/formUpdateBeritaSekolah', [Admin::class, 'formUpdateBeritaSekolah'])->name('formUpdateBeritaSekolah');
+		// 	// 	Route::post('/getBeritaSekolah', [Admin::class, 'tampilBeritaSekolah'])->name('tampilBeritaSekolah');
+		// 	// 	Route::post('/upload', [Admin::class, 'uploadBeritaSekolah'])->name('uploadBeritaSekolah');
+		// 	// 	Route::post('/update', [Admin::class, 'updateBeritaSekolah'])->name('updateBeritaSekolah');
+		// 	// 	Route::post('/delete', [Admin::class, 'deleteBeritaSekolah'])->name('deleteBeritaSekolah');
+		// 	// });
+		// });
 	});
 	Route::group(array('prefix' => 'petugas-sekolah'), function () { #Web petugas sekolah
 		Route::get('/', [Dashboard::class, 'mainPetugas'])->name('dashboardPetugas');

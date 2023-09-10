@@ -14,7 +14,7 @@
 		@include('include.master.breadcrumb')
 		<div class="card main-layer">
 			<div class="card-header bg-card">
-				<h5 class="text-card">Slider</h5>
+				<h5 class="text-card">Logo</h5>
 			</div>
 			<div class="card-body">
 				<div class="row">
@@ -23,8 +23,8 @@
 							<thead>
 								<tr>
 									<td>No</td>
-									<td class="text-center">Gambar Icon</td>
-									<td class="text-center">Aksi</td>
+									<td class="text-center">Judul</td>
+									<td class="text-center">Tanggal</td>
 								</tr>
 							</thead>
 							<tbody>
@@ -47,30 +47,24 @@
 		$(".knob").knob()
 		loadTable();
 	});
-	function loadTable(){
-		var table = $('#datatabel').DataTable({
+	async function loadTable(){
+      var uri = await '{{Request::url()}}'
+      uri = await uri.split('/').pop()
+		var table = await $('#datatabel').DataTable({
 			scrollX: true,
-			searching: false, 
-			// paging: false,
 			processing: true,
 			serverSide: true,
-			columnDefs: [
-				{sortable: false,'targets': [0]},
-				{searchable: false,'targets': [0]},
-			],
-			ajax: {
-				url: "{{route('slider')}}",
-			},
+			ajax: '{{route("berita.main",'')}}/'+uri,
 			columns: [
-				{ data: "DT_RowIndex", name: "DT_RowIndex"},
-				{ data: "image", name: "image"},
-				{ data: "actions", name: "actions", class: "text-center"},
+			{ data: 'DT_RowIndex', name: 'DT_RowIndex'},
+			{ data: 'judul', name: 'judul'},
+			{ data: 'tanggal', name: 'tanggal'},
 			],
 		})
 	}
 	function formAdd(id='') {
 		$('.main-layer').hide();
-		$.post("{{route('formUpdateSlider')}}", {id:id})
+		$.post("{{route('formUpdateLogo')}}", {id:id,posisi:'Kiri'})
 		.done(function(data){
 			if(data.status == 'success'){
 				$('.other-page').html(data.content).fadeIn();

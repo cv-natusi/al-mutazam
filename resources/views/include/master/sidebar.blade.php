@@ -96,19 +96,19 @@
 			</a>
 			<ul>
 			  <li class="{{ ($title == 'Berita Sekolah') ? 'mm-active' : ''}}">
-				<a style="color: #000" href="{{ url('admin/berita/beritaSekolah/1') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Berita Sekolah</a>
+				<a style="color: #000" href="{{ route('berita.main',1) }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Berita Sekolah</a>
 			  </li>
 			  <li class="{{ ($title == 'Event') ? 'mm-active' : ''}}">
-				<a style="color: #000" href="{{ url('admin/berita/beritaSekolah/2') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Event</a>
+				<a style="color: #000" href="{{ route('berita.main',2) }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Event</a>
 			  </li>
 			  <li class="{{ ($title == 'Pengumuman') ? 'mm-active' : ''}}">
-				<a style="color: #000" href="{{ url('admin/berita/beritaSekolah/3') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Pengumuman</a>
+				<a style="color: #000" href="{{ route('berita.main',3) }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Pengumuman</a>
 			  </li>
 			  <li class="{{ ($title == 'Prestasi Siswa') ? 'mm-active' : ''}}">
-				<a style="color: #000" href="{{ url('admin/berita/beritaSekolah/4') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Prestasi Siswa</a>
+				<a style="color: #000" href="{{ route('berita.main',4) }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Prestasi Siswa</a>
 			  </li>
 			  <li class="{{ ($title == 'Program Unggulan') ? 'mm-active' : ''}}">
-				<a style="color: #000" href="{{ url('admin/berita/beritaSekolah/5') }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Program Unggulan</a>
+				<a style="color: #000" href="{{ route('berita.main',5) }}"><i style="color: #000" class="bx bx-right-arrow-alt"></i>Program Unggulan</a>
 			  </li>
 			</ul>
 		</li>
