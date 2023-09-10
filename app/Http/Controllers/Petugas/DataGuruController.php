@@ -75,6 +75,20 @@ class DataGuruController extends Controller
 		return ['status' => 'success', 'content' => $content, 'data' => $data];
     }
 
+    public function cariMapel(Request $request) {
+        $data = MstPelajaran::whereRaw("UPPER(nama_mapel) like '%".strtoupper($request->nama_mapel)."%'")
+        ->where('guru_id','=',$request->guru_id)
+        ->limit(5)->get();
+
+        if (count($data) > 0) {
+            $return = ['status'=>'success', 'code'=>200, 'message'=>'Berhasil', 'data'=>$data];
+        }else{
+            $return = ['status'=>'warning', 'code'=>500, 'message'=>'Data tidak ditemukan', 'data'=>""];
+        }
+
+        return response()->json($return);
+    }
+
     public function saveDataDiri(Request $request) {
         if (empty($request->id)) {
             $data = new Guru;

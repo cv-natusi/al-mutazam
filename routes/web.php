@@ -10,23 +10,13 @@ use App\Http\Controllers\Pengaturan\PengaturanController as Pengaturan;
 use App\Http\Controllers\Dashboard\DashboardController as Dashboard;
 use App\Http\Controllers\Pengguna\PenggunaController as Pengguna;
 use App\Http\Controllers\Auth\AuthController as Auth;
-use App\Http\Controllers\Guru\DataPrimerController as DataPrimer;
-use App\Http\Controllers\Guru\DataSekunderController as DataSekunder;
-use App\Http\Controllers\Guru\PengaturanGuruController as PengaturanGuru;
-use App\Http\Controllers\Guru\UploadFileController as UploadPrimerGuru;
 use App\Http\Controllers\Guru\ProfilController as Profil;
-use App\Http\Controllers\Petugas\DataPrimerPetugasController as DataPetugasPrimer;
-use App\Http\Controllers\Petugas\DataSekunderPetugasController as DataPetugasSekunder;
-use App\Http\Controllers\Petugas\PengaturanPetugasController as PengaturanPetugas;
 use App\Http\Controllers\Petugas\DataGuruController as DataGuru;
 use App\Http\Controllers\Petugas\DataTugasPegawaiController as DataTugasPegawai;
 use App\Http\Controllers\Petugas\DataAdministrasiController as DataAdministrasi;
 use App\Http\Controllers\Petugas\BerbagiDokumenController as BerbagiDokumen;
 use App\Http\Controllers\Petugas\DataKelasController as DataKelas;
 use App\Http\Controllers\Petugas\DataPelajaranController as DataPelajaran;
-use App\Http\Controllers\Petugas\UbahPasswordController as UbahPassword;
-use App\Http\Controllers\Petugas\ResetPasswordController as ResetPassword;
-use App\Http\Controllers\mstWilayah\mstWilayahController as mstWilayah;
 use GuzzleHttp\Psr7\UploadedFile;
 
 /*
@@ -104,11 +94,6 @@ Route::get('login', [Auth::class, 'login'])->name('login');
 Route::post('proses_login', [Auth::class, 'proses_login'])->name('proses_login');
 Route::get('logout', [Auth::class, 'logout'])->name('logout');
 # Auth end
-# Start Wilayah
-Route::post('getKabupaten', [mstWilayah::class, 'getKabupaten'])->name('get_kabupaten');
-Route::post('getKecamatan', [mstWilayah::class, 'getKecamatan'])->name('get_kecamatan');
-Route::post('getDesa', [mstWilayah::class, 'getDesa'])->name('get_desa');
-# End Wilayah
 Route::group(['middleware' => 'auth'], function () {
 	Route::group(array('prefix' => 'admin'), function () { #Web admin
 		Route::get('/', [Dashboard::class, 'mainAdmin'])->name('dashboardAdmin'); #Dashboard admin

@@ -25,8 +25,8 @@
                                 <tr>
                                     <td>No</td>
                                     <td>Kelas</td>
-                                    <td>Nama Kelas</td>
-                                    <td>Guru Wali Kelas</td>
+                                    <td>Nama Rombel</td>
+                                    <td>Wali Kelas</td>
                                     <td>Aksi</td>
                                 </tr>
                             </thead>

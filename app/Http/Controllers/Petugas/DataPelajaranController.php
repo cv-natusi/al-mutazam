@@ -35,6 +35,10 @@ class DataPelajaranController extends Controller
                     $txt = "Kelas ".$kelas->kelas." ".$kelas->nama_kelas;
                     return $txt;
 				})
+                ->addColumn('guru', function($row){
+                    $txt = Guru::where('id_guru', $row->guru_id)->first()->nama;
+                    return $txt;
+				})
 				->rawColumns(['actions'])
 				->toJson();
 		}
