@@ -213,7 +213,7 @@
 			</a>
 		</li>
 		@endif
-		@if (Auth::User()->level=='2' && Auth::User()->level=='3')
+		@if (Auth::User()->level=='2' || Auth::User()->level=='3')
 		<li class="{{ ($title == 'Profile') ? 'mm-active' : ''}}">
 			<a href="{{route('profile')}}">
 				<div class="parent-icon">
