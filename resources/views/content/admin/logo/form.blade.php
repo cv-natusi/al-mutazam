@@ -23,15 +23,11 @@
 							<div class="col-md-4">
 								<div class="crop-edit">
 									<center>
-										@if(!empty($identity->logo_kiri))
-											@if(file_exists('uploads/identitas/'.$identity->logo_kiri))
-												<img id="preview-photo" src="{!! url('uploads/identitas/'.$identity->logo_kiri) !!}" class="img-polaroid" width="200">
-											@else
-												<img id="preview-photo" src="{!! url('uploads/default.jpg') !!}" class="img-polaroid" width="200">
-											@endif
-										@else
-											<img id="preview-photo" src="{!! url('uploads/default.jpg') !!}" class="img-polaroid" width="200">
-										@endif
+                              @if(file_exists('uploads/identitas/'.$identity->logo_kiri))
+                                 <img id="preview-photo" src="{!! url('uploads/identitas/'.$identity->logo_kiri) !!}" class="img-polaroid rounded mx-auto d-block responsive img-thumbnail" width="200">
+                              @else
+                                 <img id="preview-photo" src="{!! url('uploads/default.jpg') !!}" class="img-polaroid rounded mx-auto d-block responsive img-thumbnail" width="200">
+                              @endif
 									</center>
 								</div>
 							</div>
