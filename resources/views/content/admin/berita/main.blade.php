@@ -19,7 +19,7 @@
 			<div class="card-body">
 				<div class="row">
 					<div class="table-responsive">
-						<table id="datatabel" class="table table-striped table-bordered" width="100%">
+						<table id="datatabel" class="table table-striped table-bordered" style="width: 100%;">
 							<thead>
 								<tr>
 									<td>No</td>
