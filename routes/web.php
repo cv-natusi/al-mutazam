@@ -303,10 +303,10 @@ Route::group(['middleware' => 'auth'], function () {
 			// Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
 		});
 		Route::group(array('prefix' => 'data-administrasi'), function () {
-			Route::get('/', [DataAdministrasi::class, 'main'])->name('dataAdministrasi');
-			Route::post('/modal-form', [DataAdministrasi::class, 'modalForm'])->name('administrasiModalForm');
-			Route::post('/store', [DataAdministrasi::class, 'save'])->name('saveAdministrasi');
-			Route::post('/delete', [DataAdministrasi::class, 'delete'])->name('deleteAdministrasi');
+			Route::get('/', [DataAdministrasi::class, 'mainPetugas'])->name('dataAdministrasiPetugas');
+			Route::post('/modal-form', [DataAdministrasi::class, 'modalFormPetugas'])->name('administrasiModalFormPetugas');
+			Route::post('/verifikasi', [DataAdministrasi::class, 'verifikasi'])->name('verifAdministrasiPetugas');
+			Route::post('/tolak', [DataAdministrasi::class, 'tolak'])->name('tolakAdministrasiPetugas');
 		});
 		Route::group(array('prefix' => 'berbagi-dokumen'), function () {
 			Route::get('/', [BerbagiDokumen::class, 'main'])->name('berbagiDokumen');
@@ -342,6 +342,12 @@ Route::group(['middleware' => 'auth'], function () {
 		});
 		Route::group(array('prefix' => 'pengembangan-diri'), function () {
 			Route::get('/', [Dashboard::class, 'mainGuru'])->name('pengembanganDiri');
+		});
+		Route::group(array('prefix' => 'data-administrasi'), function () {
+			Route::get('/', [DataAdministrasi::class, 'main'])->name('dataAdministrasi');
+			Route::post('/modal-form', [DataAdministrasi::class, 'modalForm'])->name('administrasiModalForm');
+			Route::post('/store', [DataAdministrasi::class, 'save'])->name('saveAdministrasi');
+			Route::post('/delete', [DataAdministrasi::class, 'delete'])->name('deleteAdministrasi');
 		});
 	});
 });

@@ -2,7 +2,7 @@
 	<div class="col-md-12">
 		<div class="card" style="width: 100%; background-color:#ffffff">
 			<div class="card-header bg-card">	
-				<h5 class="text-card">Edit Logo</h5>
+				<h5 class="text-card">Edit {{$title}}</h5>
 			</div>
 			<div class="card-body">
 				<form class="formSave">

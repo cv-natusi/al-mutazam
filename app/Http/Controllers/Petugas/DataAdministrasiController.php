@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Petugas;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 Use App\Models\DataAdministrasi;
-use DataTables;
+Use App\Models\Guru;
+use DataTables, Auth;
 
 class DataAdministrasiController extends Controller
 {
@@ -14,18 +15,26 @@ class DataAdministrasiController extends Controller
         $this->title = 'Data Administrasi';
     }
 
+    # Data Administrasi guru
     public function main(Request $request)
     {
         if(request()->ajax()){
-            $data = DataAdministrasi::orderBy('id_administrasi','ASC')->get();
+            $data = DataAdministrasi::where('guru_id', Auth::User()->guru_id)->orderBy('id_administrasi','ASC')->get();
 			
 			return DataTables::of($data)
 				->addIndexColumn()
 				->addColumn('actions', function($row){
-					$txt = "
-                    <button class='btn btn-sm btn-secondary' title='Edit' onclick='formAdd(`$row->id_administrasi`)'><i class='fadeIn animated bx bxs-file' aria-hidden='true'></i></button>
-                    <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusData(`$row->id_administrasi`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>
-					";
+					if ($row->status=='1' || $row->status=='2') {
+                        $txt = "
+                        <button class='btn btn-sm btn-secondary disabled' title='Edit' onclick='formAdd(`$row->id_administrasi`)'><i class='fadeIn animated bx bxs-file' aria-hidden='true'></i></button>
+                        <button class='btn btn-sm btn-danger disabled' title='Hapus' onclick='hapusData(`$row->id_administrasi`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>
+                        ";
+                    } else {
+                        $txt = "
+                        <button class='btn btn-sm btn-secondary' title='Edit' onclick='formAdd(`$row->id_administrasi`)'><i class='fadeIn animated bx bxs-file' aria-hidden='true'></i></button>
+                        <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusData(`$row->id_administrasi`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>
+                        ";
+                    }
 					return $txt;
 				})
                 ->addColumn('btnStatus', function($row){
@@ -66,6 +75,7 @@ class DataAdministrasiController extends Controller
             $data = DataAdministrasi::find($request->id);
         }
         try {
+            $data->guru_id = Auth::User()->guru_id;
             $data->nama_berkas = $request->nama_berkas;
             $data->keterangan = $request->keterangan;
             $data->tanggal_upload = date('Y-m-d');
@@ -94,6 +104,98 @@ class DataAdministrasiController extends Controller
             return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Dihapus.'];
         } else {
             return ['code'=>201,'status'=>'error','message'=>'Data Gagal Dihapus.'];
+        }
+    }
+
+    # Data Administrasi Petugas
+    public function mainPetugas(Request $request)
+    {
+        if(request()->ajax()){
+            $data = DataAdministrasi::whereIn('status', ['1','2'])->orderBy('id_administrasi','ASC')->get();
+			
+			return DataTables::of($data)
+				->addIndexColumn()
+				->addColumn('nip', function($row){
+					$txt = Guru::where('id_guru', $row->guru_id)->first()->nip;
+					return $txt;
+				})
+				->addColumn('guru', function($row){
+					$txt = $txt = Guru::where('id_guru', $row->guru_id)->first()->nama;
+					return $txt;
+				})
+                ->addColumn('verifikasi', function($row){
+					if($row->status=='1'){
+                        $txt = "
+                        <button class='btn btn-sm btn-primary' title='verifikasi' onclick='verifikasi(`$row->id_administrasi`)'>Verifikasi</button>
+                        <button class='btn btn-sm btn-danger' title='tolak' onclick='tolak(`$row->id_administrasi`)'>Tolak</button>
+                        ";
+                        return $txt;
+                    }else{
+                        $txt = "
+                        <button class='btn btn-sm btn-primary disabled' title='verifikasi' onclick='verifikasi(`$row->id_administrasi`)'>Verifikasi</button>
+                        <button class='btn btn-sm btn-danger disabled' title='tolak' onclick='tolak(`$row->id_administrasi`)'>Tolak</button>
+                        ";
+                        return $txt;
+                    }
+				})
+                ->addColumn('btnStatus', function($row){
+					if ($row->status=='1') {
+                        $txt = "<p class='disabled'>Menunggu</p>";
+                    } else if($row->status=='2'){
+                        $txt = "<p style='color: #blue'>Terverifikasi</p>";
+                    }
+					return $txt;
+				})
+				->addColumn('actions', function($row){
+                    if ($row->status=='1') {
+                        $txt = "
+                        <button class='btn btn-sm btn-success text-center' title='lihat' onclick='lihat(`$row->id_administrasi`)'><i class='bx bxs-bullseye'></i> Lihat</button>
+                        ";
+                    } else {
+                        $txt = "
+                        <button class='btn btn-sm btn-success text-center disabled' title='lihat' onclick='lihat(`$row->id_administrasi`)'><i class='bx bxs-bullseye'></i> Lihat</button>
+                        ";  
+                    }
+					return $txt;
+				})
+				->rawColumns(['actions', 'btnStatus', 'verifikasi'])
+				->toJson();
+		}
+
+        $data['title'] = $this->title;
+        return view('content.petugas.dataAdministrasi.main', $data);
+    }
+
+    public function modalFormPetugas(Request $request)
+    {
+        $data['title'] = "Lihat ".$this->title;
+        $data['data'] = DataAdministrasi::where('id_administrasi',$request->id)->first();
+        $data['guru'] = Guru::find($data['data']->guru_id);
+        $content = view('content.petugas.dataAdministrasi.modal', $data)->render();
+		return ['content'=>$content];
+    }
+
+    public function verifikasi(Request $request)
+    {
+        $data = DataAdministrasi::find($request->id);
+        $data->status = '2';
+        $data->save();
+        if ($data) {
+            return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Diverifikasi.'];
+        } else {
+            return ['code'=>201,'status'=>'error','message'=>'Data Gagal Diverifikasi.'];
+        }
+    }
+
+    public function tolak(Request $request)
+    {
+        $data = DataAdministrasi::find($request->id);
+        $data->status = '0';
+        $data->save();
+        if ($data) {
+            return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Ditolak.'];
+        } else {
+            return ['code'=>201,'status'=>'error','message'=>'Data Gagal Ditolak.'];
         }
     }
 }
