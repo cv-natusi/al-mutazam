@@ -180,6 +180,9 @@ Route::group(['middleware' => 'auth'], function () {
 			# Modul berita start
 			Route::group(['prefix'=>'berita','as'=>'berita.'],function(){
 				Route::get('{id}','berita')->name('main');
+				Route::post('formAddBerita', 'formAddBerita')->name('formAddBerita');
+				Route::post('saveBerita', 'saveBerita')->name('saveBerita');
+				Route::post('deleteBerita', 'deleteBerita')->name('deleteBerita');
 			});
 			# Modul berita end
 
@@ -187,22 +190,15 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::group(['prefix'=>'modul-media','as'=>'media.'],function(){
 				Route::group(['prefix'=>'amtv','as'=>'amtv.'],function(){
 					Route::get('/', 'amtv')->name('main');
-					Route::post('getAMtv', 'tampilAmtv')->name('tampilAmtv');
 					Route::post('formAddAMtv', 'formAddAmtv')->name('formAddAmtv');
-					Route::post('formUpdateAmtv', 'formUpdateAmtv')->name('formUpdateAmtv');
-					Route::post('uploadAMtv', 'uploadAmtv')->name('uploadAmtv');
-					Route::post('updateAMtv', 'updateAmtv')->name('updateAmtv');
+					Route::post('saveAmtv', 'saveAmtv')->name('saveAmtv');
 					Route::post('deleteAMtv', 'deleteAmtv')->name('deleteAmtv');
 				});
 
 				Route::group(['prefix'=>'galeri','as'=>'galeri.'],function(){
 					Route::get('/', 'galeri')->name('main');
-					Route::post('/getGaleri', [Admin::class, 'tampilGaleri'])->name('tampilGaleri');
 					Route::post('/formAddGaleri', [Admin::class, 'formAddGaleri'])->name('formAddGaleri');
-					Route::post('/formUpdateGaleri', [Admin::class, 'formUpdateGaleri'])->name('formUpdateGaleri');
-					Route::post('/uploadGaleri', [Admin::class, 'uploadGaleri'])->name('uploadGaleri');
-					Route::post('/updateGaleri', [Admin::class, 'updateGaleri'])->name('updateGaleri');
-					Route::post('/deleteGaleri', [Admin::class, 'deleteGaleri'])->name('deleteGaleri');
+					Route::post('/SaveGaleri', [Admin::class, 'SaveGaleri'])->name('SaveGaleri');
 				});
 			});
 			# Modul media end
@@ -237,19 +233,13 @@ Route::group(['middleware' => 'auth'], function () {
 				Route::group(['prefix'=>'ekskul','as'=>'ekskul.'], function () {
 					Route::get('/', 'ekskul')->name('main');
 					Route::post('/formAddEkskul', 'formAddEkskul')->name('formAddEkskul');
-					Route::post('/formUpdateEkskul', 'formUpdateEkskul')->name('formUpdateEkskul');
-					Route::post('/getEkskul', 'tampilEkskul')->name('tampilEkskul');
-					Route::post('/upload', 'uploadEkskul')->name('uploadEkskul');
-					Route::post('/update', 'updateEkskul')->name('updateEkskul');
+					Route::post('/saveExkul', 'saveExkul')->name('saveExkul');
 				});
 
 				Route::group(['prefix'=>'fasilitas','as'=>'fasilitas.'], function () {
 					Route::get('/', 'fasilitas')->name('main');
 					Route::post('/formAddFasilitas', 'formAddFasilitas')->name('formAddFasilitas');
-					Route::post('/formUpdateFasilitas', 'formUpdateFasilitas')->name('formUpdateFasilitas');
-					Route::post('/getFasilitas', 'tampilFasilitas')->name('tampilFasilitas');
-					Route::post('/upload', 'uploadFasilitas')->name('uploadFasilitas');
-					Route::post('/update', 'updateFasilitas')->name('updateFasilitas');
+					Route::post('/saveFasilitas', 'saveFasilitas')->name('saveFasilitas');
 				});
 			});
 			# Modul sekolah end

@@ -68,11 +68,11 @@
 	}
 
 	.overlay-card {
-		left: 20px;
-		right: 20px;
-		margin-bottom: 30px;
-		bottom: 0;
-		border-radius: 0px 0px 5px 5px;
+		left: auto;
+		right: auto;
+		bottom: -5px;
+		width: 93.3%;
+		border-radius: 0px 0px 10px 10px;
 		padding: 80px 0px 30px 0px;
 	}
 
@@ -88,6 +88,22 @@
 	.text-color-slider {
 		color: #ffffff;
 	}
+
+	.img-size{
+		width: 420px; 
+		height: 300px; 
+		object-fit:cover;
+		margin-top: 20px;
+		border-radius: 10px;
+	}
+
+	.img-pengumuman{
+		height:100px; 
+		width:100px; 
+		object-fit: cover;
+		border-radius: 5px;
+	}
+
 </style>
 @endpush
 
@@ -116,6 +132,7 @@
 			<div class="slider">
 				<ul class="slides">
 					@foreach ($slider as $i => $s)
+					@if(file_exists(public_path().'/slider/berita/'.$s->gambar))
 					@if (empty($s->gambar))
 					<li id="slide-{{$i}}">
 						<img src="{{asset('uploads/default.jpg')}}" alt="slide-background">
@@ -124,6 +141,7 @@
 					<li id="slide-{{$i}}">
 						<img src="{{asset('uploads/slider/'.$s->gambar)}}" alt="slide-background">
 					</li>
+					@endif
 					@endif
 					@endforeach
 				</ul>
@@ -179,7 +197,7 @@
 			@foreach ($berita as $key => $val)
 			<div class="col-md-4">
 				<div class="t-3-photo mb-25">
-					<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('uploads/berita/'.$val->gambar)}}" alt="team-member-foto">
+					<img class="img-size img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('uploads/berita/'.$val->gambar)}}" alt="team-member-foto">
 					<h5 class="mt-3">{{$val->judul}}</h5>
 					<div class="text-justify content" id="content-{{$val->id_berita}}">{!!$val->isi!!}</div>
 					<a href="javascript:void(0)" id="read-more-{{$val->id_berita}}" onclick="readMore('{{$val->id_berita}}')" class="color-a">[Baca Selengkapnya]</a>
@@ -207,16 +225,16 @@
 		</div>
 		<div class="row">
 			@if(count($event)>0)
-			@foreach($event as $key => $val)
+			@foreach($event as $idx => $p)
 			<div class="col-md-4">
 				<div class="t-3-photo mb-25">
-					@if(file_exists(public_path().'/uploads/berita/'.$val->gambar))
-					<img class="mx-auto d-block responsive img-fluid" src="{{asset('uploads/berita/'.$val->gambar)}}" alt="team-member-foto">
+					@if(file_exists(public_path().'/uploads/berita/'.$p->gambar))
+					<img class="mx-auto d-block responsive img-fluid img-size" src="{{asset('uploads/berita/'.$p->gambar)}}" alt="team-member-foto">
 					@else
 					<img class="mx-auto d-block responsive img-fluid" src="{{asset('default.jpg')}}" alt="team-member-foto">
 					@endif
 					<div class="overlay-content overlay-card text-center">
-						<p class="text-overlay fw7">{{$val->judul}}</p>
+						<p class="text-overlay fw7">{{$p->judul}}</p>
 					</div>
 				</div>
 			</div>
@@ -320,7 +338,11 @@
 						<div class="contact-box">
 							<div class="row">
 								<div class="col-md-3 mtb-auto">
-									<img class="img-80" src="{{asset('landing-page/images/pengumuman.png')}}" alt="contacts-icon">
+									@if(file_exists(public_path().'/uploads/berita/'.$val->gambar))
+									<img class="mx-auto d-block responsive img-fluid img-pengumuman" src="{{asset('uploads/berita/'.$val->gambar)}}" alt="icon-pengumuman">
+									@else
+									<img class="mx-auto d-block responsive img-fluid img-pengumuman" src="{{asset('landing-page/images/pengumuman.png')}}" alt="icon-pengumuman">
+									@endif
 								</div>
 								<div class="col-md-9 mtb-auto text-left">
 									<span class="fw4">
@@ -500,6 +522,19 @@
 	}
 
 	function readMore(id) {
+		var textButton = $(`#read-more-${id}`).text()
+		var firstText = $(`#content-${id}`).data('first')
+		var secondText = $(`#content-${id}`).data('second')
+		if (textButton === '[Baca Selengkapnya]') {
+			$(`#content-${id}`).empty().html(firstText.slice(0, -3) + secondText)
+			$(`#read-more-${id}`).text('[Baca Lebih Sedikit]')
+		} else {
+			$(`#content-${id}`).empty().html(firstText)
+			$(`#read-more-${id}`).text('[Baca Selengkapnya]')
+		}
+	}
+
+	function readMorePengumuman(id) {
 		var textButton = $(`#read-more-${id}`).text()
 		var firstText = $(`#content-${id}`).data('first')
 		var secondText = $(`#content-${id}`).data('second')

@@ -14,141 +14,17 @@ class Berita extends Model{
 	protected $fillable = ['id_berita', 'menu_id', 'editor_id', 'judul', 'isi', 'gambar', 'jam', 'tanggal', 'dibaca', 'status', 'kategori'];
 	protected $primaryKey = "id_berita";
 	public $timestamps = false;
-	
-	public static function getBeritaSekolah($input){
-		$table  = 'berita';
-		$select = '*';
-		
-		$replace_field  = [
-			// ['old_name' => 'statu', 'new_name' => 'status'],
-			// ['old_name' => 'terbit', 'new_name' => 'tanggal'],
-			// ['old_name' => 'terbit', 'new_name' => 'jam'],
-		];
-		
-		$param = [
-			'input'         => $input->all(),
-			'select'        => $select,
-			'table'         => $table,
-			'replace_field' => $replace_field
-		];
-		$datagrid = new Datagrid;
-		$data = $datagrid->datagrid_query($param, function ($data) {
-			// return $data->where('kategori','1')->orderBy('id_berita','DESC');
-			return $data;
-		});
-		// return
-		return $data;
-	}
 
-	// public static function getEvent($input){
-	// 	$table  = 'berita';
-	// 	$select = '*';
-		
-	// 	$replace_field  = [
-	// 		['old_name' => 'statu', 'new_name' => 'status'],
-	// 		['old_name' => 'terbit', 'new_name' => 'tanggal'],
-	// 		// ['old_name' => 'terbit', 'new_name' => 'jam'],
-	// 	];
-		
-	// 	$param = [
-	// 		'input'         => $input->all(),
-	// 		'select'        => $select,
-	// 		'table'         => $table,
-	// 		'replace_field' => $replace_field
-	// 	];
-	// 	$datagrid = new Datagrid;
-	// 	$data = $datagrid->datagrid_query($param, function ($data) {
-	// 		return $data->where('kategori', '2')->orderBy('id_berita', 'DESC');
-	// 		// return $data;
-	// 	});
-	// 	return $data;
-	// }
 	public static function getDatatable($request){
 		$query = Berita::select('*', 'tanggal as date_indo');
 		$query->when($request->id,fn($q)=>$q->where('kategori',$request->id));
 		return $query->get();
 	}
-	
-	public static function getPengumuman($input){
-		$table  = 'berita';
-		$select = '*';
-
-		$replace_field  = [
-			['old_name' => 'statu', 'new_name' => 'status'],
-			['old_name' => 'terbit', 'new_name' => 'tanggal'],
-			// ['old_name' => 'terbit', 'new_name' => 'jam'],
-		];
-
-		$param = [
-			'input'         => $input->all(),
-			'select'        => $select,
-			'table'         => $table,
-			'replace_field' => $replace_field
-		];
-		$datagrid = new Datagrid;
-		$data = $datagrid->datagrid_query($param, function ($data) {
-			return $data->where('kategori', '3')->orderBy('id_berita', 'DESC');
-			// return $data;
-		});
-		return $data;
-	}
-
-	public static function getPrestasi($input){
-		$table  = 'berita';
-		$select = '*';
-
-		$replace_field  = [
-			['old_name' => 'statu', 'new_name' => 'status'],
-			['old_name' => 'terbit', 'new_name' => 'tanggal'],
-			// ['old_name' => 'terbit', 'new_name' => 'jam'],
-		];
-		
-		$param = [
-			'input'         => $input->all(),
-			'select'        => $select,
-			'table'         => $table,
-			'replace_field' => $replace_field
-		];
-		$datagrid = new Datagrid;
-		$data = $datagrid->datagrid_query($param, function ($data) {
-			return $data->where('kategori', '4')->orderBy('id_berita', 'DESC');
-			// return $data;
-		});
-		return $data;
-	}
-	
-	public static function getProgram($input){
-		$table  = 'berita';
-		$select = '*';
-		
-		$replace_field  = [
-			['old_name' => 'statu', 'new_name' => 'status'],
-			['old_name' => 'terbit', 'new_name' => 'tanggal'],
-			// ['old_name' => 'terbit', 'new_name' => 'jam'],
-		];
-		
-		$param = [
-			'input'         => $input->all(),
-			'select'        => $select,
-			'table'         => $table,
-			'replace_field' => $replace_field
-		];
-		$datagrid = new Datagrid;
-		$data = $datagrid->datagrid_query($param, function ($data) {
-			return $data->where('kategori', '5')->orderBy('id_berita', 'DESC');
-			// return $data;
-		});
-		return $data;
-	}
-	
-
 	# Accessor start
 	public static function getDateIndoAttribute($value){
 		return Helpers::dateIndo($value);
 	}
 	# Accessor end
-
-
 	public static function getBeritaPaginate(){
 		return Berita::select('*', 'tanggal as date_indo')->where('kategori', 1)->orderBy('tanggal', 'DESC')->paginate(4);
 	}

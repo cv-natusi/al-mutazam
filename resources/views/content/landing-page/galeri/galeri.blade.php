@@ -147,7 +147,7 @@
                     <div class="col-md-4 galery">
                         <div class="t-3-photo mb-25 image">
                             <img class="span img-shadow mx-auto d-block responsive img-thumbnail img-fluid"
-                                src="{{ asset('uploads/galeri/' . $galeri->file_galeri) }}" alt="slide-background"
+                                src="{{ asset('uploads/galeri/' . $galeri->file_galeri) }}" alt="slide-background" style="width: 400px; height: 250px; object-fit:cover"
                                 data-toggle="modal" data-target="#modal-detail" id="read-more-{{ $galeri->id_galeri }}"
                                 onclick="modalShow(`{{ $galeri->id_galeri }}`)">
                             <h5 class="mt-3">{{ $galeri->deskripsi_galeri }}</h5>

@@ -180,7 +180,7 @@
 		<li class="{{ ($title == 'Data Pengguna') ? 'mm-active' : ''}}">
 			<a href="{{route('pengguna')}}">
 				<div class="parent-icon">
-					<i style="color: #000" class='bx bx-cog'></i>
+					<i style="color: #000" class='bx bxs-user-plus'></i>
 				</div>
 				<div class="menu-title">Data Pengguna</div>
 			</a>

@@ -68,8 +68,8 @@
                 @foreach ($fasilitas as $index => $f)
                     <div class="col-md-4 galery">
                         <div class="t-3-photo mb-25 image">
-                            <img class="span img-shadow mx-auto d-block responsive img-thumbnail img-fluid"
-                                src="{{ asset('uploads/exkul/' . $f->foto) }}" alt="slide-background">
+                            <img class="span img-shadow mx-auto d-block responsive img-thumbnail img-fluid" 
+                                style="width:400px;height:250px;object-fit:cover" src="{{ asset('uploads/exkul/' . $f->foto) }}" alt="slide-background">
                             <h5 class="mt-3 text-center">{{ $f->nama_exkul }}</h5>
                         </div>
                     </div>

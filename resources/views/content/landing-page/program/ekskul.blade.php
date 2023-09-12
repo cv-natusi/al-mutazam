@@ -52,7 +52,7 @@
                                     <div class="t-3-photo mb-25">
                                         <img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid"
                                             src="{{ asset('uploads/exkul/' . $eks->foto) }}" alt="slide-background"
-                                            data-toggle="modal" data-target="#modal-detail"
+                                            data-toggle="modal" data-target="#modal-detail" style="width: 200px; height: 135px; object-fit:cover"
                                             id="read-more-{{ $eks->id_exkul }}" onclick="modalShow(`{{ $eks->id_exkul }}`)">
                                         <button class="btn" type="button">{{ $eks->nama_exkul }}</button>
                                     </div>

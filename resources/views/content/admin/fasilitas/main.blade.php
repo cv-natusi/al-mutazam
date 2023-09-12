@@ -18,6 +18,13 @@
 				<h5 class="text-card">{{$title}}</h5>
 			</div>
 			<div class="card-body">
+				<div class="row mb-3">
+					<div class="col-md-3">
+						<button type="button" class="btn btn-primary" onclick="editFasilitas()"> Tambah Fasilitas</button>
+					</div>
+					<div class="col-md-5"></div>
+					<div class="col-md-4"></div>
+				</div>
 				<div class="row">
 					<div class="table-responsive">
 						<table id="datatabel" class="table table-striped table-bordered" style="width: 100%;">
@@ -42,6 +49,8 @@
 @push('script')
 <script src="{{url('assets/plugins/jquery-knob/jquery.knob.js')}}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{!! url('assets/js/ckeditor1/ckeditor.js') !!}"></script>
+<script src="{!! url('assets/js/ckeditor1/adapters/jquery.js') !!}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js" integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -68,30 +77,20 @@
 			],
 		})
 	}
-	function formAdd(id='') {
-		$('.main-layer').hide();
-		$.post("{{route('formUpdateSlider')}}", {id:id})
-		.done(function(data){
+	function editFasilitas(id=''){
+        $('.main-layer').hide();
+        $.post("{{route('sekolah.fasilitas.formAddFasilitas')}}", {id:id})
+        .done(function(data){
 			if(data.status == 'success'){
 				$('.other-page').html(data.content).fadeIn();
 			} else {
 				$('.main-layer').show();
 			}
 		})
-		.fail(() => {
-			$('.other-page').empty();
-			$('.main-layer').show();
-		})
-	}
-	function hideForm(){
-		$('.other-page').empty()
-		$('.main-layer').show()
-	}
-	function editFasilitas(id){
-		alert('pengembangan')
-	}
-	function hapusFasilitas(id){
-		alert('pengembangan')
+        .fail(() => {
+            $('.other-page').empty();
+            $('.main-layer').show();
+        })
 	}
 </script>
 @endpush

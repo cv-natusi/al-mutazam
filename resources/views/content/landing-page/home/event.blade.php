@@ -44,7 +44,7 @@
 						<div class="row d-flex align-items-center mb-4">
 							<div class="col-md-3 mtb-auto">
 								@if(file_exists(public_path().'/uploads/berita/'.$val->gambar))
-									<img class="mx-auto d-block responsive img-fluid" src="{{asset('uploads/berita/'.$val->gambar)}}" alt="team-member-foto">
+									<img class="mx-auto d-block responsive img-fluid" src="{{asset('uploads/berita/'.$val->gambar)}}" alt="team-member-foto" style="height:100px; width:140px; object-fit: cover; border-radius: 5px;">
 								@else
 									<img class="mx-auto d-block responsive img-fluid" src="{{asset('default.jpg')}}" alt="team-member-foto">
 								@endif

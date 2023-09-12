@@ -3,6 +3,11 @@
 @push('style')
 <link href="{{asset('plugins/datatable/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<style>
+	.size-card{
+		height: 150px;
+	}
+</style>
 @endpush
 
 @section('content')
@@ -33,9 +38,9 @@
 						<div class="row d-flex align-items-center">
 							<div class="col-lg-12">
 								<div class="contact-box">
-									<div class="row">
+									<div class="row size-card">
 										<div class="col-md-4 mtb-auto">
-											<img class="img-80" src="{{asset('uploads/berita/'.$berita1->gambar)}}" alt="contacts-icon">
+											<img class="img" src="{{asset('uploads/berita/'.$berita1->gambar)}}" alt="contacts-icon" style="height:70px; width:70px; object-fit: cover;">
 											<br>
 										</div>
 										<div class="col-md-8 mtb-auto text-left">
@@ -130,9 +135,9 @@
 			<div class="row d-flex align-items-center">
 				<div class="col-lg-12">
 					<div class="contact-box">
-						<div class="row">
+						<div class="row size-card">
 							<div class="col-md-4 mtb-auto">
-								<img class="img-80" src="{{asset('uploads/berita/'.$berita2->gambar)}}" alt="contacts-icon">
+								<img class="img" src="{{asset('uploads/berita/'.$berita2->gambar)}}" alt="contacts-icon" style="height:70px; width:70px; object-fit: cover;">
 								<br>
 							</div>
 							<div class="col-md-8 mtb-auto text-left">

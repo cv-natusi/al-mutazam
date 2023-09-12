@@ -18,6 +18,14 @@
 				<h5 class="text-card">Galeri</h5>
 			</div>
 			<div class="card-body">
+				<div class="row mb-3">
+					<div class="col-md-3">
+						<button type="button" class="btn btn-primary" onclick="formAdd()">Tambah Galeri</button>
+					</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-3"></div>
+					<div class="col-md-3"></div>
+				</div>
 				<div class="row">
 					<div class="table-responsive">
 						<table id="datatabel" class="table table-striped table-bordered" style="width: 100%;">
@@ -72,7 +80,7 @@
 	}
 	function formAdd(id='') {
 		$('.main-layer').hide();
-		$.post("{{route('formUpdateSlider')}}", {id:id})
+		$.post("{{route('media.galeri.formAddGaleri')}}", {id:id})
 		.done(function(data){
 			if(data.status == 'success'){
 				$('.other-page').html(data.content).fadeIn();
@@ -84,13 +92,6 @@
 			$('.other-page').empty();
 			$('.main-layer').show();
 		})
-	}
-	function hideForm(){
-		$('.other-page').empty()
-		$('.main-layer').show()
-	}
-	function editGaleri(id){
-		alert('pengembangan')
 	}
 	function hapusGaleri(id){
 		alert('pengembangan')

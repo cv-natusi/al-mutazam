@@ -34,7 +34,7 @@
                             @if (!empty($g->foto))
                             <img class="span img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('images/guru/'.$g->foto)}}" alt="slide-background" data-toggle="modal" data-target="#modal-detail">
                             @else
-                            <img class="span img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('landing-page/images/slider/slide-3.jpg')}}" alt="slide-background" data-toggle="modal" data-target="#modal-detail">
+                            <img class="span img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('uploads/default.jpg')}}" alt="slide-background" data-toggle="modal" data-target="#modal-detail">
                             @endif
                             <h5 class="mt-3 text-center">{{$g->nama}}</h5>
                         </div>

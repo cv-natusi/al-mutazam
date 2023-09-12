@@ -22,18 +22,21 @@
                                 <input type="hidden" name="id" id="id" value="{{!empty($data)?$data->id:''}}">
                                 <div class="col-md-6">
                                     <label>Password Lama <small>*</small></label>
-                                    <input type="text" class="form-control" autocomplete="off" name="password_lama" id="password_lama" value="{{!empty($data->lihat_password)?$data->lihat_password:''}}" required>
+                                    <input type="text" class="form-control" autocomplete="off" name="password_lama" id="password_lama" value="{{!empty($data->lihat_password)?$data->lihat_password:''}}" required
+                                    placeholder="********"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
                                 </div>
                                 <div class="col-md-6"></div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label>Password Baru <small>*</small></label>
-                                    <input type="text" class="form-control" autocomplete="off" name="password" id="password" placeholder="Password Baru" required>
+                                    <input type="text" class="form-control" autocomplete="off" name="password" id="password" placeholder="Password Baru" required
+                                    placeholder="********"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Ulangi Password Baru <small>*</small></label>
-                                    <input type="text" class="form-control" autocomplete="off" name="ulangi_password" id="ulangi_password" placeholder="Ulangi Password Baru" required>
+                                    <input type="text" class="form-control" autocomplete="off" name="ulangi_password" id="ulangi_password" placeholder="Ulangi Password Baru" required
+                                    placeholder="********"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
                                 </div>
                             </div>
                         </form>
@@ -50,6 +53,46 @@
 <script src="{{ url('assets/plugins/jquery-knob/jquery.knob.js') }}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
+    $(document).ready(function () {
+        $("#show_hide_password_sekarang a").on('click', function (event) {
+            event.preventDefault();
+            if ($('#show_hide_password_sekarang input').attr("type") == "text") {
+                $('#show_hide_password_sekarang input').attr('type', 'password');
+                $('#show_hide_password_sekarang i').addClass("bx-hide");
+                $('#show_hide_password_sekarang i').removeClass("bx-show");
+            } else if ($('#show_hide_password_sekarang input').attr("type") == "password") {
+                $('#show_hide_password_sekarang input').attr('type', 'text');
+                $('#show_hide_password_sekarang i').removeClass("bx-hide");
+                $('#show_hide_password_sekarang i').addClass("bx-show");
+            }
+        });
+
+        $("#show_hide_password_baru a").on('click', function (event) {
+            event.preventDefault();
+            if ($('#show_hide_password_baru input').attr("type") == "text") {
+                $('#show_hide_password_baru input').attr('type', 'password');
+                $('#show_hide_password_baru i').addClass("bx-hide");
+                $('#show_hide_password_baru i').removeClass("bx-show");
+            } else if ($('#show_hide_password_baru input').attr("type") == "password") {
+                $('#show_hide_password_baru input').attr('type', 'text');
+                $('#show_hide_password_baru i').removeClass("bx-hide");
+                $('#show_hide_password_baru i').addClass("bx-show");
+            }
+        });
+
+        $("#show_hide_password_baru_ulang a").on('click', function (event) {
+            event.preventDefault();
+            if ($('#show_hide_password_baru_ulang input').attr("type") == "text") {
+                $('#show_hide_password_baru_ulang input').attr('type', 'password');
+                $('#show_hide_password_baru_ulang i').addClass("bx-hide");
+                $('#show_hide_password_baru_ulang i').removeClass("bx-show");
+            } else if ($('#show_hide_password_baru_ulang input').attr("type") == "password") {
+                $('#show_hide_password_baru_ulang input').attr('type', 'text');
+                $('#show_hide_password_baru_ulang i').removeClass("bx-hide");
+                $('#show_hide_password_baru_ulang i').addClass("bx-show");
+            }
+        });
+    });
     $('.btnSimpan').click(()=>{
 		var data = new FormData($('.formSave')[0])
 		$('.btnSimpan').attr('disabled',true).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>LOADING...')

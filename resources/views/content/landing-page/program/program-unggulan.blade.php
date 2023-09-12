@@ -31,7 +31,7 @@
                             <img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid"
                                 src="{{ asset('uploads/berita/' . $berita->gambar) }}" alt="slide-background"
                                 data-toggle="modal" data-target="#modal-detail" id="read-more-{{ $berita->id_berita }}"
-                                onclick="modalShow(`{{ $berita->id_berita }}`)">
+                                onclick="modalShow(`{{ $berita->id_berita }}`)" style="height:220px; width:400px; object-fit: cover;">
                             <h5 class="mt-3 text-center">{{ $berita->judul }}</h5>
                         </div>
                     </div>

@@ -18,16 +18,24 @@
 				<h5 class="text-card">Amtv</h5>
 			</div>
 			<div class="card-body">
+				<div class="row mb-3">
+					<div class="col-md-3">
+						<button type="button" class="btn btn-primary" onclick="formAdd()">Tambah AMTV</button>
+					</div>
+					<div class="col-md-3"></div>
+					<div class="col-md-3"></div>
+					<div class="col-md-3"></div>
+				</div>
 				<div class="row">
 					<div class="table-responsive">
 						<table id="datatabel" class="table table-striped table-bordered" style="width: 100%;">
 							<thead>
 								<tr>
-									<th>No</th>
-									<th>Judul</th>
-									<th>Video</th>
-									<th>Status</th>
-									<th>Aksi</th>
+									<th style="width: 3%">No</th>
+									<th style="width: 60%">Judul</th>
+									<th style="width: 30%">Video</th>
+									<th style="width: 4%">Status</th>
+									<th style="width: 3%">Aksi</th>
 								</tr>
 							</thead>
 						</table>
@@ -62,17 +70,17 @@
 				url: "{{route('media.amtv.main')}}",
 			},
 			columns: [
-				{ data: "DT_RowIndex", name: "DT_RowIndex"},
-				{ data: "judul", name: "judul"},
-				{ data: "file", name: "file"},
-				{ data: "status", name: "status"},
-				{ data: "actions", name: "actions"},
+				{ data: "DT_RowIndex", name: "DT_RowIndex", width: '3%'},
+				{ data: "judul", name: "judul", width: '60%'},
+				{ data: "file", name: "file", width: '30%'},
+				{ data: "status", name: "status", width: '4%'},
+				{ data: "actions", name: "actions", width: '3%'},
 			],
 		})
 	}
 	function formAdd(id='') {
 		$('.main-layer').hide();
-		$.post("{{route('formUpdateSlider')}}", {id:id})
+		$.post("{{route('media.amtv.formAddAmtv')}}", {id:id})
 		.done(function(data){
 			if(data.status == 'success'){
 				$('.other-page').html(data.content).fadeIn();
@@ -85,15 +93,37 @@
 			$('.main-layer').show();
 		})
 	}
-	function hideForm(){
-		$('.other-page').empty()
-		$('.main-layer').show()
-	}
-	function editAmtv(id){
-		alert('pengembangan')
-	}
-	function hapusAmtv(id){
-		alert('pengembangan')
+	function hapusAmtv(id='') {
+		$.post("{{route('media.amtv.deleteAmtv')}}", {id:id})
+		.done(function(data){
+			if(data.status == 'success'){
+				Swal.fire({
+					icon: 'success',
+					title: 'Berhasil',
+					text: data.message,
+					showConfirmButton: false,
+					timer: 1200
+				})
+				location.reload()
+			} else {
+				Swal.fire({
+					icon: 'error',
+					title: 'Error',
+					text: data.message,
+					showConfirmButton: false,
+					timer: 1200
+				})
+			}
+		})
+		.fail(() => {
+			Swal.fire({
+				icon: 'error',
+				title: 'Error',
+				text: 'Terjadi Kesalahan Sistem',
+				showConfirmButton: false,
+				timer: 1200
+			})
+		})
 	}
 </script>
 @endpush

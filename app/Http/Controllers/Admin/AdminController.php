@@ -358,7 +358,7 @@ class AdminController extends Controller{
 		$data['mn_active'] = 'modulSekolah';
 		$data['subMenuActive'] = 'uks';
 		$data['title'] = 'UKS';
-		$data['identity'] = Identity::find(1);
+		$data['data'] = Identity::find(1);
 		return view('content.admin.uks.main', $data);
 	}
 	public function updateUks(Request $request)
@@ -448,7 +448,7 @@ class AdminController extends Controller{
 	public function ekskul(Request $request) {
 		if($request->ajax()){
 			// return Exkul::get();
-			return DataTables::of(Exkul::get())
+			return DataTables::of(Exkul::where('type_exkul',1)->get())
 			->addIndexColumn()
 			->addColumn('gambar', function($row){
 				if(file_exists(public_path()."/uploads/exkul/$row->foto")){
@@ -469,7 +469,7 @@ class AdminController extends Controller{
 				return $html;
 			})
 			->addColumn('actions', function($row){
-				$html = "<button class='btn btn-sm btn-primary' title='Edit' onclick='editFasilitas(`$row->id_amtv`)'><i class='fa-regular fa-pen-to-square'></i></button>";
+				$html = "<button class='btn btn-sm btn-primary' title='Edit' onclick='editExkul(`$row->id_exkul`)'><i class='fa-regular fa-pen-to-square'></i></button>";
 				// $html .= " <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusFasilitas(`$row->id_amtv`)'><i class='fa-solid fa-trash'></i></button>";
 				return $html;
 			})
@@ -481,22 +481,24 @@ class AdminController extends Controller{
 		$data['title'] = 'Ekstra Kulikuler';
 		return view('content.admin.ekskul.main', $data);
 	}
-	public function tampilEkskul(Request $request){
-		$data = Exkul::getEkskul($request);
-		return response()->json($data);
-	}
-	public function formAddEkskul(){
-		$content = view('Admin.web.ekskul.formAdd')->render();
+	public function formAddEkskul(Request $request){
+		// return$request->id;
+		if (empty($request->id)) {
+			$data['data'] = '';
+		} else {
+			$data['data'] = Exkul::where('id_exkul', $request->id)->where('type_exkul',1)->first();
+		}
+		$content = view('content.admin.ekskul.form', $data)->render();
 		return ['status' => 'success', 'content' => $content];
 	}
-	public function formUpdateEkskul(Request $request){
-		$data['ekskul'] = Exkul::find($request->id);
-		$content = view('Admin.web.ekskul.formEdit',$data)->render();
-		return ['status' => 'success', 'content' => $content];
-	}
-	public function uploadEkskul(Request $request){
-		$ekskul = new Exkul;
-		$ekskul->nama_exkul = $request->nama_ekskul;
+	public function saveExkul(Request $request) {
+		// return $request->all();
+		if (empty($request->id)) {
+			$ekskul = new Exkul;
+		} else {
+			$ekskul = Exkul::find($request->id);
+		}
+		$ekskul->nama_exkul = $request->nama_exkul;
 		$ekskul->deskripsi = $request->deskripsi;
 		$ekskul->status_exkul = $request->status;
 		$foto = date('YmdHis');
@@ -509,7 +511,7 @@ class AdminController extends Controller{
 			$ukuranFile1 = filesize($request->logo);
 			if ($ukuranFile1 <= 500000) {
 				$ext_foto1 = $request->logo->getClientOriginalExtension();
-				$filename1 = "Ekskul".date('Ymd-His').".".$ext_foto1;
+				$filename1 = "Fasilitas".date('Ymd-His').".".$ext_foto1;
 				$temp_foto1 = 'uploads/exkul/';
 				$proses1 = $request->logo->move($temp_foto1, $filename1);
 				$ekskul->foto = $filename1;
@@ -519,7 +521,7 @@ class AdminController extends Controller{
 				if(!empty($file1)){
 					$direktori1='uploads/exkul/'; //tempat upload foto
 					$name1='logo'; //name pada input type file
-					$namaBaru1="Ekskul".date('Ymd-His'); //name pada input type file
+					$namaBaru1="Fasilitas".date('Ymd-His'); //name pada input type file
 					$quality1=50; //konversi kualitas gambar dalam satuan %
 					$upload1 = compressFile::UploadCompress($namaBaru1,$name1,$direktori1,$quality1);
 				}
@@ -529,61 +531,21 @@ class AdminController extends Controller{
 		$ekskul->type_exkul = 1;
 		$ekskul->save();
 		if ($ekskul) {
-			return Redirect::route('ekskul')->with('title', 'Success !')->with('message', 'Info Ekstra Kulikuler Successfully Upload !!')->with('type', 'success');
+			return ['code'=>200,'status'=>'success','Berhasil.'];
 		} else {
-			return Redirect::route('ekskul')->with('title', 'Whoops!!!')->with('message', 'Info Ekstra Kulikuler Failed to Upload !!')->with('type', 'error');
-		}
-	}
-	public function updateEkskul(Request $request){
-		$ekskul = Exkul::find($request->id_ekskul);
-		$ekskul->nama_exkul = $request->nama_ekskul;
-		$ekskul->deskripsi = $request->deskripsi;
-		$ekskul->status_exkul = $request->status;
-		$foto = date('YmdHis');
-		if (!empty($request->logo)) {
-			if($ekskul->foto!=''){
-				if(file_exists('uploads/ekskul/'.$ekskul->foto)){
-					unlink('uploads/ekskul/'.$ekskul->foto);
-				}
-			}
-			$ukuranFile1 = filesize($request->logo);
-			if ($ukuranFile1 <= 500000) {
-				$ext_foto1 = $request->logo->getClientOriginalExtension();
-				$filename1 = "Ekskul".date('Ymd-His').".".$ext_foto1;
-				$temp_foto1 = 'uploads/exkul/';
-				$proses1 = $request->logo->move($temp_foto1, $filename1);
-				$ekskul->foto = $filename1;
-			}else{
-				$file1=$_FILES['logo']['name'];
-				$ext_foto1 = $request->logo->getClientOriginalExtension();
-				if(!empty($file1)){
-					$direktori1='uploads/exkul/'; //tempat upload foto
-					$name1='logo'; //name pada input type file
-					$namaBaru1="Ekskul".date('Ymd-His'); //name pada input type file
-					$quality1=50; //konversi kualitas gambar dalam satuan %
-					$upload1 = compressFile::UploadCompress($namaBaru1,$name1,$direktori1,$quality1);
-				}
-				$ekskul->foto = $namaBaru1.".".$ext_foto1;
-			}
-		}
-		$ekskul->save();
-		if ($ekskul) {
-			return Redirect::route('ekskul')->with('title', 'Success !')->with('message', 'Info Ekstra Kulikuler Successfully Updated !!')->with('type', 'success');
-		} else {
-			return Redirect::route('ekskul')->with('title', 'Whoops!!!')->with('message', 'Info Ekstra Kulikuler Failed to Update !!')->with('type', 'error');
+			return ['code'=>201,'status'=>'error','Gagal.'];
 		}
 	}
 	# Modul ekstrakurikuler end
-
-
 	# Modul fasilitas sekolah start
 	public function fasilitas(Request $request){#Fasilitas sekolah
+		// return Exkul::where('type_exkul',2)->get();
 		if($request->ajax()){
-			return DataTables::of(Galeri::get())
+			return DataTables::of(Exkul::where('type_exkul',2)->get())
 			->addIndexColumn()
 			->addColumn('gambar', function($row){
-				if(file_exists(public_path()."/uploads/galeri/$row->file_galeri")){
-					$image = "/uploads/galeri/$row->file_galeri";
+				if(file_exists(public_path()."/uploads/exkul/$row->foto")){
+					$image = "/uploads/exkul/$row->foto";
 				}else{
 					$image = '/uploads/default.jpg';
 				}
@@ -591,17 +553,16 @@ class AdminController extends Controller{
 				return $html;
 			})
 			->addColumn('deskripsi', function($row){
-				$html = "<p class='p-0'>".($row->deskripsi_galeri ? $row->deskripsi_galeri : "-")."</p>";
+				$html = "<p class='p-0'>".($row->nama_exkul ? $row->nama_exkul : "-")."</p>";
 				return $html;
 			})
 			->addColumn('status', function($row){
-				$status = $row->status_galeri==1 ? 'Aktif' : 'Non-aktif';
+				$status = $row->status_exkul==1 ? 'Aktif' : 'Non-aktif';
 				$html = "<p class='p-0'>$status</p>";
 				return $html;
 			})
 			->addColumn('actions', function($row){
-				$html = "<button class='btn btn-sm btn-primary' title='Edit' onclick='editFasilitas(`$row->id_amtv`)'><i class='fa-regular fa-pen-to-square'></i></button>";
-				// $html .= " <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusFasilitas(`$row->id_amtv`)'><i class='fa-solid fa-trash'></i></button>";
+				$html = "<button class='btn btn-sm btn-primary' title='Edit' onclick='editFasilitas(`$row->id_exkul`)'><i class='fa-regular fa-pen-to-square'></i></button>";
 				return $html;
 			})
 			->rawColumns(['gambar','deskripsi','status','actions'])
@@ -612,22 +573,23 @@ class AdminController extends Controller{
 		$data['title'] = 'Fasilitas Sekolah';
 		return view('content.admin.fasilitas.main', $data);
 	}
-	public function tampilFasilitas(Request $request){
-		$data = Exkul::getFasilitas($request);
-		return response()->json($data);
-	}
-	public function formAddFasilitas(){
-		$content = view('Admin.web.fasilitas.formAdd')->render();
+	public function formAddFasilitas(Request $request){
+		if (empty($request->id)) {
+			$data['data'] = '';
+		} else {
+			$data['data'] = Exkul::where('id_exkul', $request->id)->where('type_exkul',2)->first();
+		}
+		$content = view('content.admin.fasilitas.form', $data)->render();
 		return ['status' => 'success', 'content' => $content];
 	}
-	public function formUpdateFasilitas(Request $request){
-		$data['ekskul'] = Exkul::find($request->id);
-		$content = view('Admin.web.fasilitas.formEdit',$data)->render();
-		return ['status' => 'success', 'content' => $content];
-	}
-	public function uploadFasilitas(Request $request){
-		$ekskul = new Exkul;
-		$ekskul->nama_exkul = $request->nama_ekskul;
+	public function saveFasilitas(Request $request) {
+		// return $request->all();
+		if (empty($request->id)) {
+			$ekskul = new Exkul;
+		} else {
+			$ekskul = Exkul::find($request->id);
+		}
+		$ekskul->nama_exkul = $request->nama_exkul;
 		$ekskul->deskripsi = $request->deskripsi;
 		$ekskul->status_exkul = $request->status;
 		$foto = date('YmdHis');
@@ -660,53 +622,12 @@ class AdminController extends Controller{
 		$ekskul->type_exkul = 2;
 		$ekskul->save();
 		if ($ekskul) {
-			return Redirect::route('fasilitas')->with('title', 'Success !')->with('message', 'Info Ekstra Kulikuler Successfully Upload !!')->with('type', 'success');
+			return ['code'=>200,'status'=>'success','Berhasil.'];
 		} else {
-			return Redirect::route('fasilitas')->with('title', 'Whoops!!!')->with('message', 'Info Ekstra Kulikuler Failed to Upload !!')->with('type', 'error');
-		}
-	}
-	public function updateFasilitas(Request $request){
-		$ekskul = Exkul::find($request->id_ekskul);
-		$ekskul->nama_exkul = $request->nama_ekskul;
-		$ekskul->deskripsi = $request->deskripsi;
-		$ekskul->status_exkul = $request->status;
-		$foto = date('YmdHis');
-		if (!empty($request->logo)) {
-			if($ekskul->foto!=''){
-				if(file_exists('uploads/ekskul/'.$ekskul->foto)){
-					unlink('uploads/ekskul/'.$ekskul->foto);
-				}
-			}
-			$ukuranFile1 = filesize($request->logo);
-			if ($ukuranFile1 <= 500000) {
-				$ext_foto1 = $request->logo->getClientOriginalExtension();
-				$filename1 = "Fasilitas".date('Ymd-His').".".$ext_foto1;
-				$temp_foto1 = 'uploads/exkul/';
-				$proses1 = $request->logo->move($temp_foto1, $filename1);
-				$ekskul->foto = $filename1;
-			}else{
-				$file1=$_FILES['logo']['name'];
-				$ext_foto1 = $request->logo->getClientOriginalExtension();
-				if(!empty($file1)){
-					$direktori1='uploads/exkul/'; //tempat upload foto
-					$name1='logo'; //name pada input type file
-					$namaBaru1="Fasilitas".date('Ymd-His'); //name pada input type file
-					$quality1=50; //konversi kualitas gambar dalam satuan %
-					$upload1 = compressFile::UploadCompress($namaBaru1,$name1,$direktori1,$quality1);
-				}
-				$ekskul->foto = $namaBaru1.".".$ext_foto1;
-			}
-		}
-		$ekskul->save();
-		if ($ekskul) {
-			return Redirect::route('fasilitas')->with('title', 'Success !')->with('message', 'Info Ekstra Kulikuler Successfully Updated !!')->with('type', 'success');
-		} else {
-			return Redirect::route('fasilitas')->with('title', 'Whoops!!!')->with('message', 'Info Ekstra Kulikuler Failed to Update !!')->with('type', 'error');
+			return ['code'=>201,'status'=>'error','Gagal.'];
 		}
 	}
 	# Modul fasilitas sekolah end
-
-
 	#Modul media start
 	public function amtv(Request $request) { # Amtv
 		$data['mn_active'] = 'modulMedia';
@@ -735,7 +656,7 @@ class AdminController extends Controller{
 				return $html;
 			})
 			->addColumn('actions', function($row){
-				$html = "<button class='btn btn-sm btn-primary' title='Edit' onclick='editAmtv(`$row->id_amtv`)'><i class='fa-regular fa-pen-to-square'></i></button>";
+				$html = "<button class='btn btn-sm btn-primary' title='Edit' onclick='formAdd(`$row->id_amtv`)'><i class='fa-regular fa-pen-to-square'></i></button>";
 				$html .= " <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusAmtv(`$row->id_amtv`)'><i class='fa-solid fa-trash'></i></button>";
 				return $html;
 			})
@@ -744,48 +665,37 @@ class AdminController extends Controller{
 		}
 		return view('content.admin.amtv.main', $data);
 	}
-	public function tampilAmtv(Request $request){
-		$data = Amtv::getAmtv($request);
-		return response()->json($data);
-	}
 	public function formAddAmtv(Request $request){
-		$content = view('Admin.media.amtv.formAdd')->render();
-		return ['status' => 'success', 'content' => $content];
-	}
-	public function formUpdateAmtv(Request $request){
-		$data['id'] = $request->id;
-		$data['amtv'] = Amtv::find($request->id);
-		$content = view('Admin.media.amtv.formEdit',$data)->render();
-		return ['status' => 'success', 'content' => $content];
-	}
-	public function uploadAmtv(Request $request){
-		$amtv = new Amtv;
-		$amtv->judul_amtv = $request->judul;
-		$amtv->file = $request->youtube;
-		$amtv->status_amtv = $request->status;
-		$amtv->save();
-		if($amtv){
-			return Redirect::route('amtv')->with('title', 'Success !')->with('message', 'AMTV Successfully to Upload !!')->with('type', 'success');
-		}else{
-			return Redirect::route('amtv')->with('title', 'Success !')->with('message', 'AMTV Failed to Upload !!')->with('type', 'success');
+		if (empty($request->id)) {
+			$data['data'] = '';
+		} else {
+			$data['data'] = Amtv::where('id_amtv', $request->id)->first();
 		}
+		$content = view('content.admin.amtv.form', $data)->render();
+		return ['status' => 'success', 'content' => $content];
 	}
-	public function updateAmtv(Request $request){
-		$amtv = Amtv::find($request->id_amtv);
+	public function saveAmtv(Request $request) {
+		if (empty($request->id)) {
+			$amtv = new Amtv;
+		} else {
+			$amtv = Amtv::find($request->id);
+		}
 		$amtv->judul_amtv = $request->judul;
-		$amtv->file = $request->youtube;
+		$amtv->file = $request->link;
 		$amtv->status_amtv = $request->status;
 		$amtv->save();
-		if($amtv){
-			return Redirect::route('amtv')->with('title', 'Success !')->with('message', 'AMTV Successfully to Upload !!')->with('type', 'success');
-		}else{
-			return Redirect::route('amtv')->with('title', 'Success !')->with('message', 'AMTV Failed to Upload !!')->with('type', 'success');
+		if ($amtv) {
+			return ['code'=>200,'status'=>'success','Berhasil.'];
+		} else {
+			return ['code'=>201,'status'=>'error','Gagal.'];
 		}
 	}
 	public function deleteAmtv(Request $request){
 		$amtv = Amtv::where('id_amtv',$request->id)->delete();
-		if($amtv){
-			return ['status' => 'success'];
+		if ($amtv) {
+			return ['code'=>200,'status'=>'success','Berhasil.'];
+		} else {
+			return ['code'=>201,'status'=>'error','Gagal.'];
 		}
 	}
 
@@ -815,8 +725,8 @@ class AdminController extends Controller{
 				return $html;
 			})
 			->addColumn('actions', function($row){
-				$html = "<button class='btn btn-sm btn-primary' title='Edit' onclick='editGaleri(`$row->id_amtv`)'><i class='fa-regular fa-pen-to-square'></i></button>";
-				$html .= " <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusGaleri(`$row->id_amtv`)'><i class='fa-solid fa-trash'></i></button>";
+				$html = "<button class='btn btn-sm btn-primary' title='Edit' onclick='formAdd(`$row->id_galeri`)'><i class='fa-regular fa-pen-to-square'></i></button>";
+				$html .= " <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusGaleri(`$row->id_galeri`)'><i class='fa-solid fa-trash'></i></button>";
 				return $html;
 			})
 			->rawColumns(['gambar','deskripsi','status','actions'])
@@ -824,67 +734,25 @@ class AdminController extends Controller{
 		}
 		return view('content.admin.galeri.main', $data);
 	}
-	public function tampilGaleri(Request $request){
-		$data = Galeri::getGaleri($request);
-		return response()->json($data);
-	}
 	public function formAddGaleri(Request $request){
-		$content = view('Admin.media.galeri.formAdd')->render();
+		if (empty($request->id)) {
+			$data['data'] = '';
+		} else {
+			$data['data'] = Galeri::where('id_galeri', $request->id)->first();
+		}
+		$content = view('content.admin.galeri.form', $data)->render();
 		return ['status' => 'success', 'content' => $content];
 	}
-	public function formUpdateGaleri(Request $request){
-		$data['id'] = $request->id;
-		$data['galeri'] = Galeri::find($request->id);
-		$content = view('Admin.media.galeri.formEdit',$data)->render();
-		return ['status' => 'success', 'content' => $content];
-	}
-	public function uploadGaleri(Request $request){
-		$galeri = new Galeri;
-		$galeri->kategori_galeri = $request->kategori;
-		$galeri->deskripsi_galeri = $request->deskripsi;
-		$galeri->status_galeri = $request->status;
-		
+	public function SaveGaleri(Request $request) {
+		if (empty($request->id)) {
+			$galeri = Galeri::find($request->id_galeri);
+		} else {
+			$galeri = new Galeri;
+		}
 		if($request->kategori==1){
 			$foto = date('YmdHis');
 			if (!empty($request->file)) {
-				$ukuranFile1 = filesize($request->file);
-				if ($ukuranFile1 <= 500000) {
-					$ext_foto1 = $request->file->getClientOriginalExtension();
-					$filename1 = "Galeri".date('Ymd-His').".".$ext_foto1;
-					$temp_foto1 = 'uploads/galeri/';
-					$proses1 = $request->file->move($temp_foto1, $filename1);
-					$galeri->file_galeri = $filename1;
-				}else{
-					$file1=$_FILES['file']['name'];
-					$ext_foto1 = $request->file->getClientOriginalExtension();
-					if(!empty($file1)){
-						$direktori1='uploads/galeri/'; //tempat upload foto
-						$name1='file'; //name pada input type file
-						$namaBaru1="Galeri".date('Ymd-His'); //name pada input type file
-						$quality1=50; //konversi kualitas gambar dalam satuan %
-						$upload1 = compressFile::UploadCompress($namaBaru1,$name1,$direktori1,$quality1);
-					}
-					$galeri->file_galeri = $namaBaru1.".".$ext_foto1;
-				}
-			}
-		}else{
-			$galeri->file_galeri = $request->file;
-		}
-		
-		$galeri->save();
-		if($galeri){
-			return Redirect::route('galeri')->with('title', 'Success !')->with('message', 'Galeri Successfully to Upload !!')->with('type', 'success');
-		}else{
-			return Redirect::route('galeri')->with('title', 'Success !')->with('message', 'Galeri Failed to Upload !!')->with('type', 'success');
-		}
-	}
-	public function updateGaleri(Request $request){
-		$galeri = Galeri::find($request->id_galeri);
-		
-		if($request->kategori==1){
-			$foto = date('YmdHis');
-			if (!empty($request->file)) {
-				if($galeri->file_galeri!=''){
+				if(!empty($galeri) && $galeri->file_galeri!=''){
 					if(file_exists('uploads/galeri/'.$galeri->file_galeri)){
 						unlink('uploads/galeri/'.$galeri->file_galeri);
 					}
@@ -911,7 +779,7 @@ class AdminController extends Controller{
 			}
 		}else{
 			if(!empty($request->file)){
-				if($galeri->kategori_galeri=='1'){
+				if(!empty($galeri) && $galeri->kategori_galeri=='1'){
 					if($galeri->file_galeri!=''){
 						if(file_exists('uploads/galeri/'.$galeri->file_galeri)){
 							unlink('uploads/galeri/'.$galeri->file_galeri);
@@ -925,12 +793,11 @@ class AdminController extends Controller{
 		$galeri->kategori_galeri = $request->kategori;
 		$galeri->deskripsi_galeri = $request->deskripsi;
 		$galeri->status_galeri = $request->status;
-		
 		$galeri->save();
-		if($galeri){
-			return Redirect::route('galeri')->with('title', 'Success !')->with('message', 'Galeri Successfully to Update !!')->with('type', 'success');
-		}else{
-			return Redirect::route('galeri')->with('title', 'Success !')->with('message', 'Galeri Failed to Update !!')->with('type', 'success');
+		if ($galeri) {
+			return ['code'=>200,'status'=>'success','Berhasil.'];
+		} else {
+			return ['code'=>201,'status'=>'error','Gagal.'];
 		}
 	}
 	public function deleteGaleri(Request $request){
@@ -948,8 +815,6 @@ class AdminController extends Controller{
 		}
 	}
 	# Modul media end
-
-
 	# Modul berita start
 	public function berita(Request $request) {#Berita sekolah
 		$id = $request->id;
@@ -998,9 +863,15 @@ class AdminController extends Controller{
 				$html = "<p class='text-center'>$row->date_indo</p>";
 				return $html;
 			})
+			->addColumn('stts', function($row){
+				$status = ($row->status==1)?'Aktif':'Non Aktif';
+				return $status;
+			})
 			->addColumn('actions', function($row){
 				$html = "
-				<button style='color: #fff' class='btn btn-sm btn-secondary' title='Detail' onclick='formAdd(q)'><i class='fadeIn animated bx bx-file' aria-hidden='true'></i></button>
+				<button style='color: #fff' class='btn btn-sm btn-primary' title='Edit' onclick='formAdd(`$row->id_berita`)'><i class='fadeIn animated bx bx-file' aria-hidden='true'></i></button>
+				<button style='color: #fff' class='btn btn-sm btn-danger' title='Hapus' onclick='hapusBerita(`$row->id_berita`)'><i class='fadeIn animated bx bx-trash' aria-hidden='true'></i></button>
+				
 				";
 				return $html;
 			})
@@ -1009,23 +880,7 @@ class AdminController extends Controller{
 		}
 		return view('content.admin.berita.main', $data);
 	}
-	public function tampilBeritaSekolah(Request $request){
-		// return $request->kategori;
-		$isi = $request->kategori;
-		if ($isi==1) {
-			$data = Berita::getBeritaSekolah($request,$isi);
-		}else if($isi==2){
-			$data = Berita::getEvent($request,$isi);
-		}else if($isi==3){
-			$data = Berita::getPengumuman($request,$isi);
-		}else if($isi==4){
-			$data = Berita::getPrestasi($request,$isi);
-		}else {
-			$data = Berita::getProgram($request,$isi);
-		}
-		return response()->json($data);
-	}
-	public function formAddBeritaSekolah(Request $request)
+	public function formAddBerita(Request $request)
 	{
 		$data['kategori'] = $request->kategori;
 		if($request->kategori==1){
@@ -1039,86 +894,36 @@ class AdminController extends Controller{
 		}else{
 			$data['title'] = 'Program Unggulan';
 		}
-		$content = view('Admin.berita.formAdd',$data)->render();
-		return ['status' => 'success', 'content' => $content];
-	}
-	public function formUpdateBeritaSekolah(Request $request)
-	{
-		$data['kategori'] = $request->kategori;
-		if($request->kategori==1){
-			$data['title'] = 'Berita Sekolah';
-		}else if($request->kategori==2){
-			$data['title'] = 'Event';
-		}else if($request->kategori==3){
-			$data['title'] = 'Pengumuman';
-		}else if($request->kategori==4){
-			$data['title'] = 'Prestasi Siswa';
-		}else{
-			$data['title'] = 'Program Unggulan';
-		}
-		$data['berita'] = Berita::find($request->id);
-		$content = view('Admin.berita.formEdit',$data)->render();
-		return ['status' => 'success', 'content' => $content];
-	}
-	public function uploadBeritaSekolah(Request $request)
-	{
-		$berita = new Berita;
-		$berita->judul = $request->judul;
-		$berita->isi = $request->isi_berita;
-		$berita->status = $request->status;
-		$berita->kategori = $request->kategori;
-		$berita->editor_id = Sentinel::getUser()->id;
-		
-		if($request->kategori==2){
-			$berita->tanggal_acara = $request->tanggal_acara;
-		}
-		
-		$berita->tanggal = date('Y-m-d');
-		$berita->jam = date('H:i');
-		$foto = date('YmdHis');
-		if (!empty($request->gambar)) {
-			$ukuranFile1 = filesize($request->gambar);
-			if ($ukuranFile1 <= 500000) {
-				$ext_foto1 = $request->gambar->getClientOriginalExtension();
-				$filename1 = "Berita".date('Ymd-His').".".$ext_foto1;
-				$temp_foto1 = 'uploads/berita/';
-				$proses1 = $request->gambar->move($temp_foto1, $filename1);
-				$berita->gambar = $filename1;
-			}else{
-				$file1=$_FILES['gambar']['name'];
-				$ext_foto1 = $request->gambar->getClientOriginalExtension();
-				if(!empty($file1)){
-					$direktori1='uploads/berita/'; //tempat upload foto
-					$name1='gambar'; //name pada input type file
-					$namaBaru1="Berita".date('Ymd-His'); //name pada input type file
-					$quality1=50; //konversi kualitas gambar dalam satuan %
-					$upload1 = compressFile::UploadCompress($namaBaru1,$name1,$direktori1,$quality1);
-				}
-				$berita->gambar = $namaBaru1.".".$ext_foto1;
-			}
-		}
-		$berita->save();
-		if ($berita) {
-			return Redirect('admin/berita/beritaSekolah/'.$request->kategori)->with('title', 'Success !')->with('message', 'Berita Sekolah Successfully to Upload !!')->with('type', 'success');
+		if (empty($request->id)) {
+			$data['data'] = '';
 		} else {
-			return Redirect('admin/berita/beritaSekolah/'.$request->kategori)->with('title', 'Whoops!!!')->with('message', 'Berita Sekolah Failed to Upload !!')->with('type', 'error');
+			$data['data'] = Berita::where('id_berita', $request->id)->first();
 		}
+		$content = view('content.admin.berita.form', $data)->render();
+		return ['status' => 'success', 'content' => $content];
 	}
-	public function updateBeritaSekolah(Request $request)
-	{
-		$berita = Berita::find($request->id_berita);
-		$berita->judul = $request->judul;
-		$berita->isi = $request->isi_berita;
-		$berita->status = $request->status;
-		if($request->kategori==2){
-			$berita->tanggal_acara = $request->tanggal_acara;
+	public function saveBerita(Request $request) {
+		if (empty($request->id)) {
+			$berita = new Berita;
+		} else {
+			$berita = Berita::find($request->id);
 		}
-		// $berita->kategori = '1';
+		$berita->editor_id = 1;
+		$berita->judul = $request->judul;
+		$berita->isi = $request->isi;
+		$berita->status = $request->status;
+		if($request->kategori=='2'){
+			$berita->tanggal_acara = date('Y-m-d', strtotime($request->tanggal_acara));
+		}else{
+			$defaultTgl = '0000-00-00';
+			$berita->tanggal_acara = date('Y-m-d');
+		}
 		$berita->tanggal = date('Y-m-d');
 		$berita->jam = date('H:i');
+		$berita->kategori = $request->kategori;
 		$foto = date('YmdHis');
 		if (!empty($request->gambar)) {
-			if($berita->gambar!=''){
+			if(!empty($request->id) && $berita->gambar!=''){
 				if(file_exists('uploads/berita/'.$berita->gambar)){
 					unlink('uploads/berita/'.$berita->gambar);
 				}
@@ -1145,16 +950,18 @@ class AdminController extends Controller{
 		}
 		$berita->save();
 		if ($berita) {
-			return Redirect('admin/berita/beritaSekolah/'.$request->kategori)->with('title', 'Success !')->with('message', 'Berita Sekolah Successfully to Update !!')->with('type', 'success');
+			return ['code'=>200,'status'=>'success','Berhasil.'];
 		} else {
-			return Redirect('admin/berita/beritaSekolah/'.$request->kategori)->with('title', 'Whoops!!!')->with('message', 'Berita Sekolah Failed to Update !!')->with('type', 'error');
+			return ['code'=>201,'status'=>'error','Gagal.'];
 		}
 	}
-	public function deleteBeritaSekolah(Request $request)
+	public function deleteBerita(Request $request)
 	{
-		$amtv = Berita::where('id_berita',$request->id)->delete();
-		if($amtv){
-			return ['status' => 'success'];
+		$data = Berita::where('id_berita',$request->id)->delete();
+		if ($data) {
+			return ['code'=>200,'status'=>'success','Berhasil.'];
+		} else {
+			return ['code'=>201,'status'=>'error','Gagal.'];
 		}
 	}
 	# Modul berita end

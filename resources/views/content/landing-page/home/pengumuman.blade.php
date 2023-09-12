@@ -58,7 +58,7 @@
                                     <div class="row">
                                         <div class="col-md-3 mtb-auto">
                                             <img class="mx-auto d-block responsive img-fluid"
-                                                src="{{ asset('uploads/berita/' . $val->gambar) }}" alt="contacts-icon">
+                                                src="{{ asset('uploads/berita/' . $val->gambar) }}" alt="contacts-icon" style="height:100px; width:100px; object-fit: cover; border-radius: 5px;">
                                         </div>
                                         <div class="col-md-9 mtb-auto text-left">
                                             <span class="fw4">
