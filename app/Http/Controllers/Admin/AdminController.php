@@ -115,6 +115,7 @@ class AdminController extends Controller{
 		return ['status' => 'success', 'content' => $content];
 	}
 	public function saveLogo(Request $request){
+		// return $request->all();
 		$identity = Identity::find(1);
 		if ($request->position == "Kiri") {
 			if (!empty($request->logo)) {
@@ -261,9 +262,11 @@ class AdminController extends Controller{
 		}
 		$identity->save();
 		if ($identity) {
-			return Redirect::route('sejarah')->with('title', 'Success !')->with('message', 'Sejarah Successfully Updated !!')->with('type', 'success');
+			session()->flash('success', 'Berhasil!');
+			return Redirect::route('sekolah.sejarah.main');
 		} else {
-			return Redirect::route('sejarah')->with('title', 'Whoops!!!')->with('message', 'Sejarah Failed to Update !!')->with('type', 'error');
+			session()->flash('error', 'Gagal!');
+			return Redirect::route('sekolah.sejarah.main');
 		}
 	}
 	public function visimisi(Request $request) {#Visimisi
@@ -305,9 +308,11 @@ class AdminController extends Controller{
 		}
 		$identity->save();
 		if ($identity) {
-			return Redirect::route('visimisi')->with('title', 'Success !')->with('message', 'Visi dan Misi Successfully Updated !!')->with('type', 'success');
+			session()->flash('success', 'Berhasil!');
+			return Redirect::route('sekolah.visimisi.main');
 		} else {
-			return Redirect::route('visimisi')->with('title', 'Whoops!!!')->with('message', 'Visi dan Misi Failed to Update !!')->with('type', 'error');
+			session()->flash('error', 'gagal!');
+			return Redirect::route('sekolah.visimisi.main');
 		}
 	}
 	public function kepsek(Request $request) {#Kepsek
@@ -349,9 +354,11 @@ class AdminController extends Controller{
 		}
 		$identity->save();
 		if ($identity) {
-			return Redirect::route('kepsek')->with('title', 'Success !')->with('message', 'Sambutan Successfully Updated !!')->with('type', 'success');
+			session()->flash('success', 'Berhasil!');
+			return Redirect::route('sekolah.kepsek.main');
 		} else {
-			return Redirect::route('kepsek')->with('title', 'Whoops!!!')->with('message', 'Sambutan Failed to Update !!')->with('type', 'error');
+			session()->flash('error', 'Gagal!');
+			return Redirect::route('sekolah.kepsek.main');
 		}
 	}
 	public function uks(Request $request) {#Uks
@@ -393,9 +400,11 @@ class AdminController extends Controller{
 		}
 		$identity->save();
 		if ($identity) {
-			return Redirect::route('uks')->with('title', 'Success !')->with('message', 'UKS Successfully Updated !!')->with('type', 'success');
+			session()->flash('success', 'Berhasil!');
+			return Redirect::route('sekolah.uks.main');
 		} else {
-			return Redirect::route('uks')->with('title', 'Whoops!!!')->with('message', 'UKS Failed to Update !!')->with('type', 'error');
+			session()->flash('error', 'Gagal!');
+			return Redirect::route('sekolah.uks.main');
 		}
 	}
 	public function organisasi(Request $request) {#Struktur organisasi
@@ -437,9 +446,11 @@ class AdminController extends Controller{
 		}
 		$identity->save();
 		if ($identity) {
-			return Redirect::route('organisasi')->with('title', 'Success !')->with('message', 'Info Iklan Successfully Updated !!')->with('type', 'success');
+			session()->flash('success', 'Berhasil!');
+			return Redirect::route('sekolah.organisasi.main');
 		} else {
-			return Redirect::route('organisasi')->with('title', 'Whoops!!!')->with('message', 'Info Iklan Failed to Update !!')->with('type', 'error');
+			session()->flash('error', 'Gagal!');
+			return Redirect::route('sekolah.organisasi.main');
 		}
 	}
 
@@ -744,10 +755,11 @@ class AdminController extends Controller{
 		return ['status' => 'success', 'content' => $content];
 	}
 	public function SaveGaleri(Request $request) {
+		// return $request->all();
 		if (empty($request->id)) {
-			$galeri = Galeri::find($request->id_galeri);
-		} else {
 			$galeri = new Galeri;
+		} else {
+			$galeri = Galeri::find($request->id);
 		}
 		if($request->kategori==1){
 			$foto = date('YmdHis');

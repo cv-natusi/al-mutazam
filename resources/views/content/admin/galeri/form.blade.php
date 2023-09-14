@@ -84,23 +84,23 @@
         });
     });
     $('.btnSimpan').click(()=>{
-        var judul = $('#judul').val();
-        var link =  $('#link').val();
-        var status = $('#status').val();
+        var kategori = $('input[name="kategori"]:checked').val();
+        var deskripsi =  $('#deskripsi').val();
+        var status = $('input[name="status"]:checked').val();
         var data = new FormData($('.formSave')[0])
-        if (!judul) {
+        if (!kategori) {
             Swal.fire({
                 icon: 'error',
                 title: 'Whoops..',
-                text: 'Judul Wajib Diisi',
+                text: 'kategori Wajib Diisi',
                 showConfirmButton: false,
                 timer: 1300,
             })
-        } else if (!link) {
+        } else if (!deskripsi) {
             Swal.fire({
                 icon: 'error',
                 title: 'Whoops..',
-                text: 'Link Youtube Wajib Diisi',
+                text: 'Deskripsi Wajib Diisi',
                 showConfirmButton: false,
                 timer: 1300,
             })

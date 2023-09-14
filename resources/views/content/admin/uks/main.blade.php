@@ -17,33 +17,58 @@
                 <h5 class="text-card">{{$title}}</h5>
             </div>
             <div class="card-body">
-                <form method='post' action="{{ route('sekolah.uks.updateUks') }}" enctype='multipart/form-data'>
-                    <div class="row mb-2">
-                        <label for="">Gambar</label>
-                        <input type="file" name="gambar" id="gambar" class="form-control" onchange="loadFilePhoto(event)">
-                    </div>
-                    <div class="row mb-2">
-                        <i>Ukuran tinggi maksmal 300px</i><br>
-                        <?php
-                        if(empty($data)){
-                            ?>
-                            <img id="preview-photo" src="{{url('uploads/default.jpg')}}" style="width: 50%;height: 300px">
-                            <?php
-                        }else{
-                            ?>
-                            <img id="preview-photo" src="{{url('uploads/identitas/'.$identity->foto_uks)}}" style="width: 50%;height: 300px">
-                            <?php
-                        }
-                        ?>
-                    </div>
-                    <div class="row">
-                        <textarea id="editor1" name="uks" rows="40" cols="100">{!! $data->uks !!}</textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="card-footer">
-                <input type="submit" name="edit" class="btn btn-primary btn-block" value="Simpan">
-                <input type="reset" class="btn btn-warning btn-block" value="Reset">
+               <div class="row">
+                    @if(session('success'))
+                        <div class="alert alert-success" id="success-alert">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if(session('error'))
+                        <div class="alert alert-danger" id="error-alert">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                    <form method='post' action="{{ route('sekolah.uks.updateUks') }}" enctype='multipart/form-data'>
+                        {{ csrf_field() }}
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label class="col-lg-3 col-md-3">Gambar</label>
+                                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                                    <input type="file" name="gambar" class="form-control" onchange="loadFilePhoto(event)">
+                                    <i>Ukuran tinggi maksmal 300px</i>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <div class="col-lg-12 col-md-12">
+                                    <?php
+                                    if($identity->foto_uks==''){
+                                        ?>
+                                        <img id="preview-photo" src="{{url('uploads/default.jpg')}}" style="width: 50%;height: 300px">
+                                        <?php
+                                    }else{
+                                        ?>
+                                        <img id="preview-photo" src="{{url('uploads/identitas/'.$identity->foto_uks)}}" style="width: 50%;height: 300px">
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <textarea id="editor1" name="uks" rows="40" cols="100">{!! $identity->uks !!}</textarea>
+                                </div>
+                            </div>
+                            <div class='clearfix' style='padding-bottom:2px;'></div><hr>
+                        </div> <!-- col-lg-6 -->
+                        <div class='clearfix' style='padding-bottom:10px'></div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <input type="submit" name="edit" class="btn btn-primary btn-block" value="Simpan">
+                            <input type="reset" class="btn btn-warning btn-block" value="Reset">
+                        </div>
+                    </form>
+               </div>
             </div>
         </div>
 	</div>
@@ -78,5 +103,12 @@
         { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'] },
         CKEDITOR.env.isCompatible = true,
     ]});
+    // Menghilangkan flash message setelah 3 detik
+    setTimeout(function() {
+        $('#success-alert').fadeOut('slow');
+    }, 3000);
+    setTimeout(function() {
+        $('#error-alert').fadeOut('slow');
+    }, 3000);
 </script>
 @endpush

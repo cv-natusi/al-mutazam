@@ -18,25 +18,35 @@
                     </div>
                     <div class="card-body">
                         <form class="row mb-3 formSave">
+                            <input type="hidden" name="id" id="id" value="{{Auth::User()->id}}">
                             <div class="row mb-3">
-                                <input type="hidden" name="id" id="id" value="{{!empty($data)?$data->id:''}}">
-                                <div class="col-md-6">
-                                    <label>Password Lama <small>*</small></label>
-                                    <input type="text" class="form-control" autocomplete="off" name="password_lama" id="password_lama" value="{{!empty($data->lihat_password)?$data->lihat_password:''}}" required
-                                    placeholder="********"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                <div class="col-md-4">
+                                    <label for="">Password Sekarang</label>
                                 </div>
-                                <div class="col-md-6"></div>
+                                <div class="col-md-8">
+                                    <div class="input-group" id="show_hide_password_sekarang">
+                                        <input type="password" class="form-control border-end-0" id="inputChoosePassword" name="password_sekarang" value="{{Auth::User()->lihat_password}}" placeholder="Masukkan Password"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label>Password Baru <small>*</small></label>
-                                    <input type="text" class="form-control" autocomplete="off" name="password" id="password" placeholder="Password Baru" required
-                                    placeholder="********"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                <div class="col-md-4">
+                                    <label for="">Password Baru</label>
                                 </div>
-                                <div class="col-md-6">
-                                    <label>Ulangi Password Baru <small>*</small></label>
-                                    <input type="text" class="form-control" autocomplete="off" name="ulangi_password" id="ulangi_password" placeholder="Ulangi Password Baru" required
-                                    placeholder="********"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                <div class="col-md-8">
+                                    <div class="input-group" id="show_hide_password_baru">
+                                        <input type="password" class="form-control border-end-0" id="inputChoosePassword" name="password_baru" placeholder="********"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="">Ulangi Password Baru</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="input-group" id="show_hide_password_baru_ulang">
+                                        <input type="password" class="form-control border-end-0" id="inputChoosePassword" name="password_baru_ulang" placeholder="********"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                    </div>
                                 </div>
                             </div>
                         </form>

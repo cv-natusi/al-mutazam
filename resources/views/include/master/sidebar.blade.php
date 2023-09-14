@@ -154,11 +154,11 @@
 			</a>
 		</li>
 		<li class="{{ ($title == 'Data Pengembangan Diri') ? 'mm-active' : ''}}">
-			<a href="{{route('dataPengembanganDiri')}}">
+			<a href="{{route('mainPengembanganDiri')}}">
 				<div class="parent-icon">
 					<i style="color: #000" class='bx bxs-category'></i>
 				</div>
-				<div class="menu-title">Data Penembangan Diri</div>
+				<div class="menu-title">Data Pengembangan Diri</div>
 			</a>
 		</li>
 		<li class="{{ ($title == 'Data Administrasi') ? 'mm-active' : ''}}">
@@ -199,7 +199,15 @@
 				</div>
 				<div class="menu-title">Mata Pelajaran Diampu</div>
 			</a>
-			<a href="{{route('pengembanganDiri')}}">
+			<li class="{{ ($title == 'Profile') ? 'mm-active' : ''}}">
+				<a href="{{route('profile')}}">
+					<div class="parent-icon">
+						<i style="color: #000" class='bx bxs-user-account'></i>
+					</div>
+					<div class="menu-title">Profile</div>
+				</a>
+			</li>
+			<a href="{{route('mainPengembanganDiriGuru')}}">
 				<div class="parent-icon">
 					<i style="color: #000" class='bx bxs-category'></i>
 				</div>
@@ -214,15 +222,7 @@
 		</li>
 		@endif
 		@if (Auth::User()->level=='2' || Auth::User()->level=='3')
-		<li class="{{ ($title == 'Profile') ? 'mm-active' : ''}}">
-			<a href="{{route('profile')}}">
-				<div class="parent-icon">
-					<i style="color: #000" class='bx bxs-user-account'></i>
-				</div>
-				<div class="menu-title">Profile</div>
-			</a>
-		</li>
-		<li class="{{ ($title == 'Data Pelajaran') ? 'mm-active' : ''}}">
+		<li class="{{ ($title == 'Pengaturan') ? 'mm-active' : ''}}">
 			<a href="{{route('pengaturan')}}">
 				<div class="parent-icon">
 					<i style="color: #000" class='bx bx-cog'></i>

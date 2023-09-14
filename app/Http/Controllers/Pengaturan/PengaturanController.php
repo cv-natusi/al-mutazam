@@ -17,8 +17,8 @@ class PengaturanController extends Controller
     }
     public function save(Request $request) {
         $data = Users::find($request->id);
-        $data->password = bcrypt($request->password);
-        $data->lihat_password = $request->password;
+        $data->password = bcrypt($request->password_baru);
+        $data->lihat_password = $request->password_baru;
         $data->save();
         if ($data) {
             return ['code'=>200,'status'=>'success','message'=>'Update Berhasil.'];

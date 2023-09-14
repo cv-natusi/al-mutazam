@@ -18,6 +18,16 @@
         </div>
         <div class="card-body">
             <div class="row">
+                @if(session('success'))
+                    <div class="alert alert-success" id="success-alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                @if(session('error'))
+                    <div class="alert alert-danger" id="error-alert">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <form method='post' action="{{ route('sekolah.organisasi.updateOrganisasi') }}" enctype='multipart/form-data'>
                     {{ csrf_field() }}
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
@@ -47,8 +57,8 @@
 						<div class="clearfix"></div>
                     </div> <!-- col-lg-6 -->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <input type="submit" name="edit" class="btn btn-primary btn-block" value="Simpan">
                         <input type="reset" class="btn btn-warning btn-block" value="Reset">
+                        <input type="submit" name="edit" class="btn btn-primary btn-block" value="Simpan">
                     </div>
                 </form>
             </div>
@@ -85,5 +95,12 @@
         { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
         { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'] },
     ]});
+    // Menghilangkan flash message setelah 3 detik
+    setTimeout(function() {
+        $('#success-alert').fadeOut('slow');
+    }, 3000);
+    setTimeout(function() {
+        $('#error-alert').fadeOut('slow');
+    }, 3000);
 </script>
 @endpush

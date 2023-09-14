@@ -37,8 +37,8 @@
 				</form>
 			</div>
 			<div class="card-footer">
-				<button class="btn btn-success btnSimpan" type="button">Simpan</button>
 				<button class="btn btn-secondary btnCancel" type="button">Kembali</button>
+				<button class="btn btn-success btnSimpan" type="button">Simpan</button>
 			</div>
 		</div>
 	</div>

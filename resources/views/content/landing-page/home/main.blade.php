@@ -132,7 +132,7 @@
 			<div class="slider">
 				<ul class="slides">
 					@foreach ($slider as $i => $s)
-					@if(file_exists(public_path().'/slider/berita/'.$s->gambar))
+					@if(file_exists(public_path().'/uploads/slider/'.$s->gambar))
 					@if (empty($s->gambar))
 					<li id="slide-{{$i}}">
 						<img src="{{asset('uploads/default.jpg')}}" alt="slide-background">
@@ -332,24 +332,24 @@
 					</div>
 				</div>
 				@if(count($pengumuman)>0)
-				@foreach($pengumuman as $key => $val)
+				@foreach($pengumuman as $idx => $pe)
 				<div class="row d-flex align-items-center">
 					<div class="col-lg-12">
 						<div class="contact-box">
 							<div class="row">
 								<div class="col-md-3 mtb-auto">
-									@if(file_exists(public_path().'/uploads/berita/'.$val->gambar))
-									<img class="mx-auto d-block responsive img-fluid img-pengumuman" src="{{asset('uploads/berita/'.$val->gambar)}}" alt="icon-pengumuman">
+									@if(file_exists(public_path().'/uploads/berita/'.$pe->gambar))
+									<img class="mx-auto d-block responsive img-fluid img-pengumuman" src="{{asset('uploads/berita/'.$pe->gambar)}}" alt="icon-pengumuman">
 									@else
 									<img class="mx-auto d-block responsive img-fluid img-pengumuman" src="{{asset('landing-page/images/pengumuman.png')}}" alt="icon-pengumuman">
 									@endif
 								</div>
 								<div class="col-md-9 mtb-auto text-left">
 									<span class="fw4">
-										{{$val->judul}}<br>
+										{{$pe->judul}}<br>
 									</span>
-									<div class="text-justify content" id="content-{{$val->id_berita}}">{!!$val->isi!!}</div>
-									<a href="javascript:void(0)" id="read-more-{{$val->id_berita}}" onclick="readMore('{{$val->id_berita}}')" class="color-a">[Baca Selengkapnya]</a>
+									<div class="text-justify content" id="content-{{$pe->id_berita}}">{!!$pe->isi!!}</div>
+									<a href="javascript:void(0)" id="read-more-{{$pe->id_berita}}" onclick="readMore('{{$pe->id_berita}}')" class="color-a">[Baca Selengkapnya]</a>
 								</div>
 							</div>
 						</div>
@@ -378,7 +378,7 @@
 						<div class="contact-box">
 							<div class="row">
 								<div class="col-md-3 mtb-auto">
-									<img class="img-80" src="{{asset('landing-page/images/mask.png')}}" alt="contacts-icon">
+									<img class="img-80" src="{{asset('landing-page/images/Mask.png')}}" alt="contacts-icon">
 								</div>
 								<div class="col-md-9 mtb-auto text-left">
 									<span class="fw4">
@@ -452,7 +452,7 @@
 		$('.close-modal').click(() => {
 			$('.modal').fadeOut("slow")
 		})
-		
+
 		var maxWord = 15;
 		$(".content").each(function() {
 			var myStr = $(this).html()
@@ -504,8 +504,6 @@
 		// 	]
 		// });
 	})
-
-
 	function filterArray(array, num, prefix) {
 		var arrStr = $.grep(array, function(v, i) {
 			if (prefix === 'first') {
@@ -520,7 +518,6 @@
 		})
 		return arrStr
 	}
-
 	function readMore(id) {
 		var textButton = $(`#read-more-${id}`).text()
 		var firstText = $(`#content-${id}`).data('first')
@@ -533,23 +530,8 @@
 			$(`#read-more-${id}`).text('[Baca Selengkapnya]')
 		}
 	}
-
-	function readMorePengumuman(id) {
-		var textButton = $(`#read-more-${id}`).text()
-		var firstText = $(`#content-${id}`).data('first')
-		var secondText = $(`#content-${id}`).data('second')
-		if (textButton === '[Baca Selengkapnya]') {
-			$(`#content-${id}`).empty().html(firstText.slice(0, -3) + secondText)
-			$(`#read-more-${id}`).text('[Baca Lebih Sedikit]')
-		} else {
-			$(`#content-${id}`).empty().html(firstText)
-			$(`#read-more-${id}`).text('[Baca Selengkapnya]')
-		}
-	}
-
 	// https://youtu.be/ysNDDrG9PtI
 	var player;
-
 	function onYouTubeIframeAPIReady() {
 		player = new YT.Player('playerId', {
 			videoId: '4qEs6r6Ycnc', // Video id

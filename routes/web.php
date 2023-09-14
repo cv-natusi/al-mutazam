@@ -17,6 +17,7 @@ use App\Http\Controllers\Petugas\DataAdministrasiController as DataAdministrasi;
 use App\Http\Controllers\Petugas\BerbagiDokumenController as BerbagiDokumen;
 use App\Http\Controllers\Petugas\DataKelasController as DataKelas;
 use App\Http\Controllers\Petugas\DataPelajaranController as DataPelajaran;
+use App\Http\Controllers\Petugas\PengembanganDiriController as PengembanganDiri;
 use GuzzleHttp\Psr7\UploadedFile;
 
 /*
@@ -287,10 +288,14 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
 		});
 		Route::group(array('prefix' => 'data-pengembangan-diri'), function () {
-			Route::get('/', [DataPelajaran::class, 'main'])->name('dataPengembanganDiri');
-			// Route::post('/form', [DataPelajaran::class, 'form'])->name('formDataPelajaran');
-			// Route::post('/store', [DataPelajaran::class, 'save'])->name('saveDataPelajaran');
-			// Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
+			Route::get('/', [PengembanganDiri::class, 'main'])->name('mainPengembanganDiri');
+			Route::post('/pengembangan-diri', [PengembanganDiri::class, 'pengembanganDiri'])->name('pengembanganDiriPetugas');
+			Route::post('/mst-pengembangan-diri', [PengembanganDiri::class, 'mstPengembanganDiri'])->name('mstPengembanganDiri');
+			Route::post('/form-pengembangan-diri', [PengembanganDiri::class, 'formPengembanganDiri'])->name('formPengembanganDiri');
+			Route::post('/form-lihat-pengembangan-diri', [PengembanganDiri::class, 'formLihatPengembanganDiri'])->name('formLihatPengembanganDiri');
+			Route::post('/form-mst-pengembangan-diri', [PengembanganDiri::class, 'formMstPengembanganDiri'])->name('formMstPengembanganDiri');
+			Route::post('/save-pengembangan-diri', [PengembanganDiri::class, 'savePengembanganDiri'])->name('savePengembanganDiri');
+			Route::post('/save-mst-pengembangan-diri', [PengembanganDiri::class, 'saveMstPengembanganDiri'])->name('saveMstPengembanganDiri');
 		});
 		Route::group(array('prefix' => 'data-administrasi'), function () {
 			Route::get('/', [DataAdministrasi::class, 'mainPetugas'])->name('dataAdministrasiPetugas');
@@ -330,8 +335,10 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::group(array('prefix' => 'Dashboard'), function () {
 			Route::get('/', [Dashboard::class, 'mainGuru'])->name('dashboardGuru');
 		});
-		Route::group(array('prefix' => 'pengembangan-diri'), function () {
-			Route::get('/', [Dashboard::class, 'mainGuru'])->name('pengembanganDiri');
+		Route::group(array('prefix' => 'data-pengembangan-diri'), function () {
+			Route::get('/', [PengembanganDiri::class, 'mainPengembanganDiriGuru'])->name('mainPengembanganDiriGuru');
+			Route::post('/form-pengembangan-diri-guru', [PengembanganDiri::class, 'formPengembanganDiriGuru'])->name('formPengembanganDiriGuru');
+			Route::post('/save-pengembangan-diri-guru', [PengembanganDiri::class, 'savePengembanganDiriGuru'])->name('savePengembanganDiriGuru');
 		});
 		Route::group(array('prefix' => 'data-administrasi'), function () {
 			Route::get('/', [DataAdministrasi::class, 'main'])->name('dataAdministrasi');

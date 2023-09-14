@@ -18,10 +18,19 @@
             </div>
             <div class="card-body">
                 <div class="row">
+                    @if(session('success'))
+                        <div class="alert alert-success" id="success-alert">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if(session('error'))
+                        <div class="alert alert-danger" id="error-alert">
+                            {{ session('error') }}
+                        </div>
+                    @endif
                     <form method='post' action="{{ route('sekolah.kepsek.updateKepsek') }}" enctype='multipart/form-data'>
                         {{ csrf_field() }}
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            
                             <div class="form-group">
                                 <label class="col-lg-3 col-md-3">Gambar</label>
                                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
@@ -93,5 +102,12 @@
         { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'] },
         CKEDITOR.env.isCompatible = true,
     ]});
+    // Menghilangkan flash message setelah 3 detik
+    setTimeout(function() {
+        $('#success-alert').fadeOut('slow');
+    }, 3000);
+    setTimeout(function() {
+        $('#error-alert').fadeOut('slow');
+    }, 3000);
 </script>
 @endpush
