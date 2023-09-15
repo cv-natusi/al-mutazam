@@ -42,22 +42,34 @@
 					<div class="col-lg-12">
 						<div class="contact-box">
 							<div class="row">
-								<li>Sejarah</li>
+								<li>
+									<a href="{{route('profil.sejarah')}}">Sejarah</a>
+								</li>
 							</div>
 							<div class="row">
-								<li>Visi dan Misi</li>
+								<li>
+									<a href="{{route('profil.visimisi')}}">Visi dan Misi</a>
+								</li>
 							</div>
 							<div class="row">
-								<li>Sambutan Kepada Kepala Madrasah</li>
+								<li>
+									<a href="{{route('profil.sambutan')}}">Sambutan Kepala Madrasah</a>
+								</li>
 							</div>
 							<div class="row">
-								<li>Struktur Organisasi</li>
+								<li>
+									<a href="{{route('profil.struktur')}}">Struktur organisasi</a>
+								</li>
 							</div>
 							<div class="row">
-								<li>Profil Struktural</li>
+								<li>
+									<a href="{{route('profil.struktural')}}">Profil Struktural</a>
+								</li>
 							</div>
 							<div class="row">
-								<li>Fasilitas Madrasah</li>
+								<li>
+									<a href="{{route('profil.fasilitas')}}">Fasilitas Madrasah</a>
+								</li>
 							</div>
 						</div>
 					</div>

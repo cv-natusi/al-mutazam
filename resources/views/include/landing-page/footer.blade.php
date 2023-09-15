@@ -54,7 +54,7 @@
 											</div>
 											<div class="col-md-8 mtb-auto text-left">
 												<span class="fw5">Sekolah:</span><br>
-												<span class="fw4 f-color">Jalan Raya Kepuhanyar No. 24 Mojoanyar Mojokerto</span>
+												<span class="fw4 f-color">{{$identity->alamat}}</span>
 											</div>
 										</div>
 									</div>
@@ -72,7 +72,7 @@
 												<span class="fw8" style="font-size: 20px;">Telepon</span>
 											</div>
 											<div class="col-md-8 mtb-auto f-color text-left">
-												<span class="fw4">Mobile: 03215885002</span>
+												<span class="fw4">Mobile: {{$identity->phone}}</span>
 											</div>
 										</div>
 									</div>
@@ -90,7 +90,7 @@
 												<span class="fw8" style="font-size: 20px;">Email</span>
 											</div>
 											<div class="col-md-8 mtb-auto f-color text-left">
-												<span class="fw4">mtsalmutazam@gmail.com</span>
+												<span class="fw4">{{$identity->email}}</span>
 											</div>
 										</div>
 									</div>

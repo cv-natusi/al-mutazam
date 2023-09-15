@@ -296,6 +296,8 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::post('/form-mst-pengembangan-diri', [PengembanganDiri::class, 'formMstPengembanganDiri'])->name('formMstPengembanganDiri');
 			Route::post('/save-pengembangan-diri', [PengembanganDiri::class, 'savePengembanganDiri'])->name('savePengembanganDiri');
 			Route::post('/save-mst-pengembangan-diri', [PengembanganDiri::class, 'saveMstPengembanganDiri'])->name('saveMstPengembanganDiri');
+			Route::post('/verif-pengembangan-diri', [PengembanganDiri::class, 'verifPengembanganDiri'])->name('verifPengembanganDiri');
+			Route::post('/tolak-pengembangan-diri', [PengembanganDiri::class, 'tolakPengembanganDiri'])->name('tolakPengembanganDiri');
 		});
 		Route::group(array('prefix' => 'data-administrasi'), function () {
 			Route::get('/', [DataAdministrasi::class, 'mainPetugas'])->name('dataAdministrasiPetugas');

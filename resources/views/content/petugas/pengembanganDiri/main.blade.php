@@ -114,6 +114,7 @@
         $(".knob").knob()
     });
     $(function() {
+        // DataTable Pengembangan Diri
         var table = $('#datatablePengembanganDiri').DataTable({
             processing: true,
             serverSide: true,
@@ -168,7 +169,7 @@
                 searchable: false
             },]
         });
-
+        // DataTable Master Pengembangan Diri
         var table2 = $('#datatableMstPengembanganDiri').DataTable({
             processing: true,
             serverSide: true,
@@ -207,7 +208,6 @@
 			$("#modalForm").html(data.content);
 		});
 	}
-    
     function formFirstLihat(id='') {
         $.post("{{route('formLihatPengembanganDiri')}}",{id:id},function(data){
 			$("#modalForm").html(data.content);
@@ -218,5 +218,66 @@
 			$("#modalForm").html(data.content);
 		});   
     }
+    function verifikasi(id) {
+        $.post("{{ route('verifPengembanganDiri') }}",{id:id}).done(function(data) {
+            if(data.code==200){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: data.message,
+                    showConfirmButton: false,
+                    timer: 1200
+                })
+                location.reload()
+            }else{
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Whoops',
+                    text: data.message,
+                    showConfirmButton: false,
+                    timer: 1300,
+                })
+            }
+        }).fail(function() {
+            Swal.fire("Sorry!", "Gagal menghapus data!", "error");
+        });
+	}
+    function tolak(id) {
+		Swal.fire({
+			title: "Apakah Anda yakin?",
+			text: "Data Akan Ditolak Dan Dikembalikan Pada Guru.",
+			icon: 'warning',
+			showCancelButton: true,
+			cancelButtonText: 'Batal',
+			confirmButtonText: 'Tolak',
+		}).then((result) => {
+			if (result.value) {
+				$.post("{{ route('tolakPengembanganDiri') }}",{id:id}).done(function(data) {
+					if(data.code==200){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1200
+                        })
+                        location.reload()
+                    }else{
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Whoops',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1300,
+                        })
+                    }
+				}).fail(function() {
+					Swal.fire("Sorry!", "Terjadi Kesalahan Sistem!", "error");
+				});
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				Swal.fire("Batal", "Data batal ditolak!", "error");
+			}
+		});
+	}
 </script>
 @endpush
