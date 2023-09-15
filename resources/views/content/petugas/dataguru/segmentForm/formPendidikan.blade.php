@@ -1,143 +1,237 @@
 <div class="card mb-3" style="width: 100%; background-color:#ffffff">
-    <div class="card-header bg-card">	
-        <h5 class="text-card">DATA PENDIDIKAN DAN PEKERJAAN</h5>
-    </div>
-    <div class="card-body">
-        <form class="formDataPendidikan">
-            <input type="hidden" name="id" id="id" value="{{!empty($data)?$data->id_guru:''}}">
-            <div class="row mb-3">
-                <div class="col-md-8">
-                    <label>Mata Pelajaran Yang Diajar</label>
-                    <select class="form-control" id="mata_pelajaran" name="mata_pelajaran">
-                        <option value="">.:: Pilih ::.</option>
-                        @if (count($pelajaran)>0)
-                            @foreach ($pelajaran as $p)
-                                <option id="opt_{{$p->id_pelajaran}}" value="{{$p->id_pelajaran}}">{{$p->nama_mapel}}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                    <input type="hidden" name="sIdMapel" id="sIdMapel">
-                </div>
-                <div class="col-md-2">
-                    <label>Jumlah Jam <small>*</small></label>
-                    <input autocomplete="off" class="form-control" type="number" name="jumlah_jam" id="jumlah_jam" value="{{ !empty($data->jumlah_jam)? $data->jumlah_jam : ''}}" placeholder="0">
-                </div>
-                <div class="col-md-2">
-                    <button type="button" style="margin-top: 20px;" class="btn btn-primary" id="btnAddMapel" onclick="addMapel()">ADD</button>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <table class="table" id="tableMapel" style="font-size: 12px;">
-                        <thead class="table-light">
-                            <tr>
-                                <th scope="col">Nama Mata Pelajaran</th>
-                                <th scope="col">Jumlah Jam</th>
-                                <th scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tempatData">
-                            @if (!empty($dataMapel)&&$dataMapel[0]->id_detail_data_pendidikan != '')
-                                @foreach($dataMapel as $index => $val)
-                                <tr id="mapel_{{$val->id_pelajaran}}">
-                                    <td id="td_nama_mapel_{{$val->id_pelajaran}}">{{$val->nama_mapel}}</td>
-                                    <td id="td_jumlah_jam_{{$val->id_pelajaran}}">{{$val->jumlah_jam}}</td>
-                                    <td>
-                                        <a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-warning mr-2" onclick="editMapel(`{{$val->id_pelajaran}}`)"><i class="bx bxs-edit"></i></a>
-                                        <a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-danger" onclick="deleteMapel(`{{$val->id_pelajaran}}`)"><i class="bx bxs-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <input type="hidden" class="hps_{{$val->id_pelajaran}}" id="rnama_mapel_{{$val->id_pelajaran}}" name="mata_pelajaran[]" value="{{$val->id_pelajaran}}">
-                                <input type="hidden" class="hps_{{$val->id_pelajaran}}" id="rjumlah_jam_{{$val->id_pelajaran}}" name="jumlah_jam[]" value="{{$val->jumlah_jam}}">
-                                @endforeach
-                            @endif
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <label>Potensi Bidang</label>
-                    <select name="potensi_bidang" id="potensi_bidang" class="form-control">
-                        <option value="">.:: Pilih ::.</option>
-                        <option value="potensi">Potensi Bidang</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label>No. Sertifikat Pendidik</label>
-                    <input type="text" name="no_sertifikat_pendidik" id="no_sertifikat_pendidik" placeholder="No. Sertifikat Pendidik" class="form-control">
-                </div>
-                <div class="col-md-4">
-                    <label>Sertifikasi</label>
-                    <input type="text" name="sertifikasi" id="sertifikasi" placeholder="Sertifikasi" class="form-control">
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="card-footer">
-        {{-- <button class="btn btn-secondary editDataPendidikan" type="button">EDIT</button> --}}
-        <button class="btn btn-success simpanDataPendidikan" type="button">SIMPAN</button>
-    </div>
+	<div class="card-header bg-card">	
+		<h5 class="text-card">DATA PENDIDIKAN DAN PEKERJAAN</h5>
+	</div>
+	<div class="card-body">
+		<form class="formDataPendidikan">
+			<input type="hidden" name="id" id="id" value="{{!empty($data)?$data->id_guru:''}}">
+			<div class="row mb-3">
+				<div class="col-md-7">
+					<label>Mata Pelajaran Yang Diajar</label>
+					<select class="form-control" id="mata_pelajaran" name="mata_pelajaran">
+						<option value="first" disabled selected>.:: Pilih ::.</option>
+						@if (count($pelajaran)>0)
+							@foreach ($pelajaran as $p)
+								<option id="opt_{{$p->id_pelajaran}}" value="{{$p->id_pelajaran}}">{{$p->nama_mapel}}</option>
+							@endforeach
+						@endif
+					</select>
+					<input type="hidden" name="sIdMapel" id="sIdMapel">
+				</div>
+				<div class="col-md-2">
+					<label>Jumlah Jam <small>*</small></label>
+					<input autocomplete="off" class="form-control" type="number" name="jumlah_jam" id="jumlah_jam" value="{{ !empty($data->jumlah_jam)? $data->jumlah_jam : ''}}" placeholder="0">
+				</div>
+				<div class="col-md-3">
+					<button type="button" style="margin-top: 20px;" class="btn btn-primary" id="btnAddMapel" onclick="addMapel()">ADD</button>
+					<div class="btn-update" style="margin-top: 20px;"></div>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-md-12">
+					<table class="table" id="tableMapel" style="font-size: 12px;">
+						<thead class="table-light">
+							<tr>
+								<th scope="col">Nama Mata Pelajaran</th>
+								<th scope="col">Jumlah Jam</th>
+								<th scope="col">Aksi</th>
+							</tr>
+						</thead>
+						<tbody id="tempatData">
+							@if (!empty($dataMapel)&&$dataMapel[0]->id_detail_data_pendidikan != '')
+								@foreach($dataMapel as $index => $val)
+									<tr id="mapel_{{$val->id_pelajaran}}">
+										<td id="td_nama_mapel_{{$val->id_pelajaran}}">{{$val->nama_mapel}}</td>
+										<td id="td_jumlah_jam_{{$val->id_pelajaran}}">{{$val->jumlah_jam}}</td>
+										<td>
+											<a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-warning mr-2" onclick="editMapel(`{{$val->id_pelajaran}}`)"><i class="bx bxs-edit"></i></a>
+											<a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-danger" onclick="deleteMapel(`{{$val->id_pelajaran}}`)"><i class="bx bxs-trash"></i></a>
+										</td>
+									</tr>
+									<input type="hidden" class="hps_{{$val->id_pelajaran}}" id="rnama_mapel_{{$val->id_pelajaran}}" name="mata_pelajaran[]" value="{{$val->id_pelajaran}}">
+									<input type="hidden" class="hps_{{$val->id_pelajaran}}" id="rjumlah_jam_{{$val->id_pelajaran}}" name="jumlah_jam[]" value="{{$val->jumlah_jam}}">
+								@endforeach
+							@endif
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<label>Potensi Bidang</label>
+					<select name="potensi_bidang" id="potensi_bidang" class="form-control">
+						<option value="">.:: Pilih ::.</option>
+						<option value="potensi">Potensi Bidang</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<label>No. Sertifikat Pendidik</label>
+					<input type="text" name="no_sertifikat_pendidik" id="no_sertifikat_pendidik" placeholder="No. Sertifikat Pendidik" class="form-control">
+				</div>
+				<div class="col-md-4">
+					<label>Sertifikasi</label>
+					<input type="text" name="sertifikasi" id="sertifikasi" placeholder="Sertifikasi" class="form-control">
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="card-footer">
+		{{-- <button class="btn btn-secondary editDataPendidikan" type="button">EDIT</button> --}}
+		<button class="btn btn-success simpanDataPendidikan" type="button">SIMPAN</button>
+	</div>
 </div>
 <script type="text/javascript">
-    $('#mata_pelajaran').change(() => {
-        var id = $('#mata_pelajaran').val();
-        $('#sIdMapel').val(id);
-    });
+	$('#mata_pelajaran').change(() => {
+		var id = $('#mata_pelajaran').val();
+		$('#sIdMapel').val(id);
+	});
+	
+	async function addMapel() {
+		const kode = await generateId(5)
+		var id = $('#mata_pelajaran').val()
+		var nama = $('#mata_pelajaran option:selected').text()
+		var jumlahJam = $('#jumlah_jam').val()
+		var cekMapel = $('input[name^="mata_pelajaran"]')
+		let exist = 0;
+		var html = ''
 
-    function addMapel() {
-        var btn = $('#btnAddMapel').html()
-        var id = $('#sIdMapel').val();
-        var cPelajaranId = $('input[name^="mata_pelajaran"]');
-        var error = 0;
-        for (var i=0;i < cPelajaranId.length;i++) {
-            if (cPelajaranId[i].value == id) {
-                error += 1;
-            }
-        };
-        var idMapel = $('#mata_pelajaran').val();
-        var nama = $('#mata_pelajaran').text();
-        var jumlah = $('#jumlah_jam').val();
-        if (btn == 'ADD') {
-            if (error == 0) {
-                if (!id) { 
-                    swal('Maaf!','Kolom Mata Pelajaran Harus diisi','warning')
-                } else if (!nama) { 
-                    swal('Maaf!','Kolom Mata Pelajaran Harus diisi','warning')
-                } else if (!jumlah) { 
-                    swal('Maaf!','Kolom Jumlah Jam Harus diisi','warning')
-                } else {
-                    var html = ''
-                    html += '<tr id="obt_'+id+'">'
-                    html += '<td id="td_nama_mapel_'+id+'">'+idMapel+'</td>'
-                    html += '<td id="td_jumlah_jam_'+id+'">'+jumlah+'</td>'
-                    html += '<td>'
-                    html += '<a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-warning mr-2" onclick="editMapel(`'+id+'`)"><i class="bx bxs-edit"></i></a>'
-                    html += '<a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-danger" onclick="deleteMapel(`'+id+'`)"><i class="bx bxs-trash"></i></a>'
-                    html += '</td>'
-                    html += '</tr>'
+		for (var i=0;i < cekMapel.length;i++) {
+			if (cekMapel[i].value == id) {
+				exist += 1;
+			}
+		}
+		if(!id){
+			await Swal.fire({
+				icon: 'warning',
+				title: 'Oops..',
+				text: 'Pilih Mapel dengan benar!',
+				showConfirmButton: true,
+			})
+			return
+		}
+		if(exist>0){
+			await Swal.fire({
+				icon: 'warning',
+				title: 'Oops..',
+				text: 'Mapel sudah masuk ke list!',
+				showConfirmButton: true,
+			})
+			return
+		}
+		if(!jumlahJam){
+			await Swal.fire({
+				icon: 'warning',
+				title: 'Oops..',
+				text: 'Isi jumlah jam dengan benar!',
+				showConfirmButton: true,
+			})
+			return
+		}
 
-                    html += '<input type="hidden" class="hps_'+id+'" id="rnama_mapel_'+id+'" name="mata_pelajaran[]" value="'+idMapel+'">'
-                    html += '<input type="hidden" class="hps_'+id+'" id="rjumlah_jam_'+id+'" name="jumlah_jam[]" value="'+jumlah+'">'
+		html += '<tr class="rowMapel" id="'+kode+'">'
+		html += '<td><span id="namaMapel">'+nama+'</span></td>'
+		html += '<td><span id="jumlahJam">'+jumlahJam+'</span></td>'
+		html += '<td>'
+		html += '<input type="hidden" id="idMapel" name="mata_pelajaran[]" value="'+id+'">'
+		html += '<input type="hidden" id="idJam" name="jumlah_jam[]" value="'+jumlahJam+'">'
+		html += '<a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-warning mr-2" onclick="editMapel(`'+kode+'`)"><i class="bx bxs-edit"></i></a>'
+		html += '<a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-danger" onclick="deleteMapel(`'+kode+'`)"><i class="bx bxs-trash"></i></a>'
+		html += '</td>'
+		html += '</tr>'
+		$('#tempatData').append(html)
+		$('#mata_pelajaran').val('first').trigger('change')
+		$('#jumlah_jam').val('')
+		await Swal.fire({
+			icon: 'success',
+			title: 'Berhasil ditambahkan',
+			showConfirmButton: false,
+			timer: 900,
+		})
+	}
+	async function editMapel(id){
+		const idMapel = $(`#${id} #idMapel`).val()
+		const jumlahJam = $(`#${id} #idJam`).val()
+		const namaMapel = $(`#${id} #namaMapel`).html()
 
-                    $('#tempatData').append(html)
-                    $('#mata_pelajaran').val('');
-                    $('#jumlah_jam').val('');
-                }
-            } else {
-                swal('Whoops','Mata Pelajaran yang anda pilih sudah pernah diinput','warning')
-            }
-        } else {
-            $('#td_nama_mapel_'+id).html(nama);
-            $('#td_jumlah_jam_'+id).html(jumlah);
+		$('#mata_pelajaran').val(idMapel)
+		$('#select2-mata_pelajaran-container').attr('title', namaMapel)
+		$('#select2-mata_pelajaran-container').html(`${namaMapel}`)
+		$('#jumlah_jam').val(jumlahJam)
 
-            $('#rstok_sim_'+id).val(stok_sim);
-            $('#rstok_real_'+id).val(stok_real);
+		await $('#btnAddMapel').hide()
+		var buttonUpdate = '<input type="hidden" id="idRow" value="'+id+'">'
+		buttonUpdate += '<button type="button" class="btn btn-secondary" onclick="batalEdit()">Batal</button>'
+		buttonUpdate += '<button type="button" class="btn btn-warning" onclick="updateMapel(`'+id+'`)">Update</button>'
+		await $('.btn-update').html(buttonUpdate)
+		await $('#mata_pelajaran').attr('disabled',true)
+	}
+	async function updateMapel(id){
+		const jumlahJam = parseInt($(`#jumlah_jam`).val())
+		if(!jumlahJam || jumlahJam<=0){
+			await Swal.fire({
+				icon: 'warning',
+				title: 'Oops..',
+				text: 'Masukkan jam dengan benar!',
+				showConfirmButton: true,
+			})
+			return
+		}
 
-            $('#mata_pelajaran').val('');
-            $('#jumlah_jam').val('');
+		await $(`#${id} #idJam`).val(jumlahJam)
+		await $(`#${id} #jumlahJam`).text(jumlahJam)
 
-            $('#btn-add-stok').html('ADD')
-        }
-    }
+		await Swal.fire({
+			icon: 'success',
+			title: 'Berhasil',
+			text: 'Data berhasil di ubah',
+			showConfirmButton: false,
+			timer: 900
+		})
+		await $('#mata_pelajaran').val('first').trigger('change')
+		await $('#jumlah_jam').val('')
+		await $('.btn-update').empty()
+		await $('#btnAddMapel').show()
+		$('#mata_pelajaran').attr('disabled',false)
+	}
+	async function deleteMapel(id){
+		Swal.fire({
+			title: 'Anda yakin?',
+			text: 'Ingin menghapus data ini!',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			confirmButtonText: 'Saya yakin!',
+			cancelButtonText: 'Batal!',
+			// closeOnConfirm: true,
+		}).then(async (result) => {
+			if(result.value == true){
+				// await array_stok_barang.splice($('#' + id).index(), 1);
+				await $('#' + id).remove()
+				await Swal.fire({
+					icon: 'success',
+					title: 'Berhasil',
+					text: 'Data berhasil dihapus',
+					showConfirmButton: false,
+					timer: 900
+				})
+			}
+		})
+	}
+	async function batalEdit(){
+		await $('#mata_pelajaran').val('first').trigger('change')
+		await $('#jumlah_jam').val('')
+		await $('.btn-update').empty()
+		await $('#btnAddMapel').show()
+		$('#mata_pelajaran').attr('disabled',false)
+	}
+
+	async function generateId(n) {
+		var text = "";
+		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+		
+		for (var i = 0; i < n; i++) {
+			text += possible.charAt(Math.floor(Math.random() * possible.length));
+		}
+		return text;
+	}
 </script>
