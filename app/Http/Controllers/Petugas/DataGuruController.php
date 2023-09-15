@@ -85,7 +85,6 @@ class DataGuruController extends Controller{
 	}
 	
 	public function saveDataDiri(Request $request) {
-		return $request->all();
 		if (empty($request->id)) {
 			$data = new Guru;
 		} else {
@@ -120,5 +119,14 @@ class DataGuruController extends Controller{
 		} catch (\Throwable $th) {
 			return $th->getMessage();
 		}
+	}
+	public function saveDataPendidikan(Request $request){
+		return $request->all();
+	}
+	public function saveDataPenugasan(Request $request){
+		return $request->all();
+	}
+	public function saveDataPendukung(Request $request){
+		return $request->all();
 	}
 }
