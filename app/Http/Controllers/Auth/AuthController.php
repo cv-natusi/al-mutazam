@@ -43,7 +43,7 @@ class AuthController extends Controller
             } else if ($user->level == '3') {
                 return redirect()->route('dashboardGuru');
             }
-            return redirect()->route('/');
+            // return redirect()->route('/');
         }
 
         return redirect()->route('login')

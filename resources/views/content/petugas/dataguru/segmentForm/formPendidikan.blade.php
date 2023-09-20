@@ -40,16 +40,16 @@
 						<tbody id="tempatData">
 							@if (!empty($dataMapel)&&$dataMapel[0]->id_detail_data_pendidikan != '')
 								@foreach($dataMapel as $index => $val)
-									<tr id="mapel_{{$val->id_pelajaran}}">
-										<td id="td_nama_mapel_{{$val->id_pelajaran}}">{{$val->nama_mapel}}</td>
-										<td id="td_jumlah_jam_{{$val->id_pelajaran}}">{{$val->jumlah_jam}}</td>
+									<tr class="rowMapel" id="{{$val->id_pelajaran}}">
+										<td><span id="namaMapel">{{$val->nama_mapel}}</span></td>
+										<td><span id="jumlahJam">{{$val->jumlah_jam}}</span></td>
 										<td>
+											<input type="hidden" class="hps_{{$val->id_pelajaran}}" id="idMapel" name="mata_pelajaran[]" value="{{$val->id_pelajaran}}">
+											<input type="hidden" class="hps_{{$val->id_pelajaran}}" id="idJam" name="jumlah_jam[]" value="{{$val->jumlah_jam}}">
 											<a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-warning mr-2" onclick="editMapel(`{{$val->id_pelajaran}}`)"><i class="bx bxs-edit"></i></a>
 											<a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-danger" onclick="deleteMapel(`{{$val->id_pelajaran}}`)"><i class="bx bxs-trash"></i></a>
 										</td>
 									</tr>
-									<input type="hidden" class="hps_{{$val->id_pelajaran}}" id="rnama_mapel_{{$val->id_pelajaran}}" name="mata_pelajaran[]" value="{{$val->id_pelajaran}}">
-									<input type="hidden" class="hps_{{$val->id_pelajaran}}" id="rjumlah_jam_{{$val->id_pelajaran}}" name="jumlah_jam[]" value="{{$val->jumlah_jam}}">
 								@endforeach
 							@endif
 						</tbody>
@@ -61,16 +61,16 @@
 					<label>Potensi Bidang</label>
 					<select name="potensi_bidang" id="potensi_bidang" class="form-control">
 						<option value="">.:: Pilih ::.</option>
-						<option value="potensi">Potensi Bidang</option>
+						<option @if(!empty($dataMapel->potensi_bidang)&&$dataMapel->potensi_bidang=='potensi') selected @endif value="potensi">Potensi Bidang</option>
 					</select>
 				</div>
 				<div class="col-md-4">
 					<label>No. Sertifikat Pendidik</label>
-					<input type="text" name="no_sertifikat_pendidik" id="no_sertifikat_pendidik" placeholder="No. Sertifikat Pendidik" class="form-control">
+					<input type="text" name="no_sertifikat_pendidik" id="no_sertifikat_pendidik" placeholder="No. Sertifikat Pendidik" class="form-control" value="{{!empty($dataMapel[0]->no_sertifikat_pendidik)?$dataMapel[0]->no_sertifikat_pendidik:''}}">
 				</div>
 				<div class="col-md-4">
 					<label>Sertifikasi</label>
-					<input type="text" name="sertifikasi" id="sertifikasi" placeholder="Sertifikasi" class="form-control">
+					<input type="text" name="sertifikasi" id="sertifikasi" placeholder="Sertifikasi" class="form-control" value="{{!empty($dataMapel[0]->sertifikasi)?$dataMapel[0]->sertifikasi:''}}">
 				</div>
 			</div>
 		</form>

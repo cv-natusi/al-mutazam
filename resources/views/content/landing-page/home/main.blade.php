@@ -363,7 +363,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-6">
+			<div class="col-lg-1"></div>
+			<div class="col-lg-5">
 				<div class="row">
 					<div class="col-md-12 mb-2">
 						<div style="background: linear-gradient(90deg, #97E2A8 4.57%, rgba(217, 217, 217, 0) 76.75%); color: #000; padding: 5px">
@@ -371,19 +372,20 @@
 						</div>
 					</div>
 				</div>
-				@if(count($pengumuman)>0)
-				@foreach($pengumuman as $key => $val)
+				@if(count($dokumen)>0)
+				@foreach($dokumen as $ky => $d)
 				<div class="row d-flex align-items-center">
 					<div class="col-lg-12">
 						<div class="contact-box">
 							<div class="row">
 								<div class="col-md-3 mtb-auto">
-									<img class="img-80" src="{{asset('landing-page/images/Mask.png')}}" alt="contacts-icon">
+									<img class="mx-auto d-block responsive img-fluid img-pengumuman" src="{{asset('landing-page/images/Mask.png')}}" alt="contacts-icon">
 								</div>
 								<div class="col-md-9 mtb-auto text-left">
 									<span class="fw4">
-										{{$val->judul}}<br>
-										<a href="javascript:void(0)" class="color-a">[Baca Selengkapnya]</a>
+										{{$d->nama_dokumen}}<br>
+										<a href="javascript:void(0)" class="color-a" onclick="preDownloadFile('{{$d->file_dokumen}}')">[Link Download File]</a>
+										{{-- <a href="{{ route('home.downloadPdf', ['filename' => $d->file_dokumen])}}" class="color-a">[Link Download File]</a> --}}
 									</span>
 								</div>
 							</div>
@@ -394,18 +396,19 @@
 				@endif
 				<div class="row">
 					<div class="col-md-12">
-						<a href="{{route('home.pengumuman')}}" class="color-a fw6"><i>LIHAT LAINNYA ...</i></a>
+						<a href="{{route('home.dokumen')}}" class="color-a fw6"><i>LIHAT LAINNYA ...</i></a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
+@include('content.landing-page.home.modal-login')
 @endsection
 @push('script')
 <script src="{{asset('plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('plugins/datatable/js/dataTables.bootstrap5.min.js')}}"></script>
-
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type='text/javascript' src='http://www.youtube.com/iframe_api'></script>
 <script type="text/javascript">
 	async function modalShow(id) {
@@ -448,7 +451,56 @@
 			})
 		}
 	}
+	function preDownloadFile(param) {
+		$("#modal-login").show();
+		$('#filename').val(param);
+	}
+	$('#btn-login').click(function (e) {
+		var data  = new FormData($('.formLogin')[0]);
+		$.ajax({
+			url: "{{ route('home.doLoginDownload') }}",
+			type: 'POST',
+			data: data,
+			async: true,
+			cache: false,
+			contentType: false,
+			processData: false
+		}).done(function(data){
+			if(data.code=='200'){
+				downloadFile()
+			} else {
+				Swal.fire('Whoops !', data.message, 'error');
+			}
+		}).fail(function() {
+			Swal.fire("MAAF !","Terjadi Kesalahan, Silahkan Ulangi Kembali !!", "error");
+		});
+	});
+	function downloadFile() {
+		var filename = $('#filename').val();
+        var url = "{{ route('home.downloadPdf', ':filename') }}";
+        url = url.replace(':filename', filename);
+
+        $.ajax({
+            url: url,
+            method: 'GET',
+            xhrFields: {
+                responseType: 'blob' // Format respons sebagai blob
+            },
+            success: function(response) {
+                var blob = new Blob([response], { type: 'application/pdf' });
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = filename;
+                link.click();
+				$('#modal-login').fadeOut("slow")
+            },
+            error: function() {
+                Swal.fire('Gagal mengunduh file PDF.');
+            }
+        });
+	}
 	$(document).ready(() => {
+		$('#modal-login').hide();
 		$('.close-modal').click(() => {
 			$('.modal').fadeOut("slow")
 		})
@@ -471,38 +523,6 @@
 				$(this).data('second', ' ' + removedStr)
 			}
 		})
-
-		// var data = [
-		// 	{
-		// 		'no': '1',
-		// 		'tanggal': 'Senin',
-		// 		'kegiatan': 'Ekstra',
-		// 		'aksi': 'detail'
-		// 	},
-		// ]
-		// $('#agendaTable').DataTable({
-		// 	// dom: 'lfrtip', // Default
-		// 	dom: 'rtp',
-		// 	data:data,
-		// 	columns: [
-		// 		{
-		// 			name: 'no',
-		// 			data: 'no'
-		// 		},
-		// 		{
-		// 			name: 'tanggal',
-		// 			data: 'tanggal'
-		// 		},
-		// 		{
-		// 			name: 'kegiatan',
-		// 			data: 'kegiatan'
-		// 		},
-		// 		{
-		// 			name: 'aksi',
-		// 			data: 'aksi'
-		// 		},
-		// 	]
-		// });
 	})
 	function filterArray(array, num, prefix) {
 		var arrStr = $.grep(array, function(v, i) {

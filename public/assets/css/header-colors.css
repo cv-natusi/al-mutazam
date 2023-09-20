@@ -199,7 +199,8 @@ html.color-sidebar .sidebar-wrapper {
 }
 
 html.color-sidebar.sidebarcolor1 .sidebar-wrapper {
-    background-image: url(../images/bg-themes/1.png);
+    /* background-image: url(../images/bg-themes/1.png); */
+    background-image: url(../images/bg-sidebar.png);
 }
 
 html.color-sidebar.sidebarcolor2 .sidebar-wrapper {

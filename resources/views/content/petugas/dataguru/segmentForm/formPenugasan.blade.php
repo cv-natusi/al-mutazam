@@ -3,7 +3,7 @@
 		<h5 class="text-card">PENUGASAN</h5>
 	</div>
 	<div class="card-body">
-		<form class="row mb-3 formDataPendidikan">
+		<form class="row mb-3 formDataPenugasan">
 			<input type="hidden" name="id" id="id" value="{{!empty($data)?$data->id_guru:''}}">
 			<div class="row mb-3">
 				<label>Tugas Utama</label>
@@ -11,7 +11,7 @@
 					<option value="first">.:: Pilih ::.</option>
 					@if($tugas)
 						@foreach($tugas as $k => $v)
-							<option value="{{$v->id_tugas_pegawai}}">{{$v->nama_tugas}}</option>
+							<option @if(!empty($dataTugas)&&$dataTugas->tugas_utama==$v->id_tugas_pegawai) selected @endif value="{{$v->id_tugas_pegawai}}">{{$v->nama_tugas}}</option>
 						@endforeach
 					@endif
 				</select>
@@ -45,6 +45,18 @@
 							</tr>
 						</thead>
 						<tbody id="dataPenugasan">
+							@if(count($detailTugas)>0)
+								@foreach($detailTugas as $i => $v)
+									<tr class="rowMapel" id="{{$v->id_tugas_pegawai}}">
+										<td><span id="rowCount">{{$i+1}}</span></td>
+										<td><span id="namaMapel">{{$v->nama_tugas}}</span></td>
+										<td>
+											<input type="hidden" class="hps_{{$v->id_tugas_pegawai}}" id="idMapel" name="tugasTambahan[]" value="{{$v->id_tugas_pegawai}}">
+											<a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-danger" onclick="deleteTugas(`{{$v->id_tugas_pegawai}}`)"><i class="bx bxs-trash"></i></a>
+										</td>
+									</tr>
+								@endforeach
+							@endif
 						</tbody>
 					</table>
 				</div>

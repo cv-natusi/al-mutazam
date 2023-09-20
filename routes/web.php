@@ -53,6 +53,10 @@ Route::controller(HomeController::class)->group(function () {
 		Route::post('search-event', 'event')->name('searchEvent');
 		Route::get('pengumuman', 'pengumuman')->name('pengumuman');
 		Route::post('search-pengumuman', 'pengumuman')->name('searchPengumuman');
+		Route::get('dokumen', 'dokumen')->name('dokumen');
+		// Route::post('search-dokumen', 'dokumen')->name('searchPengumuman');
+		Route::get('download-pdf/{filename}', 'downloadPdf')->name('downloadPdf');
+		Route::post('doLogin-download', 'doLogin')->name('doLoginDownload');
 	});
 	Route::group(['prefix' => 'program', 'as' => 'program.'], function () { # Program menu
 		Route::get('unggulan', 'programUnggulan')->name('unggulan');
@@ -80,6 +84,7 @@ Route::controller(ProfilController::class)->group(function () { # Profil Menu
 		Route::get('/sambutan-kepsek', 'sambutan')->name('sambutan');
 		Route::get('/struktur-organisasi', 'struktur')->name('struktur');
 		Route::get('/profil-struktural', 'struktural')->name('struktural');
+		Route::post('/search-profil-struktural', 'struktural')->name('searchStruktural');
 		Route::get('/fasilitas-sekolah', 'fasilitas')->name('fasilitas');
 	});
 });
@@ -263,7 +268,6 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::group(array('prefix' => 'data-guru'), function () {
 			Route::get('/', [DataGuru::class, 'main'])->name('dataGuru');
 			Route::post('/form', [DataGuru::class, 'form'])->name('tambahGuru');
-			Route::post('/cari-mapel', [DataGuru::class, 'cariMapel'])->name('cariMapel');
 			Route::post('/store-data-diri', [DataGuru::class, 'saveDataDiri'])->name('saveDataDiri');
 			Route::post('/store-data-pendidikan', [DataGuru::class, 'saveDataPendidikan'])->name('saveDataPendidikan');
 			Route::post('/store-data-penugasan', [DataGuru::class, 'saveDataPenugasan'])->name('saveDataPenugasan');
@@ -283,6 +287,7 @@ Route::group(['middleware' => 'auth'], function () {
 		});
 		Route::group(array('prefix' => 'data-pelajaran'), function () {
 			Route::get('/', [DataPelajaran::class, 'main'])->name('dataPelajaran');
+			Route::post('/datatable-dataPelajaran', [DataPelajaran::class, 'main'])->name('datatableDataPelajaran');
 			Route::post('/form', [DataPelajaran::class, 'form'])->name('formDataPelajaran');
 			Route::post('/store', [DataPelajaran::class, 'save'])->name('saveDataPelajaran');
 			Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
@@ -307,6 +312,7 @@ Route::group(['middleware' => 'auth'], function () {
 		});
 		Route::group(array('prefix' => 'berbagi-dokumen'), function () {
 			Route::get('/', [BerbagiDokumen::class, 'main'])->name('berbagiDokumen');
+			Route::post('/datatable-berbagiDokumen', [BerbagiDokumen::class, 'main'])->name('datatableBerbagiDokumen');
 			Route::post('/modal-form', [BerbagiDokumen::class, 'modalForm'])->name('berbagiDokumenModal');
 			Route::post('/store', [BerbagiDokumen::class, 'save'])->name('saveBerbagiDokumen');
 			Route::post('/delete', [BerbagiDokumen::class, 'delete'])->name('deleteBerbagiDokumen');
@@ -316,12 +322,6 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::post('/modal-form', [Pengguna::class, 'modalForm'])->name('penggunaModalForm');
 			Route::post('/store', [Pengguna::class, 'save'])->name('savePengguna');
 			Route::post('/delete', [Pengguna::class, 'delete'])->name('deletePengguna');
-		});
-		Route::group(array('prefix' => 'profile'), function () {
-			Route::get('/', [DataPelajaran::class, 'main'])->name('profile');
-			// Route::post('/form', [DataPelajaran::class, 'form'])->name('formDataPelajaran');
-			// Route::post('/store', [DataPelajaran::class, 'save'])->name('saveDataPelajaran');
-			// Route::post('/delete', [DataPelajaran::class, 'delete'])->name('deleteDataPelajaran');
 		});
 		Route::group(array('prefix' => 'reset-akun'), function () {
 			Route::get('/', [Pengaturan::class, 'main'])->name('resetAkun');
@@ -336,6 +336,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::group(array('prefix' => 'guru-pengajar'), function () { #Web petugas sekolah
 		Route::group(array('prefix' => 'Dashboard'), function () {
 			Route::get('/', [Dashboard::class, 'mainGuru'])->name('dashboardGuru');
+		});
+		Route::group(array('prefix' => 'data-pelajaran'), function () {
+			Route::get('/', [DataPelajaran::class, 'mainGuru'])->name('dataPelajaranGuru');
+			Route::post('/datatable', [DataPelajaran::class, 'mainGuru'])->name('datatableDataPelajaranGuru');
+		});	
+		Route::group(array('prefix' => 'profile'), function () {
+			Route::get('/', [Profil::class, 'form'])->name('profile');
 		});
 		Route::group(array('prefix' => 'data-pengembangan-diri'), function () {
 			Route::get('/', [PengembanganDiri::class, 'mainPengembanganDiriGuru'])->name('mainPengembanganDiriGuru');

@@ -3,7 +3,7 @@
 		<!-- MOBILE HEADER -->
 		<div class="wsmobileheader clearfix">	
 			<a id="wsnavtoggle" class="wsanimated-arrow"><span></span></a>
-			<span class="smllogo smllogo-black"><img src="{{asset('landing-page/images/logo.png')}}" width="172" height="40" alt="mobile-logo"></span>
+			<span class="smllogo smllogo-black"><img src="{{asset('assets/images/logo-profile.png')}}" width="172" height="40" alt="mobile-logo"></span>
 			<span class="smllogo smllogo-white"><img src="{{asset('landing-page/images/logo-white.png')}}" width="172" height="40" alt="mobile-logo"></span>
 		</div>
 

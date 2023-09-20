@@ -11,13 +11,39 @@
         @include('include.master.breadcrumb')
 
         <div class="card main-layer">
+            <div class="card-header bg-card">
+                <h5 class="text-card">{{$title}}</h5>
+            </div>
             <div class="card-body">
                 <div class="row mb-3" style="margin-top: 1rem">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <button type="button" class="btn button-custome btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> Tambah</button>
                     </div>
-                    <div class="col-md-7"></div>
-                    <div class="col-md-2"></div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-3">
+                        <label>Tahun Ajaran</label>
+                        <select name="tahun" id="tahun" class="form-control">
+                            <option value="">.:: Pilih ::.</option>
+                            <option value="2020-2021">2020-2021</option>
+                            <option value="2021-2022">2021-2022</option>
+                            <option value="2022-2023" selected>2022-2023</option>
+                            <option value="2023-2024">2023-2024</option>
+                            <option value="2024-2025">2024-2025</option>
+                            <option value="2025-2026">2025-2026</option>
+                            <option value="2026-2027">2026-2027</option>
+                            <option value="2027-2028">2027-2028</option>
+                            <option value="2028-2029">2028-2029</option>
+                            <option value="2029-2030">2029-2030</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Semester</label>
+                        <select name="semester" id="semester" class="form-control">
+                            <option value="">.:: Pilih ::.</option>
+                            <option value="1" selected>Semester 1</option>
+                            <option value="2">Semester 2</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="row" style="margin-top: 2rem">
@@ -52,13 +78,16 @@
 <script>
     $(document).ready(function() {
         $(".knob").knob()
-        loadTable();
+        $('#tahun').select2();
+        $('#semester').select2();
+        loadTable($("#tahun").val(), $("#semester").val());
+		filterByTwo();
     });
-    function loadTable(){
+    function loadTable(tahun=null, semester=null){
         var table = $('#datatabel').DataTable({
             scrollX: true,
-            searching: false, 
-            // paging: false,
+            searching: true, 
+            paging: true,
             processing: true,
             serverSide: true,
             columnDefs: [
@@ -71,8 +100,13 @@
                 },
             ],
             ajax: {
-                url: "{{route('berbagiDokumen')}}",
-            },
+				url:"{{route('datatableBerbagiDokumen')}}",
+				type: 'post',
+				data: {
+					tahun : tahun,
+					semester : semester,
+				}
+			},
             columns: [
                 { data: "DT_RowIndex", name: "DT_RowIndex"},
                 { data: "nama_dokumen", name: "nama_dokumen"},
@@ -82,6 +116,20 @@
             ],
         })
     }
+    function filterByTwo() {
+		$("#tahun").change(function (e) { 
+			e.preventDefault();
+            $('#datatabel').DataTable().destroy();
+            console.log($(this).val(), $("#semester").val());
+			loadTable( $(this).val(), $("#semester").val());
+		});
+		$("#semester").change(function (e) { 
+			e.preventDefault();
+            $('#datatabel').DataTable().destroy();
+            console.log($("#tahun").val(),$(this).val());
+			loadTable($("#tahun").val() , $(this).val());
+		});
+	}
     function formAdd(id) {
         $.post("{{route('berbagiDokumenModal')}}",{id:id},function(data){
 			$("#modalForm").html(data.content);

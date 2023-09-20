@@ -17,7 +17,12 @@ class BerbagiDokumenController extends Controller
 
     public function main(Request $request) {
         if(request()->ajax()){
-            $data = BerbagiDokumen::orderBy('id_berbagi_dokumen','ASC')->get();
+            // return $request->all();
+            if (!empty($request->tahun) && !empty($request->semester)) {
+                $data = BerbagiDokumen::where('tahun_ajaran',$request->tahun)->where('semester',$request->semester)->orderBy('id_berbagi_dokumen','ASC')->get();
+            } else {
+                $data = BerbagiDokumen::orderBy('id_berbagi_dokumen','ASC')->get();
+            }
 			
 			return DataTables::of($data)
 				->addIndexColumn()

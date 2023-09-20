@@ -9,13 +9,24 @@
         @include('include.master.breadcrumb')
 
         <div class="card main-layer">
+            <div class="card-header bg-card">
+                <h5 class="text-card">{{$title}}</h5>
+            </div>
             <div class="card-body">
                 <div class="row mb-3" style="margin-top: 1rem">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <button type="button" class="btn button-custome btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> Tambah</button>
                     </div>
-                    <div class="col-md-7"></div>
-                    <div class="col-md-2"></div>
+                    <div class="col-md-8"></div>
+                    <div class="col-md-2">
+                        <div class="input-group date">
+                            <label style="margin-top: 10px">Tahun</label>&nbsp;&nbsp;
+                            <input type="text" class="form-control" id="yearPicker">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="bx bxs-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row" style="margin-top: 2rem">
@@ -48,13 +59,22 @@
 <script>
     $(document).ready(function() {
         $(".knob").knob()
+        $('#yearPicker').datepicker({
+            format: "yyyy",
+            minViewMode: "years", // Set the view mode to years only
+            autoclose: true,
+            todayHighlight: true
+        });
+        // Set the default date to the current year
+        var currentYear = new Date().getFullYear();
+        $('#yearPicker').val(currentYear);
         loadTable();
     });
     function loadTable(){
         var table = $('#datatabel').DataTable({
             scrollX: true,
-            searching: false, 
-            // paging: false,
+            searching: true, 
+            paging: true,
             processing: true,
             serverSide: true,
             columnDefs: [

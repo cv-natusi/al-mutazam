@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\LandingPage\Profil;
 
 use App\Http\Controllers\Controller;
+use App\Helpers\Helpers;
 use App\Models\Exkul;
 use Illuminate\Http\Request;
 use App\Models\Guru;
 use App\Models\Amtv;
+use App\Models\BerbagiDokumen;
 use App\Models\identity;
 use DB;
 
@@ -16,19 +18,22 @@ class ProfilController extends Controller
     {
         $identity = Identity::find(1);
         $amtvs = DB::table('amtv')->where('status_amtv', '1')->orderBy('id_amtv', 'DESC')->limit('3')->get();
-        return view('content.landing-page.profil.sejarah', compact('identity', 'amtvs'));
+        $dokumen = BerbagiDokumen::getDokumenLimit(3);
+        return view('content.landing-page.profil.sejarah', compact('identity','amtvs','dokumen'));
     }
     public function visimisi()
     {
         $identity = Identity::find(1);
         $amtvs = DB::table('amtv')->where('status_amtv', '1')->orderBy('id_amtv', 'DESC')->limit('3')->get();
-        return view('content.landing-page.profil.visimisi', compact('identity', 'amtvs'));
+        $dokumen = BerbagiDokumen::getDokumenLimit(3);
+        return view('content.landing-page.profil.visimisi', compact('identity', 'amtvs','dokumen'));
     }
     public function sambutan()
     {
         $identity = Identity::find(1);
         $amtvs = DB::table('amtv')->where('status_amtv', '1')->orderBy('id_amtv', 'DESC')->limit('3')->get();
-        return view('content.landing-page.profil.sambutan', compact('identity','amtvs'));
+        $dokumen = BerbagiDokumen::getDokumenLimit(3);
+        return view('content.landing-page.profil.sambutan', compact('identity','amtvs','dokumen'));
     }
     public function struktur()
     {
@@ -46,9 +51,10 @@ class ProfilController extends Controller
                 'message' => 'Data tidak ditemukan',
             ];
             if ($event = Guru::filterStrukturalById($request)) {
+                return $event;
                 $payload['code'] = 200;
                 $payload['message'] = 'Ok';
-                $payload['response'] = $guru;
+                $payload['response'] = $event;
             }
             return Helpers::resAjax($payload);
         }

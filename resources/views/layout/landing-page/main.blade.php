@@ -11,6 +11,15 @@
 
 		<title>MTs Al-Mutazam</title>
 		@include('include.landing-page.style')
+		<style>
+			.btnLogin{
+				background: rgba(68, 148, 39, 1) !important;
+				color: #ffffff !important;
+			}
+			.btnLogin:hover{
+				background: rgb(43, 75, 32) !important;
+			}
+		</style>
 	</head>
 	<body>
 		<!-- PRELOADER SPINNER ============================================= -->

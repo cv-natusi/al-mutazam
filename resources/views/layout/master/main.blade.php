@@ -8,15 +8,6 @@
 	<title>{{ $title }} | MTS AL-MUTAZAM</title>
 	@include('include.master.style')<!--importCSS-->
 	<style>
-		.sidebar-header {
-			background: #32762C80 !important;
-		}
-		.wrapper {
-			color: black;
-		}
-		.menu-title {
-			color: #000;
-		}
 		.bg-card{
 			background: #32762C80 !important;
 		}

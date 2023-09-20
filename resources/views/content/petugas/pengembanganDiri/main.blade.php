@@ -69,7 +69,7 @@
                     <!-- Tab panes -->
                     <div class="tab-content mt-3">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <button type="button" class="btn btn-primary" onclick="formFirst()"><i class="bx bxs-plus-square"></i> Tambah</button>
+                            <button type="button" class="btn button-custome" onclick="formFirst()"><i class="bx bxs-plus-square"></i> Tambah</button>
                             <div class="clearfix" style="margin-bottom: 20px"></div>
                             <table class="table table-bordered table-striped dataTable" id="datatablePengembanganDiri" style="width: 100%">
                                 <thead>
@@ -84,7 +84,7 @@
                             </table>
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            <button type="button" class="btn btn-primary" onclick="formSecond()"><i class="bx bxs-plus-square"></i> Tambah</button>
+                            <button type="button" class="btn button-custome" onclick="formSecond()"><i class="bx bxs-plus-square"></i> Tambah</button>
                             <div class="clearfix" style="margin-bottom: 20px"></div>
                             <table class="table table-bordered table-striped dataTable" id="datatableMstPengembanganDiri" style="width: 100%">
                                 <thead>

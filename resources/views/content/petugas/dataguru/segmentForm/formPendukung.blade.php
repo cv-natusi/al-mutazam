@@ -3,7 +3,7 @@
         <h5 class="text-card">DATA PENDUKUNG</h5>
     </div>
     <div class="card-body">
-        <form class="row mb-3 formDataPendidikan">
+        <form class="row mb-3 formDataPendukung">
             <input type="hidden" name="id" id="id" value="{{!empty($data)?$data->id_guru:''}}">
             <div class="row mb-3">
                 <div class="col-md-6">

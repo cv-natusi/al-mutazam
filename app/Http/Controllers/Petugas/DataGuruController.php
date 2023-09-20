@@ -6,10 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Guru;
 use App\Models\TugasPegawai;
 use App\Models\MstPelajaran;
-use App\Models\Petugas\DataPrimerGuru;
-use App\Models\Petugas\DataSekunderGuru;
+use App\Models\DataPendidikanGuru;
+use App\Models\DetailDataPendidikanGuru;
+use App\Models\DataPenugasanGuru;
+use App\Models\DetailDataPenugasanGuru;
+use App\Models\DataPendukungGuru;
 use Illuminate\Http\Request;
-use DataTables, Validator, DB, Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use DataTables, Validator, DB, Auth, Help;
 
 class DataGuruController extends Controller{
 	function __construct(){
@@ -45,28 +50,51 @@ class DataGuruController extends Controller{
 		}
 		if (!empty($data['data'])) {
 			$data['dataMapel'] = Guru::select(
-				'data_guru.id_guru',
-				'dpg.id_data_pendidikan',
-				'dpg.guru_id',
-				'dpg.potensi_bidang',
-				'dpg.no_sertifikat_pendidik',
-				'dpg.sertifikasi',
-				'ddpg.id_detail_data_pendidikan',
-				'ddpg.data_pendidikan_id',
-				'ddpg.mata_pelajaran',
-				'ddpg.jumlah_jam',
-				'mp.id_pelajaran',
-				'mp.nama_mapel'
-			)->leftJoin('data_pendidikan_guru as dpg','dpg.guru_id','data_guru.id_guru')
-			->leftJoin('detail_data_pendidikan_guru as ddpg','ddpg.data_pendidikan_id','dpg.id_data_pendidikan')
-			->leftJoin('mst_pelajaran as mp','mp.id_pelajaran','ddpg.mata_pelajaran')
-			->where('data_guru.id_guru', $data['data']->id_guru)
-			->get();
+					'data_guru.id_guru',
+					'dpg.id_data_pendidikan',
+					'dpg.guru_id',
+					'dpg.potensi_bidang',
+					'dpg.no_sertifikat_pendidik',
+					'dpg.sertifikasi',
+					'ddpg.id_detail_data_pendidikan',
+					'ddpg.guru_id',
+					'ddpg.mata_pelajaran',
+					'ddpg.jumlah_jam',
+					'mp.id_pelajaran',
+					'mp.nama_mapel'
+				)->leftJoin('data_pendidikan_guru as dpg','dpg.guru_id','data_guru.id_guru')
+				->leftJoin('detail_data_pendidikan_guru as ddpg','ddpg.guru_id','data_guru.id_guru')
+				->leftJoin('mst_pelajaran as mp','mp.id_pelajaran','ddpg.mata_pelajaran')
+				->where('data_guru.id_guru', $data['data']->id_guru)->get();
+			$data['dataTugas'] = Guru::select(
+					'data_guru.id_guru',
+					'dpg.id_data_penugasan',
+					'dpg.guru_id',
+					'dpg.tugas_utama',
+					'tp.id_tugas_pegawai',
+					'tp.nama_tugas'
+				)
+				->leftJoin('data_penugasan_guru as dpg','dpg.guru_id','data_guru.id_guru')
+				->leftJoin('tugas_pegawai as tp','tp.id_tugas_pegawai','dpg.tugas_utama')
+				->where('data_guru.id_guru', $data['data']->id_guru)->first();
+			$data['detailTugas'] = Guru::select(
+					'data_guru.id_guru',
+					'ddpg.id_detail_data_penugasan',
+					'ddpg.guru_id',
+					'ddpg.tugas_tambahan',
+					'tp.id_tugas_pegawai',
+					'tp.nama_tugas'
+				)
+				->leftJoin('detail_data_penugasan_guru as ddpg','ddpg.guru_id','data_guru.id_guru')
+				->leftJoin('tugas_pegawai as tp','tp.id_tugas_pegawai','ddpg.tugas_tambahan')
+				->where('data_guru.id_guru', $data['data']->id_guru)->get();
 		} else {
 			$data['dataMapel'] = [];
+			$data['detailTugas'] = [];
+			$data['dataTugas'] = '';
 		}
 		$data['tugas'] = TugasPegawai::all();
-		$data['pelajaran'] = MstPelajaran::all();
+		$data['pelajaran'] = MstPelajaran::where('guru_id',$request->id)->get();
 		$content = view('content.petugas.dataguru.form', $data)->render();
 		return ['status' => 'success', 'content' => $content, 'data' => $data];
 	}
@@ -121,12 +149,123 @@ class DataGuruController extends Controller{
 		}
 	}
 	public function saveDataPendidikan(Request $request){
-		return $request->all();
+		try {
+			DB::beginTransaction();
+			$save = DataPendidikanGuru::store($request);
+			if (!$save) {
+				DB::rollback();
+				return Help::resAjax(['message'=>'Data pendidikan guru gagal disimpan','code'=>500]);
+			}
+			foreach($request->mata_pelajaran as $k => $v){
+				$detailDataPendidikanGuru = DetailDataPendidikanGuru::where([
+					['mata_pelajaran',$v],
+					['guru_id',$request->id],
+				])->first();
+				$store = $detailDataPendidikanGuru ? $detailDataPendidikanGuru : new DetailDataPendidikanGuru;
+				$store->guru_id = $request->id;
+				$store->mata_pelajaran = $v;
+				$store->jumlah_jam = $request->jumlah_jam[$k];
+				$store->save();
+				if(!$store){
+					DB::rollback();
+					return Help::resAjax(['message'=>'Mapel gagal disimpan','code'=>500]);
+				}
+			}
+			$checkDelete = DetailDataPendidikanGuru::where('guru_id',$request->id)->whereNotIn('mata_pelajaran',$request->mata_pelajaran);
+			if($checkDelete->count()>0 && !$checkDelete->delete()){
+				DB::rollback();
+				return Help::resAjax(['message'=>'Mapel gagal dihapus','code'=>500]);
+			}
+			DB::commit();
+			return Help::resAjax(['message'=>'Data berhasil disimpan','code'=>200,'response'=>$store]);
+		} catch (\Throwable $e) {
+			Log::error('Terjadi kesalahan sistem: ' . $e->getMessage());
+		}
 	}
 	public function saveDataPenugasan(Request $request){
 		return $request->all();
+		try {
+			DB::beginTransaction();
+			$save = DataPenugasanGuru::store($request);
+			if (!$save) {
+				DB::rollback();
+				return Help::resAjax(['message'=>'Data penugasan gagal disimpan','code'=>500]);
+			}
+			foreach($request->tugasTambahan as $k => $v){
+				$detailPenugasan = DetailDataPenugasanGuru::where([
+					['tugas_tambahan',$v],
+					['guru_id',$request->id],
+				])->first();
+				$store = $detailPenugasan ? $detailPenugasan : new DetailDataPenugasanGuru;
+				$store->guru_id = $request->id;
+				$store->tugas_tambahan = $v;
+				$store->save();
+				if(!$store){
+					DB::rollback();
+					return Help::resAjax(['message'=>'Tugas tambahan gagal disimpan','code'=>500]);
+				}
+			}
+			$checkDelete = DetailDataPenugasanGuru::where('guru_id',$request->id)->whereNotIn('tugas_tambahan',$request->tugasTambahan);
+			if($checkDelete->count()>0 && !$checkDelete->delete()){
+				DB::rollback();
+				return Help::resAjax(['message'=>'Data penugasan gagal dihapus','code'=>500]);
+			}
+			DB::commit();
+			return Help::resAjax(['message'=>'Data berhasil disimpan','code'=>200,'response'=>$store]);
+		} catch (\Throwable $e) {
+			Log::error('Terjadi kesalahan sistem: ' . $e->getMessage());
+		}
 	}
 	public function saveDataPendukung(Request $request){
-		return $request->all();
+		// return $request->all();
+		$request->validate([
+            'file_ktp' => 'required|image|mimes:jpeg,png,jpg,gif,pdf|max:2048',
+			'file_kk' => 'required|image|mimes:jpeg,png,jpg,gif,pdf|max:2048',
+			'file_sertifikat_pendidik' => 'required|image|mimes:jpeg,png,jpg,gif,pdf|max:2048',
+			'ijazah_terakhir' => 'required|image|mimes:jpeg,png,jpg,gif,pdf|max:2048',
+        ]);
+		try {
+			DB::beginTransaction();
+			$dataPendukung = DataPendukungGuru::where('guru_id', $request->id)->first();
+			$data = ($dataPendukung) ? $dataPendukung : new DataPendukungGuru;
+			$data->guru_id = $request->id;
+			if ($request->file_ktp) {
+				$fileName = $request->file_ktp->getClientOriginalName();
+				$filePath = 'uploads/dokumenGuru/' . $fileName;
+				$path = Storage::disk('public')->put($filePath, file_get_contents($request->file_ktp));
+				$path = Storage::disk('public')->url($path);
+				$data->file_ktp = $fileName;
+			}
+			if ($request->file_kk) {
+				$fileNameKK = $request->file_kk->getClientOriginalName();
+				$filePath = 'uploads/dokumenGuru/' . $fileNameKK;
+				$path = Storage::disk('public')->put($filePath, file_get_contents($request->file_kk));
+				$path = Storage::disk('public')->url($path);
+				$data->file_kk = $fileNameKK;
+			}
+			if ($request->file_sertifikat_pendidik) {
+				$fileNameSertifikat = $request->file_sertifikat_pendidik->getClientOriginalName();
+				$filePath = 'uploads/dokumenGuru/' . $fileNameSertifikat;
+				$path = Storage::disk('public')->put($filePath, file_get_contents($request->file_sertifikat_pendidik));
+				$path = Storage::disk('public')->url($path);
+				$data->file_sertifikat_pendidik = $fileNameSertifikat;
+			}
+			if ($request->ijazah_terakhir) {
+				$fileNameIjazah = $request->ijazah_terakhir->getClientOriginalName();
+				$filePath = 'uploads/dokumenGuru/' . $fileNameIjazah;
+				$path = Storage::disk('public')->put($filePath, file_get_contents($request->ijazah_terakhir));
+				$path = Storage::disk('public')->url($path);
+				$data->ijazah_terakhir = $fileNameIjazah;
+			}
+			$data->save();
+			if (!$data) {
+				DB::rollback();
+				return Help::resAjax(['message'=>'Data pendukung gagal disimpan','code'=>500]);
+			}
+			DB::commit();
+			return Help::resAjax(['message'=>'Data berhasil disimpan','code'=>200,'response'=>$data]);
+		} catch (\Throwable $e) {
+			Log::error('Terjadi kesalahan sistem: ' . $e->getMessage());
+		}
 	}
 }

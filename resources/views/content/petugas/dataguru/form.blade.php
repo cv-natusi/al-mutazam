@@ -129,151 +129,22 @@
 		$('.simpanDataPendidikan').attr('disabled',true).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>LOADING...')
 		await store(data,url)
 		$('.simpanDataPendidikan').attr('disabled',false).html('SIMPAN')
-
-		// $.ajax({
-		// 	url: '{{route("saveDataPendidikan")}}',
-		// 	type: 'POST',
-		// 	data: data,
-		// 	async: true,
-		// 	cache: false,
-		// 	contentType: false,
-		// 	processData: false,
-		// 	success: function(data){
-		// 		if(data.code==200){
-		// 			Swal.fire({
-		// 				icon: 'success',
-		// 				title: 'Berhasil',
-		// 				text: data.message,
-		// 				showConfirmButton: false,
-		// 				timer: 1200
-		// 			})
-		// 			setTimeout(()=>{
-		// 				$('.other-page').fadeOut(()=>{
-		// 					$('#datatabel').DataTable().ajax.reload()
-		// 					hideForm()
-		// 				})
-		// 			}, 1100);
-		// 			// location.reload()
-		// 		}else{
-		// 			Swal.fire({
-		// 				icon: 'warning',
-		// 				title: 'Whoops',
-		// 				text: data.message,
-		// 				showConfirmButton: false,
-		// 				timer: 1300,
-		// 			})
-		// 		}
-		// 		$('.simpanDataPendidikan').attr('disabled',false).html('SIMPAN')
-		// 	}
-		// }).fail(()=>{
-		// 	Swal.fire({
-		// 		icon: 'error',
-		// 		title: 'Whoops..',
-		// 		text: 'Terjadi kesalahan silahkan ulangi kembali',
-		// 		showConfirmButton: false,
-		// 		timer: 1300,
-		// 	})
-		// 	$('.simpanDataPendidikan').attr('disabled',false).html('SIMPAN')
-		// })
 	})
 	// Store Data Penugasan
-	$('.simpanPenugasan').click(()=>{
-		var data = new FormData($('.formSave')[0])
+	$('.simpanPenugasan').click(async(e)=>{
+		var data = new FormData($('.formDataPenugasan')[0])
+		const url = '{{route("saveDataPenugasan")}}'
 		$('.simpanPenugasan').attr('disabled',true).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>LOADING...')
-		$.ajax({
-			url: '{{route("saveDataPenugasan")}}',
-			type: 'POST',
-			data: data,
-			async: true,
-			cache: false,
-			contentType: false,
-			processData: false,
-			success: function(data){
-				if(data.code==200){
-					Swal.fire({
-						icon: 'success',
-						title: 'Berhasil',
-						text: data.message,
-						showConfirmButton: false,
-						timer: 1200
-					})
-					setTimeout(()=>{
-						$('.other-page').fadeOut(()=>{
-							$('#datatabel').DataTable().ajax.reload()
-							hideForm()
-						})
-					}, 1100);
-				}else{
-					Swal.fire({
-						icon: 'warning',
-						title: 'Whoops',
-						text: data.message,
-						showConfirmButton: false,
-						timer: 1300,
-					})
-				}
-				$('.simpanPenugasan').attr('disabled',false).html('SIMPAN')
-			}
-		}).fail(()=>{
-			Swal.fire({
-				icon: 'error',
-				title: 'Whoops..',
-				text: 'Terjadi kesalahan silahkan ulangi kembali',
-				showConfirmButton: false,
-				timer: 1300,
-			})
-			$('.simpanPenugasan').attr('disabled',false).html('SIMPAN')
-		})
+		await store(data,url)
+		$('.simpanPenugasan').attr('disabled',false).html('SIMPAN')
 	})
 	// Store Data Pendukung
-	$('.simpanDataPendukung').click(()=>{
-		var data = new FormData($('.formSave')[0])
+	$('.simpanDataPendukung').click(async(e)=>{
+		var data = new FormData($('.formDataPendukung')[0])
+		const url = '{{route("saveDataPendukung")}}'
 		$('.simpanDataPendukung').attr('disabled',true).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>LOADING...')
-		$.ajax({
-			url: '{{route("saveDataPendukung")}}',
-			type: 'POST',
-			data: data,
-			async: true,
-			cache: false,
-			contentType: false,
-			processData: false,
-			success: function(data){
-				if(data.code==200){
-					Swal.fire({
-						icon: 'success',
-						title: 'Berhasil',
-						text: data.message,
-						showConfirmButton: false,
-						timer: 1200
-					})
-					setTimeout(()=>{
-						$('.other-page').fadeOut(()=>{
-							$('#datatabel').DataTable().ajax.reload()
-							hideForm()
-						})
-					}, 1100);
-					// location.reload()
-				}else{
-					Swal.fire({
-						icon: 'warning',
-						title: 'Whoops',
-						text: data.message,
-						showConfirmButton: false,
-						timer: 1300,
-					})
-				}
-				$('.simpanDataPendukung').attr('disabled',false).html('SIMPAN')
-			}
-		}).fail(()=>{
-			Swal.fire({
-				icon: 'error',
-				title: 'Whoops..',
-				text: 'Terjadi kesalahan silahkan ulangi kembali',
-				showConfirmButton: false,
-				timer: 1300,
-			})
-			$('.simpanDataPendukung').attr('disabled',false).html('SIMPAN')
-		})
+		await store(data,url)
+		$('.simpanDataPendukung').attr('disabled',false).html('SIMPAN')
 	})
 	// Validasi NIK 16 Digit
 	$('input[name="nik"]').keyup(() => {
@@ -292,7 +163,6 @@
 			hideForm()
 		})
 	})
-
 	async function store(data,url){
 		try{
 			await $.ajax({
@@ -303,6 +173,7 @@
 				processData: false,
 			}).done(async(data,status,xhr)=>{
 				const code = xhr.status
+				console.log(code)
 				if(code===204){
 					await Swal.fire({
 						icon: 'warning',
@@ -317,6 +188,10 @@
 					title: 'Berhasil',
 					text: 'Data berhasil disimpan',
 					showConfirmButton: true,
+				})
+				$('.other-page').fadeOut(function(){
+					hideForm()
+					location.reload()
 				})
 			})
 		}catch(e){

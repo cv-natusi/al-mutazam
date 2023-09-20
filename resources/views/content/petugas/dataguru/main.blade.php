@@ -47,12 +47,15 @@
         @include('include.master.breadcrumb')
 
         <div class="card main-layer">
+            <div class="card-header bg-card">
+                <h5 class="text-card">{{$title}}</h5>
+            </div>
             <div class="card-body">
                 <div class="row mb-3" style="margin-top: 1rem">
-                    <div class="col-md-3">
-                        <button type="button" class="btn btnFormAdd btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> TAMBAH</button>
+                    <div class="col-md-2">
+                        <button type="button" class="btn button-custome btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> TAMBAH</button>
                     </div>
-                    <div class="col-md-7"></div>
+                    <div class="col-md-8"></div>
                     <div class="col-md-2"></div>
                 </div>
 
@@ -94,8 +97,8 @@
     function loadTable(){
         var table = $('#datatabel').DataTable({
             scrollX: true,
-            searching: false, 
-            // paging: false,
+            searching: true, 
+            paging: true,
             processing: true,
             serverSide: true,
             columnDefs: [

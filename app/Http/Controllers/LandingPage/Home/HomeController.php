@@ -4,13 +4,16 @@ namespace App\Http\Controllers\LandingPage\Home;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 use App\Helpers\Helpers;
 use App\Models\Identity;
 use App\Models\Berita;
 use App\Models\Exkul;
 use App\Models\Galeri;
-use DB;
+use App\Models\BerbagiDokumen;
+use DB, Storage;
 
 class HomeController extends Controller
 {
@@ -31,11 +34,12 @@ class HomeController extends Controller
 		$berita = Berita::getBeritaLimit(3);
 		$event = Berita::getEventLimit(3);
 		$pengumuman = Berita::getPengumumanLimit(6);
+		$dokumen = BerbagiDokumen::getDokumenLimit(6);
 		$slider = DB::table('slider')->get();
 		$beritaSlider = Berita::where('kategori', 1)->orderBy('tanggal', 'ASC')->limit(3)->get();
 		// $agendas = DB::table('berita')->where('status', '1')->where('tanggal_acara', '>=', date('Y-m-d'))->where('kategori', '2')->orderBy('tanggal_acara', 'ASC')->limit(10)->get();
 		$agendas = DB::table('berita')->where('status', '1')->where('kategori', '2')->orderBy('tanggal_acara', 'ASC')->limit(10)->get();
-		return view('content.landing-page.home.main', compact('berita', 'event', 'pengumuman', 'slider', 'beritaSlider', 'agendas'));
+		return view('content.landing-page.home.main', compact('berita', 'event', 'pengumuman', 'slider', 'beritaSlider', 'agendas', 'dokumen'));
 	}
 	public function berita(Request $request)
 	{
@@ -71,7 +75,6 @@ class HomeController extends Controller
 		$event = Berita::getEventPaginate();
 		return view('content.landing-page.home.event', compact('event'));
 	}
-
 	public function pengumuman(Request $request)
 	{
 		$pengumuman = Berita::getPengumumanLimit(5);
@@ -90,7 +93,43 @@ class HomeController extends Controller
 		$pengumuman = Berita::getPengumumanPaginate();
 		return view('content.landing-page.home.pengumuman', compact('pengumuman'));
 	}
+	public function dokumen(Request $request)
+	{
+		$dokumen = BerbagiDokumen::getDokumenPaginate();
+		$amtvs = DB::table('amtv')->where('status_amtv', '1')->orderBy('id_amtv', 'DESC')->limit('5')->get();
+		return view('content.landing-page.home.dokumen', compact('dokumen','amtvs'));
+	}
+	public function doLogin(Request $request) {
+		request()->validate(
+            [
+                'email' => 'required',
+                'password' => 'required',
+            ]
+        );
+        $kredensil = $request->only('email', 'password');
+        if (Auth::attempt($kredensil)) {
+            $user = Auth::user();
+            if ($user) {
+                return ['code'=>'200','status'=>'success','message'=>'berhasil'];
+            } else {
+				return ['code'=>'201','status'=>'error','message'=>'gagal'];
+			}
+        }
 
+        return redirect()->route('home.main');
+	}
+	public function downloadPdf($filename)
+    {
+		$path = storage_path("app/public/uploads/berbagiDokumen/{$filename}");
+		
+		if (file_exists($path)) {
+			return response()->download($path, $filename, [
+				'Content-Type' => 'application/pdf',
+			]);
+		} else {
+			abort(404, 'File not found');
+		}
+    }
 	public function ekskul(Request $request)
 	{
 		$amtvs = DB::table('amtv')->where('status_amtv', '1')->orderBy('id_amtv', 'DESC')->limit('3')->get();
@@ -109,7 +148,6 @@ class HomeController extends Controller
 		$ekskul = Exkul::getExkulPaginate();
 		return view('content.landing-page.program.ekskul', compact('ekskul', 'amtvs'));
 	}
-
 	public function programUnggulan(Request $request)
 	{
 		// $beritas = DB::table('berita')->where('kategori', '5')->where('status', '1')->limit('10')->orderBy('id_berita', 'DESC')->get();
@@ -171,6 +209,8 @@ class HomeController extends Controller
 	}
 	public function uks(Request $request)
 	{
-		return view('content.landing-page.program.uks');
+		$dokumen = BerbagiDokumen::getDokumenLimit(6);
+        // return view('content.landing-page.profil.sambutan', compact('identity','amtvs','dokumen'));
+		return view('content.landing-page.program.uks', compact('dokumen'));
 	}
 }

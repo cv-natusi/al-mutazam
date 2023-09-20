@@ -18,7 +18,7 @@
                         }
                     }
                     ?>
-                    <input type="radio" name="kategori" value='1' {{!empty($data)?$aktif[0]:''}}><label style='margin-right:10px;font-weight:normal'> Upload</label>
+                    <input type="radio" name="kategori" value='1' {{!empty($data)?$aktif[0]:'checked'}}><label style='margin-right:10px;font-weight:normal'> Upload</label>
                     <input type="radio" name="kategori" value='0' {{!empty($data)?$aktif[1]:''}}><label style='font-weight:normal'> Instagram</label>
                 </div>
             </div>
@@ -66,13 +66,14 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        $('#rowInstagram').hide();
         $("input[name='kategori']").change(function() {
-            if ($(this).val() === "0") {
-                $('#rowInstagram').show();
-                $('#rowUpload').hide();
-            } else if ($(this).val() === "1") {
+            if ($(this).val() == "1") {
                 $('#rowUpload').show();
                 $('#rowInstagram').hide();
+            } else {
+                $('#rowInstagram').show();
+                $('#rowUpload').hide();
             }
         });
     });

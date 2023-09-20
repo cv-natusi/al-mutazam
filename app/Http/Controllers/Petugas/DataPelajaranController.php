@@ -15,11 +15,20 @@ class DataPelajaranController extends Controller
     {
         $this->title = 'Data Pelajaran';
     }
-
+    # Petugas
     public function main(Request $request)
     {
         if(request()->ajax()){
-            $data = MstPelajaran::orderBy('id_pelajaran','ASC')->get();
+            // if (!empty($request->tahun) && !empty($request->semester)) {
+            //     $data = MstPelajaran::leftJoin('mst_kelas as mk','mk.id_kelas','mst_pelajaran.kelas_id')
+            //         ->where('mst_pelajaran.ta',$request->tahun)
+            //         ->where('mst_pelajaran.semester',$request->semester)
+            //         ->orderBy('id_pelajaran','ASC')->get();
+            // } else {
+                $data = MstPelajaran::orderBy('id_pelajaran','ASC')->get();
+                // leftJoin('mst_kelas as mk','mk.id_kelas','mst_pelajaran.kelas_id')
+                    // ->orderBy('id_pelajaran','ASC')->get();
+            // }
 			
 			return DataTables::of($data)
 				->addIndexColumn()
@@ -46,7 +55,6 @@ class DataPelajaranController extends Controller
         $data['title'] = $this->title;
         return view('content.petugas.datapelajaran.main', $data);
     }
-
     public function form(Request $request)
     {
         if (empty($request->id)) {
@@ -61,7 +69,6 @@ class DataPelajaranController extends Controller
         $content = view('content.petugas.datapelajaran.form', $data)->render();
 		return ['status' => 'success', 'content' => $content, 'data' => $data];
     }
-
     public function save(Request $request)
     {
         if (empty($request->id)) {
@@ -85,7 +92,6 @@ class DataPelajaranController extends Controller
            return $th->getMessage();
         }
     }
-
     public function delete(Request $request) {
         $data = MstPelajaran::find($request->id);
         $data->delete();
@@ -94,5 +100,33 @@ class DataPelajaranController extends Controller
         } else {
             return ['code'=>201,'status'=>'error','message'=>'Data Gagal Dihapus.'];
         }
+    }
+    # Guru petugas
+    public function mainGuru(Request $request)
+    {
+        if(request()->ajax()){
+            // return $request->all();
+            if (!empty($request->tahun) && !empty($request->semester)) {
+                $data = MstPelajaran::leftJoin('mst_kelas as mk','mk.id_kelas','mst_pelajaran.kelas_id')
+                    ->where('mst_pelajaran.guru_id','=',Auth::User()->guru_id)
+                    ->where('mst_pelajaran.ta',$request->tahun)
+                    ->where('mst_pelajaran.semester',$request->semester)
+                    ->orderBy('id_pelajaran','ASC')->get();
+            } else {
+                $data = MstPelajaran::leftJoin('mst_kelas as mk','mk.id_kelas','mst_pelajaran.kelas_id')
+                    ->where('mst_pelajaran.guru_id',Auth::User()->guru_id)
+                    ->orderBy('id_pelajaran','ASC')->get();
+            }
+			return DataTables::of($data)
+				->addIndexColumn()
+                ->addColumn('kls', function($row){
+                    $txt = "Kelas ".$row->kelas;
+                    return $txt;
+				})
+				->toJson();
+		}
+
+        $data['title'] = 'Mata Pelajaran Diampu';
+        return view('content.guru.datapelajaran.main', $data);
     }
 }

@@ -9,6 +9,9 @@
         @include('include.master.breadcrumb')
 
         <div class="card main-layer">
+            <div class="card-header bg-card">
+                <h5 class="text-card">{{$title}}</h5>
+            </div>
             <div class="card-body">
                 <div class="row" style="margin-top: 2rem">
                     <div class="table-responsive">
