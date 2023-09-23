@@ -111,102 +111,35 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-4 mt-4">
-					<section id="contacts-2" class="contacts-section division">
-						<div class="contacts-2-holder mb-20">
-							<div class="row d-flex align-items-center">
-								<div class="col-lg-12">
-									<div class="contact-box">
-										<div class="row">
-											<div class="col-md-4 mtb-auto">
-												<img class="img-80" src="{{asset('landing-page/images/event/1.png')}}" alt="contacts-icon">
-												<br>
-											</div>
-											<div class="col-md-8 mtb-auto text-left">
-												<span class="fw4">SIMSARPRAS</span><br>
-												<button type="button" class="btn btn-buka btn-sm fw5">Buka</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="contacts-2-holder mb-20">
-							<div class="row d-flex align-items-center">
-								<div class="col-lg-12">
-									<div class="contact-box">
-										<div class="row">
-											<div class="col-md-4 mtb-auto">
-												<img class="img-80" src="{{asset('landing-page/images/berita/1.png')}}" alt="contacts-icon">
-												<br>
-											</div>
-											<div class="col-md-8 mtb-auto text-left">
-												<span class="fw4">EMIS</span><br>
-												<button type="button" class="btn btn-buka btn-sm fw5">Buka</button>
+				<div class="col-md-8 mt-4">
+					<div class="row">
+						@foreach ($sim as $item)
+							<div class="col-md-6">
+								<div class="contacts-2-holder mb-20">
+									<div class="row d-flex align-items-center">
+										<div class="col-lg-12">
+											<div class="contact-box">
+												<div class="row">
+													<div class="col-md-4 mtb-auto">
+														<img class="img-80" src="{{asset('storage/uploads/MstSIM/'.$item->gambar)}}" alt="contacts-icon">
+														<br>
+													</div>
+													<div class="col-md-8 mtb-auto text-left">
+														<span class="fw4">{{ $item->nama }}</span><br>
+														<a href="{{ $item->link_url }}" class="btn btn-buka btn-sm fw5">Buka</a>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="contacts-2-holder mb-20">
-							<div class="row d-flex align-items-center">
-								<div class="col-lg-12">
-									<div class="contact-box">
-										<div class="row">
-											<div class="col-md-4 mtb-auto">
-												<img class="img-80" src="{{asset('landing-page/images/berita/1.png')}}" alt="contacts-icon">
-												<br>
-											</div>
-											<div class="col-md-8 mtb-auto text-left">
-												<span class="fw4">BOS</span><br>
-												<button type="button" class="btn btn-buka btn-sm fw5">Buka</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="contacts-2-holder mb-20">
-							<div class="row d-flex align-items-center">
-								<div class="col-lg-12">
-									<div class="contact-box">
-										<div class="row">
-											<div class="col-md-4 mtb-auto">
-												<img class="img-80" src="{{asset('landing-page/images/berita/1.png')}}" alt="contacts-icon">
-												<br>
-											</div>
-											<div class="col-md-8 mtb-auto text-left">
-												<span class="fw4">SISPENA</span><br>
-												<button type="button" class="btn btn-buka btn-sm fw5">Buka</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="contacts-2-holder">
-							<div class="row d-flex align-items-center">
-								<div class="col-lg-12">
-									<div class="contact-box">
-										<div class="row">
-											<div class="col-md-4 mtb-auto">
-												<img class="img-80" src="{{asset('landing-page/images/berita/1.png')}}" alt="contacts-icon">
-												<br>
-											</div>
-											<div class="col-md-8 mtb-auto text-left">
-												<span class="fw4">TENDIK MTs</span><br>
-												<button type="button" class="btn btn-buka btn-sm fw5">Buka</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</section>
+						@endforeach
+						
+					</div>
 				</div>
 				
-				<div class="col-md-4 mt-4">
+				{{-- <div class="col-md-4 mt-4">
 					<section id="contacts-2" class="contacts-section division">
 						<div class="contacts-2-holder mb-20">
 							<div class="row d-flex align-items-center">
@@ -299,14 +232,16 @@
 							</div>
 						</div>
 					</section>
-				</div>
+				</div> --}}
 				
 				<div class="col-md-4 mt-4" style="padding-left: 30px;">
 					@include('content.landing-page.include.side-dokumen')
 				</div>
 			</div>
+			
 			<div class="row">
-				<div class="col-md-8 mt-4">
+			{{ $sim->links() }}
+				{{-- <div class="col-md-8 mt-4">
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center">
 							<li class="page-item disabled">
@@ -320,7 +255,7 @@
 							</li>
 						</ul>
 					</nav>
-				</div>
+				</div> --}}
 			</div>
 		</div>
 	</section>

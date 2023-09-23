@@ -17,6 +17,7 @@ use App\Http\Controllers\Petugas\DataAdministrasiController as DataAdministrasi;
 use App\Http\Controllers\Petugas\BerbagiDokumenController as BerbagiDokumen;
 use App\Http\Controllers\Petugas\DataKelasController as DataKelas;
 use App\Http\Controllers\Petugas\DataPelajaranController as DataPelajaran;
+use App\Http\Controllers\Petugas\MasterSIMController;
 use App\Http\Controllers\Petugas\PengembanganDiriController as PengembanganDiri;
 use GuzzleHttp\Psr7\UploadedFile;
 
@@ -316,6 +317,12 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::post('/modal-form', [BerbagiDokumen::class, 'modalForm'])->name('berbagiDokumenModal');
 			Route::post('/store', [BerbagiDokumen::class, 'save'])->name('saveBerbagiDokumen');
 			Route::post('/delete', [BerbagiDokumen::class, 'delete'])->name('deleteBerbagiDokumen');
+		});
+		Route::group(array('prefix' => 'master_sim'), function () {
+			Route::get('/', [MasterSIMController::class, 'main'])->name('masterSim');
+			Route::post('/modal-form', [MasterSIMController::class, 'modalForm'])->name('masterSimModalForm');
+			Route::post('/store', [MasterSIMController::class, 'save'])->name('saveMasterSim');
+			Route::post('/delete', [MasterSIMController::class, 'delete'])->name('deleteMasterSim');
 		});
 		Route::group(array('prefix' => 'pengguna'), function () {
 			Route::get('/', [Pengguna::class, 'main'])->name('pengguna');
