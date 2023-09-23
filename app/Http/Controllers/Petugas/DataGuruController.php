@@ -268,4 +268,10 @@ class DataGuruController extends Controller{
 			Log::error('Terjadi kesalahan sistem: ' . $e->getMessage());
 		}
 	}
+	public function guruFind(Request $request) {
+		$text_search = $request->q ?? '....';
+		$data = Guru::where('nama_guru', 'ilike', "%$text_search%")->orWhere('nip',  'ilike', "%$text_search%")
+			->get();
+		return response()->json($data, 200);
+	}
 }

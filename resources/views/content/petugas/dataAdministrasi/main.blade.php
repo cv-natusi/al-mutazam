@@ -13,6 +13,12 @@
                 <h5 class="text-card">{{$title}}</h5>
             </div>
             <div class="card-body">
+                <div class="row mb-3" style="margin-top: 1rem">
+                    <div class="col-md-2">
+                        <button type="button" class="btn button-custome btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> Tambah</button>
+                    </div>
+                    <div class="col-md-10"></div>
+                </div>
                 <div class="row" style="margin-top: 2rem">
                     <div class="table-responsive">
                         <table id="datatabel" class="table table-striped table-bordered" width="100%">
@@ -74,6 +80,11 @@
                 { data: "verifikasi", name: "verifikasi", class: "text-center"},
             ],
         })
+    }
+    function formAdd(id='') {
+        $.post("{{route('administrasiModalForm')}}",{id:id},function(data){
+			$("#modalForm").html(data.content);
+		});
     }
     function lihat(id='') {
         $.post("{{route('administrasiModalFormPetugas')}}",{id:id},function(data){
@@ -145,5 +156,42 @@
         $('#modalForm').hide()
         $('.main-layer').show()
     }
+    function hapusData(id) {
+		Swal.fire({
+			title: "Apakah Anda yakin?",
+			text: "Data yang dihapus tidak dapat dikembalikan lagi.",
+			icon: 'warning',
+			showCancelButton: true,
+			cancelButtonText: 'Batal',
+			confirmButtonText: 'Hapus',
+		}).then((result) => {
+			if (result.value) {
+				$.post("{{ route('deleteAdministrasi') }}",{id:id}).done(function(data) {
+					if(data.code==200){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1200
+                        })
+                        location.reload()
+                    }else{
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Whoops',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1300,
+                        })
+                    }
+				}).fail(function() {
+					Swal.fire("Sorry!", "Gagal menghapus data!", "error");
+				});
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				Swal.fire("Batal", "Data batal dihapus!", "error");
+			}
+		});
+	}   
 </script>
 @endpush

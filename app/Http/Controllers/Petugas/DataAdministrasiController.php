@@ -24,15 +24,13 @@ class DataAdministrasiController extends Controller
 			return DataTables::of($data)
 				->addIndexColumn()
 				->addColumn('actions', function($row){
-					if ($row->status=='1' || $row->status=='2') {
+					if ( $row->status=='2') {
                         $txt = "
-                        <button class='btn btn-sm btn-secondary disabled' title='Edit' onclick='formAdd(`$row->id_administrasi`)'><i class='fadeIn animated bx bxs-file' aria-hidden='true'></i></button>
-                        <button class='btn btn-sm btn-danger disabled' title='Hapus' onclick='hapusData(`$row->id_administrasi`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>
+                        <button class='btn btn-sm btn-warning' title='Edit' onclick='uploadBerkas(`$row->id_administrasi`)' disabled>Upload</button>
                         ";
                     } else {
                         $txt = "
-                        <button class='btn btn-sm btn-secondary' title='Edit' onclick='formAdd(`$row->id_administrasi`)'><i class='fadeIn animated bx bxs-file' aria-hidden='true'></i></button>
-                        <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusData(`$row->id_administrasi`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>
+                        <button class='btn btn-sm btn-warning' title='Edit' onclick='uploadBerkas(`$row->id_administrasi`)'>Upload</button>
                         ";
                     }
 					return $txt;
@@ -64,7 +62,8 @@ class DataAdministrasiController extends Controller
             $data['title'] = "Edit ".$this->title;
             $data['data'] = DataAdministrasi::where('id_administrasi',$request->id)->first();
 		}
-        $content = view('content.guru.dataAdministrasi.modal', $data)->render();
+        $data['guru'] = Guru::all();
+        $content = view('content.petugas.dataAdministrasi.modalForm', $data)->render();
 		return ['content'=>$content];
     }
 
@@ -75,16 +74,16 @@ class DataAdministrasiController extends Controller
             $data = DataAdministrasi::find($request->id);
         }
         try {
-            $data->guru_id = Auth::User()->guru_id;
+            $data->guru_id = $request->guru_id;
             $data->nama_berkas = $request->nama_berkas;
             $data->keterangan = $request->keterangan;
-            $data->tanggal_upload = date('Y-m-d');
-            if ($image = $request->file('file')) {
-                $destinationPath = 'images/administrasi';
-                $fileUpload = date('YmdHis') . "." . $image->getClientOriginalExtension();
-                $image->move($destinationPath, $fileUpload);
-                $data->file = "$fileUpload";
-            }
+            // $data->tanggal_upload = date('Y-m-d');
+            // if ($image = $request->file('file')) {
+            //     $destinationPath = 'images/administrasi';
+            //     $fileUpload = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            //     $image->move($destinationPath, $fileUpload);
+            //     $data->file = "$fileUpload";
+            // }
             $data->status = '1'; # Berhasil dibuat / menunggu verif
             $data->save();
             if ($data) {
@@ -124,19 +123,22 @@ class DataAdministrasiController extends Controller
 					return $txt;
 				})
                 ->addColumn('verifikasi', function($row){
+                    $txt = '';
 					if($row->status=='1'){
-                        $txt = "
+                        $txt .= "
                         <button class='btn btn-sm btn-primary' title='verifikasi' onclick='verifikasi(`$row->id_administrasi`)'>Verifikasi</button>
                         <button class='btn btn-sm btn-danger' title='tolak' onclick='tolak(`$row->id_administrasi`)'>Tolak</button>
                         ";
-                        return $txt;
                     }else{
-                        $txt = "
+                        $txt .= "
                         <button class='btn btn-sm btn-primary disabled' title='verifikasi' onclick='verifikasi(`$row->id_administrasi`)'>Verifikasi</button>
                         <button class='btn btn-sm btn-danger disabled' title='tolak' onclick='tolak(`$row->id_administrasi`)'>Tolak</button>
+                        
                         ";
-                        return $txt;
                     }
+                    $txt .= "<button style='color: #fff' class='btn btn-sm btn-secondary' title='Detail' onclick='formAdd(`$row->id_administrasi`)'><i class='fadeIn animated bx bxs-file-find' aria-hidden='true'></i></button>
+                    <button style='color: #fff' class='btn btn-sm btn-danger' title='Delete' onclick='hapusData(`$row->id_administrasi`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>";
+                    return $txt;
 				})
                 ->addColumn('btnStatus', function($row){
 					if ($row->status=='1') {
@@ -191,6 +193,30 @@ class DataAdministrasiController extends Controller
     {
         $data = DataAdministrasi::find($request->id);
         $data->status = '0';
+        $data->save();
+        if ($data) {
+            return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Ditolak.'];
+        } else {
+            return ['code'=>201,'status'=>'error','message'=>'Data Gagal Ditolak.'];
+        }
+    }
+
+    public function modalBerkas(Request $request)
+    {
+        $data['title'] = "Upload Berkas Guru";
+        $data['data'] = DataAdministrasi::where('id_administrasi',$request->id)->first();
+        $content = view('content.guru.dataAdministrasi.modalBerkas', $data)->render();
+		return ['content'=>$content];
+    }
+    public function uploadBerkas(Request $request) {
+        $data = DataAdministrasi::find($request->id);
+        $data->tanggal_upload = date('Y-m-d');
+        if ($image = $request->file('file')) {
+            $destinationPath = 'images/administrasi';
+            $fileUpload = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $fileUpload);
+            $data->file = "$fileUpload";
+        }
         $data->save();
         if ($data) {
             return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Ditolak.'];

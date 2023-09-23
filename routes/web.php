@@ -310,6 +310,8 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::post('/modal-form', [DataAdministrasi::class, 'modalFormPetugas'])->name('administrasiModalFormPetugas');
 			Route::post('/verifikasi', [DataAdministrasi::class, 'verifikasi'])->name('verifAdministrasiPetugas');
 			Route::post('/tolak', [DataAdministrasi::class, 'tolak'])->name('tolakAdministrasiPetugas');
+			Route::post('/modal-berkas', [DataAdministrasi::class, 'modalBerkas'])->name('modalBerkasGuru');
+			Route::post('/upload-berkas-guru', [DataAdministrasi::class, 'uploadBerkas'])->name('uploadBerkasGuru');
 		});
 		Route::group(array('prefix' => 'berbagi-dokumen'), function () {
 			Route::get('/', [BerbagiDokumen::class, 'main'])->name('berbagiDokumen');
