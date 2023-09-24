@@ -10,22 +10,22 @@
 
         <div class="card main-layer">
             <div class="card-body">
+                
                 <div class="row mb-3" style="margin-top: 1rem">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-7"></div>
                     <div class="col-md-2">
-                        {{-- <label for="">Tahun</label>
-                        <input type="date" name="tahun" id="tahun" value="{{date('Y')}}" class="form-control"> --}}
+                        <button type="button" class="btn button-custome btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> Tambah</button>
                     </div>
+                    <div class="col-md-10"></div>
                 </div>
-
                 <div class="row" style="margin-top: 2rem">
                     <div class="table-responsive">
                         <table id="datatabel" class="table table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
                                     <td>No</td>
-                                    <td>Tahun</td>
+                                    <td>Nama Kegiatan</td>
+                                    <td>Tgl Mulai</td>
+                                    <td>Tgl Selesai</td>
                                     <td>Nama Dokumen/Berkas</td>
                                     <td class="text-center">Status</td>
                                     <td class="text-center">Aksi</td>
@@ -72,17 +72,57 @@
             },
             columns: [
                 { data: "DT_RowIndex", name: "DT_RowIndex"},
-                { data: "tahun", name: "tahun"},
-                { data: "nama_dokumen", name: "nama_dokumen"},
+                { data: "nama_kegiatan", name: "nama_kegiatan"},
+                { data: "tgl_mulai", name: "tgl_mulai"},
+                { data: "tgl_selesai", name: "tgl_selesai"},
+                { data: "file", name: "file"},
                 { data: "stts", name: "stts", class: "text-center"},
                 { data: "actions", name: "actions", class: "text-center"},
             ],
         })
     }
-    function uploadGuru(id) {
-        $.post("{{route('formPengembanganDiriGuru')}}",{id:id},function(data){
+    
+    function formAdd(id=''){
+		$.post("{{route('formPengembanganDiriGuru')}}",{id:id},function(data){
 			$("#modalForm").html(data.content);
 		});
-    }
+	}
+    function hapusData(id) {
+		Swal.fire({
+			title: "Apakah Anda yakin?",
+			text: "Data Akan Dihapus.",
+			icon: 'warning',
+			showCancelButton: true,
+			cancelButtonText: 'Batal',
+			confirmButtonText: 'Ya',
+		}).then((result) => {
+			if (result.value) {
+				$.post("{{ route('deletePengembanganDiriGuru') }}",{id:id}).done(function(data) {
+					if(data.code==200){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1200
+                        })
+                        location.reload()
+                    }else{
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Whoops',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1300,
+                        })
+                    }
+				}).fail(function() {
+					Swal.fire("Sorry!", "Gagal menghapus data!", "error");
+				});
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				Swal.fire("Batal", "Data batal dihapus!", "error");
+			}
+		});
+	}
 </script>
 @endpush

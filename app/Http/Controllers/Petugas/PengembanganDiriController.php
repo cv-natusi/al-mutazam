@@ -10,6 +10,7 @@ use App\Models\MstPengembanganDiri;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use DataTables,Validator,DB,Auth,PDF;
+use Illuminate\Support\Facades\Validator as FacadesValidator;
 
 class PengembanganDiriController extends Controller
 {
@@ -207,28 +208,29 @@ class PengembanganDiriController extends Controller
     # guru pengajar
     public function mainPengembanganDiriGuru(Request $request) {
         if ($request->ajax()) {
-            $data = PengembanganDiri::select(
-                    'pengembangan_diri.id_pengembangan_diri',
-                    'pengembangan_diri.guru_id',
-                    'pengembangan_diri.mst_pengembangan_diri_id',
-                    'pengembangan_diri.tahun',
-                    'pengembangan_diri.status',
-                    'mpd.id_mst_pengembangan_diri',
-                    'mpd.nama_dokumen',
-                )
-                ->leftJoin('data_guru as g', 'g.id_guru', 'pengembangan_diri.guru_id')
-                ->leftJoin('mst_pengembangan_diri as mpd', 'mpd.id_mst_pengembangan_diri', 'pengembangan_diri.mst_pengembangan_diri_id')
-                ->where('pengembangan_diri.guru_id', Auth::User()->guru_id)
-                ->whereIn('status', ['buat', 'tolak'])
-                ->orderBy('pengembangan_diri.id_pengembangan_diri','DESC')->get();
+            $data = PengembanganDiri::
+            // select(
+            //         'pengembangan_diri.id_pengembangan_diri',
+            //         'pengembangan_diri.guru_id',
+            //         'pengembangan_diri.mst_pengembangan_diri_id',
+            //         'pengembangan_diri.tahun',
+            //         'pengembangan_diri.status',
+            //         'mpd.id_mst_pengembangan_diri',
+            //         'mpd.nama_dokumen',
+            //     )
+                // ->leftJoin('data_guru as g', 'g.id_guru', 'pengembangan_diri.guru_id')
+                // ->leftJoin('mst_pengembangan_diri as mpd', 'mpd.id_mst_pengembangan_diri', 'pengembangan_diri.mst_pengembangan_diri_id')
+                where('guru_id', Auth::User()->guru_id)
+                // ->whereIn('status', ['buat', 'tolak'])
+                ->orderBy('pengembangan_diri.id_pengembangan_diri','DESC');
 
-            return DataTables::of($data)
+            return DataTables::eloquent($data)
             ->addIndexColumn()
             ->addColumn('stts', function($row){
                 if ($row->status=='tolak') {
                     $txt = "Ditolak";
                 } else if($row->status!='verif') {
-                    $txt = "Belum Tuntas";
+                    $txt = "Belum Diverifikasi";
                 } else {
                     $txt = "Terverifikasi";
                 }
@@ -236,7 +238,9 @@ class PengembanganDiriController extends Controller
             })
             ->addColumn('actions', function($row){
                 if ($row->status=='buat') {
-                    $txt = "<button class='btn btn-sm btn-success text-center' title='Upload' onclick='uploadGuru(`$row->id_pengembangan_diri`)'>Upload</button>";
+                    $txt = "
+                    <button class='btn btn-sm btn-secondary' title='Edit' onclick='formAdd(`$row->id_pengembangan_diri`)'><i class='fadeIn animated bx bxs-file' aria-hidden='true'></i></button>
+                    <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusData(`$row->id_pengembangan_diri`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>";
                 } else {
                     $txt = "<button class='btn btn-sm btn-success text-center disabled' title='Upload'>Upload</button>";  
                 }
@@ -256,27 +260,80 @@ class PengembanganDiriController extends Controller
 		return ['content'=>$content];
     }
     public function savePengembanganDiriGuru(Request $request) {
-        $request->validate([
-            'file_dokumen' => 'required|mimes:pdf|max:2048',
-        ]);
-        $data = PengembanganDiri::find($request->id);
+        // return $request->all();
         try {
-            if ($request->file_dokumen) {
-                $fileName = $request->file_dokumen->getClientOriginalName();
-                $filePath = 'uploads/pengembanganDiri/' . $fileName;
-                $path = Storage::disk('public')->put($filePath, file_get_contents($request->file_dokumen));
-                $path = Storage::disk('public')->url($path);
-                $data->file = $fileName;
+            if (empty($request->id)) {
+                $rules = array(
+                    'nama_kegiatan' => 'required',
+                    'tgl_mulai' => 'required',
+                    'tgl_selesai' => 'required',
+                    'file_dokumen' => 'required|mimes:jpeg,png,jpg,pdf,docx|max:2048',
+                );
+            }else{
+                $rules = array(
+                    'nama_kegiatan' => 'required',
+                    'tgl_mulai' => 'required',
+                    'tgl_selesai' => 'required',
+                );
             }
-            $data->status = 'upload';
-            $data->save(); 
-            if ($data) {
-                return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Diupload.'];
-            } else {
-                return ['code'=>201,'status'=>'error','message'=>'Data Gagal Diupload.'];
+            $messages = array(
+                'required'  => 'harus diisi',
+                'mimes'  => 'format file tidak diperbolehkan',
+                'max' => 'ukuran file terlalu besar'
+            );
+            $validator = FacadesValidator::make($request->all(), $rules, $messages);
+            if (!$validator->fails()) {
+                if(empty($request->id)) {
+                    $data = new PengembanganDiri;
+                } else {
+                    $data = PengembanganDiri::find($request->id);
+                }
+                $data->status = 'buat';
+                $data->guru_id = Auth::User()->guru_id;
+                $data->nama_kegiatan = $request->nama_kegiatan;
+                $data->tgl_mulai = $request->tgl_mulai;
+                $data->tgl_selesai = $request->tgl_selesai;
+
+                if ($request->file_dokumen) {
+                    $check = Storage::disk('public')->exists("/uploads/pengembanganDiri/$data->file");
+                    if($check == 1 || $check == true){
+                        Storage::disk('public')->delete("uploads/pengembanganDiri/$data->file");
+                    }
+                    $fileName = $request->file_dokumen->getClientOriginalName();
+                    $filePath = 'uploads/pengembanganDiri/' . $fileName;
+                    $path = Storage::disk('public')->put($filePath, file_get_contents($request->file_dokumen));
+                    $path = Storage::disk('public')->url($path);
+                    $data->file = $fileName;
+                }   
+                
+                $data->save(); 
+                // return $data;
+                if ($data) {
+                    return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Diupload.'];
+                } else {
+                    return ['code'=>201,'status'=>'error','message'=>'Data Gagal Diupload.'];
+                }
+            }else{
+                return ['code'=>403,'status'=>'failed','message'=> $validator->messages()];
             }
         } catch (\Throwable $e) {
             Log::error('Terjadi kesalahan sistem: ' . $e->getMessage());
+        }
+    }
+    public function delete(Request $request) {
+        $data = PengembanganDiri::find($request->id);
+        //DELETE IMAGE IF HAS IMAGE
+        if (isset($data->file)) {
+            $check = Storage::disk('public')->exists("/uploads/pengembanganDiri/$data->file");
+            if($check == 1 || $check == true){
+                Storage::disk('public')->delete("uploads/pengembanganDiri/$data->file");
+            }
+        }
+        $data->delete();
+        if ($data) {
+            return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Dihapus.'];
+        } else {
+            return ['code'=>201,'status'=>'error','message'=>'Data Gagal Dihapus.'];
         }
     }
 }

@@ -80,9 +80,11 @@ class MasterSIMController extends Controller
                 $data->link_url     = $request->link_url;
                 if ($request->gambar) {
                     //REMOVE PREV IMAGE
-                    $check = Storage::disk('public')->exists("/uploads/MstSIM/$data->gambar");
-                    if($check == 1 || $check == true){
-                        Storage::disk('public')->delete("uploads/MstSIM/$data->gambar");
+                    if (isset($data->gambar)) {
+                        $check = Storage::disk('public')->exists("/uploads/MstSIM/$data->gambar");
+                        if($check == 1 || $check == true){
+                            Storage::disk('public')->delete("uploads/MstSIM/$data->gambar");
+                        }
                     }
                     $fileName = date('YmdHis') .'.'.$request->gambar->getClientOriginalExtension();
                     $filePath = 'uploads/MstSIM/' . $fileName;
@@ -104,10 +106,13 @@ class MasterSIMController extends Controller
     public function delete(Request $request) {
         $data = MstSIM::find($request->id);
         //DELETE IMAGE IF HAS IMAGE
-        $check = Storage::disk('public')->exists("/uploads/MstSIM/$data->gambar");
-        if($check == 1 || $check == true){
-            Storage::disk('public')->delete("uploads/MstSIM/$data->gambar");
+        if (isset($data->gambar)) {
+            $check = Storage::disk('public')->exists("/uploads/MstSIM/$data->gambar");
+            if($check == 1 || $check == true){
+                Storage::disk('public')->delete("uploads/MstSIM/$data->gambar");
+            }
         }
+        
         $data->delete();
         if ($data) {
             return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Dihapus.'];

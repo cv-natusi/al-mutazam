@@ -356,6 +356,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::group(array('prefix' => 'data-pengembangan-diri'), function () {
 			Route::get('/', [PengembanganDiri::class, 'mainPengembanganDiriGuru'])->name('mainPengembanganDiriGuru');
 			Route::post('/form-pengembangan-diri-guru', [PengembanganDiri::class, 'formPengembanganDiriGuru'])->name('formPengembanganDiriGuru');
+			Route::post('/delete-pengembangan-diri-guru', [PengembanganDiri::class, 'delete'])->name('deletePengembanganDiriGuru');
 			Route::post('/save-pengembangan-diri-guru', [PengembanganDiri::class, 'savePengembanganDiriGuru'])->name('savePengembanganDiriGuru');
 		});
 		Route::group(array('prefix' => 'data-administrasi'), function () {

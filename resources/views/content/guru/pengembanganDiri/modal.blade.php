@@ -10,6 +10,22 @@
 			<div class="modal-body">
 				<form id="saveForm">
 					<input type="hidden" name="id" id="id" value="{{!empty($data)?$data->id_pengembangan_diri:''}}">
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="">Nama Kegiatan <small>*</small></label>
+                            <input type="text" name="nama_kegiatan" id="" class="form-control" value="{{!empty($data)?$data->nama_kegiatan:''}}">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="">Tanggal Mulai <small>*</small></label>
+                            <input type="date" name="tgl_mulai" id="" onchange="triggerDate()" class="form-control" value="{{!empty($data)?$data->tgl_mulai:''}}">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Tanggal Selesai <small>*</small></label>
+                            <input type="date" name="tgl_selesai" id=""  onchange="triggerDate()" class="form-control" value="{{!empty($data)?$data->tgl_selesai:''}}">
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <label for="">File Dokumen/Berkas</label>
@@ -28,13 +44,32 @@
 </div> 
 <script type="text/javascript">
     $('#modalFormDialog').modal('show');
+    var rowCount = 1; // Awal nomor urutan
+    $('#dokumen_id').change(function() {
+        var selectedValue = $(this).val(); // Mendapatkan nilai yang dipilih
+        if (selectedValue !== '') {
+            // Mendapatkan teks dari option yang dipilih
+            var selectedText = $('#dokumen_id option:selected').text();
+            // Menambahkan data ke dalam tabel
+            var newRow = '<tr>' +
+                '<td>' + rowCount + '</td>' +
+                '<td data-nama="' + selectedValue + '">' + selectedText + '</td>' +
+                '<td class="text-center"><button class="btn btn-danger deleteRow"><i class="bx bxs-trash"><i/></button></td>' + // Tombol Hapus
+            '</tr>';
+            $('#tableList tbody').append(newRow);
+            rowCount++; // Tingkatkan nomor urutan
+            // Mengosongkan pilihan select setelah data ditambahkan
+            $(this).val('');
+        }
+    });
+    // Event handler untuk tombol "Hapus"
+    $('#tableList').on('click', '.deleteRow', function() {
+        $(this).closest('tr').remove();
+    });
+    
     $('.btnSimpan').click(function (e) { 
         e.preventDefault();
-        var nama = $('#file_dokumen').val();
-        if(!nama) {
-            Swal.fire('Maaf!!', 'File Dokumen/Berkas Wajib Diisi.', 'warning')
-        } else {
-            var data = new FormData($('#saveForm')[0]);
+        var data = new FormData($('#saveForm')[0]);
             $.ajax({
                 url: '{{route("savePengembanganDiriGuru")}}',
                 type: 'POST',
@@ -54,15 +89,9 @@
                         })
                         location.reload()
                     }else{
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Whoops',
-                            text: data.message,
-                            showConfirmButton: false,
-                            timer: 1300,
-                        })
+                        alert_validation(data.message)
                     }
-                    $('.btnSimpan').attr('disabled',false).html('SIMPAN')
+                    // $('.btnSimpan').attr('disabled',false).html('SIMPAN')
                 }
             }).fail(()=>{
                 Swal.fire({
@@ -72,13 +101,45 @@
                     showConfirmButton: false,
                     timer: 1300,
                 })
-                $('.btnSimpan').attr('disabled',false).html('SIMPAN')
+                // $('.btnSimpan').attr('disabled',false).html('SIMPAN')
             })
-        }
     });
+    function alert_validation(message) { 
+        var n = 0;
+                for (key in message) {
+                    if (n == 0) {
+                        var dt0 = key;
+                    }
+                    n++;
+                }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Whoops..',
+                    text:  dt0 + ' ' + message[dt0],
+                    showConfirmButton: false,
+                    timer: 1300,
+                })
+     }
     $('.btnCancel').click(()=>{
 		$('#modalForm').fadeOut(function(){
 			location.reload()
 		})
 	})
+
+    function triggerDate() { 
+        var start_date = $('input[name=tgl_mulai').val();
+        var end_date = $('input[name=tgl_selesai').val();
+        if (start_date != '' && end_date != '') {
+                if (end_date < start_date) {
+                    $('input[name=tgl_selesai').val(start_date);
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Whoops..',
+                    text:  'Tanggal selesai tidak boleh kurang dari tanggal mulai',
+                    showConfirmButton: false,
+                    timer: 1300,
+                })
+                }
+            }
+     }
 </script>
