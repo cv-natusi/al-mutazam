@@ -36,13 +36,13 @@ class PengembanganDiriController extends Controller
                 )
                 ->leftJoin('data_guru as g', 'g.id_guru', 'pengembangan_diri.guru_id')
                 ->leftJoin('mst_pengembangan_diri as mpd', 'mpd.id_mst_pengembangan_diri', 'pengembangan_diri.mst_pengembangan_diri_id')
-                ->whereNotIn('status', ['buat','tolak'])
+                // ->whereNotIn('status', ['buat','tolak'])
                 ->orderBy('pengembangan_diri.id_pengembangan_diri','ASC')->get();
 
             return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('verifikasi', function($row){
-                if($row->status=='upload'){
+                if($row->status=='buat'){
                     $txt = "
                     <button class='btn btn-sm btn-primary' title='verifikasi' onclick='verifikasi(`$row->id_pengembangan_diri`)'>Verifikasi</button>
                     <button class='btn btn-sm btn-danger' title='tolak' onclick='tolak(`$row->id_pengembangan_diri`)'>Tolak</button>
@@ -112,6 +112,9 @@ class PengembanganDiriController extends Controller
                     'pengembangan_diri.mst_pengembangan_diri_id',
                     'pengembangan_diri.file',
                     'pengembangan_diri.status',
+                    'pengembangan_diri.nama_kegiatan',
+                    'pengembangan_diri.tgl_mulai',
+                    'pengembangan_diri.tgl_selesai',
                     'g.id_guru',
                     'g.nama',
                     'g.nip',
@@ -181,6 +184,7 @@ class PengembanganDiriController extends Controller
         try {
             $data = PengembanganDiri::find($request->id);
             $data->status = 'tolak';
+            $data->keterangan_tolak = $request->keterangan;
             $data->save();
             if ($data) {
                 return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Ditolak.'];

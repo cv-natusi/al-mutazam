@@ -35,16 +35,18 @@
                                 <thead>
                                     <tr>
                                         <td>No</td>
-                                        <td>Nama Berkas</td>
-                                        <td>File Berkas</td>
+                                        <td>Nama Kegiatan</td>
+                                        <td>Tgl Mulai</td>
+                                        <td>Tgl Selesai</td>
                                         <td class="text-center">Verifikasi</td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>1</td>
-                                        <td>{{$dokumen->nama_dokumen}}</td>
-                                        <td>{{$data->file}}</td>
+                                        <td>{{$data->nama_kegiatan}}</td>
+                                        <td>{{$data->tgl_mulai}}</td>
+                                        <td>{{$data->tgl_selesai}}</td>
                                         <td class="text-center">
                                             <button class="btn btn-primary" type="button" onclick="verifikasi({{$data->id_pengembangan_diri}})">
                                                 <i class='bx bxs-check-square'></i>

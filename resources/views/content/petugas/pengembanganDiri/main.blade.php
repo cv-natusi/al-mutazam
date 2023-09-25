@@ -69,7 +69,7 @@
                     <!-- Tab panes -->
                     <div class="tab-content mt-3">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <button type="button" class="btn button-custome" onclick="formFirst()"><i class="bx bxs-plus-square"></i> Tambah</button>
+                            {{-- <button type="button" class="btn button-custome" onclick="formFirst()"><i class="bx bxs-plus-square"></i> Tambah</button> --}}
                             <div class="clearfix" style="margin-bottom: 20px"></div>
                             <table class="table table-bordered table-striped dataTable" id="datatablePengembanganDiri" style="width: 100%">
                                 <thead>
@@ -243,41 +243,94 @@
         });
 	}
     function tolak(id) {
-		Swal.fire({
-			title: "Apakah Anda yakin?",
-			text: "Data Akan Ditolak Dan Dikembalikan Pada Guru.",
-			icon: 'warning',
-			showCancelButton: true,
-			cancelButtonText: 'Batal',
-			confirmButtonText: 'Tolak',
-		}).then((result) => {
-			if (result.value) {
-				$.post("{{ route('tolakPengembanganDiri') }}",{id:id}).done(function(data) {
-					if(data.code==200){
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil',
-                            text: data.message,
-                            showConfirmButton: false,
-                            timer: 1200
-                        })
-                        location.reload()
-                    }else{
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Whoops',
-                            text: data.message,
-                            showConfirmButton: false,
-                            timer: 1300,
-                        })
-                    }
-				}).fail(function() {
-					Swal.fire("Sorry!", "Terjadi Kesalahan Sistem!", "error");
-				});
-			} else if (result.dismiss === Swal.DismissReason.cancel) {
-				Swal.fire("Batal", "Data batal ditolak!", "error");
-			}
-		});
+		// Swal.fire({
+		// 	title: "Apakah Anda yakin?",
+		// 	text: "Data Akan Ditolak Dan Dikembalikan Pada Guru.",
+		// 	icon: 'warning',
+        //     inputAttributes: {
+        //         autocapitalize: 'off'
+        //     },
+		// 	showCancelButton: true,
+		// 	cancelButtonText: 'Batal',
+		// 	confirmButtonText: 'Tolak',
+        //     showLoaderOnConfirm: true,
+		// }).then((result) => {
+		// 	if (result.value) {
+		// 		$.post("{{ route('tolakPengembanganDiri') }}",{id:id}).done(function(data) {
+		// 			if(data.code==200){
+        //                 Swal.fire({
+        //                     icon: 'success',
+        //                     title: 'Berhasil',
+        //                     text: data.message,
+        //                     showConfirmButton: false,
+        //                     timer: 1200
+        //                 })
+        //                 location.reload()
+        //             }else{
+        //                 Swal.fire({
+        //                     icon: 'warning',
+        //                     title: 'Whoops',
+        //                     text: data.message,
+        //                     showConfirmButton: false,
+        //                     timer: 1300,
+        //                 })
+        //             }
+		// 		}).fail(function() {
+		// 			Swal.fire("Sorry!", "Terjadi Kesalahan Sistem!", "error");
+		// 		});
+		// 	} else if (result.dismiss === Swal.DismissReason.cancel) {
+		// 		Swal.fire("Batal", "Data batal ditolak!", "error");
+		// 	}
+		// });
+
+        Swal.fire({
+            title: "Tolak pengembangan diri?",
+			text: "Masukkan keterangan anda menolak.",
+            input: 'text',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Tolak',
+            cancelButtonText: 'Batal',
+            showLoaderOnConfirm: true,
+            preConfirm: (keterangan) => {
+                if (keterangan == '') {
+                    Swal.showValidationMessage(
+                        `Masukkan keterangan and menolak!`
+                        );
+                }else{
+                    return keterangan;
+                }
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+            if (result.isConfirmed) {
+                let keterangan = result.value;
+                $.post("{{ route('tolakPengembanganDiri') }}",{id:id, keterangan:keterangan}).done(function(data) {
+                        if(data.code==200){
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: data.message,
+                                showConfirmButton: false,
+                                timer: 1200
+                            })
+                            location.reload()
+                        }else{
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Whoops',
+                                text: data.message,
+                                showConfirmButton: false,
+                                timer: 1300,
+                            })
+                        }
+                    }).fail(function() {
+                        Swal.fire("Sorry!", "Terjadi Kesalahan Sistem!", "error");
+                    });
+            }
+            })
 	}
 </script>
 @endpush

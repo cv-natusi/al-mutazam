@@ -54,6 +54,8 @@
                             timer: 1200
                         })
                         location.reload()
+                    }else if(data.code==403){
+                        alert_validation(data.message);
                     }else{
                         Swal.fire({
                             icon: 'warning',
@@ -77,6 +79,22 @@
             })
         }
     });
+    function alert_validation(message) { 
+        var n = 0;
+                for (key in message) {
+                    if (n == 0) {
+                        var dt0 = key;
+                    }
+                    n++;
+                }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Whoops..',
+                    text:  dt0 + ' ' + message[dt0],
+                    showConfirmButton: false,
+                    timer: 1300,
+                })
+     }
     $('.btnCancel').click(()=>{
 		$('#modalForm').fadeOut(function(){
 			location.reload()

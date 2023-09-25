@@ -132,7 +132,10 @@
 						})
 					}, 1100);
 					// location.reload()
-				}else{
+				}else if(data.code==403){
+					alert_validation(data.message)
+				}
+				else{
 					Swal.fire({
 						icon: 'warning',
 						title: 'Whoops',
@@ -154,6 +157,22 @@
 			$('.simpanDataDiri').attr('disabled',false).html('SIMPAN')
 		})
 	})
+	function alert_validation(message) { 
+        var n = 0;
+                for (key in message) {
+                    if (n == 0) {
+                        var dt0 = key;
+                    }
+                    n++;
+                }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Whoops..',
+                    text:  dt0 + ' ' + message[dt0],
+                    showConfirmButton: false,
+                    timer: 1300,
+                })
+     }
 	// Store Data Pendidikan
 	$('.simpanDataPendidikan').click(async(e)=>{
 		var data = new FormData($('.formDataPendidikan')[0])
@@ -205,7 +224,6 @@
 				processData: false,
 			}).done(async(data,status,xhr)=>{
 				const code = xhr.status
-				console.log(code)
 				if(code===204){
 					await Swal.fire({
 						icon: 'warning',
@@ -214,6 +232,9 @@
 						showConfirmButton: true,
 					})
 					return
+				}
+				if(data.code==403){
+					return alert_validation(data.message)
 				}
 				await Swal.fire({
 					icon: 'success',

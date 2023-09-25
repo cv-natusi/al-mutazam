@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 Use App\Models\DataAdministrasi;
 Use App\Models\Guru;
 use DataTables, Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class DataAdministrasiController extends Controller
 {
@@ -209,19 +211,39 @@ class DataAdministrasiController extends Controller
 		return ['content'=>$content];
     }
     public function uploadBerkas(Request $request) {
-        $data = DataAdministrasi::find($request->id);
-        $data->tanggal_upload = date('Y-m-d');
-        if ($image = $request->file('file')) {
-            $destinationPath = 'images/administrasi';
-            $fileUpload = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $fileUpload);
-            $data->file = "$fileUpload";
-        }
-        $data->save();
-        if ($data) {
-            return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Ditolak.'];
-        } else {
-            return ['code'=>201,'status'=>'error','message'=>'Data Gagal Ditolak.'];
+        $rules = array(
+            'file' => 'required|mimes:jpeg,png,jpg,pdf,docx|max:2048',
+        );
+        $messages = array(
+            'required'  => 'harus diisi',
+            'mimes'  => 'format file tidak diperbolehkan',
+            'max' => 'ukuran file terlalu besar'
+        );
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if (!$validator->fails()) {
+            $data = DataAdministrasi::find($request->id);
+            $data->tanggal_upload = date('Y-m-d');
+            if ($image = $request->file('file')) {
+                //DELETE PREV FILE IF NOT NULL
+                if (isset($data->file)) {
+                    $check = Storage::disk('public')->exists("/uploads/administrasi/$data->file");
+                    if($check == 1 || $check == true){
+                        Storage::disk('public')->delete("uploads/administrasi/$data->file");
+                    }
+                }
+                $destinationPath = 'images/administrasi';
+                $fileUpload = date('YmdHis') . "." . $image->getClientOriginalExtension();
+                $image->move($destinationPath, $fileUpload);
+                $data->file = "$fileUpload";
+            }
+            $data->save();
+            if ($data) {
+                return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Ditolak.'];
+            } else {
+                return ['code'=>201,'status'=>'error','message'=>'Data Gagal Ditolak.'];
+            }
+        }else{
+            return ['code'=>403,'status'=>'failed','message'=> $validator->messages()];
         }
     }
 }

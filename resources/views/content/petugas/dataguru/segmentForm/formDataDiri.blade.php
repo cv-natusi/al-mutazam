@@ -37,16 +37,31 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-4">
+                    <label>Email</label>
+                    <input class="form-control" type="text" name="email" id="email" value="{{ !empty($data->email)? $data->email : ''}}" placeholder="Email">
+                </div>
+                <div class="col-md-4">
                     <label>TMT Pegawai</label>
                     <input autocomplete="off" type="text" class="form-control" name="tmt_pegawai" id="tmt_pegawai" placeholder="TMT Pegawai" value="{{isset($data->tmt_pegawai) ? $data->tmt_pegawai:''}}">
+                </div>
+                <div class="col-md-4">
+                    <label>File TMT Pegawai</label>
+                    <input class="form-control" type="file" name="file_tmt_pegawai" id="file_tmt_pegawai" value="{{ !empty($data->file_tmt_petugas)? $data->file_tmt_petugas : ''}}" placeholder="Upload TMT Pegawai">
+                </div>
+                
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label>No Telp <small>*</small></label>
+                    <input class="form-control" type="text" name="no_telp" id="no_telp" value="{{ !empty($data->no_telp)? $data->no_telp : ''}}" placeholder="No Telp">
                 </div>
                 <div class="col-md-4">
                     <label>TMT Guru</label>
                     <input class="form-control" type="text" name="tmt_guru" id="tmt_guru" value="{{ !empty($data->tmt_guru)? $data->tmt_guru : ''}}" placeholder="TMT Guru">
                 </div>
                 <div class="col-md-4">
-                    <label>Email</label>
-                    <input class="form-control" type="text" name="email" id="email" value="{{ !empty($data->email)? $data->email : ''}}" placeholder="Email">
+                    <label>File TMT Guru</label>
+                    <input class="form-control" type="file" name="file_tmt_guru" id="file_tmt_guru" value="{{ !empty($data->file_tmt_guru)? $data->file_tmt_guru : ''}}" placeholder="Upload File TMT Guru">
                 </div>
             </div>
             <div class="row mb-3">
@@ -65,7 +80,7 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-8">
-                    <label>Alamat <small>*</small></label>
+                    <label>Alamat </label>
                     <input autocomplete="off" class="form-control" type="text" name="alamat" id="alamat" value="{{ !empty($data->alamat)? $data->alamat : ''}}" placeholder="Alamat">
                 </div>
                 <div class="col-md-4">

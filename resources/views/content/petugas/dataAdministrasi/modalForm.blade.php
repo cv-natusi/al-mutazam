@@ -102,32 +102,7 @@
             })
         }
     });
-    // $('#guru_id').select2({
-    //     width: "resolve",
-    //     ajax: {
-    //         url: "{{ route('findGuru') }}",
-    //         dataType: 'json',
-    //         type: 'POST',
-    //         delay: 250,
-    //         data: function(params) {
-    //             var query = {
-    //                 q: params.term,
-    //             }
-    //             return query;
-    //         },
-    //         processResults: function(data) {
-    //             return {
-    //                 results: $.map(data, function(item) {
-    //                     return {
-    //                         text: '(' + item.nip + ') ' + item.nama_guru,
-    //                         id: item.id_guru,
-    //                     }
-    //                 })
-    //             };
-    //         },
-    //         cache: true,
-    //     }
-    // });
+   
     $('.btnCancel').click(()=>{
 		$('#modalForm').fadeOut(function(){
 			location.reload()
