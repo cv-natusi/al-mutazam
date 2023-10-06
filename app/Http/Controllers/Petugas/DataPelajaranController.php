@@ -19,18 +19,26 @@ class DataPelajaranController extends Controller
     public function main(Request $request)
     {
         if(request()->ajax()){
+            // return $request->all();
             // if (!empty($request->tahun) && !empty($request->semester)) {
             //     $data = MstPelajaran::leftJoin('mst_kelas as mk','mk.id_kelas','mst_pelajaran.kelas_id')
             //         ->where('mst_pelajaran.ta',$request->tahun)
             //         ->where('mst_pelajaran.semester',$request->semester)
             //         ->orderBy('id_pelajaran','ASC')->get();
             // } else {
-                $data = MstPelajaran::orderBy('id_pelajaran','ASC')->get();
+                $data = MstPelajaran::orderBy('id_pelajaran','ASC');
+                if ($request->tahun) {
+                    # code...
+                    $data->where('ta',$request->tahun);
+                }
+                if ($request->semester) {
+                    $data->where('semester', $request->semester);
+                }
                 // leftJoin('mst_kelas as mk','mk.id_kelas','mst_pelajaran.kelas_id')
                     // ->orderBy('id_pelajaran','ASC')->get();
             // }
 			
-			return DataTables::of($data)
+			return DataTables::eloquent($data)
 				->addIndexColumn()
 				->addColumn('actions', function($row){
 					$txt = "

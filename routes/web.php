@@ -206,6 +206,7 @@ Route::group(['middleware' => 'auth'], function () {
 					Route::get('/', 'galeri')->name('main');
 					Route::post('/formAddGaleri', [Admin::class, 'formAddGaleri'])->name('formAddGaleri');
 					Route::post('/SaveGaleri', [Admin::class, 'SaveGaleri'])->name('SaveGaleri');
+					Route::post('/deleteGaleri', [Admin::class, 'deleteGaleri'])->name('deleteGaleri');
 				});
 			});
 			# Modul media end
@@ -273,6 +274,7 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::post('/store-data-pendidikan', [DataGuru::class, 'saveDataPendidikan'])->name('saveDataPendidikan');
 			Route::post('/store-data-penugasan', [DataGuru::class, 'saveDataPenugasan'])->name('saveDataPenugasan');
 			Route::post('/store-data-pendukung', [DataGuru::class, 'saveDataPendukung'])->name('saveDataPendukung');
+			Route::post('/delete-data-guru', [DataGuru::class, 'deleteGuru'])->name('deleteGuru');
 		});
 		Route::group(array('prefix' => 'data-tugas-pegawai'), function () {
 			Route::get('/', [DataTugasPegawai::class, 'main'])->name('dataTugasPegawai');
@@ -304,6 +306,8 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::post('/save-mst-pengembangan-diri', [PengembanganDiri::class, 'saveMstPengembanganDiri'])->name('saveMstPengembanganDiri');
 			Route::post('/verif-pengembangan-diri', [PengembanganDiri::class, 'verifPengembanganDiri'])->name('verifPengembanganDiri');
 			Route::post('/tolak-pengembangan-diri', [PengembanganDiri::class, 'tolakPengembanganDiri'])->name('tolakPengembanganDiri');
+			Route::post('/delete-pengembangan-diri', [PengembanganDiri::class, 'deleteMstPengembanganDiri'])->name('deleteMstPengembanganDiri');
+			
 		});
 		Route::group(array('prefix' => 'data-administrasi'), function () {
 			Route::get('/', [DataAdministrasi::class, 'mainPetugas'])->name('dataAdministrasiPetugas');

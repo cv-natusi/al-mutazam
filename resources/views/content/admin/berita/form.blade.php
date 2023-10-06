@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header bg-card">
-        <h5 class="text-card">{{!empty($data)?'Edit':'Tambah'}} Ekstrakurikuler</h5>
+        <h5 class="text-card">{{!empty($data)?'Edit':'Tambah'}} {{ $title }}</h5>
     </div>
     <div class="card-body">
         <form class="formSave">

@@ -340,4 +340,13 @@ class PengembanganDiriController extends Controller
             return ['code'=>201,'status'=>'error','message'=>'Data Gagal Dihapus.'];
         }
     }
+    public function deleteMstPengembanganDiri(Request $request) {
+		$data = mstPengembanganDiri::find($request->id);
+        $data->delete();
+        if ($data) {
+            return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Dihapus.'];
+        } else {
+            return ['code'=>201,'status'=>'error','message'=>'Data Gagal Dihapus.'];
+        }
+	}
 }

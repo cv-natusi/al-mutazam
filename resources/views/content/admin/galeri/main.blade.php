@@ -94,7 +94,41 @@
 		})
 	}
 	function hapusGaleri(id){
-		alert('pengembangan')
+		Swal.fire({
+			title: "Apakah Anda yakin?",
+			text: "Data yang dihapus tidak dapat dikembalikan lagi.",
+			icon: 'warning',
+			showCancelButton: true,
+			cancelButtonText: 'Batal',
+			confirmButtonText: 'Hapus',
+		}).then((result) => {
+			if (result.value) {
+				$.post("{{ route('media.galeri.deleteGaleri') }}",{id:id}).done(function(data) {
+					if(data.code==200){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1200
+                        })
+                        location.reload()
+                    }else{
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Whoops',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1300,
+                        })
+                    }
+				}).fail(function() {
+					Swal.fire("Sorry!", "Gagal menghapus data!", "error");
+				});
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				Swal.fire("Batal", "Data batal dihapus!", "error");
+			}
+		});
 	}
 </script>
 @endpush

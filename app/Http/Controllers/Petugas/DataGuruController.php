@@ -29,7 +29,7 @@ class DataGuruController extends Controller{
 				->addColumn('actions', function($row){
 					$txt = "
 						<button style='color: #fff' class='btn btn-sm btn-secondary' title='Detail' onclick='formAdd(`$row->id_guru`)'><i class='fadeIn animated bx bxs-file-find' aria-hidden='true'></i></button>
-						<button style='color: #fff' class='btn btn-sm btn-danger' title='Delete' onclick='Delete(`$row->id_guru`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>
+						<button style='color: #fff' class='btn btn-sm btn-danger' title='Delete' onclick='hapus(`$row->id_guru`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>
 					";
 					return $txt;
 				})
@@ -396,5 +396,14 @@ class DataGuruController extends Controller{
 		$data = Guru::where('nama_guru', 'ilike', "%$text_search%")->orWhere('nip',  'ilike', "%$text_search%")
 			->get();
 		return response()->json($data, 200);
+	}
+	public function deleteGuru(Request $request) {
+		$data = Guru::find($request->id);
+        $data->delete();
+        if ($data) {
+            return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Dihapus.'];
+        } else {
+            return ['code'=>201,'status'=>'error','message'=>'Data Gagal Dihapus.'];
+        }
 	}
 }

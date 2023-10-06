@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\DataPenugasanGuru;
 use App\Models\DetailDataPendidikanGuru;
 use App\Models\MstPelajaran;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Guru extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
     protected $table = 'data_guru';
     protected $primaryKey = 'id_guru';
 
