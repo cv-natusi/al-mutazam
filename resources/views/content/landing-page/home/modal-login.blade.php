@@ -22,7 +22,7 @@
 						</div>
 						<div class="col-md-12">
 							<label for="">Password</label>
-							<input type="text" name="password" id="password" class="form-control" autocomplete="off">
+							<input type="password" name="password" id="password" class="form-control" autocomplete="off">
 						</div>
 					</div>
 					<div class="row mt-3">
