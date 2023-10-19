@@ -18,11 +18,11 @@
 						<input type="hidden" name="filename" id="filename">
 						<div class="col-md-12 mb-3">
 							<label for="">Username</label>
-							<input type="text" name="email" id="email" class="form-control" autocomplete="off">
+							<input type="text" name="email" id="email" class="form-control" autocomplete="off" placeholder="000000000000">
 						</div>
 						<div class="col-md-12">
 							<label for="">Password</label>
-							<input type="password" name="password" id="password" class="form-control" autocomplete="off">
+							<input type="password" name="password" id="password" class="form-control" autocomplete="off" placeholder="000000000000">
 						</div>
 					</div>
 					<div class="row mt-3">

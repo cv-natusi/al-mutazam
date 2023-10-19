@@ -121,7 +121,6 @@ class HomeController extends Controller
 	public function downloadPdf($filename)
     {
 		$path = storage_path("app/public/uploads/berbagiDokumen/{$filename}");
-		
 		if (file_exists($path)) {
 			return response()->download($path, $filename, [
 				'Content-Type' => 'application/pdf',

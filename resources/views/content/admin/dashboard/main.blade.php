@@ -13,17 +13,9 @@
 		@include('include.master.breadcrumb')
 
 		<div class="row">
-			{{-- <div class="col-md-12">
-				<div class="card" style="background: #ffffff">
-					<div class="card-body">
-						<span><b id="date" style="font-size: 10pt;"></b></span>&nbsp;
-						<span id="time" style="font-size: 10pt"></span>
-					</div>
-				</div>
-			</div> --}}
 			<div class="col-md-12">
                 <div class="row">
-                    <h5>Selamat Datang Di halaman Administrator!</h5>
+                    <h5 style="font-size: 10pt">Selamat Datang Di halaman Administrator!</h5>
                 </div>
 				<div class="row">
 					<div class="col">

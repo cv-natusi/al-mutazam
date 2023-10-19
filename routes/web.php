@@ -267,6 +267,7 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 	Route::group(array('prefix' => 'petugas-sekolah'), function () { #Web petugas sekolah
 		Route::get('/', [Dashboard::class, 'mainPetugas'])->name('dashboardPetugas');
+		Route::get('/get-dashboard-petugas', [Dashboard::class, 'getDashboardPetugas'])->name('getDashboardPetugas');
 		Route::group(array('prefix' => 'data-guru'), function () {
 			Route::get('/', [DataGuru::class, 'main'])->name('dataGuru');
 			Route::post('/form', [DataGuru::class, 'form'])->name('tambahGuru');

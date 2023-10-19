@@ -180,7 +180,7 @@
 		<li class="{{ ($title == 'Master SIM') ? 'mm-active' : ''}}">
 			<a href="{{route('masterSim')}}">
 				<div class="parent-icon">
-					<i class='bx bxs-user-plus'></i>
+					<i class='bx bxs-customize' ></i>
 				</div>
 				<div class="menu-title">Master SIM</div>
 			</a>

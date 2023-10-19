@@ -82,7 +82,14 @@ class PengembanganDiriController extends Controller
     public function mstPengembanganDiri(Request $request)
     {
         if ($request->ajax()) {
-            $data = MstPengembanganDiri::orderBy('id_mst_pengembangan_diri','ASC')->get();
+            if (!empty($request->tahun)&&!empty($request->semester)) {
+                $data = MstPengembanganDiri::where('tahun_ajaran',$request->tahun)
+                    ->where('semester',$request->semester)
+                    ->orderBy('id_mst_pengembangan_diri','ASC')
+                    ->get();
+            } else {
+                $data = MstPengembanganDiri::orderBy('id_mst_pengembangan_diri','ASC')->get();
+            }
             
             return DataTables::of($data)
 				->addIndexColumn()
@@ -131,12 +138,18 @@ class PengembanganDiriController extends Controller
 		return ['content'=>$content];
     }
     public function formLihatPengembanganDiri(Request $request) {
-        $data['title'] = "Lihat Data Pengembangan Diri";
-        $data['data'] = PengembanganDiri::where('id_pengembangan_diri',$request->id)->first();
-        $data['guru'] = Guru::where('id_guru',$data['data']->guru_id)->first();
-        $data['dokumen'] = MstPengembanganDiri::where('id_mst_pengembangan_diri',$data['data']->mst_pengembangan_diri_id)->first();
-        $content = view('content.petugas.pengembanganDiri.modalFirstLihat', $data)->render();
-		return ['content'=>$content];
+        try {
+            $data['title'] = "Lihat Data Pengembangan Diri";
+            $data['data'] = PengembanganDiri::where('id_pengembangan_diri',$request->id)->first();
+            $data['filePath'] = storage_path("app/public/uploads/pengembanganDiri{$data['data']->file}");
+            // $data['guru'] = Guru::where('id_guru',$data['data']->guru_id)->first();
+            // $data['dokumen'] = MstPengembanganDiri::where('id_mst_pengembangan_diri',$data['data']->mst_pengembangan_diri_id)->first();
+            // $content = view('content.petugas.pengembanganDiri.modalFirstLihat', $data)->render();
+            $content = view('content.petugas.pengembanganDiri.modalFirstShow', $data)->render();
+			return ['status' => 'success', 'content' => $content, 'data' => $data];
+		} catch (\Exception $e) {
+			return ['status' => 'success', 'content' => '','errMsg'=>$e];
+		}
     }
     public function formMstPengembanganDiri(Request $request) {
         if (empty($request->id)) {
@@ -202,6 +215,8 @@ class PengembanganDiriController extends Controller
             $data = MstPengembanganDiri::where('id_mst_pengembangan_diri',$request->id)->first();
 		}
         $data->nama_dokumen = $request->nama_dokumen;
+        $data->tahun_ajaran = $request->tahun_ajaran;
+        $data->semester = $request->semester;
         $data->save();
         if ($data) {
             return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Disimpan.'];
