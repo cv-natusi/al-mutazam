@@ -25,8 +25,14 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function preDownloadFile(param) {
-        $("#modal-login").show();
-        $('#filename').val(param);
+        var AuthUser = "{{{ (Auth::user()) ? Auth::user() : null }}}";
+		console.log(AuthUser)
+		if (AuthUser!='') {
+			downloadFile(param)
+		} else {
+			$("#modal-login").show();
+			$('#filename').val(param);	
+		}
     }
     $('#btn-login').click(function (e) {
         var data  = new FormData($('.formLogin')[0]);
@@ -48,8 +54,12 @@
             Swal.fire("MAAF !","Terjadi Kesalahan, Silahkan Ulangi Kembali !!", "error");
         });
     });
-    function downloadFile() {
-        var filename = $('#filename').val();
+    function downloadFile(filename='') {
+		if (filename!='') {
+			var filename = filename;
+		} else {
+			var filename = $('#filename').val();
+		}
         var url = "{{ route('home.downloadPdf', ':filename') }}";
         url = url.replace(':filename', filename);
 
@@ -65,13 +75,14 @@
                 link.href = window.URL.createObjectURL(blob);
                 link.download = filename;
                 link.click();
-                $('#modal-login').fadeOut("slow")
+				$('#modal-login').fadeOut("slow")
+				location.reload()
             },
             error: function() {
-                Swal.fire('Gagal mengunduh file PDF.');
+                Swal.fire('Maaf!','Gagal mengunduh file PDF, Berkas tidak ada.','error');
             }
         });
-    }
+	}
     $(document).ready(() => {
         $("#modal-login").hide();
         $('.close-modal').click(() => {

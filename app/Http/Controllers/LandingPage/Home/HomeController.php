@@ -56,7 +56,8 @@ class HomeController extends Controller
 			return Helpers::resAjax($payload);
 		}
 		$berita = Berita::getBeritaPaginate();
-		return view('content.landing-page.home.berita', compact('berita'));
+		$dokumen = BerbagiDokumen::getDokumenLimit(6);
+		return view('content.landing-page.home.berita', compact('berita','dokumen'));
 	}
 	public function event(Request $request)
 	{
@@ -73,7 +74,8 @@ class HomeController extends Controller
 			return Helpers::resAjax($payload);
 		}
 		$event = Berita::getEventPaginate();
-		return view('content.landing-page.home.event', compact('event'));
+		$dokumen = BerbagiDokumen::getDokumenLimit(6);
+		return view('content.landing-page.home.event', compact('event','dokumen'));
 	}
 	public function pengumuman(Request $request)
 	{
@@ -91,7 +93,8 @@ class HomeController extends Controller
 			return Helpers::resAjax($payload);
 		}
 		$pengumuman = Berita::getPengumumanPaginate();
-		return view('content.landing-page.home.pengumuman', compact('pengumuman'));
+		$dokumen = BerbagiDokumen::getDokumenLimit(6);
+		return view('content.landing-page.home.pengumuman', compact('pengumuman','dokumen'));
 	}
 	public function dokumen(Request $request)
 	{
@@ -184,7 +187,8 @@ class HomeController extends Controller
 			return Helpers::resAjax($payload);
 		}
 		$berita = Berita::getPrestasiPaginate();
-		return view('content.landing-page.program.prestasi-siswa', compact('beritas1', 'beritas2', 'berita'));
+		$dokumen = BerbagiDokumen::getDokumenLimit(6);
+		return view('content.landing-page.program.prestasi-siswa', compact('beritas1', 'beritas2', 'berita','dokumen'));
 	}
 	public function galeri(Request $request)
 	{

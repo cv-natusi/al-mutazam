@@ -280,7 +280,7 @@
 										<td>{{$agenda->judul}}</td>
 										<td>{{date('d/M/Y',strtotime($agenda->tanggal_acara))}}</td>
 										<td>
-											<a href="javascript:void(0)" id="read-more-{{$agenda->id_berita}}" onclick="modalShow(`{{$agenda->id_berita}}`)" style="text-align: center; color: #000">Detail</a>
+											<a href="javascript:void(0)" id="read-more-{{$agenda->id_berita}}" onclick="modalShow(`{{$agenda->id_berita}}`)" style="text-align: center; color: #687EFF; text-decoration: underline;">Detail</a>
 										</td>
 									</tr>
 									@endforeach

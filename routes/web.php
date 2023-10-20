@@ -302,21 +302,25 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::post('/mst-pengembangan-diri', [PengembanganDiri::class, 'mstPengembanganDiri'])->name('mstPengembanganDiri');
 			Route::post('/form-pengembangan-diri', [PengembanganDiri::class, 'formPengembanganDiri'])->name('formPengembanganDiri');
 			Route::post('/form-lihat-pengembangan-diri', [PengembanganDiri::class, 'formLihatPengembanganDiri'])->name('formLihatPengembanganDiri');
+			Route::post('/form-tolak-pengembangan-diri', [PengembanganDiri::class, 'formTolakPengembanganDiri'])->name('formTolakPengembanganDiri');
 			Route::post('/form-mst-pengembangan-diri', [PengembanganDiri::class, 'formMstPengembanganDiri'])->name('formMstPengembanganDiri');
 			Route::post('/save-pengembangan-diri', [PengembanganDiri::class, 'savePengembanganDiri'])->name('savePengembanganDiri');
 			Route::post('/save-mst-pengembangan-diri', [PengembanganDiri::class, 'saveMstPengembanganDiri'])->name('saveMstPengembanganDiri');
 			Route::post('/verif-pengembangan-diri', [PengembanganDiri::class, 'verifPengembanganDiri'])->name('verifPengembanganDiri');
 			Route::post('/tolak-pengembangan-diri', [PengembanganDiri::class, 'tolakPengembanganDiri'])->name('tolakPengembanganDiri');
 			Route::post('/delete-pengembangan-diri', [PengembanganDiri::class, 'deleteMstPengembanganDiri'])->name('deleteMstPengembanganDiri');
+			Route::post('/export-pengembangan-diri', [PengembanganDiri::class, 'exportPengembanganDiri'])->name('exportPengembanganDiri');
 			
 		});
 		Route::group(array('prefix' => 'data-administrasi'), function () {
 			Route::get('/', [DataAdministrasi::class, 'mainPetugas'])->name('dataAdministrasiPetugas');
 			Route::post('/modal-form', [DataAdministrasi::class, 'modalFormPetugas'])->name('administrasiModalFormPetugas');
 			Route::post('/verifikasi', [DataAdministrasi::class, 'verifikasi'])->name('verifAdministrasiPetugas');
+			Route::post('/form-tolak-administrasi', [DataAdministrasi::class, 'formTolak'])->name('formTolakAdministrasi');
 			Route::post('/tolak', [DataAdministrasi::class, 'tolak'])->name('tolakAdministrasiPetugas');
 			Route::post('/modal-berkas', [DataAdministrasi::class, 'modalBerkas'])->name('modalBerkasGuru');
 			Route::post('/upload-berkas-guru', [DataAdministrasi::class, 'uploadBerkas'])->name('uploadBerkasGuru');
+			Route::post('/export-data-administrasi', [DataAdministrasi::class, 'exportDataAdministrasi'])->name('exportDataAdministrasi');
 		});
 		Route::group(array('prefix' => 'berbagi-dokumen'), function () {
 			Route::get('/', [BerbagiDokumen::class, 'main'])->name('berbagiDokumen');
@@ -361,6 +365,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::group(array('prefix' => 'data-pengembangan-diri'), function () {
 			Route::get('/', [PengembanganDiri::class, 'mainPengembanganDiriGuru'])->name('mainPengembanganDiriGuru');
 			Route::post('/form-pengembangan-diri-guru', [PengembanganDiri::class, 'formPengembanganDiriGuru'])->name('formPengembanganDiriGuru');
+			Route::post('/form-lihat-pengembangan-diri-guru', [PengembanganDiri::class, 'formLihatPengembanganDiriGuru'])->name('formLihatPengembanganDiriGuru');
 			Route::post('/delete-pengembangan-diri-guru', [PengembanganDiri::class, 'delete'])->name('deletePengembanganDiriGuru');
 			Route::post('/save-pengembangan-diri-guru', [PengembanganDiri::class, 'savePengembanganDiriGuru'])->name('savePengembanganDiriGuru');
 		});
