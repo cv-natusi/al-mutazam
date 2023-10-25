@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 Use App\Models\DataAdministrasi;
 Use App\Models\Guru;
-use DataTables, Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
+use DB, Validator, Storage, Auth, DataTables;
 
 class DataAdministrasiController extends Controller
 {
@@ -20,7 +18,10 @@ class DataAdministrasiController extends Controller
     # Data Administrasi guru
     public function main(Request $request) {
         if(request()->ajax()){
-            $data = DataAdministrasi::where('guru_id', Auth::User()->guru_id)->orderBy('id_administrasi','ASC')->get();
+            $data = DataAdministrasi::where('guru_id', Auth::User()->guru_id)
+            ->orderByRaw('field(status, "0","1","2","3")')
+            // ->orderBy('id_administrasi','ASC')
+            ->get();
 			
 			return DataTables::of($data)
 				->addIndexColumn()
@@ -42,6 +43,12 @@ class DataAdministrasiController extends Controller
                     } else {
                         return "-";
                     }
+                })
+                ->addColumn('tahun', function($row){
+                    return $row->tahun_ajaran;
+                })
+                ->addColumn('modifySemester', function($row){
+                    return "Semester ".$row->semester;
                 })
                 ->addColumn('modifyKeterangan', function($row){
                     if (!empty($row->keterangan_tolak)) {
@@ -285,9 +292,9 @@ class DataAdministrasiController extends Controller
             $data->status = '2';
             $data->save();
             if ($data) {
-                return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Ditolak.'];
+                return ['code'=>200,'status'=>'success','message'=>'Berhasil.'];
             } else {
-                return ['code'=>201,'status'=>'error','message'=>'Data Gagal Ditolak.'];
+                return ['code'=>201,'status'=>'error','message'=>'Ada kesalahan.'];
             }
         }else{
             return ['code'=>403,'status'=>'failed','message'=> $validator->messages()];

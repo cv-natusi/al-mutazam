@@ -29,6 +29,8 @@
                                     <td>Nama Berkas</td>
                                     <td>Tanggal Upload</td>
                                     <td>Upload</td>
+                                    <td>Tahun Ajaran</td>
+                                    <td>Semester</td>
                                     <td class="text-center">Status</td>
                                     <td>Keterangan</td>
                                     <td class="text-center">Aksi</td>
@@ -79,6 +81,8 @@
                 { data: "nama_berkas", name: "nama_berkas"},
                 { data: "modifyTanggal", name: "modifyTanggal"},
                 { data: "modifyFile", name: "modifyFile"},
+                { data: "tahun", name: "tahun"},
+                { data: "modifySemester", name: "modifySemester"},
                 { data: "modifyStatus", name: "modifyStatus", class: "text-center"},
                 { data: "modifyKeterangan", name: "modifyKeterangan"},
                 { data: "actions", name: "actions", class: "text-center"},

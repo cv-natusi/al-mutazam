@@ -35,7 +35,7 @@
 						</div>
                         <div class="col-md-6">
                             <label>Semester <small>*</small></label>
-                            <select name="semester" id="semester" class="form-control single-select">
+                            <select name="semester" id="semesterAdd" class="form-control single-select">
                                 <option value="">.:: Pilih ::.</option>
                                 <option @if(!empty($data) && $data->semester=='1') selected @endif value="1">Semeseter 1</option>
                                 <option @if(!empty($data) && $data->semester=='2') selected @endif value="2">Semeseter 2</option>
@@ -76,15 +76,13 @@
         var idAdministrasi = $('#id').val();
         var nama = $('#nama_berkas').val();
         var tahun = $('#tahun_ajaran').find(":selected").val();
-        var semester = $('#semester').find(":selected").val();
+        var semester = $('#semesterAdd option:selected').val()
         var guru = $('#guru_id').find(":selected").val();
         console.log(guru);
         if(!nama) {
             Swal.fire('Maaf!!', 'Nama Berkas Wajib Diisi.', 'warning')
         } else if(!tahun) {
             Swal.fire('Maaf!!', 'Tahun Ajaran Wajib Diisi.', 'warning')
-        } else if(!semester) {
-            Swal.fire('Maaf!!', 'Semester Wajib Diisi.', 'warning')
         } else if(!guru) {
             Swal.fire('Maaf!!', 'Guru Wajib Diisi.', 'warning')
         } else{

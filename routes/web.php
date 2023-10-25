@@ -340,6 +340,7 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::post('/modal-form', [Pengguna::class, 'modalForm'])->name('penggunaModalForm');
 			Route::post('/store', [Pengguna::class, 'save'])->name('savePengguna');
 			Route::post('/delete', [Pengguna::class, 'delete'])->name('deletePengguna');
+			Route::post('/reset-pengguna', [Pengguna::class, 'reset'])->name('resetPengguna');
 		});
 		Route::group(array('prefix' => 'reset-akun'), function () {
 			Route::get('/', [Pengaturan::class, 'main'])->name('resetAkun');

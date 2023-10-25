@@ -313,7 +313,8 @@ class PengembanganDiriController extends Controller
                 ->leftJoin('mst_pengembangan_diri as mpd', 'mpd.id_mst_pengembangan_diri', 'pengembangan_diri.mst_pengembangan_diri_id')
                 ->where('guru_id', Auth::User()->guru_id)
                 // ->whereIn('status', ['buat', 'tolak'])
-                ->orderBy('pengembangan_diri.id_pengembangan_diri','DESC');
+                // ->orderBy('pengembangan_diri.id_pengembangan_diri','DESC');
+                ->orderByRaw('field(status, "tolak","buat","upload","verif")');
 
             return DataTables::eloquent($data)
             ->addIndexColumn()
