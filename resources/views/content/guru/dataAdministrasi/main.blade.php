@@ -26,11 +26,11 @@
                             <thead>
                                 <tr>
                                     <td>No</td>
-                                    <td>Nama Berkas Administrasi</td>
-                                    <td>Keterangan</td>
+                                    <td>Nama Berkas</td>
                                     <td>Tanggal Upload</td>
                                     <td>Upload</td>
                                     <td class="text-center">Status</td>
+                                    <td>Keterangan</td>
                                     <td class="text-center">Aksi</td>
                                 </tr>
                             </thead>
@@ -57,7 +57,8 @@
     function loadTable(){
         var table = $('#datatabel').DataTable({
             scrollX: true,
-            searching: false, 
+            searching: false,
+            ordering: false,
             // paging: false,
             processing: true,
             serverSide: true,
@@ -76,10 +77,10 @@
             columns: [
                 { data: "DT_RowIndex", name: "DT_RowIndex"},
                 { data: "nama_berkas", name: "nama_berkas"},
-                { data: "keterangan", name: "keterangan"},
-                { data: "tanggal_upload", name: "tanggal_upload"},
-                { data: "file", name: "file"},
-                { data: "btnStatus", name: "btnStatus", class: "text-center"},
+                { data: "modifyTanggal", name: "modifyTanggal"},
+                { data: "modifyFile", name: "modifyFile"},
+                { data: "modifyStatus", name: "modifyStatus", class: "text-center"},
+                { data: "modifyKeterangan", name: "modifyKeterangan"},
                 { data: "actions", name: "actions", class: "text-center"},
             ],
         })
@@ -88,6 +89,15 @@
         $.post("{{route('modalBerkasGuru')}}",{id:id},function(data){
 			$("#modalForm").html(data.content);
 		});
+    }
+    function showFile(id) {
+        $.post("{!! route('administrasiModalFormPetugas') !!}",{id:id}).done(function(data){
+          if(data.status == 'success'){
+            $('#modalForm').html(data.content).fadeIn();
+          } else {
+            $('.main-layer').show();
+          }
+        });
     }
     // function formAdd(id='') {
     //     $.post("{{route('administrasiModalForm')}}",{id:id},function(data){

@@ -15,25 +15,25 @@ class UsersSeeder extends Seeder
     {
         Users::create([
             'name_user' => 'Administrator',
-            'email' => 'admin',
-            'password' => bcrypt('admin'),
-            'lihat_password' => 'admin',
+            'email' => '3527162918000001',
+            'password' => bcrypt('3527162918000001'),
+            'lihat_password' => '3527162918000001',
             'level'=> '1',
             'active'=> 'active'
         ]);
         Users::create([
             'name_user' => 'Petugas Sekolah',
-            'email' => 'petugas',
-            'password' => bcrypt('petugas'),
-            'lihat_password' => 'petugas',
+            'email' => '3527162918000002',
+            'password' => bcrypt('3527162918000002'),
+            'lihat_password' => '3527162918000002',
             'level'=> '2',
             'active'=> 'active'
         ]);
         Users::create([
             'name_user' => 'Guru Pengajar',
-            'email' => 'guru',
-            'password' => bcrypt('guru'),
-            'lihat_password' => 'guru',
+            'email' => '3527162918000003',
+            'password' => bcrypt('3527162918000003'),
+            'lihat_password' => '3527162918000003',
             'level'=> '3',
             'active'=> 'active'
         ]);

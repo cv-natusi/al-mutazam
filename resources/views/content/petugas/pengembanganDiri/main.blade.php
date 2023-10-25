@@ -13,49 +13,6 @@
         <div class="card-group main-layer">
             <div class="card">
                 <div class="card-body">
-                    {{-- <button type="button" class="btn btn-sm btn-rounded btn-primary addPengembangan mb-2">
-                        (+) Pengembangan Diri Guru
-                    </button>
-                    <button type="button" class="btn btn-sm btn-rounded btn-success addMstPengembanganDiri mb-2" style="float: right;">
-                        (+) Master Pengembangan Diri
-                    </button>
-                    <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
-                        <li class="nav-item">
-                            <a href="#pengembanganDiri" id="navPengembanganDiri" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 active">
-                                <i class="mdi mdi-home-variant d-lg-none d-block mr-1"></i><span class="d-none d-lg-block">Data Pengembangan Diri Guru</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#mstPengembanganDiri" id="navMstPengembanganDiri" data-toggle="tab" aria-expanded="true" class="nav-link rounded-0">
-                                <i class="mdi mdi-account-circle d-lg-none d-block mr-1"></i><span class="d-none d-lg-block">Data Master Pengembangan Diri</span>
-                            </a>
-                        </li>
-                    </ul>
-    
-                    <div class="tab-content">
-                        <div class="tab-pane show active" id="pengembanganDiri">
-                            <table class="table table-striped dataTable" id="datatablePengembanganDiri" style="width: 100%">
-                                <thead>
-                                    <td>No</td>
-                                    <td>NIP</td>		
-                                    <td>Nama Guru</td>												
-                                    <td>Aksi</td>
-                                    <td>Status</td>
-                                    <td>Verifikasi</td>
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="tab-pane" id="mstPengembanganDiri">
-                            <table class="table table-striped dataTable" id="datatableMstPengembanganDiri" style="width: 100%">
-                                <thead>
-                                    <td>No</td>
-                                    <td>Nama Dokumen/Data Pengembangan Diri</td>
-                                    <td>Aksi</td>
-                                </thead>
-                            </table>
-                        </div>
-                    </div> --}}
-
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" id="myTabs" role="tablist">
                         <li class="nav-item" role="presentation">
@@ -69,31 +26,77 @@
                     <!-- Tab panes -->
                     <div class="tab-content mt-3">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            {{-- <button type="button" class="btn button-custome" onclick="formFirst()"><i class="bx bxs-plus-square"></i> Tambah</button> --}}
-                            <div class="clearfix" style="margin-bottom: 20px"></div>
-                            <table class="table table-bordered table-striped dataTable" id="datatablePengembanganDiri" style="width: 100%">
-                                <thead>
-                                    <td>No</td>
-                                    <td>NIP</td>		
-                                    <td>Nama Guru</td>												
-                                    <td class="text-center">Aksi</td>
-                                    <td class="text-center">Status</td>
-                                    <td class="text-center">Verifikasi</td>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
+                            <div class="col-md-12">
+                                <div class="row mb-3">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-3" style="text-align: center">
+                                        <label>Tahun</label>
+                                        <select name="tahun" id="tahun" class="form-control" style="display: inline-block; width:70%;">
+                                            <option value="">.:: Pilih ::.</option>
+                                            <option value="2020-2021">2020-2021</option>
+                                            <option value="2021-2022">2021-2022</option>
+                                            <option value="2022-2023">2022-2023</option>
+                                            <option value="2023-2024">2023-2024</option>
+                                            <option value="2024-2025">2024-2025</option>
+                                            <option value="2025-2026">2025-2026</option>
+                                            <option value="2026-2027">2026-2027</option>
+                                            <option value="2027-2028">2027-2028</option>
+                                            <option value="2028-2029">2028-2029</option>
+                                            <option value="2029-2030">2029-2030</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3" style="text-align: center">
+                                        <label>Semester</label>
+                                        <select name="semester" id="semester" class="form-control" style="display: inline-block; width:70%;">
+                                            <option value="">.:: Pilih ::.</option>
+                                            <option value="1">Semester 1</option>
+                                            <option value="2">Semester 2</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button"  class="btn btn-sm button-custome float-end" style="width: 100%" onclick="download()"><i class='bx bxs-cloud-download'></i> Download</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <table class="table table-bordered table-striped dataTable" id="datatablePengembanganDiri" style="width: 100%">
+                                        <thead>
+                                            <td>No</td>
+                                            <td>NIP</td>		
+                                            <td>Nama Guru</td>	
+                                            <td>Tahun Ajaran</td>										
+                                            <td>Semester</td>	
+                                            <td class="text-center">Aksi</td>
+                                            <td class="text-center">Status</td>
+                                            <td class="text-center">Verifikasi</td>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            <button type="button" class="btn button-custome" onclick="formSecond()"><i class="bx bxs-plus-square"></i> Tambah</button>
-                            <div class="clearfix" style="margin-bottom: 20px"></div>
-                            <table class="table table-bordered table-striped dataTable" id="datatableMstPengembanganDiri" style="width: 100%">
-                                <thead>
-                                    <td>No</td>
-                                    <td>Nama Dokumen/Berkas</td>
-                                    <td>Aksi</td>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
+                            <div class="col-md-12">
+                                <div class="row mb-3">
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-sm button-custome" style="width: 100%" onclick="formSecond()"><i class="bx bxs-plus-square"></i> Tambah</button>
+                                    </div>
+                                    <div class="col-md-10"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-bordered table-striped dataTable" id="datatableMstPengembanganDiri" style="width: 100%">
+                                            <thead>
+                                                <td>No</td>
+                                                <td>Nama Dokumen</td>
+                                                <td>Tahun Ajaran</td>
+                                                <td>Semester</td>
+                                                <td>Aksi</td>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -112,15 +115,24 @@
 <script>
     $(document).ready(function() {
         $(".knob").knob()
+        $('#tahun').select2();
+        $('#semester').select2();
+        table();
+        table2();
+        filterByTwo();
     });
-    $(function() {
-        // DataTable Pengembangan Diri
+    // DataTable Pengembangan Diri
+    function table(tahun='', semester='') {
         var table = $('#datatablePengembanganDiri').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
                 url: "{{ route('pengembanganDiriPetugas') }}",
                 type: "POST",
+                data: {
+                    tahun : tahun,
+                    semester : semester,
+                },
                 error: function(xhr, errorType, exception) {
                     console.log(xhr.responseText); // Pesan kesalahan dari server
                 }
@@ -143,6 +155,20 @@
             {
                 data: 'nama',
                 name: 'nama',
+                render: function(data, type, row) {
+                    return '<p style="color:black">' + data + '</p>';
+                }
+            },				
+            {
+                data: 'tahun_ajaran',
+                name: 'tahun_ajaran',
+                render: function(data, type, row) {
+                    return '<p style="color:black">' + data + '</p>';
+                }
+            },				
+            {
+                data: 'modifySemester',
+                name: 'modifySemester',
                 render: function(data, type, row) {
                     return '<p style="color:black">' + data + '</p>';
                 }
@@ -169,7 +195,9 @@
                 searchable: false
             },]
         });
-        // DataTable Master Pengembangan Diri
+    }
+    // DataTable Master Pengembangan Diri
+    function table2() {
         var table2 = $('#datatableMstPengembanganDiri').DataTable({
             processing: true,
             serverSide: true,
@@ -180,7 +208,6 @@
                     console.log(xhr.responseText); // Pesan kesalahan dari server
                 }
             },
-
             columns: [{
                 data: 'DT_RowIndex',
                 name: 'DT_RowIndex',
@@ -196,22 +223,52 @@
                 }
             },
             {
+                data: 'tahun_ajaran',
+                name: 'tahun_ajaran',
+                render: function(data, type, row) {
+                    return '<p style="color:black">' + data + '</p>';
+                }
+            },
+            {
+                data: 'semester',
+                name: 'semester',
+                render: function(data, type, row) {
+                    return '<p style="color:black">' + data + '</p>';
+                }
+            },
+            {
                 data: 'actions',
                 name: 'actions',
                 orderable: false,
                 searchable: false
             },]
         });
-    });
+    }
+    function filterByTwo() {
+		$("#tahun").change(function (e) { 
+			e.preventDefault();
+            $('#datatablePengembanganDiri').DataTable().destroy();
+			table( $(this).val(), $("#semester").val());
+		});
+		$("#semester").change(function (e) { 
+			e.preventDefault();
+            $('#datatablePengembanganDiri').DataTable().destroy();
+			table($("#tahun").val() , $(this).val());
+		});
+	}
     function formFirst(id=''){
 		$.post("{{route('formPengembanganDiri')}}",{id:id},function(data){
 			$("#modalForm").html(data.content);
 		});
 	}
     function formFirstLihat(id='') {
-        $.post("{{route('formLihatPengembanganDiri')}}",{id:id},function(data){
-			$("#modalForm").html(data.content);
-		});   
+        $.post("{!! route('formLihatPengembanganDiri') !!}",{id:id}).done(function(data){
+          if(data.status == 'success'){
+            $('#modalForm').html(data.content).fadeIn();
+          } else {
+            $('.main-layer').show();
+          }
+        });
     }
     function formSecond(id='') {
         $.post("{{route('formMstPengembanganDiri')}}",{id:id},function(data){
@@ -243,95 +300,14 @@
         });
 	}
     function tolak(id) {
-		// Swal.fire({
-		// 	title: "Apakah Anda yakin?",
-		// 	text: "Data Akan Ditolak Dan Dikembalikan Pada Guru.",
-		// 	icon: 'warning',
-        //     inputAttributes: {
-        //         autocapitalize: 'off'
-        //     },
-		// 	showCancelButton: true,
-		// 	cancelButtonText: 'Batal',
-		// 	confirmButtonText: 'Tolak',
-        //     showLoaderOnConfirm: true,
-		// }).then((result) => {
-		// 	if (result.value) {
-		// 		$.post("{{ route('tolakPengembanganDiri') }}",{id:id}).done(function(data) {
-		// 			if(data.code==200){
-        //                 Swal.fire({
-        //                     icon: 'success',
-        //                     title: 'Berhasil',
-        //                     text: data.message,
-        //                     showConfirmButton: false,
-        //                     timer: 1200
-        //                 })
-        //                 location.reload()
-        //             }else{
-        //                 Swal.fire({
-        //                     icon: 'warning',
-        //                     title: 'Whoops',
-        //                     text: data.message,
-        //                     showConfirmButton: false,
-        //                     timer: 1300,
-        //                 })
-        //             }
-		// 		}).fail(function() {
-		// 			Swal.fire("Sorry!", "Terjadi Kesalahan Sistem!", "error");
-		// 		});
-		// 	} else if (result.dismiss === Swal.DismissReason.cancel) {
-		// 		Swal.fire("Batal", "Data batal ditolak!", "error");
-		// 	}
-		// });
-
-        Swal.fire({
-            title: "Tolak pengembangan diri?",
-			text: "Masukkan keterangan anda menolak.",
-            input: 'text',
-            inputAttributes: {
-                autocapitalize: 'off'
-            },
-            showCancelButton: true,
-            confirmButtonText: 'Tolak',
-            cancelButtonText: 'Batal',
-            showLoaderOnConfirm: true,
-            preConfirm: (keterangan) => {
-                if (keterangan == '') {
-                    Swal.showValidationMessage(
-                        `Masukkan keterangan and menolak!`
-                        );
-                }else{
-                    return keterangan;
-                }
-            },
-            allowOutsideClick: () => !Swal.isLoading()
-            }).then((result) => {
-            if (result.isConfirmed) {
-                let keterangan = result.value;
-                $.post("{{ route('tolakPengembanganDiri') }}",{id:id, keterangan:keterangan}).done(function(data) {
-                        if(data.code==200){
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: data.message,
-                                showConfirmButton: false,
-                                timer: 1200
-                            })
-                            location.reload()
-                        }else{
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Whoops',
-                                text: data.message,
-                                showConfirmButton: false,
-                                timer: 1300,
-                            })
-                        }
-                    }).fail(function() {
-                        Swal.fire("Sorry!", "Terjadi Kesalahan Sistem!", "error");
-                    });
-            }
-            })
-	}
+        $.post("{!! route('formTolakPengembanganDiri') !!}",{id:id}).done(function(data){
+          if(data.status == 'success'){
+            $('#modalForm').html(data.content).fadeIn();
+          } else {
+            $('.main-layer').show();
+          }
+        });
+    }
     function deleteSecond(id) { 
 		Swal.fire({
 			title: "Apakah Anda yakin?",
@@ -368,6 +344,34 @@
 				Swal.fire("Batal", "Data batal dihapus!", "error");
 			}
 		});
-     }
+    }
+    function download() {
+        var tahun = $('#tahun').val();
+        var semester = $('#semester').val();
+        if (tahun && semester) {
+            $.post("{!! route('exportPengembanganDiri') !!}", {
+                tahun: tahun,
+                semester: semester
+            }, function(data) {
+                var newWin = window.open('', 'Print-Window');
+                newWin.document.open();
+                newWin.document.write(
+                    '<html><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"></head><body>' +
+                    data.content + '</body></html>');
+                    setTimeout(() => {
+                        newWin.document.close();
+                        newWin.close();
+                    }, 3000);
+                });
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Whoops',
+                text: 'Tahun Ajaran atau Semester Belum Dipilih!',
+                showConfirmButton: false,
+                timer: 1200
+            });
+        }
+    }
 </script>
 @endpush

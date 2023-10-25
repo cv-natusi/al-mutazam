@@ -280,7 +280,7 @@
 										<td>{{$agenda->judul}}</td>
 										<td>{{date('d/M/Y',strtotime($agenda->tanggal_acara))}}</td>
 										<td>
-											<a href="javascript:void(0)" id="read-more-{{$agenda->id_berita}}" onclick="modalShow(`{{$agenda->id_berita}}`)" style="text-align: center; color: #000">Detail</a>
+											<a href="javascript:void(0)" id="read-more-{{$agenda->id_berita}}" onclick="modalShow(`{{$agenda->id_berita}}`)" style="text-align: center; color: #687EFF; text-decoration: underline;">Detail</a>
 										</td>
 									</tr>
 									@endforeach
@@ -294,11 +294,11 @@
 		</div>
 	</div>
 </section>
-<div class="modal" id="exampleModal" tabindex="-1">
+<div class="modal" id="detailModal" tabindex="-1">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<p class="modal-title fwhite fw7"></p>
+				<p class="modal-title-detail fwhite fw7"></p>
 				<button type="button" class="close-modal btn-x">
 					<i class="far fa-times-circle fwhite" style="font-size: 25px;"></i>
 				</button>
@@ -433,13 +433,13 @@
 					})
 					return false
 				}
-				await $('.modal-title').text(data.response.judul)
+				await $('.modal-title-detail').text(data.response.judul)
 				await $('#modal-img').attr('src', `${rootDir}/${data.response.gambar}`)
 				await $('#event-text').html(data.response.isi)
 				await $('#modal-img').on('error', async () => {
 					await $('#modal-img').attr('src', `${defaultDir}/default.jpg`)
 				})
-				$('.modal').fadeIn("slow")
+				$('#detailModal').fadeIn("slow")
 			})
 		} catch (error) {
 			await Swal.fire({
@@ -452,8 +452,14 @@
 		}
 	}
 	function preDownloadFile(param) {
-		$("#modal-login").show();
-		$('#filename').val(param);
+		var AuthUser = "{{{ (Auth::user()) ? Auth::user() : null }}}";
+		console.log(AuthUser)
+		if (AuthUser!='') {
+			downloadFile(param)
+		} else {
+			$("#modal-login").show();
+			$('#filename').val(param);	
+		}
 	}
 	$('#btn-login').click(function (e) {
 		var data  = new FormData($('.formLogin')[0]);
@@ -475,8 +481,12 @@
 			Swal.fire("MAAF !","Terjadi Kesalahan, Silahkan Ulangi Kembali !!", "error");
 		});
 	});
-	function downloadFile() {
-		var filename = $('#filename').val();
+	function downloadFile(filename='') {
+		if (filename!='') {
+			var filename = filename;
+		} else {
+			var filename = $('#filename').val();
+		}
         var url = "{{ route('home.downloadPdf', ':filename') }}";
         url = url.replace(':filename', filename);
 
@@ -493,9 +503,10 @@
                 link.download = filename;
                 link.click();
 				$('#modal-login').fadeOut("slow")
+				location.reload()
             },
             error: function() {
-                Swal.fire('Gagal mengunduh file PDF.');
+                Swal.fire('Maaf!','Gagal mengunduh file PDF, Berkas tidak ada.','error');
             }
         });
 	}

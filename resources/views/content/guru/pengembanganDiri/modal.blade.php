@@ -13,7 +13,15 @@
                     <div class="row mb-3">
                         <div class="col-md-12">
                             <label for="">Nama Kegiatan <small>*</small></label>
-                            <input type="text" name="nama_kegiatan" id="" class="form-control" value="{{!empty($data)?$data->nama_kegiatan:''}}">
+                            {{-- <input type="text" name="nama_kegiatan" id="" class="form-control" value="{{!empty($data)?$data->nama_kegiatan:''}}" autocomplete="off"> --}}
+                            <select name="nama_kegiatan" id="nama_kegiatan" class="form-control single-select">
+                                <option value="">.:: Pilih ::.</option>
+                                @if (count($dokumen)>0)
+                                @foreach ($dokumen as $d)
+                                <option value="{{$d->id_mst_pengembangan_diri}}">{{$d->nama_dokumen}}</option>
+                                @endforeach
+                                @endif
+                            </select>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -43,6 +51,12 @@
 	</div>
 </div> 
 <script type="text/javascript">
+    $(document).ready(function () {
+        $(".single-select").select2({
+            theme: 'bootstrap-5',
+            dropdownParent: $('#modalFormDialog')
+        });
+    });
     $('#modalFormDialog').modal('show');
     var rowCount = 1; // Awal nomor urutan
     $('#dokumen_id').change(function() {

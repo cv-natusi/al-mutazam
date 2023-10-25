@@ -26,8 +26,9 @@
                                     <td>Nama Kegiatan</td>
                                     <td>Tgl Mulai</td>
                                     <td>Tgl Selesai</td>
-                                    <td>Nama Dokumen/Berkas</td>
+                                    <td class="text-center">File Upload</td>
                                     <td class="text-center">Status</td>
+                                    <td>Keterangan</td>
                                     <td class="text-center">Aksi</td>
                                 </tr>
                             </thead>
@@ -54,7 +55,8 @@
     function loadTable(){
         var table = $('#datatabel').DataTable({
             scrollX: true,
-            searching: false, 
+            searching: false,
+            ordering: false, 
             // paging: false,
             processing: true,
             serverSide: true,
@@ -72,11 +74,12 @@
             },
             columns: [
                 { data: "DT_RowIndex", name: "DT_RowIndex"},
-                { data: "nama_kegiatan", name: "nama_kegiatan"},
+                { data: "modifyName", name: "modifyName"},
                 { data: "tgl_mulai", name: "tgl_mulai"},
                 { data: "tgl_selesai", name: "tgl_selesai"},
-                { data: "file", name: "file"},
+                { data: "modifyFile", name: "modifyFile", class: "text-center"},
                 { data: "stts", name: "stts", class: "text-center"},
+                { data: "modifyKeterangan", name: "modifyKeterangan"},
                 { data: "actions", name: "actions", class: "text-center"},
             ],
         })
@@ -87,6 +90,15 @@
 			$("#modalForm").html(data.content);
 		});
 	}
+    function showFile(id) {
+        $.post("{!! route('formLihatPengembanganDiriGuru') !!}",{id:id}).done(function(data){
+          if(data.status == 'success'){
+            $('#modalForm').html(data.content).fadeIn();
+          } else {
+            $('.main-layer').show();
+          }
+        });
+    }
     function hapusData(id) {
 		Swal.fire({
 			title: "Apakah Anda yakin?",

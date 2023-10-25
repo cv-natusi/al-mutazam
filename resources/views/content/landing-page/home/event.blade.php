@@ -70,48 +70,8 @@
 					</div>
 				</div>
 
-				<div class="col-lg-4">
-					<div class="row">
-						<div class="col-md-12">
-							<h1>Pengumuman</h1>
-						</div>
-					</div>
-					<div class="row d-flex align-items-center">
-						<div class="col-lg-12">
-							<div class="contact-box">
-								<div class="row">
-									<div class="col-md-3 mtb-auto">
-										<img class="img-80" src="{{asset('landing-page/images/pengumuman.png')}}" alt="contacts-icon">
-									</div>
-									<div class="col-md-9 mtb-auto text-left">
-										{{-- <span class="fw5">Sekolah:</span><br> --}}
-										{{-- <span class="fw4 f-color">Final MA Permata Festival 2021 [Baca Selengkapnya]</span> --}}
-										<span class="fw4">
-											Final MA Permata Festival 2021<br>
-											<a href="javascript:void(0)" onclick="tes()" class="color-a">[Baca Selengkapnya]</a>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row d-flex align-items-center">
-						<div class="col-lg-12">
-							<div class="contact-box">
-								<div class="row">
-									<div class="col-md-3 mtb-auto">
-										<img class="img-80" src="{{asset('landing-page/images/pengumuman.png')}}" alt="contacts-icon">
-									</div>
-									<div class="col-md-9 mtb-auto text-left">
-										<span class="fw4">
-											Pemenang Lomba Poster, Karikatur dan Mading<br>
-											<a href="javascript:void(0)" class="color-a">[Baca Selengkapnya]</a>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+				<div class="col-lg-4" style="padding-left: 30px;">
+					@include('content.landing-page.include.side-dokumen')
 				</div>
 			</div>
 		</div>

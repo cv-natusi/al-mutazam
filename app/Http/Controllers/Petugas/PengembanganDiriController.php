@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Petugas;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\PengembanganDiri;
+use App\Helpers\Helpers as Help;
 use App\Models\Guru;
+use App\Models\PengembanganDiri;
 use App\Models\MstPengembanganDiri;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -22,25 +23,53 @@ class PengembanganDiriController extends Controller
     public function pengembanganDiri(Request $request)
     {
         if ($request->ajax()) {
-            $data = PengembanganDiri::select(
-                    'pengembangan_diri.id_pengembangan_diri',
-                    'pengembangan_diri.guru_id',
-                    'pengembangan_diri.mst_pengembangan_diri_id',
-                    'pengembangan_diri.file',
-                    'pengembangan_diri.status',
-                    'g.id_guru',
-                    'g.nama',
-                    'g.nip',
-                    'mpd.id_mst_pengembangan_diri',
-                    'mpd.nama_dokumen',
-                )
-                ->leftJoin('data_guru as g', 'g.id_guru', 'pengembangan_diri.guru_id')
-                ->leftJoin('mst_pengembangan_diri as mpd', 'mpd.id_mst_pengembangan_diri', 'pengembangan_diri.mst_pengembangan_diri_id')
-                // ->whereNotIn('status', ['buat','tolak'])
-                ->orderBy('pengembangan_diri.id_pengembangan_diri','ASC')->get();
-
+            if (!empty($request->tahun)&&!empty($request->semester)) {
+                $data = PengembanganDiri::select(
+                        'pengembangan_diri.id_pengembangan_diri',
+                        'pengembangan_diri.guru_id',
+                        'pengembangan_diri.mst_pengembangan_diri_id',
+                        'pengembangan_diri.file',
+                        'pengembangan_diri.status',
+                        'g.id_guru',
+                        'g.nama',
+                        'g.nip',
+                        'mpd.id_mst_pengembangan_diri',
+                        'mpd.nama_dokumen',
+                        'mpd.tahun_ajaran',
+                        'mpd.semester'
+                    )
+                    ->leftJoin('data_guru as g', 'g.id_guru', 'pengembangan_diri.guru_id')
+                    ->leftJoin('mst_pengembangan_diri as mpd', 'mpd.id_mst_pengembangan_diri', 'pengembangan_diri.mst_pengembangan_diri_id')
+                    ->where('mpd.tahun_ajaran',$request->tahun)
+                    ->where('mpd.semester',$request->semester)
+                    ->orderBy('pengembangan_diri.id_pengembangan_diri','ASC')->get();
+            } else {
+                $data = PengembanganDiri::select(
+                        'pengembangan_diri.id_pengembangan_diri',
+                        'pengembangan_diri.guru_id',
+                        'pengembangan_diri.mst_pengembangan_diri_id',
+                        'pengembangan_diri.file',
+                        'pengembangan_diri.status',
+                        'g.id_guru',
+                        'g.nama',
+                        'g.nip',
+                        'mpd.id_mst_pengembangan_diri',
+                        'mpd.nama_dokumen',
+                        'mpd.tahun_ajaran',
+                        'mpd.semester'
+                    )
+                    ->leftJoin('data_guru as g', 'g.id_guru', 'pengembangan_diri.guru_id')
+                    ->leftJoin('mst_pengembangan_diri as mpd', 'mpd.id_mst_pengembangan_diri', 'pengembangan_diri.mst_pengembangan_diri_id')
+                    // ->whereNotIn('status', ['buat','tolak'])
+                    ->orderBy('pengembangan_diri.id_pengembangan_diri','ASC')->get();
+            }
+            // return $data;
             return DataTables::of($data)
             ->addIndexColumn()
+            ->addColumn('modifySemester', function($row){
+                $txt = "<text>Semester $row->semester</text>";
+                return $txt;
+            })
             ->addColumn('verifikasi', function($row){
                 if($row->status=='buat'){
                     $txt = "
@@ -57,22 +86,20 @@ class PengembanganDiriController extends Controller
                 }
             })
             ->addColumn('btnStatus', function($row){
-                if ($row->status!='verif') {
+                if ($row->status=='verif') {
+                    $txt = "<p class='disabled'>Terverifikasi</p>";
+                } else if ($row->status=='buat') {
                     $txt = "<p class='disabled'>Menunggu</p>";
                 } else {
-                    $txt = "<p style='color: #0000FF'>Terverifikasi</p>";
+                    $txt = "<p style='color: #D80032'>Ditolak</p>";
                 }
                 return $txt;
             })
             ->addColumn('actions', function($row){
-                if ($row->status!='verif') {
-                    $txt = "<button class='btn btn-sm btn-success text-center' title='lihat' onclick='formFirstLihat(`$row->id_pengembangan_diri`)'><i class='bx bxs-bullseye'></i> Lihat</button>";
-                } else {
-                    $txt = "<button class='btn btn-sm btn-success text-center disabled' title='lihat'><i class='bx bxs-bullseye'></i> Lihat</button>";  
-                }
+                $txt = "<button class='btn btn-sm btn-success text-center' title='lihat' onclick='formFirstLihat(`$row->id_pengembangan_diri`)'><i class='bx bxs-bullseye'></i> Lihat</button>";
                 return $txt;
             })
-            ->rawColumns(['actions', 'btnStatus', 'verifikasi'])
+            ->rawColumns(['actions','btnStatus','verifikasi','modifySemester'])
             ->toJson();
 		}
 
@@ -83,7 +110,6 @@ class PengembanganDiriController extends Controller
     {
         if ($request->ajax()) {
             $data = MstPengembanganDiri::orderBy('id_mst_pengembangan_diri','ASC')->get();
-            
             return DataTables::of($data)
 				->addIndexColumn()
 				->addColumn('actions', function($row){
@@ -131,12 +157,28 @@ class PengembanganDiriController extends Controller
 		return ['content'=>$content];
     }
     public function formLihatPengembanganDiri(Request $request) {
-        $data['title'] = "Lihat Data Pengembangan Diri";
-        $data['data'] = PengembanganDiri::where('id_pengembangan_diri',$request->id)->first();
-        $data['guru'] = Guru::where('id_guru',$data['data']->guru_id)->first();
-        $data['dokumen'] = MstPengembanganDiri::where('id_mst_pengembangan_diri',$data['data']->mst_pengembangan_diri_id)->first();
-        $content = view('content.petugas.pengembanganDiri.modalFirstLihat', $data)->render();
-		return ['content'=>$content];
+        try {
+            $data['title'] = "Lihat Data Pengembangan Diri";
+            $data['data'] = PengembanganDiri::where('id_pengembangan_diri',$request->id)->first();
+            // $data['guru'] = Guru::where('id_guru',$data['data']->guru_id)->first();
+            // $data['dokumen'] = MstPengembanganDiri::where('id_mst_pengembangan_diri',$data['data']->mst_pengembangan_diri_id)->first();
+            // $content = view('content.petugas.pengembanganDiri.modalFirstLihat', $data)->render();
+            $content = view('content.petugas.pengembanganDiri.modalFirstShow', $data)->render();
+			return ['status' => 'success', 'content' => $content, 'data' => $data];
+		} catch (\Exception $e) {
+			return ['status' => 'success', 'content' => '','errMsg'=>$e];
+		}
+    }
+    public function formTolakPengembanganDiri(Request $request) {
+        try {
+            $data['title'] = "Tolak Data Pengembangan Diri";
+            $data['data'] = PengembanganDiri::where('id_pengembangan_diri',$request->id)->first();
+            $content = view('content.petugas.pengembanganDiri.modalFirstTolak', $data)->render();
+			return ['status' => 'success', 'content' => $content, 'data' => $data];
+		} catch (\Exception $e) {
+			return ['status' => 'success', 'content' => '','errMsg'=>$e];
+		}
+
     }
     public function formMstPengembanganDiri(Request $request) {
         if (empty($request->id)) {
@@ -150,6 +192,7 @@ class PengembanganDiriController extends Controller
 		return ['content'=>$content];
     }
     public function savePengembanganDiri(Request $request) {
+        return $request->all();
         if (empty($request->id)) {
             $data = new PengembanganDiri;
         } else {
@@ -188,9 +231,8 @@ class PengembanganDiriController extends Controller
             $data->save();
             if ($data) {
                 return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Ditolak.'];
-            } else {
-                return ['code'=>201,'status'=>'error','message'=>'Data Gagal Ditolak.'];
             }
+            return ['code'=>201,'status'=>'error','message'=>'Data Gagal Ditolak.'];
         } catch (\Throwable $e) {
             Log::error('Terjadi kesalahan sistem: ' . $e->getMessage());
         }
@@ -202,6 +244,8 @@ class PengembanganDiriController extends Controller
             $data = MstPengembanganDiri::where('id_mst_pengembangan_diri',$request->id)->first();
 		}
         $data->nama_dokumen = $request->nama_dokumen;
+        $data->tahun_ajaran = $request->tahun_ajaran;
+        $data->semester = $request->semester;
         $data->save();
         if ($data) {
             return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Disimpan.'];
@@ -209,22 +253,65 @@ class PengembanganDiriController extends Controller
             return ['code'=>201,'status'=>'error','message'=>'Data Gagal Disimpan.'];
         }
     }
+    public function exportPengembanganDiri(Request $request) {
+		try {
+            $data['date'] = date('Y-m-d');
+            $data['tahun'] = $request->tahun;
+            $data['semester'] = "Semester ".$request->semester;
+            $data['judul'] = 'LAPORAN PENGEMBANGAN DIRI GURU MTS AL-MUTAZAM';
+
+            $this->query($request->tahun, $request->semester);
+            $data['data'] = $this->data;
+            if (count($this->data) > 0) {
+                $content = view('content.petugas.pengembanganDiri.excel', $data)->render();
+                return ['status' => 'success', 'content' => $content];
+            }
+            return ['status' => 'error', 'message' => 'Data tidak ditemukan pada tanggal tersebut!'];
+        } catch (\Throwable $e) {
+            $log = ['ERROR EXPORT PENGEMBANGAN DIRI ('.$e->getFile().')',false,$e->getMessage(),$e->getLine()];
+            Help::logging($log);
+            return Help::resApi('Terjadi kesalahan sistem',500);
+        }
+    }
+    public function query($tahun, $semester) {
+        $data = PengembanganDiri::select(
+            'pengembangan_diri.id_pengembangan_diri',
+            'pengembangan_diri.guru_id',
+            'pengembangan_diri.mst_pengembangan_diri_id',
+            'pengembangan_diri.file',
+            'pengembangan_diri.status',
+            'pengembangan_diri.keterangan_tolak',
+            'pengembangan_diri.tgl_mulai',
+            'pengembangan_diri.tgl_selesai',
+            'g.id_guru',
+            'g.nama',
+            'g.nip',
+            'mpd.id_mst_pengembangan_diri',
+            'mpd.nama_dokumen',
+            'mpd.tahun_ajaran',
+            'mpd.semester'
+        )
+        ->leftJoin('data_guru as g', 'g.id_guru', 'pengembangan_diri.guru_id')
+        ->leftJoin('mst_pengembangan_diri as mpd', 'mpd.id_mst_pengembangan_diri', 'pengembangan_diri.mst_pengembangan_diri_id')
+        ->where('mpd.tahun_ajaran',$tahun)
+        ->where('mpd.semester',$semester)
+        ->orderBy('pengembangan_diri.id_pengembangan_diri','ASC')->get();
+        
+		$this->data = $data;
+	}
     # guru pengajar
     public function mainPengembanganDiriGuru(Request $request) {
         if ($request->ajax()) {
-            $data = PengembanganDiri::
-            // select(
-            //         'pengembangan_diri.id_pengembangan_diri',
-            //         'pengembangan_diri.guru_id',
-            //         'pengembangan_diri.mst_pengembangan_diri_id',
-            //         'pengembangan_diri.tahun',
-            //         'pengembangan_diri.status',
-            //         'mpd.id_mst_pengembangan_diri',
-            //         'mpd.nama_dokumen',
-            //     )
+            $data = PengembanganDiri::select(
+                    'pengembangan_diri.*',
+                    'mpd.id_mst_pengembangan_diri',
+                    'mpd.nama_dokumen',
+                    'mpd.tahun_ajaran',
+                    'mpd.semester',
+                )
                 // ->leftJoin('data_guru as g', 'g.id_guru', 'pengembangan_diri.guru_id')
-                // ->leftJoin('mst_pengembangan_diri as mpd', 'mpd.id_mst_pengembangan_diri', 'pengembangan_diri.mst_pengembangan_diri_id')
-                where('guru_id', Auth::User()->guru_id)
+                ->leftJoin('mst_pengembangan_diri as mpd', 'mpd.id_mst_pengembangan_diri', 'pengembangan_diri.mst_pengembangan_diri_id')
+                ->where('guru_id', Auth::User()->guru_id)
                 // ->whereIn('status', ['buat', 'tolak'])
                 ->orderBy('pengembangan_diri.id_pengembangan_diri','DESC');
 
@@ -240,6 +327,24 @@ class PengembanganDiriController extends Controller
                 }
                 return $txt;
             })
+            ->addColumn('modifyName', function($row){
+                if (!empty($row->nama_dokumen)) {
+                    return $row->nama_dokumen;
+                } else {
+                    return "-";
+                }
+            })
+            ->addColumn('modifyKeterangan', function($row){
+                if (!empty($row->keterangan_tolak)) {
+                    return $row->keterangan_tolak;
+                } else {
+                    return "-";
+                }
+            })
+            ->addColumn('modifyFile', function($row){
+                $txt = "<a href='javascript:void(0)' onclick='showFile(`$row->id_pengembangan_diri`)'>$row->file</a>"; 
+                return $txt;
+            })
             ->addColumn('actions', function($row){
                 if ($row->status=='buat') {
                     $txt = "
@@ -250,7 +355,7 @@ class PengembanganDiriController extends Controller
                 }
                 return $txt;
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['actions','modifyFile'])
             ->toJson();
 		}
 
@@ -260,8 +365,22 @@ class PengembanganDiriController extends Controller
     public function formPengembanganDiriGuru(Request $request) {
         $data['title'] = "Upload Data Pengembangan Diri Guru";
         $data['data'] = PengembanganDiri::where('id_pengembangan_diri',$request->id)->first();
+        $data['dokumen'] = MstPengembanganDiri::all();
         $content = view('content.guru.pengembanganDiri.modal', $data)->render();
 		return ['content'=>$content];
+    }
+    public function formLihatPengembanganDiriGuru(Request $request) {
+        try {
+            $data['title'] = "Lihat Data Pengembangan Diri";
+            $data['data'] = PengembanganDiri::where('id_pengembangan_diri',$request->id)->first();
+            // $data['guru'] = Guru::where('id_guru',$data['data']->guru_id)->first();
+            // $data['dokumen'] = MstPengembanganDiri::where('id_mst_pengembangan_diri',$data['data']->mst_pengembangan_diri_id)->first();
+            // $content = view('content.petugas.pengembanganDiri.modalFirstLihat', $data)->render();
+            $content = view('content.petugas.pengembanganDiri.modalFirstShow', $data)->render();
+			return ['status' => 'success', 'content' => $content, 'data' => $data];
+		} catch (\Exception $e) {
+			return ['status' => 'error', 'content' => '','errMsg'=>$e];
+		}
     }
     public function savePengembanganDiriGuru(Request $request) {
         // return $request->all();
@@ -287,6 +406,7 @@ class PengembanganDiriController extends Controller
             );
             $validator = FacadesValidator::make($request->all(), $rules, $messages);
             if (!$validator->fails()) {
+                // return $request->all();
                 if(empty($request->id)) {
                     $data = new PengembanganDiri;
                 } else {
@@ -294,7 +414,9 @@ class PengembanganDiriController extends Controller
                 }
                 $data->status = 'buat';
                 $data->guru_id = Auth::User()->guru_id;
-                $data->nama_kegiatan = $request->nama_kegiatan;
+                // $data->nama_kegiatan = $request->nama_kegiatan;
+                $data->mst_pengembangan_diri_id = $request->nama_kegiatan;
+                $data->nama_kegiatan = '-';
                 $data->tgl_mulai = $request->tgl_mulai;
                 $data->tgl_selesai = $request->tgl_selesai;
 
