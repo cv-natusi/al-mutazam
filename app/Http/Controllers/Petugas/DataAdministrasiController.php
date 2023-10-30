@@ -26,9 +26,13 @@ class DataAdministrasiController extends Controller
 			return DataTables::of($data)
 				->addIndexColumn()
 				->addColumn('actions', function($row){
-					if ( $row->status=='2') {
+					if ($row->status=='2') {
                         $txt = "
-                        <button class='btn btn-sm btn-warning' title='Edit' onclick='uploadBerkas(`$row->id_administrasi`)' disabled>Upload</button>
+                        <button class='btn btn-sm btn-primary' title='Edit' disabled>Upload</button>
+                        ";
+                    } else if ($row->status=='3') {
+                        $txt = "
+                        <button class='btn btn-sm btn-primary' title='Edit' disabled>Terverifikasi</button>
                         ";
                     } else {
                         $txt = "
@@ -51,7 +55,7 @@ class DataAdministrasiController extends Controller
                     return "Semester ".$row->semester;
                 })
                 ->addColumn('modifyKeterangan', function($row){
-                    if (!empty($row->keterangan_tolak)) {
+                    if ($row->status=='0'&&!empty($row->keterangan_tolak)) {
                         return $row->keterangan_tolak;
                     } else {
                         return "-";
@@ -149,8 +153,8 @@ class DataAdministrasiController extends Controller
 			
 			return DataTables::of($data)
 				->addIndexColumn()
-				->addColumn('nip', function($row){
-					$txt = Guru::where('id_guru', $row->guru_id)->first()->nip;
+				->addColumn('nik', function($row){
+					$txt = Guru::where('id_guru', $row->guru_id)->first()->nik;
 					return $txt;
 				})
 				->addColumn('guru', function($row){
@@ -159,6 +163,10 @@ class DataAdministrasiController extends Controller
 				})
                 ->addColumn('modifySemester', function($row){
 					$txt = "<text>Semester $row->semester</text>";
+					return $txt;
+				})
+                ->addColumn('modifyName', function($row){
+					$txt = ($row->nama_berkas)?$row->nama_berkas:'-';
 					return $txt;
 				})
                 ->addColumn('verifikasi', function($row){

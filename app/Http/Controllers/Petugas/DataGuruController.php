@@ -80,7 +80,6 @@ class DataGuruController extends Controller{
 			$data['detailTugas'] = Guru::select(
 					'data_guru.id_guru',
 					'ddpg.id_detail_data_penugasan',
-					'ddpg.guru_id',
 					'ddpg.tugas_tambahan',
 					'tp.id_tugas_pegawai',
 					'tp.nama_tugas'
@@ -88,6 +87,7 @@ class DataGuruController extends Controller{
 				->leftJoin('detail_data_penugasan_guru as ddpg','ddpg.guru_id','data_guru.id_guru')
 				->leftJoin('tugas_pegawai as tp','tp.id_tugas_pegawai','ddpg.tugas_tambahan')
 				->where('data_guru.id_guru', $data['data']->id_guru)->get();
+			// $data['detailTugas'] = [];
 		} else {
 			$data['dataMapel'] = [];
 			$data['detailTugas'] = [];
@@ -198,6 +198,7 @@ class DataGuruController extends Controller{
 		}
 	}
 	public function saveDataPendidikan(Request $request){
+		// return $request->all();
 		try {
 			DB::beginTransaction();
 			$rules = [
@@ -227,6 +228,7 @@ class DataGuruController extends Controller{
 					DB::rollback();
 					return Help::resAjax(['message'=>'Data pendidikan guru gagal disimpan','code'=>500]);
 				}
+				// return 'nice';
 				foreach($request->mata_pelajaran as $k => $v){
 					$detailDataPendidikanGuru = DetailDataPendidikanGuru::where([
 						['mata_pelajaran',$v],
@@ -257,7 +259,7 @@ class DataGuruController extends Controller{
 		}
 	}
 	public function saveDataPenugasan(Request $request){
-		return $request->all();
+		// return $request->all();
 		try {
 			DB::beginTransaction();
 			$save = DataPenugasanGuru::store($request);
@@ -322,71 +324,71 @@ class DataGuruController extends Controller{
 			);
 			$validator = Validator::make($request->all(), $rules, $messages);
 			if (!$validator->fails()) {
-			$dataPendukung = DataPendukungGuru::where('guru_id', $request->id)->first();
-			$data = ($dataPendukung) ? $dataPendukung : new DataPendukungGuru;
-			$data->guru_id = $request->id;
-			if ($request->file_ktp) {
-				if (isset($data->file_ktp)) {
-					$check = Storage::disk('public')->exists("/uploads/dokumenGuru/$data->file_ktp");
-					if($check == 1 || $check == true){
-						Storage::disk('public')->delete("uploads/dokumenGuru/$data->file_ktp");
+				$dataPendukung = DataPendukungGuru::where('guru_id', $request->id)->first();
+				$data = ($dataPendukung) ? $dataPendukung : new DataPendukungGuru;
+				$data->guru_id = $request->id;
+				if ($request->file_ktp) {
+					if (isset($data->file_ktp)) {
+						$check = Storage::disk('public')->exists("/uploads/dokumenGuru/$data->file_ktp");
+						if($check == 1 || $check == true){
+							Storage::disk('public')->delete("uploads/dokumenGuru/$data->file_ktp");
+						}
 					}
+					$fileName =  date('YmdHis') . ".". $request->file_ktp->getClientOriginalName();
+					$filePath = 'uploads/dokumenGuru/' . $fileName;
+					$path = Storage::disk('public')->put($filePath, file_get_contents($request->file_ktp));
+					$path = Storage::disk('public')->url($path);
+					$data->file_ktp = $fileName;
 				}
-				$fileName =  date('YmdHis') . ".". $request->file_ktp->getClientOriginalName();
-				$filePath = 'uploads/dokumenGuru/' . $fileName;
-				$path = Storage::disk('public')->put($filePath, file_get_contents($request->file_ktp));
-				$path = Storage::disk('public')->url($path);
-				$data->file_ktp = $fileName;
-			}
-			if ($request->file_kk) {
-				if (isset($data->file_kk)) {
-					$check = Storage::disk('public')->exists("/uploads/dokumenGuru/$data->file_kk");
-					if($check == 1 || $check == true){
-						Storage::disk('public')->delete("uploads/dokumenGuru/$data->file_kk");
+				if ($request->file_kk) {
+					if (isset($data->file_kk)) {
+						$check = Storage::disk('public')->exists("/uploads/dokumenGuru/$data->file_kk");
+						if($check == 1 || $check == true){
+							Storage::disk('public')->delete("uploads/dokumenGuru/$data->file_kk");
+						}
 					}
+					$fileNameKK =  date('YmdHis') . ".".  $request->file_kk->getClientOriginalName();
+					$filePath = 'uploads/dokumenGuru/' . $fileNameKK;
+					$path = Storage::disk('public')->put($filePath, file_get_contents($request->file_kk));
+					$path = Storage::disk('public')->url($path);
+					$data->file_kk = $fileNameKK;
 				}
-				$fileNameKK =  date('YmdHis') . ".".  $request->file_kk->getClientOriginalName();
-				$filePath = 'uploads/dokumenGuru/' . $fileNameKK;
-				$path = Storage::disk('public')->put($filePath, file_get_contents($request->file_kk));
-				$path = Storage::disk('public')->url($path);
-				$data->file_kk = $fileNameKK;
-			}
-			if ($request->file_sk) {
-				if (isset($data->file_sk)) {
-					$check = Storage::disk('public')->exists("/uploads/dokumenGuru/$data->file_sk");
-					if($check == 1 || $check == true){
-						Storage::disk('public')->delete("uploads/dokumenGuru/$data->file_sk");
+				if ($request->file_sk) {
+					if (isset($data->file_sk)) {
+						$check = Storage::disk('public')->exists("/uploads/dokumenGuru/$data->file_sk");
+						if($check == 1 || $check == true){
+							Storage::disk('public')->delete("uploads/dokumenGuru/$data->file_sk");
+						}
 					}
+					$fileNameSertifikat =  date('YmdHis') . ".". $request->file_sk->getClientOriginalName();
+					$filePath = 'uploads/dokumenGuru/' . $fileNameSertifikat;
+					$path = Storage::disk('public')->put($filePath, file_get_contents($request->file_sk));
+					$path = Storage::disk('public')->url($path);
+					$data->file_sk = $fileNameSertifikat;
 				}
-				$fileNameSertifikat =  date('YmdHis') . ".". $request->file_sk->getClientOriginalName();
-				$filePath = 'uploads/dokumenGuru/' . $fileNameSertifikat;
-				$path = Storage::disk('public')->put($filePath, file_get_contents($request->file_sk));
-				$path = Storage::disk('public')->url($path);
-				$data->file_sk = $fileNameSertifikat;
-			}
-			if ($request->ijazah_terakhir) {
-				if (isset($data->ijazah_terakhir)) {
-					$check = Storage::disk('public')->exists("/uploads/dokumenGuru/$data->ijazah_terakhir");
-					if($check == 1 || $check == true){
-						Storage::disk('public')->delete("uploads/dokumenGuru/$data->ijazah_terakhir");
+				if ($request->ijazah_terakhir) {
+					if (isset($data->ijazah_terakhir)) {
+						$check = Storage::disk('public')->exists("/uploads/dokumenGuru/$data->ijazah_terakhir");
+						if($check == 1 || $check == true){
+							Storage::disk('public')->delete("uploads/dokumenGuru/$data->ijazah_terakhir");
+						}
 					}
+					$fileNameIjazah =  date('YmdHis') . ".". $request->ijazah_terakhir->getClientOriginalName();
+					$filePath = 'uploads/dokumenGuru/' . $fileNameIjazah;
+					$path = Storage::disk('public')->put($filePath, file_get_contents($request->ijazah_terakhir));
+					$path = Storage::disk('public')->url($path);
+					$data->ijazah_terakhir = $fileNameIjazah;
 				}
-				$fileNameIjazah =  date('YmdHis') . ".". $request->ijazah_terakhir->getClientOriginalName();
-				$filePath = 'uploads/dokumenGuru/' . $fileNameIjazah;
-				$path = Storage::disk('public')->put($filePath, file_get_contents($request->ijazah_terakhir));
-				$path = Storage::disk('public')->url($path);
-				$data->ijazah_terakhir = $fileNameIjazah;
+				$data->save();
+				if (!$data) {
+					DB::rollback();
+					return Help::resAjax(['message'=>'Data pendukung gagal disimpan','code'=>500]);
+				}
+				DB::commit();
+				return Help::resAjax(['message'=>'Data berhasil disimpan','code'=>200,'response'=>$data]);
+			}else{
+				return ['code'=>403,'status'=>'failed','message'=> $validator->messages()];
 			}
-			$data->save();
-			if (!$data) {
-				DB::rollback();
-				return Help::resAjax(['message'=>'Data pendukung gagal disimpan','code'=>500]);
-			}
-			DB::commit();
-			return Help::resAjax(['message'=>'Data berhasil disimpan','code'=>200,'response'=>$data]);
-		}else{
-			return ['code'=>403,'status'=>'failed','message'=> $validator->messages()];
-		}
 		} catch (\Throwable $e) {
 			Log::error('Terjadi kesalahan sistem: ' . $e->getMessage());
 		}

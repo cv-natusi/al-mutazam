@@ -63,7 +63,7 @@
 						<option value="">.:: Pilih ::.</option>
 						@if (count($pelajaran)>0)
 							@foreach ($pelajaran as $p)
-								<option value="{{$p->id_pelajaran}}">{{$p->nama_mapel}}</option>
+								<option @if($dataMapel[0]->potensi_bidang==$p->id_pelajaran) selected @endif value="{{$p->id_pelajaran}}">{{$p->nama_mapel}}</option>
 							@endforeach
 						@endif
 					</select>

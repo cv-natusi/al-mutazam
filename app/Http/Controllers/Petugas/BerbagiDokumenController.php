@@ -33,10 +33,10 @@ class BerbagiDokumenController extends Controller
 					";
 					return $txt;
 				})
-                ->addColumn('status', function($row){
-					$txt = 'STATUS';
-					return $txt;
-				})
+                // ->addColumn('status', function($row){
+				// 	$txt = 'STATUS';
+				// 	return $txt;
+				// })
 				->rawColumns(['actions'])
 				->toJson();
 		}
@@ -61,30 +61,40 @@ class BerbagiDokumenController extends Controller
     public function save(Request $request)
     {
         try {
+            $rules = [];
             if(empty($request->id)) {
-                $request->validate([
-                    'file_dokumen' => 'required|mimes:pdf|max:2048',
-                ]);
+                $rules = [
+                    'file_dokumen' => 'required|mimes:jpeg,png,jpg,gif,pdf,xlsx,docx|max:2048',
+                ];
                 $data = new BerbagiDokumen;
             } else {
                 $data = BerbagiDokumen::where('id_berbagi_dokumen',$request->id)->first();
             }
-            $data->tahun_ajaran = $request->tahun_ajaran;
-            $data->semester     = $request->semester;
-            $data->nama_dokumen = $request->nama_dokumen;
-            if ($request->file_dokumen) {
-                $fileName = $request->file_dokumen->getClientOriginalName();
-                $filePath = 'uploads/berbagiDokumen/' . $fileName;
-                $path = Storage::disk('public')->put($filePath, file_get_contents($request->file_dokumen));
-                $path = Storage::disk('public')->url($path);
-                $data->file_dokumen = $fileName;
-            }
-            $data->save(); 
-            if($data){
-                return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Disimpan.'];
-            } else{
+            $messages = array(
+                'required'  => 'harus diisi',
+                'mimes'  => 'format file tidak diperbolehkan',
+                'max' => 'ukuran file terlalu besar'
+            );
+			$validator = Validator::make($request->all(), $rules, $messages);
+			if (!$validator->fails()) {
+                $data->tahun_ajaran = $request->tahun_ajaran;
+                $data->semester     = $request->semester;
+                $data->nama_dokumen = $request->nama_dokumen;
+                if ($request->file_dokumen) {
+                    $fileName = $request->file_dokumen->getClientOriginalName();
+                    $filePath = 'uploads/berbagiDokumen/' . $fileName;
+                    $path = Storage::disk('public')->put($filePath, file_get_contents($request->file_dokumen));
+                    $path = Storage::disk('public')->url($path);
+                    $data->file_dokumen = $fileName;
+                }
+                $data->save(); 
+                if($data){
+                    return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Disimpan.'];
+                }
                 return ['code'=>201,'status'=>'success','message'=>'Data gagal Disimpan.'];
-            }
+            }else{
+				return ['code'=>403,'status'=>'failed','message'=> $validator->messages()];
+			}
         } catch (\Throwable $th) {
             return $th->getMessage();
         }

@@ -18,7 +18,7 @@
                                 <option value="">.:: Pilih ::.</option>
                                 @if (count($dokumen)>0)
                                 @foreach ($dokumen as $d)
-                                <option value="{{$d->id_mst_pengembangan_diri}}">{{$d->nama_dokumen}}</option>
+                                <option @if(!empty($data)&&$data->mst_pengembangan_diri_id==$d->id_mst_pengembangan_diri) selected @endif value="{{$d->id_mst_pengembangan_diri}}">{{$d->nama_dokumen}}</option>
                                 @endforeach
                                 @endif
                             </select>

@@ -131,7 +131,6 @@
 							hideForm()
 						})
 					}, 1100);
-					// location.reload()
 				}else if(data.code==403){
 					alert_validation(data.message)
 				}
@@ -241,10 +240,6 @@
 					title: 'Berhasil',
 					text: 'Data berhasil disimpan',
 					showConfirmButton: true,
-				})
-				$('.other-page').fadeOut(function(){
-					hideForm()
-					location.reload()
 				})
 			})
 		}catch(e){

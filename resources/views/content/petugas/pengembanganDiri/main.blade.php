@@ -61,7 +61,8 @@
                                     <table class="table table-bordered table-striped dataTable" id="datatablePengembanganDiri" style="width: 100%">
                                         <thead>
                                             <td>No</td>
-                                            <td>NIP</td>		
+                                            <td>NIP</td>
+                                            <td>Nama Kegiatan</td>	
                                             <td>Nama Guru</td>	
                                             <td>Tahun Ajaran</td>										
                                             <td>Semester</td>	
@@ -151,7 +152,14 @@
                 render: function(data, type, row) {
                     return '<p style="color:black">' + data + '</p>';
                 }
-            },				
+            },
+            {
+                data: 'modifySemester',
+                name: 'modifySemester',
+                render: function(data, type, row) {
+                    return '<p style="color:black">' + data + '</p>';
+                }
+            },			
             {
                 data: 'nama',
                 name: 'nama',

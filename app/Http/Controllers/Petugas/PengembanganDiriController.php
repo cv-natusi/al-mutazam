@@ -70,6 +70,9 @@ class PengembanganDiriController extends Controller
                 $txt = "<text>Semester $row->semester</text>";
                 return $txt;
             })
+            ->addColumn('modifySemester', function($row){
+                return MstPengembanganDiri::where('id_mst_pengembangan_diri',$row->mst_pengembangan_diri_id)->first()->nama_dokumen;
+            })
             ->addColumn('verifikasi', function($row){
                 if($row->status=='buat'){
                     $txt = "
@@ -336,7 +339,7 @@ class PengembanganDiriController extends Controller
                 }
             })
             ->addColumn('modifyKeterangan', function($row){
-                if (!empty($row->keterangan_tolak)) {
+                if ($row->status=='tolak'&&!empty($row->keterangan_tolak)) {
                     return $row->keterangan_tolak;
                 } else {
                     return "-";
@@ -347,12 +350,17 @@ class PengembanganDiriController extends Controller
                 return $txt;
             })
             ->addColumn('actions', function($row){
-                if ($row->status=='buat') {
+                if (Auth::User()->level == '2') {
                     $txt = "
-                    <button class='btn btn-sm btn-secondary' title='Edit' onclick='formAdd(`$row->id_pengembangan_diri`)'><i class='fadeIn animated bx bxs-file' aria-hidden='true'></i></button>
-                    <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusData(`$row->id_pengembangan_diri`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>";
+                        <button class='btn btn-sm btn-secondary' title='Edit' onclick='formAdd(`$row->id_pengembangan_diri`)'><i class='fadeIn animated bx bxs-file' aria-hidden='true'></i></button>
+                        <button class='btn btn-sm btn-danger' title='Hapus' onclick='hapusData(`$row->id_pengembangan_diri`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>";
                 } else {
-                    $txt = "<button class='btn btn-sm btn-success text-center disabled' title='Upload'>Upload</button>";  
+                    if ($row->status == 'tolak') {
+                        $txt = "<button class='btn btn-sm btn-success text-center' onclick='formAdd(`$row->id_pengembangan_diri`)' title='Upload'>Upload</button>";
+                    } else {
+                        $txt = "<button class='btn btn-sm btn-success text-center disabled' title='Upload'>Upload</button>";  
+                    }
+                    
                 }
                 return $txt;
             })
