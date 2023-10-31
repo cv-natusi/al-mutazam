@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-md-10"></div>
                 </div> --}}
-
+                <input type="hidden" name="authGuruId" id="authGuruId">
                 <div class="row" style="margin-top: 2rem">
                     <div class="table-responsive">
                         <table id="datatabel" class="table table-striped table-bordered" width="100%">
@@ -31,6 +31,7 @@
                                     <td>Upload</td>
                                     <td>Tahun Ajaran</td>
                                     <td>Semester</td>
+                                    <td>Batas Upload</td>
                                     <td class="text-center">Status</td>
                                     <td>Keterangan</td>
                                     <td class="text-center">Aksi</td>
@@ -83,6 +84,7 @@
                 { data: "modifyFile", name: "modifyFile"},
                 { data: "tahun", name: "tahun"},
                 { data: "modifySemester", name: "modifySemester"},
+                { data: "modifyBatas", name: "modifyBatas"},
                 { data: "modifyStatus", name: "modifyStatus", class: "text-center"},
                 { data: "modifyKeterangan", name: "modifyKeterangan"},
                 { data: "actions", name: "actions", class: "text-center"},

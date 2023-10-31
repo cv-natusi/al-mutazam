@@ -43,7 +43,7 @@
 						</div>
 					</div>
                     <div class="row mb-3">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label>Pilih Guru <small>*</small></label>
                             <select name="guru_id[]" id="guru_id" class="form-control single-select" multiple='multiple'>
                                 <option value="">.:: Pilih ::.</option>
@@ -51,6 +51,10 @@
                                     <option @if(!empty($data) && $data->guru_id==$g->id_guru) selected @endif value="{{$g->id_guru}}">{{$g->nama}}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Batas Upload <small>*</small></label>
+                            <input type="date" name="deadline_upload" id="deadline_upload" class="form-control">
                         </div>
                     </div>
 				</form>
@@ -78,13 +82,16 @@
         var tahun = $('#tahun_ajaran').find(":selected").val();
         var semester = $('#semesterAdd option:selected').val()
         var guru = $('#guru_id').find(":selected").val();
-        console.log(guru);
+        var deadline = $('#deadline_upload').val();
+
         if(!nama) {
             Swal.fire('Maaf!!', 'Nama Berkas Wajib Diisi.', 'warning')
         } else if(!tahun) {
             Swal.fire('Maaf!!', 'Tahun Ajaran Wajib Diisi.', 'warning')
         } else if(!guru) {
             Swal.fire('Maaf!!', 'Guru Wajib Diisi.', 'warning')
+        } else if(!deadline) {
+            Swal.fire('Maaf!!', 'Batas Upload Wajib Diisi.', 'warning')
         } else{
             var data = new FormData($('#saveForm')[0]);
             $.ajax({

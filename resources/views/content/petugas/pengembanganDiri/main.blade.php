@@ -27,34 +27,29 @@
                     <div class="tab-content mt-3">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="col-md-12">
-                                <div class="row mb-3">
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-3" style="text-align: center">
-                                        <label>Tahun</label>
-                                        <select name="tahun" id="tahun" class="form-control" style="display: inline-block; width:70%;">
-                                            <option value="">.:: Pilih ::.</option>
-                                            <option value="2020-2021">2020-2021</option>
-                                            <option value="2021-2022">2021-2022</option>
-                                            <option value="2022-2023">2022-2023</option>
-                                            <option value="2023-2024">2023-2024</option>
-                                            <option value="2024-2025">2024-2025</option>
-                                            <option value="2025-2026">2025-2026</option>
-                                            <option value="2026-2027">2026-2027</option>
-                                            <option value="2027-2028">2027-2028</option>
-                                            <option value="2028-2029">2028-2029</option>
-                                            <option value="2029-2030">2029-2030</option>
-                                        </select>
+                                <div class="row mb-4">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-3">
+                                        <label>Tanggal Awal</label>
+                                        <input type="date" name="pilihawal" id="pilihawal" class="form-control">
                                     </div>
-                                    <div class="col-md-3" style="text-align: center">
-                                        <label>Semester</label>
-                                        <select name="semester" id="semester" class="form-control" style="display: inline-block; width:70%;">
+                                    <div class="col-md-3">
+                                        <label>Tanggal Akhir</label>
+                                        <input type="date" name="pilihakhir" id="pilihakhir" class="form-control">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Pilih Guru</label>
+                                        <select name="pilihguru" id="pilihguru" class="form-control single-select">
                                             <option value="">.:: Pilih ::.</option>
-                                            <option value="1">Semester 1</option>
-                                            <option value="2">Semester 2</option>
+                                            @if (count($guru)>0)
+                                                @foreach ($guru as $gr)
+                                                <option value="{{$gr->id_guru}}">{{$gr->nama}}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <button type="button"  class="btn btn-sm button-custome float-end" style="width: 100%" onclick="download()"><i class='bx bxs-cloud-download'></i> Download</button>
+                                        <button type="button"  class="btn button-custome" style="width: 100%; margin-top:20px;" onclick="download()"><i class='bx bxs-cloud-download'></i> Download</button>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -64,8 +59,10 @@
                                             <td>NIP</td>
                                             <td>Nama Kegiatan</td>	
                                             <td>Nama Guru</td>	
-                                            <td>Tahun Ajaran</td>										
-                                            <td>Semester</td>	
+                                            {{-- <td>Tahun Ajaran</td>
+                                            <td>Semester</td>	 --}}
+                                            <td>Tgl Mulai</td>										
+                                            <td>Tgl Selesai</td>
                                             <td class="text-center">Aksi</td>
                                             <td class="text-center">Status</td>
                                             <td class="text-center">Verifikasi</td>
@@ -116,14 +113,15 @@
 <script>
     $(document).ready(function() {
         $(".knob").knob()
-        $('#tahun').select2();
-        $('#semester').select2();
+        $(".single-select").select2({
+            theme: 'bootstrap-5'
+        });
         table();
         table2();
         filterByTwo();
     });
     // DataTable Pengembangan Diri
-    function table(tahun='', semester='') {
+    function table(awal='',akhir='',guru='') {
         var table = $('#datatablePengembanganDiri').DataTable({
             processing: true,
             serverSide: true,
@@ -131,8 +129,9 @@
                 url: "{{ route('pengembanganDiriPetugas') }}",
                 type: "POST",
                 data: {
-                    tahun : tahun,
-                    semester : semester,
+                    awal : awal,
+                    akhir : akhir,
+                    guru : guru
                 },
                 error: function(xhr, errorType, exception) {
                     console.log(xhr.responseText); // Pesan kesalahan dari server
@@ -154,8 +153,8 @@
                 }
             },
             {
-                data: 'modifySemester',
-                name: 'modifySemester',
+                data: 'modifyName',
+                name: 'modifyName',
                 render: function(data, type, row) {
                     return '<p style="color:black">' + data + '</p>';
                 }
@@ -168,15 +167,15 @@
                 }
             },				
             {
-                data: 'tahun_ajaran',
-                name: 'tahun_ajaran',
+                data: 'tgl_mulai',
+                name: 'tgl_mulai',
                 render: function(data, type, row) {
                     return '<p style="color:black">' + data + '</p>';
                 }
             },				
             {
-                data: 'modifySemester',
-                name: 'modifySemester',
+                data: 'tgl_selesai',
+                name: 'tgl_selesai',
                 render: function(data, type, row) {
                     return '<p style="color:black">' + data + '</p>';
                 }
@@ -253,15 +252,20 @@
         });
     }
     function filterByTwo() {
-		$("#tahun").change(function (e) { 
+		$("#pilihawal").change(function (e) { 
 			e.preventDefault();
             $('#datatablePengembanganDiri').DataTable().destroy();
-			table( $(this).val(), $("#semester").val());
+			table($(this).val(), $("#pilihakhir").val(), $("#pilihguru").val());
 		});
-		$("#semester").change(function (e) { 
+        $("#pilihakhir").change(function (e) { 
 			e.preventDefault();
             $('#datatablePengembanganDiri').DataTable().destroy();
-			table($("#tahun").val() , $(this).val());
+			table($("#pilihawal").val(), $(this).val(), $("#pilihguru").val());
+		});
+		$("#pilihguru").change(function (e) { 
+			e.preventDefault();
+            $('#datatablePengembanganDiri').DataTable().destroy();
+			table($("#pilihawal").val(), $("#pilihakhir").val(), $(this).val());
 		});
 	}
     function formFirst(id=''){
@@ -354,12 +358,14 @@
 		});
     }
     function download() {
-        var tahun = $('#tahun').val();
-        var semester = $('#semester').val();
-        if (tahun && semester) {
+        var awal = $('#pilihawal').val();
+        var akhir = $('#pilihakhir').val();
+        var guru = $('#pilihguru').val();
+        if (awal && akhir && guru) {
             $.post("{!! route('exportPengembanganDiri') !!}", {
-                tahun: tahun,
-                semester: semester
+                awal: awal,
+                akhir: akhir,
+                guru: guru
             }, function(data) {
                 var newWin = window.open('', 'Print-Window');
                 newWin.document.open();
@@ -369,15 +375,15 @@
                     setTimeout(() => {
                         newWin.document.close();
                         newWin.close();
-                    }, 3000);
+                    }, 2000);
                 });
         } else {
             Swal.fire({
                 icon: 'warning',
                 title: 'Whoops',
-                text: 'Tahun Ajaran atau Semester Belum Dipilih!',
+                text: 'Tanggal awal & akhir atau guru wajib dipilih!',
                 showConfirmButton: false,
-                timer: 1200
+                timer: 2000
             });
         }
     }

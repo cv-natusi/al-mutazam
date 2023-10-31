@@ -18,18 +18,24 @@ class PengembanganDiriController extends Controller
     # Petugas
     public function main() {
         $data['title'] = 'Data Pengembangan Diri';
+        $data['guru'] = Guru::all();
         return view('content.petugas.pengembanganDiri.main', $data);
     }
     public function pengembanganDiri(Request $request)
     {
         if ($request->ajax()) {
-            if (!empty($request->tahun)&&!empty($request->semester)) {
+            $awal = $request->awal;
+            $akhir = $request->akhir;
+            $guru = $request->guru;
+            if (!empty($awal)&&!empty($akhir)&&!empty($guru)) {
                 $data = PengembanganDiri::select(
                         'pengembangan_diri.id_pengembangan_diri',
                         'pengembangan_diri.guru_id',
                         'pengembangan_diri.mst_pengembangan_diri_id',
                         'pengembangan_diri.file',
                         'pengembangan_diri.status',
+                        'pengembangan_diri.tgl_mulai',
+                        'pengembangan_diri.tgl_selesai',
                         'g.id_guru',
                         'g.nama',
                         'g.nip',
@@ -40,9 +46,9 @@ class PengembanganDiriController extends Controller
                     )
                     ->leftJoin('data_guru as g', 'g.id_guru', 'pengembangan_diri.guru_id')
                     ->leftJoin('mst_pengembangan_diri as mpd', 'mpd.id_mst_pengembangan_diri', 'pengembangan_diri.mst_pengembangan_diri_id')
-                    ->where('mpd.tahun_ajaran',$request->tahun)
-                    ->where('mpd.semester',$request->semester)
-                    ->orderBy('pengembangan_diri.id_pengembangan_diri','ASC')->get();
+                    ->where('g.id_guru',$request->guru)
+                    ->whereBetween('pengembangan_diri.tgl_mulai', [$awal, $akhir])
+                    ->orderBy('pengembangan_diri.id_pengembangan_diri','DESC')->get();
             } else {
                 $data = PengembanganDiri::select(
                         'pengembangan_diri.id_pengembangan_diri',
@@ -50,6 +56,8 @@ class PengembanganDiriController extends Controller
                         'pengembangan_diri.mst_pengembangan_diri_id',
                         'pengembangan_diri.file',
                         'pengembangan_diri.status',
+                        'pengembangan_diri.tgl_mulai',
+                        'pengembangan_diri.tgl_selesai',
                         'g.id_guru',
                         'g.nama',
                         'g.nip',
@@ -61,16 +69,12 @@ class PengembanganDiriController extends Controller
                     ->leftJoin('data_guru as g', 'g.id_guru', 'pengembangan_diri.guru_id')
                     ->leftJoin('mst_pengembangan_diri as mpd', 'mpd.id_mst_pengembangan_diri', 'pengembangan_diri.mst_pengembangan_diri_id')
                     // ->whereNotIn('status', ['buat','tolak'])
-                    ->orderBy('pengembangan_diri.id_pengembangan_diri','ASC')->get();
+                    ->orderBy('pengembangan_diri.id_pengembangan_diri','DESC')->get();
             }
             // return $data;
             return DataTables::of($data)
             ->addIndexColumn()
-            ->addColumn('modifySemester', function($row){
-                $txt = "<text>Semester $row->semester</text>";
-                return $txt;
-            })
-            ->addColumn('modifySemester', function($row){
+            ->addColumn('modifyName', function($row){
                 return MstPengembanganDiri::where('id_mst_pengembangan_diri',$row->mst_pengembangan_diri_id)->first()->nama_dokumen;
             })
             ->addColumn('verifikasi', function($row){
@@ -259,11 +263,10 @@ class PengembanganDiriController extends Controller
     public function exportPengembanganDiri(Request $request) {
 		try {
             $data['date'] = date('Y-m-d');
-            $data['tahun'] = $request->tahun;
-            $data['semester'] = "Semester ".$request->semester;
             $data['judul'] = 'LAPORAN PENGEMBANGAN DIRI GURU MTS AL-MUTAZAM';
-
-            $this->query($request->tahun, $request->semester);
+            $data['tglAwal'] = $request->awal;
+            $data['tglAkhir'] = $request->akhir;
+            $this->query($request->awal, $request->akhir, $request->guru);
             $data['data'] = $this->data;
             if (count($this->data) > 0) {
                 $content = view('content.petugas.pengembanganDiri.excel', $data)->render();
@@ -276,7 +279,7 @@ class PengembanganDiriController extends Controller
             return Help::resApi('Terjadi kesalahan sistem',500);
         }
     }
-    public function query($tahun, $semester) {
+    public function query($awal, $akhir, $guru) {
         $data = PengembanganDiri::select(
             'pengembangan_diri.id_pengembangan_diri',
             'pengembangan_diri.guru_id',
@@ -296,8 +299,8 @@ class PengembanganDiriController extends Controller
         )
         ->leftJoin('data_guru as g', 'g.id_guru', 'pengembangan_diri.guru_id')
         ->leftJoin('mst_pengembangan_diri as mpd', 'mpd.id_mst_pengembangan_diri', 'pengembangan_diri.mst_pengembangan_diri_id')
-        ->where('mpd.tahun_ajaran',$tahun)
-        ->where('mpd.semester',$semester)
+        ->where('g.id_guru',$guru)
+        ->whereBetween('pengembangan_diri.tgl_mulai', [$awal, $akhir])
         ->orderBy('pengembangan_diri.id_pengembangan_diri','ASC')->get();
         
 		$this->data = $data;
