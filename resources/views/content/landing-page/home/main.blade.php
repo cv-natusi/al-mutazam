@@ -249,77 +249,6 @@
 	</div>
 </section>
 
-<section class="bg-lightgrey courses-section division padding-section">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="row">
-					<div class="col-md-12 mb-2">
-						<div style="background: linear-gradient(90deg, #97E2A8 4.57%, rgba(217, 217, 217, 0) 76.75%); color: #000; padding: 5px">
-							<h3 style="margin-left: 10px">Agenda</h3>
-						</div>
-					</div>
-				</div>
-				<div class="row mt-3">
-					<div class="col-md-12">
-						<div class="table-responsive pr-30">
-							<table id="agendaTable" class="table table-striped table-bordered" style="width:100%; font-size: 14px;">
-								<thead>
-									<tr>
-										<th>No</th>
-										<th>Hari/Tanggal</th>
-										<th>Kegiatan</th>
-										<th>Aksi</th>
-									</tr>
-								</thead>
-								<tbody>
-									@if (count($agendas)>0)
-									@foreach ($agendas as $index => $agenda)
-									<tr>
-										<td>{{$index+1}}</td>
-										<td>{{$agenda->judul}}</td>
-										<td>{{date('d/M/Y',strtotime($agenda->tanggal_acara))}}</td>
-										<td>
-											<a href="javascript:void(0)" id="read-more-{{$agenda->id_berita}}" onclick="modalShow(`{{$agenda->id_berita}}`)" style="text-align: center; color: #000">Detail</a>
-										</td>
-									</tr>
-									@endforeach
-									@endif
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<div class="modal" id="exampleModal" tabindex="-1">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<p class="modal-title fwhite fw7"></p>
-				<button type="button" class="close-modal btn-x">
-					<i class="far fa-times-circle fwhite" style="font-size: 25px;"></i>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div class="row">
-					<div class="col-md-12 mb-4">
-						<img class="mx-auto d-block responsive img-fluid" id="modal-img" width="400" height="auto" src="{{asset('default.jpg')}}" alt="team-member-foto">
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						{{-- <div id="event-text"></div> --}}
-						<div id="event-text" class="text-justify"></div>
-						{{-- <p class="m-0" id="event-text"></p> --}}
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 <section id="about-3" class="bg-second-section about-section division padding-section">
 	<div class="container">
 		<div class="row">
@@ -433,13 +362,13 @@
 					})
 					return false
 				}
-				await $('.modal-title').text(data.response.judul)
+				await $('.modal-title-detail').text(data.response.judul)
 				await $('#modal-img').attr('src', `${rootDir}/${data.response.gambar}`)
 				await $('#event-text').html(data.response.isi)
 				await $('#modal-img').on('error', async () => {
 					await $('#modal-img').attr('src', `${defaultDir}/default.jpg`)
 				})
-				$('.modal').fadeIn("slow")
+				$('#detailModal').fadeIn("slow")
 			})
 		} catch (error) {
 			await Swal.fire({
@@ -452,8 +381,14 @@
 		}
 	}
 	function preDownloadFile(param) {
-		$("#modal-login").show();
-		$('#filename').val(param);
+		var AuthUser = "{{{ (Auth::user()) ? Auth::user() : null }}}";
+		console.log(AuthUser)
+		if (AuthUser!='') {
+			downloadFile(param)
+		} else {
+			$("#modal-login").show();
+			$('#filename').val(param);	
+		}
 	}
 	$('#btn-login').click(function (e) {
 		var data  = new FormData($('.formLogin')[0]);
@@ -475,8 +410,12 @@
 			Swal.fire("MAAF !","Terjadi Kesalahan, Silahkan Ulangi Kembali !!", "error");
 		});
 	});
-	function downloadFile() {
-		var filename = $('#filename').val();
+	function downloadFile(filename='') {
+		if (filename!='') {
+			var filename = filename;
+		} else {
+			var filename = $('#filename').val();
+		}
         var url = "{{ route('home.downloadPdf', ':filename') }}";
         url = url.replace(':filename', filename);
 
@@ -493,9 +432,10 @@
                 link.download = filename;
                 link.click();
 				$('#modal-login').fadeOut("slow")
+				location.reload()
             },
             error: function() {
-                Swal.fire('Gagal mengunduh file PDF.');
+                Swal.fire('Maaf!','Gagal mengunduh file PDF, Berkas tidak ada.','error');
             }
         });
 	}

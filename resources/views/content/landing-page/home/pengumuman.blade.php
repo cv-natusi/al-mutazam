@@ -80,41 +80,9 @@
                         {!! $pengumuman->links() !!}
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="row">
-                        <div class="col-md-12 mb-2">
-                            <div
-                                style="background: linear-gradient(90deg, #97E2A8 4.57%, rgba(217, 217, 217, 0) 76.75%); color: #000; padding: 5px">
-                                <h3 style="margin-left: 10px">Dokumen</h3>
-                            </div>
-                        </div>
-                    </div>
-                    @foreach ($pengumuman as $key => $val)
-                        <div class="row d-flex align-items-center">
-                            <div class="col-lg-12">
-                                <div class="contact-box">
-                                    <div class="row">
-                                        <div class="col-md-3 mtb-auto">
-                                            <img class="img-80" src="{{ asset('landing-page/images/mask.png') }}"
-                                                alt="contacts-icon">
-                                        </div>
-                                        <div class="col-md-9 mtb-auto text-left">
-                                            <span class="fw4">
-                                                {{ $val->judul }}<br>
-                                                <a href="javascript:void(0)" class="color-a">[Baca Selengkapnya]</a>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                    <div class="row">
-                        <div class="col-md-12">
-                            <a href="javascript:void(0)" class="color-a fw6"><i>LIHAT LAINNYA ...</i></a>
-                        </div>
-                    </div>
-                </div>
+                <div class="col-lg-4" style="padding-left: 30px;">
+					@include('content.landing-page.include.side-dokumen')
+				</div>
             </div>
         </div>
         <div class="modal fade" id="modal-detail" tabindex="-1">

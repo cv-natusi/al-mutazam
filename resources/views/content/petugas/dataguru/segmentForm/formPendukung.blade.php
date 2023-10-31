@@ -17,8 +17,8 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label>Sertifikat Pendidik</label>
-                    <input type="file" name="file_sertifikat_pendidik" class="form-control" placeholder="Sertifikat Pendidik">
+                    <label>SK</label>
+                    <input type="file" name="file_sk" class="form-control">
                 </div>
                 <div class="col-md-6">
                     <label>Ijazah Terakhir <small>*</small></label>

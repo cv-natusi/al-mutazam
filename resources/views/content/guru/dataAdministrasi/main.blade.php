@@ -13,24 +13,27 @@
                 <h5 class="text-card">{{$title}}</h5>
             </div>
             <div class="card-body">
-                <div class="row mb-3" style="margin-top: 1rem">
+                {{-- <div class="row mb-3" style="margin-top: 1rem">
                     <div class="col-md-2">
                         <button type="button" class="btn button-custome btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> Tambah</button>
                     </div>
                     <div class="col-md-10"></div>
-                </div>
-
+                </div> --}}
+                <input type="hidden" name="authGuruId" id="authGuruId">
                 <div class="row" style="margin-top: 2rem">
                     <div class="table-responsive">
                         <table id="datatabel" class="table table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
                                     <td>No</td>
-                                    <td>Nama Berkas Administrasi</td>
-                                    <td>Keterangan</td>
+                                    <td>Nama Berkas</td>
                                     <td>Tanggal Upload</td>
                                     <td>Upload</td>
+                                    <td>Tahun Ajaran</td>
+                                    <td>Semester</td>
+                                    <td>Batas Upload</td>
                                     <td class="text-center">Status</td>
+                                    <td>Keterangan</td>
                                     <td class="text-center">Aksi</td>
                                 </tr>
                             </thead>
@@ -57,7 +60,8 @@
     function loadTable(){
         var table = $('#datatabel').DataTable({
             scrollX: true,
-            searching: false, 
+            searching: false,
+            ordering: false,
             // paging: false,
             processing: true,
             serverSide: true,
@@ -76,56 +80,73 @@
             columns: [
                 { data: "DT_RowIndex", name: "DT_RowIndex"},
                 { data: "nama_berkas", name: "nama_berkas"},
-                { data: "keterangan", name: "keterangan"},
-                { data: "tanggal_upload", name: "tanggal_upload"},
-                { data: "file", name: "file"},
-                { data: "btnStatus", name: "btnStatus", class: "text-center"},
+                { data: "modifyTanggal", name: "modifyTanggal"},
+                { data: "modifyFile", name: "modifyFile"},
+                { data: "tahun", name: "tahun"},
+                { data: "modifySemester", name: "modifySemester"},
+                { data: "modifyBatas", name: "modifyBatas"},
+                { data: "modifyStatus", name: "modifyStatus", class: "text-center"},
+                { data: "modifyKeterangan", name: "modifyKeterangan"},
                 { data: "actions", name: "actions", class: "text-center"},
             ],
         })
     }
-    function formAdd(id='') {
-        $.post("{{route('administrasiModalForm')}}",{id:id},function(data){
+    function uploadBerkas(id='') {
+        $.post("{{route('modalBerkasGuru')}}",{id:id},function(data){
 			$("#modalForm").html(data.content);
 		});
     }
-    function hapusData(id) {
-		Swal.fire({
-			title: "Apakah Anda yakin?",
-			text: "Data yang dihapus tidak dapat dikembalikan lagi.",
-			icon: 'warning',
-			showCancelButton: true,
-			cancelButtonText: 'Batal',
-			confirmButtonText: 'Hapus',
-		}).then((result) => {
-			if (result.value) {
-				$.post("{{ route('deleteAdministrasi') }}",{id:id}).done(function(data) {
-					if(data.code==200){
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil',
-                            text: data.message,
-                            showConfirmButton: false,
-                            timer: 1200
-                        })
-                        location.reload()
-                    }else{
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Whoops',
-                            text: data.message,
-                            showConfirmButton: false,
-                            timer: 1300,
-                        })
-                    }
-				}).fail(function() {
-					Swal.fire("Sorry!", "Gagal menghapus data!", "error");
-				});
-			} else if (result.dismiss === Swal.DismissReason.cancel) {
-				Swal.fire("Batal", "Data batal dihapus!", "error");
-			}
-		});
-	}
+    function showFile(id) {
+        $.post("{!! route('administrasiModalFormPetugas') !!}",{id:id}).done(function(data){
+          if(data.status == 'success'){
+            $('#modalForm').html(data.content).fadeIn();
+          } else {
+            $('.main-layer').show();
+          }
+        });
+    }
+    // function formAdd(id='') {
+    //     $.post("{{route('administrasiModalForm')}}",{id:id},function(data){
+	// 		$("#modalForm").html(data.content);
+	// 	});
+    // }
+    // function hapusData(id) {
+	// 	Swal.fire({
+	// 		title: "Apakah Anda yakin?",
+	// 		text: "Data yang dihapus tidak dapat dikembalikan lagi.",
+	// 		icon: 'warning',
+	// 		showCancelButton: true,
+	// 		cancelButtonText: 'Batal',
+	// 		confirmButtonText: 'Hapus',
+	// 	}).then((result) => {
+	// 		if (result.value) {
+	// 			$.post("{{ route('deleteAdministrasi') }}",{id:id}).done(function(data) {
+	// 				if(data.code==200){
+    //                     Swal.fire({
+    //                         icon: 'success',
+    //                         title: 'Berhasil',
+    //                         text: data.message,
+    //                         showConfirmButton: false,
+    //                         timer: 1200
+    //                     })
+    //                     location.reload()
+    //                 }else{
+    //                     Swal.fire({
+    //                         icon: 'warning',
+    //                         title: 'Whoops',
+    //                         text: data.message,
+    //                         showConfirmButton: false,
+    //                         timer: 1300,
+    //                     })
+    //                 }
+	// 			}).fail(function() {
+	// 				Swal.fire("Sorry!", "Gagal menghapus data!", "error");
+	// 			});
+	// 		} else if (result.dismiss === Swal.DismissReason.cancel) {
+	// 			Swal.fire("Batal", "Data batal dihapus!", "error");
+	// 		}
+	// 	});
+	// }
     function hideForm(){
         $('#modalForm').hide()
         $('.main-layer').show()

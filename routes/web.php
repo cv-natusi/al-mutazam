@@ -17,8 +17,10 @@ use App\Http\Controllers\Petugas\DataAdministrasiController as DataAdministrasi;
 use App\Http\Controllers\Petugas\BerbagiDokumenController as BerbagiDokumen;
 use App\Http\Controllers\Petugas\DataKelasController as DataKelas;
 use App\Http\Controllers\Petugas\DataPelajaranController as DataPelajaran;
+use App\Http\Controllers\Petugas\MasterSIMController;
 use App\Http\Controllers\Petugas\PengembanganDiriController as PengembanganDiri;
 use GuzzleHttp\Psr7\UploadedFile;
+use App\Helpers\Helpers as Help;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +43,26 @@ Route::get('/clear', function () {
 	$exitCode = Artisan::call('route:clear');
 	$exitCode = Artisan::call('config:cache');
 	return 'Has been cleared!';
+});
+Route::get('autocheck', function () {
+	DB::beginTransaction();
+	try {
+		$today = date('Y-m-d');
+		$adm = DB::table('data_administrasi')->where([['deadline_upload','<',$today],['status',1]])->get();
+		if (count($adm)>0) {
+			foreach ($adm as $k => $v) {
+				$changeExp = DB::table('data_administrasi')->where('id_administrasi',$v->id_administrasi)->update(['status'=>'4','keterangan_tolak'=>'KADALUWARSA']);
+				if (!$changeExp) {
+					DB::rollback();
+				}
+			}
+		}
+		DB::commit();
+	} catch (\Throwable $e) {
+		DB::rollback();
+		$log = ['ERROR AUTOCHECK ('.$e->getFile().')',false,$e->getMessage(),$e->getLine()];
+		Help::logging($log);
+	}
 });
 # Landing page start
 Route::controller(HomeController::class)->group(function () {
@@ -205,6 +227,7 @@ Route::group(['middleware' => 'auth'], function () {
 					Route::get('/', 'galeri')->name('main');
 					Route::post('/formAddGaleri', [Admin::class, 'formAddGaleri'])->name('formAddGaleri');
 					Route::post('/SaveGaleri', [Admin::class, 'SaveGaleri'])->name('SaveGaleri');
+					Route::post('/deleteGaleri', [Admin::class, 'deleteGaleri'])->name('deleteGaleri');
 				});
 			});
 			# Modul media end
@@ -265,6 +288,7 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 	Route::group(array('prefix' => 'petugas-sekolah'), function () { #Web petugas sekolah
 		Route::get('/', [Dashboard::class, 'mainPetugas'])->name('dashboardPetugas');
+		Route::get('/get-dashboard-petugas', [Dashboard::class, 'getDashboardPetugas'])->name('getDashboardPetugas');
 		Route::group(array('prefix' => 'data-guru'), function () {
 			Route::get('/', [DataGuru::class, 'main'])->name('dataGuru');
 			Route::post('/form', [DataGuru::class, 'form'])->name('tambahGuru');
@@ -272,6 +296,7 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::post('/store-data-pendidikan', [DataGuru::class, 'saveDataPendidikan'])->name('saveDataPendidikan');
 			Route::post('/store-data-penugasan', [DataGuru::class, 'saveDataPenugasan'])->name('saveDataPenugasan');
 			Route::post('/store-data-pendukung', [DataGuru::class, 'saveDataPendukung'])->name('saveDataPendukung');
+			Route::post('/delete-data-guru', [DataGuru::class, 'deleteGuru'])->name('deleteGuru');
 		});
 		Route::group(array('prefix' => 'data-tugas-pegawai'), function () {
 			Route::get('/', [DataTugasPegawai::class, 'main'])->name('dataTugasPegawai');
@@ -298,17 +323,25 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::post('/mst-pengembangan-diri', [PengembanganDiri::class, 'mstPengembanganDiri'])->name('mstPengembanganDiri');
 			Route::post('/form-pengembangan-diri', [PengembanganDiri::class, 'formPengembanganDiri'])->name('formPengembanganDiri');
 			Route::post('/form-lihat-pengembangan-diri', [PengembanganDiri::class, 'formLihatPengembanganDiri'])->name('formLihatPengembanganDiri');
+			Route::post('/form-tolak-pengembangan-diri', [PengembanganDiri::class, 'formTolakPengembanganDiri'])->name('formTolakPengembanganDiri');
 			Route::post('/form-mst-pengembangan-diri', [PengembanganDiri::class, 'formMstPengembanganDiri'])->name('formMstPengembanganDiri');
 			Route::post('/save-pengembangan-diri', [PengembanganDiri::class, 'savePengembanganDiri'])->name('savePengembanganDiri');
 			Route::post('/save-mst-pengembangan-diri', [PengembanganDiri::class, 'saveMstPengembanganDiri'])->name('saveMstPengembanganDiri');
 			Route::post('/verif-pengembangan-diri', [PengembanganDiri::class, 'verifPengembanganDiri'])->name('verifPengembanganDiri');
 			Route::post('/tolak-pengembangan-diri', [PengembanganDiri::class, 'tolakPengembanganDiri'])->name('tolakPengembanganDiri');
+			Route::post('/delete-pengembangan-diri', [PengembanganDiri::class, 'deleteMstPengembanganDiri'])->name('deleteMstPengembanganDiri');
+			Route::post('/export-pengembangan-diri', [PengembanganDiri::class, 'exportPengembanganDiri'])->name('exportPengembanganDiri');
+			
 		});
 		Route::group(array('prefix' => 'data-administrasi'), function () {
 			Route::get('/', [DataAdministrasi::class, 'mainPetugas'])->name('dataAdministrasiPetugas');
 			Route::post('/modal-form', [DataAdministrasi::class, 'modalFormPetugas'])->name('administrasiModalFormPetugas');
 			Route::post('/verifikasi', [DataAdministrasi::class, 'verifikasi'])->name('verifAdministrasiPetugas');
+			Route::post('/form-tolak-administrasi', [DataAdministrasi::class, 'formTolak'])->name('formTolakAdministrasi');
 			Route::post('/tolak', [DataAdministrasi::class, 'tolak'])->name('tolakAdministrasiPetugas');
+			Route::post('/modal-berkas', [DataAdministrasi::class, 'modalBerkas'])->name('modalBerkasGuru');
+			Route::post('/upload-berkas-guru', [DataAdministrasi::class, 'uploadBerkas'])->name('uploadBerkasGuru');
+			Route::post('/export-data-administrasi', [DataAdministrasi::class, 'exportDataAdministrasi'])->name('exportDataAdministrasi');
 		});
 		Route::group(array('prefix' => 'berbagi-dokumen'), function () {
 			Route::get('/', [BerbagiDokumen::class, 'main'])->name('berbagiDokumen');
@@ -317,11 +350,18 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::post('/store', [BerbagiDokumen::class, 'save'])->name('saveBerbagiDokumen');
 			Route::post('/delete', [BerbagiDokumen::class, 'delete'])->name('deleteBerbagiDokumen');
 		});
+		Route::group(array('prefix' => 'master_sim'), function () {
+			Route::get('/', [MasterSIMController::class, 'main'])->name('masterSim');
+			Route::post('/modal-form', [MasterSIMController::class, 'modalForm'])->name('masterSimModalForm');
+			Route::post('/store', [MasterSIMController::class, 'save'])->name('saveMasterSim');
+			Route::post('/delete', [MasterSIMController::class, 'delete'])->name('deleteMasterSim');
+		});
 		Route::group(array('prefix' => 'pengguna'), function () {
 			Route::get('/', [Pengguna::class, 'main'])->name('pengguna');
 			Route::post('/modal-form', [Pengguna::class, 'modalForm'])->name('penggunaModalForm');
 			Route::post('/store', [Pengguna::class, 'save'])->name('savePengguna');
 			Route::post('/delete', [Pengguna::class, 'delete'])->name('deletePengguna');
+			Route::post('/reset-pengguna', [Pengguna::class, 'reset'])->name('resetPengguna');
 		});
 		Route::group(array('prefix' => 'reset-akun'), function () {
 			Route::get('/', [Pengaturan::class, 'main'])->name('resetAkun');
@@ -347,6 +387,8 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::group(array('prefix' => 'data-pengembangan-diri'), function () {
 			Route::get('/', [PengembanganDiri::class, 'mainPengembanganDiriGuru'])->name('mainPengembanganDiriGuru');
 			Route::post('/form-pengembangan-diri-guru', [PengembanganDiri::class, 'formPengembanganDiriGuru'])->name('formPengembanganDiriGuru');
+			Route::post('/form-lihat-pengembangan-diri-guru', [PengembanganDiri::class, 'formLihatPengembanganDiriGuru'])->name('formLihatPengembanganDiriGuru');
+			Route::post('/delete-pengembangan-diri-guru', [PengembanganDiri::class, 'delete'])->name('deletePengembanganDiriGuru');
 			Route::post('/save-pengembangan-diri-guru', [PengembanganDiri::class, 'savePengembanganDiriGuru'])->name('savePengembanganDiriGuru');
 		});
 		Route::group(array('prefix' => 'data-administrasi'), function () {

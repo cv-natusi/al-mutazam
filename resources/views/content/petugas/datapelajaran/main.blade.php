@@ -82,10 +82,10 @@
         $(".knob").knob()
         $('#tahun').select2();
         $('#semester').select2();
-        loadTable($("#tahun").val(), $("#semester").val());
+        loadTable();
 		filterByTwo();
     });
-    function loadTable(tahun=null, semester=null){
+    function loadTable(tahun='', semester=''){
         var table = $('#datatabel').DataTable({
             scrollX: true,
             searching: false, 
@@ -103,14 +103,15 @@
             ],
             ajax: {
                 url: "{{route('dataPelajaran')}}",
+                data: {
+					tahun : tahun,
+					semester : semester,
+				},
             },
             // ajax: {
 			// 	url:"{{route('datatableDataPelajaranGuru')}}",
 			// 	type: 'post',
-			// 	data: {
-			// 		tahun : tahun,
-			// 		semester : semester,
-			// 	}
+				
 			// },
             columns: [
                 { data: "DT_RowIndex", name: "DT_RowIndex"},

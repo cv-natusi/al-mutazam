@@ -18,6 +18,12 @@ class DataPendidikanGuru extends Model
 		$save->potensi_bidang = $param->potensi_bidang;
 		$save->no_sertifikat_pendidik = $param->no_sertifikat_pendidik;
 		$save->sertifikasi = $param->sertifikasi;
+        if ($image = $param->file('file_sertifikat_pendidik')) {
+            $destinationPath = 'images/guru/sertifikasi';
+            $fileName = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $fileName);
+            $save->file_sertifikasi = "$fileName";
+        }
 		$save->save();
 		return ($save) ? $save : false;
     }

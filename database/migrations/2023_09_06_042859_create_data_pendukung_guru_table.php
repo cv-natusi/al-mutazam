@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('guru_id');
             $table->string('file_ktp');
             $table->string('file_kk');
-            $table->string('file_sertifikat_pendidik')->nullable();
+            $table->string('file_sk')->nullable();
             $table->string('ijazah_terakhir');
             $table->timestamps();
         });

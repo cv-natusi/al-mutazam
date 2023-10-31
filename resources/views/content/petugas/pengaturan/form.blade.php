@@ -104,47 +104,67 @@
         });
     });
     $('.btnSimpan').click(()=>{
+        var password = $("input[name=password_baru]").val();
+        var password_ulang = $("input[name=password_baru_ulang]").val();
 		var data = new FormData($('.formSave')[0])
-		$('.btnSimpan').attr('disabled',true).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>LOADING...')
-        $.ajax({
-            url: '{{route("savePengaturan")}}',
-            type: 'POST',
-            data: data,
-            async: true,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function(data){
-                if(data.code==200){
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil',
-                        text: data.message,
-                        showConfirmButton: false,
-                        timer: 1200
-                    })
-                    location.reload()
-                }else{
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Whoops',
-                        text: data.message,
-                        showConfirmButton: false,
-                        timer: 1300,
-                    })
-                }
-                $('.btnSimpan').attr('disabled',false).html('SIMPAN')
-            }
-        }).fail(()=>{
+		if(!password) {
             Swal.fire({
-                icon: 'error',
-                title: 'Whoops..',
-                text: 'Terjadi kesalahan silahkan ulangi kembali',
+                icon: 'warning',
+                title: 'Whoops!!',
+                text: 'Pasword baru harus diisi',
                 showConfirmButton: false,
-                timer: 1300,
+                timer: 2000
             })
-            $('.btnSimpan').attr('disabled',false).html('SIMPAN')
-        })
+        } else if(!password_ulang) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Whoops!!',
+                text: 'Ulangi Pasword baru harus diisi',
+                showConfirmButton: false,
+                timer: 2000
+            })
+        } else {
+            $('.btnSimpan').attr('disabled',true).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>LOADING...')
+            $.ajax({
+                url: '{{route("savePengaturan")}}',
+                type: 'POST',
+                data: data,
+                async: true,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data){
+                    if(data.code==200){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1200
+                        })
+                        location.reload()
+                    }else{
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Whoops',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1300,
+                        })
+                    }
+                    $('.btnSimpan').attr('disabled',false).html('SIMPAN')
+                }
+            }).fail(()=>{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Whoops..',
+                    text: 'Terjadi kesalahan silahkan ulangi kembali',
+                    showConfirmButton: false,
+                    timer: 1300,
+                })
+                $('.btnSimpan').attr('disabled',false).html('SIMPAN')
+            })
+        }
 	})
 </script>
 @endpush

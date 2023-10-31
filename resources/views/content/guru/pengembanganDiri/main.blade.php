@@ -10,24 +10,25 @@
 
         <div class="card main-layer">
             <div class="card-body">
+                
                 <div class="row mb-3" style="margin-top: 1rem">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-7"></div>
                     <div class="col-md-2">
-                        {{-- <label for="">Tahun</label>
-                        <input type="date" name="tahun" id="tahun" value="{{date('Y')}}" class="form-control"> --}}
+                        <button type="button" class="btn button-custome btn-sm" style="width: 100%" onclick="formAdd()"><i class="bx bxs-plus-square"></i> Tambah</button>
                     </div>
+                    <div class="col-md-10"></div>
                 </div>
-
                 <div class="row" style="margin-top: 2rem">
                     <div class="table-responsive">
                         <table id="datatabel" class="table table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
                                     <td>No</td>
-                                    <td>Tahun</td>
-                                    <td>Nama Dokumen/Berkas</td>
+                                    <td>Nama Kegiatan</td>
+                                    <td>Tgl Mulai</td>
+                                    <td>Tgl Selesai</td>
+                                    <td class="text-center">File Upload</td>
                                     <td class="text-center">Status</td>
+                                    <td>Keterangan</td>
                                     <td class="text-center">Aksi</td>
                                 </tr>
                             </thead>
@@ -54,7 +55,8 @@
     function loadTable(){
         var table = $('#datatabel').DataTable({
             scrollX: true,
-            searching: false, 
+            searching: false,
+            ordering: false, 
             // paging: false,
             processing: true,
             serverSide: true,
@@ -72,17 +74,67 @@
             },
             columns: [
                 { data: "DT_RowIndex", name: "DT_RowIndex"},
-                { data: "tahun", name: "tahun"},
-                { data: "nama_dokumen", name: "nama_dokumen"},
+                { data: "modifyName", name: "modifyName"},
+                { data: "tgl_mulai", name: "tgl_mulai"},
+                { data: "tgl_selesai", name: "tgl_selesai"},
+                { data: "modifyFile", name: "modifyFile", class: "text-center"},
                 { data: "stts", name: "stts", class: "text-center"},
+                { data: "modifyKeterangan", name: "modifyKeterangan"},
                 { data: "actions", name: "actions", class: "text-center"},
             ],
         })
     }
-    function uploadGuru(id) {
-        $.post("{{route('formPengembanganDiriGuru')}}",{id:id},function(data){
+    
+    function formAdd(id=''){
+		$.post("{{route('formPengembanganDiriGuru')}}",{id:id},function(data){
 			$("#modalForm").html(data.content);
 		});
+	}
+    function showFile(id) {
+        $.post("{!! route('formLihatPengembanganDiriGuru') !!}",{id:id}).done(function(data){
+          if(data.status == 'success'){
+            $('#modalForm').html(data.content).fadeIn();
+          } else {
+            $('.main-layer').show();
+          }
+        });
     }
+    function hapusData(id) {
+		Swal.fire({
+			title: "Apakah Anda yakin?",
+			text: "Data Akan Dihapus.",
+			icon: 'warning',
+			showCancelButton: true,
+			cancelButtonText: 'Batal',
+			confirmButtonText: 'Ya',
+		}).then((result) => {
+			if (result.value) {
+				$.post("{{ route('deletePengembanganDiriGuru') }}",{id:id}).done(function(data) {
+					if(data.code==200){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1200
+                        })
+                        location.reload()
+                    }else{
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Whoops',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1300,
+                        })
+                    }
+				}).fail(function() {
+					Swal.fire("Sorry!", "Gagal menghapus data!", "error");
+				});
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				Swal.fire("Batal", "Data batal dihapus!", "error");
+			}
+		});
+	}
 </script>
 @endpush

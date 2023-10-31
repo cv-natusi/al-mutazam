@@ -1,5 +1,8 @@
 <?php
 namespace App\Helpers;
+
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Models\Identity;
 
 class Helpers{
@@ -47,6 +50,16 @@ class Helpers{
 		return $hari;
 	}
 	# Date end
+	# Custom response start
+	public static function resApi($msg='Terjadi kesalahan sistem',$code=500,$data=[]){ # Template rest api
+		return response()->json([
+			'metadata' => [
+				'message' => $msg,
+				'code'    => $code,
+			],
+			'response' => $data,
+		],$code);
+	}
 	public static function resAjax($data=[]){
 		$keyData = ['message','code','response'];
 		$arr = [];
@@ -74,4 +87,37 @@ class Helpers{
 	public static function getIdentity(){
 		return $data = Identity::first();
 	}
+	# Custom response End
+	# Logging start
+	public static function logging($param=[]){
+		# Modify parameter for logging start
+		for($i=0; $i<5; $i++){
+			$arr[$i] = isset($param[$i]) ? $param[$i] : (
+				$i==0 ? 'NO MESSAGES' : (
+					$i==1 ? false : '-'
+				)
+			);
+		}
+		# Modify parameter for logging end
+
+		$title   = $arr[0];
+		$status  = $arr[1]; # Status => true{jika program berhasil}, false{jika program gagal}
+		$errMsg  = $arr[2];
+		$errLine = $arr[3];
+		$data    = $arr[4];
+
+		$res = [
+			$title => [
+				'messageErr' => $errMsg,
+				'line'       => $errLine,
+				'data'       => $data,
+			]
+		];
+		if($status){ # If $status => true, unset key
+			unset($res[$title]['messageErr'],$res[$title]['line']);
+		}
+		Log::info(json_encode($res, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+		return true;
+	}
+	# Logging end
 }

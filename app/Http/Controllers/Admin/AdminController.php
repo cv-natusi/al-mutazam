@@ -822,9 +822,11 @@ class AdminController extends Controller{
 			}
 		}
 		$galeri = Galeri::where('id_galeri',$request->id)->delete();
-		if($galeri){
-			return ['status' => 'success'];
-		}
+		if ($galeri) {
+            return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Dihapus.'];
+        } else {
+            return ['code'=>201,'status'=>'error','message'=>'Data Gagal Dihapus.'];
+        }
 	}
 	# Modul media end
 	# Modul berita start

@@ -6,15 +6,17 @@
 		<form class="row mb-3 formDataPenugasan">
 			<input type="hidden" name="id" id="id" value="{{!empty($data)?$data->id_guru:''}}">
 			<div class="row mb-3">
-				<label>Tugas Utama</label>
-				<select name="tugas_utama" id="tugas_utama" class="form-control">
-					<option value="first">.:: Pilih ::.</option>
-					@if($tugas)
-						@foreach($tugas as $k => $v)
-							<option @if(!empty($dataTugas)&&$dataTugas->tugas_utama==$v->id_tugas_pegawai) selected @endif value="{{$v->id_tugas_pegawai}}">{{$v->nama_tugas}}</option>
-						@endforeach
-					@endif
-				</select>
+				<div class="col-md-12">
+					<label>Tugas Utama</label>
+					<select name="tugas_utama" id="tugas_utama" class="form-control">
+						<option value="first">.:: Pilih ::.</option>
+						@if($tugas)
+							@foreach($tugas as $k => $v)
+								<option @if(!empty($dataTugas)&&$dataTugas->tugas_utama==$v->id_tugas_pegawai) selected @endif value="{{$v->id_tugas_pegawai}}">{{$v->nama_tugas}}</option>
+							@endforeach
+						@endif
+					</select>
+				</div>
 			</div>
 			<div class="row mb-3">
 				<div class="col-md-10">
@@ -45,7 +47,7 @@
 							</tr>
 						</thead>
 						<tbody id="dataPenugasan">
-							@if(count($detailTugas)>0)
+							@if(!empty($detailTugas)&&$detailTugas[0]->id_detail_data_penugasan != '')
 								@foreach($detailTugas as $i => $v)
 									<tr class="rowMapel" id="{{$v->id_tugas_pegawai}}">
 										<td><span id="rowCount">{{$i+1}}</span></td>

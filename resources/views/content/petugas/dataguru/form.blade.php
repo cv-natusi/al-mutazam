@@ -189,10 +189,12 @@
 					text: 'Data berhasil disimpan',
 					showConfirmButton: true,
 				})
-				$('.other-page').fadeOut(function(){
-					hideForm()
-					location.reload()
-				})
+				setTimeout(()=>{
+					$('.other-page').fadeOut(()=>{
+						$('#datatabel').DataTable().ajax.reload()
+						hideForm()
+					})
+				}, 1100);
 			})
 		}catch(e){
 			await Swal.fire({

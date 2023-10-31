@@ -86,6 +86,43 @@
 			$("#modalForm").html(data.content);
 		});
     }
+    function resetData(id) {
+		Swal.fire({
+			title: "Apakah Anda yakin?",
+			text: "Username dan Password akan di reset dan default menggunakan NIK user.",
+			icon: 'warning',
+			showCancelButton: true,
+			cancelButtonText: 'Kembali',
+			confirmButtonText: 'Ya',
+		}).then((result) => {
+			if (result.value) {
+				$.post("{{ route('resetPengguna') }}",{id:id}).done(function(data) {
+					if(data.code==200){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1200
+                        })
+                        location.reload()
+                    }else{
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Whoops',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1300,
+                        })
+                    }
+				}).fail(function() {
+					Swal.fire("Sorry!", "Gagal menghapus data!", "error");
+				});
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				Swal.fire("Batal", "Data batal dihapus!", "error");
+			}
+		});
+	}
     function hapusData(id) {
 		Swal.fire({
 			title: "Apakah Anda yakin?",

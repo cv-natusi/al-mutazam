@@ -13,17 +13,29 @@
                     <div class="row mb-3">
 						<div class="col-md-12">
                             <label>Sebagai <small>*</small></label>
-                            <select name="level" id="level" class="form-control">
+                            <select name="level" id="level" class="form-control single-select">
                                 <option value="">.:: Pilih ::.</option>
                                 <option @if(!empty($data)&&$data->level=='2') selected @endif value="2">Petugas Madrasah</option>
                                 <option @if(!empty($data)&&$data->level=='3') selected @endif value="3">Guru</option>
                             </select>
 						</div>
 					</div>
+                    <div class="row mb-3" id="divNIK">
+						<div class="col-md-12">
+                            <label>NIK <small>*</small></label>
+                            <input type="text" name="nik" id="nik" class="form-control">
+						</div>
+					</div>
+                    <div class="row mb-3" id="divNama">
+						<div class="col-md-12">
+                            <label>Nama <small>*</small></label>
+                            <input type="text" name="nama" id="nama" class="form-control">
+						</div>
+					</div>
                     <div class="row mb-3" id="divGuru">
 						<div class="col-md-12">
                             <label>Pilih Guru <small>*</small></label>
-                            <select name="guru_id" id="guru_id" class="form-control">
+                            <select name="guru_id" id="guru_id" class="form-control single-select">
                                 <option value="">.:: Pilih ::.</option>
                                 @if (count($guru)>0)
                                     @foreach ($guru as $gu)
@@ -31,18 +43,6 @@
                                     @endforeach
                                 @endif
                             </select>
-						</div>
-					</div>
-                    <div class="row mb-3">
-						<div class="col-md-12">
-                            <label>Username <small>*</small></label>
-                            <input type="text" name="email" id="email" class="form-control" value="{{!empty($data)?$data->email:''}}" autocomplete="off">
-						</div>
-					</div>
-                    <div class="row mb-3">
-						<div class="col-md-12">
-                            <label>Password <small>*</small></label>
-                            <input type="text" name="password" id="password" class="form-control" autocomplete="off">
 						</div>
 					</div>
 				</form>
@@ -59,19 +59,23 @@
     $('#modalFormDialog').modal('show');
     $(document).ready(function () {
         $('#divGuru').hide();
+        $(".single-select").select2({
+            theme: 'bootstrap-5',
+            dropdownParent: $('#modalFormDialog')
+        });
     });
     $('.btnSimpan').click(function (e) { 
         e.preventDefault();
         var level = $('#level').val();
         var guruId = $('#guru_id').val();
-        var username = $('#email').val();
-        var password = $('#password').val();
+        var nik = $('#nik').val();
+        var nama = $('#nama').val();
         if(!level) {
             Swal.fire('Maaf!!', 'Pilih Sebagai Wajib Diisi.', 'warning')
-        } else if(!username) {
-            Swal.fire('Maaf!!', 'Username Wajib Diisi.', 'warning')
-        } else if(!password) {
-            Swal.fire('Maaf!!', 'Password Wajib Diisi.', 'warning')
+        } else if(level=='2' && !nik) {
+            Swal.fire('Maaf!!', 'NIK Wajib Diisi.', 'warning')
+        } else if(level=='2' && !nama) {
+            Swal.fire('Maaf!!', 'Nama Wajib Diisi.', 'warning')
         } else if(level=='3' && !guruId) {
             Swal.fire('Maaf!!', 'Pilih Guru Wajib Diisi.', 'warning')
         } else{
@@ -122,6 +126,12 @@
         var level = $('#level').val();
         if (level==3) {
             $('#divGuru').show();
+            $('#divNIK').hide();
+            $('#divNama').hide();
+        }else if(level==2){
+            $('#divNIK').show();
+            $('#divNama').show();
+            $('#divGuru').hide();
         } else {
             $('#divGuru').hide();
         }

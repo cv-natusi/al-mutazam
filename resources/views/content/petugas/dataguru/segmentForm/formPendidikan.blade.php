@@ -57,20 +57,28 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<label>Potensi Bidang</label>
 					<select name="potensi_bidang" id="potensi_bidang" class="form-control">
 						<option value="">.:: Pilih ::.</option>
-						<option @if(!empty($dataMapel->potensi_bidang)&&$dataMapel->potensi_bidang=='potensi') selected @endif value="potensi">Potensi Bidang</option>
+						@if (count($pelajaran)>0)
+							@foreach ($pelajaran as $p)
+								<option @if($dataMapel[0]->potensi_bidang==$p->id_pelajaran) selected @endif value="{{$p->id_pelajaran}}">{{$p->nama_mapel}}</option>
+							@endforeach
+						@endif
 					</select>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<label>No. Sertifikat Pendidik</label>
 					<input type="text" name="no_sertifikat_pendidik" id="no_sertifikat_pendidik" placeholder="No. Sertifikat Pendidik" class="form-control" value="{{!empty($dataMapel[0]->no_sertifikat_pendidik)?$dataMapel[0]->no_sertifikat_pendidik:''}}">
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<label>Sertifikasi</label>
 					<input type="text" name="sertifikasi" id="sertifikasi" placeholder="Sertifikasi" class="form-control" value="{{!empty($dataMapel[0]->sertifikasi)?$dataMapel[0]->sertifikasi:''}}">
+				</div>
+				<div class="col-md-3">
+					<label>File Sertifikat Pendidik</label>
+					<input type="file" name="file_sertifikat_pendidik" id="file_sertifikat_pendidik" class="form-control">
 				</div>
 			</div>
 		</form>

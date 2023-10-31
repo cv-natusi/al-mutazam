@@ -13,7 +13,7 @@
                     <div class="row mb-3">
 						<div class="col-md-6">
                             <label>Tahun Ajaran <small>*</small></label>
-                            <select name="tahun_ajaran" id="tahun_ajaran" class="form-control">
+                            <select name="tahun_ajaran" id="tahun_ajaran" class="form-control single-select">
                                 <option value="">.:: Pilih ::.</option>
                                 <option @if(!empty($data) && $data->tahun_ajaran=='2020-2021') selected @endif value="2020-2021">2020-2021</option>
                                 <option @if(!empty($data) && $data->tahun_ajaran=='2021-2022') selected @endif value="2021-2022">2021-2022</option>
@@ -29,7 +29,7 @@
 						</div>
                         <div class="col-md-6">
                             <label>Semester <small>*</small></label>
-                            <select name="semester" id="semester" class="form-control">
+                            <select name="semester" id="semesterForm" class="form-control single-select">
                                 <option value="">.:: Pilih ::.</option>
                                 <option @if(!empty($data) && $data->semester=='1') selected @endif value="1">Semeseter 1</option>
                                 <option @if(!empty($data) && $data->semester=='2') selected @endif value="2">Semeseter 2</option>
@@ -39,7 +39,7 @@
                     <div class="row mb-3">
 						<div class="col-md-12">
                             <label>Nama Dokumen <small>*</small></label>
-                            <input type="text" name="nama_dokumen" id="nama_dokumen" class="form-control" value="{{!empty($data)?$data->nama_dokumen:''}}">
+                            <input type="text" name="nama_dokumen" id="nama_dokumen" class="form-control" value="{{!empty($data)?$data->nama_dokumen:''}}" autocomplete="off">
 						</div>
 					</div>
                     <div class="row mb-3">
@@ -59,11 +59,17 @@
 	</div>
 </div> 
 <script type="text/javascript">
+    $(document).ready(function () {
+        $(".single-select").select2({
+            theme: 'bootstrap-5',
+            dropdownParent: $('#modalFormDialog')
+        }); 
+    });
     $('#modalFormDialog').modal('show');
     $('.btnSimpan').click(function (e) { 
         e.preventDefault();
         var ta = $('#tahun_ajaran').val();
-        var semester = $('#semester').val();
+        var semester = $('#semesterForm').val();
         var nama = $('#nama_dokumen').val();
         var file = $('#file_dokumen').val();
         if(!ta) {
@@ -96,7 +102,7 @@
                         Swal.fire({
                             icon: 'warning',
                             title: 'Whoops',
-                            text: data.message,
+                            text: 'terjadi kesalahan sistem.',
                             showConfirmButton: false,
                             timer: 1300,
                         })

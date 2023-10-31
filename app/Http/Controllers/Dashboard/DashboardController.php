@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Guru;
+use App\Models\MstKelas;
+use App\Models\DataAdministrasi;
+use App\Models\PengembanganDiri;
 use DB;
 
 class DashboardController extends Controller{
@@ -23,6 +27,13 @@ class DashboardController extends Controller{
 	public function mainPetugas() {
 		$data['title'] = 'Dashboard Petugas';
 		return view('content.petugas.dashboard.main', $data);
+	}
+	public function getDashboardPetugas() {
+		$data['guru'] = Guru::count();
+		$data['kelas'] = MstKelas::count();
+		$data['administrasi'] = DataAdministrasi::count();
+		$data['pengembangandiri'] = PengembanganDiri::count();
+		return ['code'=>200,'status'=>'success','message'=>'Berhasil','data'=>$data];
 	}
 	public function MainGuru() {
 		$data['title'] = 'Dasboard Guru';

@@ -177,6 +177,14 @@
 				<div class="menu-title">Berbagi Dokumen</div>
 			</a>
 		</li>
+		<li class="{{ ($title == 'Master SIM') ? 'mm-active' : ''}}">
+			<a href="{{route('masterSim')}}">
+				<div class="parent-icon">
+					<i class='bx bxs-customize' ></i>
+				</div>
+				<div class="menu-title">Master SIM</div>
+			</a>
+		</li>
 		<li class="{{ ($title == 'Data Pengguna') ? 'mm-active' : ''}}">
 			<a href="{{route('pengguna')}}">
 				<div class="parent-icon">

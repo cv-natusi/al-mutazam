@@ -10,11 +10,37 @@
 			<div class="modal-body">
 				<form id="saveForm">
 					<input type="hidden" name="id" id="id" value="{{!empty($data)?$data->id_mst_pengembangan_diri:''}}">
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-md-12">
-                            <label for="">Nama Dokumen//Berkas</label>
+                            <label>Nama Dokumen <small>*</small></label>
                             <input type="text" name="nama_dokumen" id="nama_dokumen" class="form-control" placeholder="Nama Dokumen" autocomplete="off"
                             value="{{!empty($data)?$data->nama_dokumen:''}}">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label>Tahun Ajaran <small>*</small></label>
+                            <select name="tahun_ajaran" id="tahun_ajaran" class="form-control single-select">
+                                <option value="">.:: Pilih ::.</option>
+                                <option @if(!empty($data) && $data->tahun_ajaran=='2020-2021') selected @endif value="2020-2021">2020-2021</option>
+                                <option @if(!empty($data) && $data->tahun_ajaran=='2021-2022') selected @endif value="2021-2022">2021-2022</option>
+                                <option @if(!empty($data) && $data->tahun_ajaran=='2022-2023') selected @endif value="2022-2023">2022-2023</option>
+                                <option @if(!empty($data) && $data->tahun_ajaran=='2023-2024') selected @endif value="2023-2024">2023-2024</option>
+                                <option @if(!empty($data) && $data->tahun_ajaran=='2024-2025') selected @endif value="2024-2025">2024-2025</option>
+                                <option @if(!empty($data) && $data->tahun_ajaran=='2025-2026') selected @endif value="2025-2026">2025-2026</option>
+                                <option @if(!empty($data) && $data->tahun_ajaran=='2026-2027') selected @endif value="2026-2027">2026-2027</option>
+                                <option @if(!empty($data) && $data->tahun_ajaran=='2027-2028') selected @endif value="2027-2028">2027-2028</option>
+                                <option @if(!empty($data) && $data->tahun_ajaran=='2028-2029') selected @endif value="2028-2029">2028-2029</option>
+                                <option @if(!empty($data) && $data->tahun_ajaran=='2029-2030') selected @endif value="2029-2030">2029-2030</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Semester <small>*</small></label>
+                            <select name="semester" id="semesterSecond" class="form-control single-select">
+                                <option value="">.:: Pilih ::.</option>
+                                <option @if(!empty($data) && $data->semester=='1') selected @endif value="1">Semeseter 1</option>
+                                <option @if(!empty($data) && $data->semester=='2') selected @endif value="2">Semeseter 2</option>
+                            </select>
                         </div>
                     </div>
 				</form>
@@ -24,16 +50,27 @@
                 <button type="button" class="btn btn-sm button-custome btnSimpan">SIMPAN</button>
             </div>
 		</div>
-
 	</div>
-</div> 
+</div>
 <script type="text/javascript">
     $('#modalFormDialog').modal('show');
+    $(document).ready(function () {
+        $(".single-select").select2({
+            theme: 'bootstrap-5',
+            dropdownParent: $('#modalFormDialog')
+        });
+    });
     $('.btnSimpan').click(function (e) { 
         e.preventDefault();
         var nama = $('#nama_dokumen').val();
+        var tahun = $('#tahun_ajaran').val();
+        var semester = $('#semesterSecond option:selected').val()
         if(!nama) {
             Swal.fire('Maaf!!', 'Nama Dokumen Wajib Diisi.', 'warning')
+        } else if(!tahun) {
+            Swal.fire('Maaf!!', 'Tahun Ajaran Wajib Diisi.', 'warning')
+        } else if(!semester) {
+            Swal.fire('Maaf!!', 'Semester Wajib Diisi.', 'warning')
         } else{
             var data = new FormData($('#saveForm')[0]);
             $.ajax({
