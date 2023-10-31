@@ -191,16 +191,27 @@
                 tahun: tahun,
                 semester: semester
             }, function(data) {
-                var newWin = window.open('', 'Print-Window');
-                newWin.document.open();
-                newWin.document.write(
-                    '<html><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"></head><body>' +
-                    data.content + '</body></html>');
+                if (data.status=='success') {
+                    var newWin = window.open('', 'Print-Window');
+                    newWin.document.open();
+                    newWin.document.write(
+                        '<html><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"></head><body>' +
+                        data.content + '</body></html>'
+                    );
                     setTimeout(() => {
                         newWin.document.close();
                         newWin.close();
                     }, 3000);
-                });
+                } else {
+                    Swal.fire({
+                        icon: data.status,
+                        title: 'Whoops',
+                        text: data.message,
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                }    
+            });
         } else {
             Swal.fire({
                 icon: 'warning',
