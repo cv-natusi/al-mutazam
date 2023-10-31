@@ -4,12 +4,16 @@
 			<td colspan="6"><b><p style="text-align:center;">{{ $judul }}</p></b></td>
 		</tr>
         <br>
-		<tr>
+		{{-- <tr>
 			<td colspan="1"><p>SEMESTER : {{$semester}}</p></td>
             <td colspan="9"><p style="text-align: center;">TANGGAL : {{ $date }}</p></td>
 		</tr>
 		<tr>
             <td><p>TAHUN PELAJARAN : {{$tahun}}</p></td>
+		</tr> --}}
+		<tr>
+			{{-- <td colspan="1"><p>TAHUN PELAJARAN : 2022-2023</p></td> --}}
+            <td colspan="6"><b><p style="text-align: center;">PERIODE : {{$tglAwal}} - {{$tglAkhir}}</p></b></td>
 		</tr>
         <br>
 		<tr>

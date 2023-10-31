@@ -121,7 +121,7 @@
 		<div class="row">
 			<div class="col-md-12 text-center">
 				<p><b>- Berilmu yang berguna bagi agama, bangsa dan negara serta bermanfaat bagi masyarakat -</b></p>
-				<p>© 2022 | Mts Al-Multazam - Mojokerto</p>
+				<p>© {{date('Y')}} | Mts Al-Multazam - Mojokerto</p>
 			</div>
 		</div>
 	</div>

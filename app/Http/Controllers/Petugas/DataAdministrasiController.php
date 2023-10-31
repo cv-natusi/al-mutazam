@@ -48,6 +48,13 @@ class DataAdministrasiController extends Controller
                         return "-";
                     }
                 })
+                ->addColumn('modifyBatas', function($row){
+                    if (!empty($row->deadline_upload)) {
+                        return $row->deadline_upload;
+                    } else {
+                        return "-";
+                    }
+                })
                 ->addColumn('tahun', function($row){
                     return $row->tahun_ajaran;
                 })
@@ -86,7 +93,6 @@ class DataAdministrasiController extends Controller
         $data['title'] = $this->title;
         return view('content.guru.dataAdministrasi.main', $data);
     }
-
     public function modalForm(Request $request) {
         if (empty($request->id)) {
             $data['title'] = "Tambah ".$this->title;
@@ -99,35 +105,53 @@ class DataAdministrasiController extends Controller
         $content = view('content.petugas.dataAdministrasi.modalForm', $data)->render();
 		return ['content'=>$content];
     }
-
-    public function save(Request $request) {
-        // if (empty($request->id)) {
-        //     $data = new DataAdministrasi;
-        // } else {
-        //     $data = DataAdministrasi::find($request->id);
-        // }
-        try {
-            $i = 0;
-            foreach ($request->guru_id as $key => $v) {
-                $data = new DataAdministrasi;
-                $data->guru_id = $request->guru_id[$i];
-                $data->nama_berkas = $request->nama_berkas;
-                $data->tahun_ajaran = $request->tahun_ajaran;
-                $data->semester = $request->semester;
-                $data->status = '1'; # Meminta pengupload-an kepada guru
-                $data->save();
-                $i++;
-
-                if (!$data) {
-                    return ['code'=>201,'status'=>'error','message'=>'Data Gagal Disimpan.'];
+    public function uploadBerkas(Request $request) {
+        $rules = array(
+            'file' => 'required|mimes:jpeg,png,jpg,pdf,docx|max:2048',
+        );
+        $messages = array(
+            'required'  => 'harus diisi',
+            'mimes'  => 'format file tidak diperbolehkan',
+            'max' => 'ukuran file terlalu besar'
+        );
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if (!$validator->fails()) {
+            $data = DataAdministrasi::find($request->id);
+            $data->tanggal_upload = date('Y-m-d');
+            if ($image = $request->file('file')) {
+                $check = Storage::disk('public')->exists("/uploads/dataAdministrasi/$data->file");
+                if($check == 1 || $check == true){
+                    Storage::disk('public')->delete("uploads/dataAdministrasi/$data->file");
                 }
+                $fileName = $request->file->getClientOriginalName();
+                $filePath = 'uploads/dataAdministrasi/' . $fileName;
+                $path = Storage::disk('public')->put($filePath, file_get_contents($request->file));
+                $path = Storage::disk('public')->url($path);
+                $data->file = $fileName;
+
+                //DELETE PREV FILE IF NOT NULL
+                // if (isset($data->file)) {
+                //     $check = Storage::disk('public')->exists("/uploads/administrasi/$data->file");
+                //     if($check == 1 || $check == true){
+                //         Storage::disk('public')->delete("uploads/administrasi/$data->file");
+                //     }
+                // }
+                // $destinationPath = 'images/administrasi';
+                // $fileUpload = date('YmdHis') . "." . $image->getClientOriginalExtension();
+                // $image->move($destinationPath, $fileUpload);
+                // $data->file = "$fileUpload";
             }
-            return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Disimpan.'];
-        } catch (\Throwable $th) {
-           return $th->getMessage();
+            $data->status = '2';
+            $data->save();
+            if ($data) {
+                return ['code'=>200,'status'=>'success','message'=>'Berhasil.'];
+            } else {
+                return ['code'=>201,'status'=>'error','message'=>'Ada kesalahan.'];
+            }
+        }else{
+            return ['code'=>403,'status'=>'failed','message'=> $validator->messages()];
         }
     }
-
     public function delete(Request $request) {
         $data = DataAdministrasi::find($request->id);
         $data->delete();
@@ -145,10 +169,10 @@ class DataAdministrasiController extends Controller
                 $data = DataAdministrasi::where('tahun_ajaran',$request->tahun)
                 ->where('semester',$request->semester)
                 // ->whereIn('status', ['1','2'])
-                ->orderBy('id_administrasi','ASC')
+                ->orderBy('id_administrasi','DESC')
                 ->get();
             } else {
-                $data = DataAdministrasi::orderBy('id_administrasi','ASC')->get();
+                $data = DataAdministrasi::orderBy('id_administrasi','DESC')->get();
             }
 			
 			return DataTables::of($data)
@@ -261,51 +285,32 @@ class DataAdministrasiController extends Controller
         $content = view('content.guru.dataAdministrasi.modalBerkas', $data)->render();
 		return ['content'=>$content];
     }
-    public function uploadBerkas(Request $request) {
-        $rules = array(
-            'file' => 'required|mimes:jpeg,png,jpg,pdf,docx|max:2048',
-        );
-        $messages = array(
-            'required'  => 'harus diisi',
-            'mimes'  => 'format file tidak diperbolehkan',
-            'max' => 'ukuran file terlalu besar'
-        );
-        $validator = Validator::make($request->all(), $rules, $messages);
-        if (!$validator->fails()) {
-            $data = DataAdministrasi::find($request->id);
-            $data->tanggal_upload = date('Y-m-d');
-            if ($image = $request->file('file')) {
-                $check = Storage::disk('public')->exists("/uploads/dataAdministrasi/$data->file");
-                if($check == 1 || $check == true){
-                    Storage::disk('public')->delete("uploads/dataAdministrasi/$data->file");
-                }
-                $fileName = $request->file->getClientOriginalName();
-                $filePath = 'uploads/dataAdministrasi/' . $fileName;
-                $path = Storage::disk('public')->put($filePath, file_get_contents($request->file));
-                $path = Storage::disk('public')->url($path);
-                $data->file = $fileName;
+    public function save(Request $request) {
+        // if (empty($request->id)) {
+        //     $data = new DataAdministrasi;
+        // } else {
+        //     $data = DataAdministrasi::find($request->id);
+        // }
+        try {
+            $i = 0;
+            foreach ($request->guru_id as $key => $v) {
+                $data = new DataAdministrasi;
+                $data->guru_id = $request->guru_id[$i];
+                $data->nama_berkas = $request->nama_berkas;
+                $data->tahun_ajaran = $request->tahun_ajaran;
+                $data->semester = $request->semester;
+                $data->deadline_upload = $request->deadline_upload;
+                $data->status = '1'; # Meminta pengupload-an kepada guru
+                $data->save();
+                $i++;
 
-                //DELETE PREV FILE IF NOT NULL
-                // if (isset($data->file)) {
-                //     $check = Storage::disk('public')->exists("/uploads/administrasi/$data->file");
-                //     if($check == 1 || $check == true){
-                //         Storage::disk('public')->delete("uploads/administrasi/$data->file");
-                //     }
-                // }
-                // $destinationPath = 'images/administrasi';
-                // $fileUpload = date('YmdHis') . "." . $image->getClientOriginalExtension();
-                // $image->move($destinationPath, $fileUpload);
-                // $data->file = "$fileUpload";
+                if (!$data) {
+                    return ['code'=>201,'status'=>'error','message'=>'Data Gagal Disimpan.'];
+                }
             }
-            $data->status = '2';
-            $data->save();
-            if ($data) {
-                return ['code'=>200,'status'=>'success','message'=>'Berhasil.'];
-            } else {
-                return ['code'=>201,'status'=>'error','message'=>'Ada kesalahan.'];
-            }
-        }else{
-            return ['code'=>403,'status'=>'failed','message'=> $validator->messages()];
+            return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Disimpan.'];
+        } catch (\Throwable $th) {
+           return $th->getMessage();
         }
     }
     public function exportDataAdministrasi(Request $request) {

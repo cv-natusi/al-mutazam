@@ -20,6 +20,7 @@ use App\Http\Controllers\Petugas\DataPelajaranController as DataPelajaran;
 use App\Http\Controllers\Petugas\MasterSIMController;
 use App\Http\Controllers\Petugas\PengembanganDiriController as PengembanganDiri;
 use GuzzleHttp\Psr7\UploadedFile;
+use App\Helpers\Helpers as Help;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,26 @@ Route::get('/clear', function () {
 	$exitCode = Artisan::call('route:clear');
 	$exitCode = Artisan::call('config:cache');
 	return 'Has been cleared!';
+});
+Route::get('autocheck', function () {
+	DB::beginTransaction();
+	try {
+		$today = date('Y-m-d');
+		$adm = DB::table('data_administrasi')->where([['deadline_upload','<',$today],['status',1]])->get();
+		if (count($adm)>0) {
+			foreach ($adm as $k => $v) {
+				$changeExp = DB::table('data_administrasi')->where('id_administrasi',$v->id_administrasi)->update(['status'=>'4','keterangan_tolak'=>'KADALUWARSA']);
+				if (!$changeExp) {
+					DB::rollback();
+				}
+			}
+		}
+		DB::commit();
+	} catch (\Throwable $e) {
+		DB::rollback();
+		$log = ['ERROR AUTOCHECK ('.$e->getFile().')',false,$e->getMessage(),$e->getLine()];
+		Help::logging($log);
+	}
 });
 # Landing page start
 Route::controller(HomeController::class)->group(function () {
