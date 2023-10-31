@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('data_pendukung_guru', function(Blueprint $table) {
-            $table->renameColumn('file_sertifikat_pendidik', 'file_sk');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('nik_user', 50)->nullable();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('data_pendukung_guru', function(Blueprint $table) {
-            $table->renameColumn('file_sk','file_sertifikat_pendidik');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('nik_user');
         });
     }
 };

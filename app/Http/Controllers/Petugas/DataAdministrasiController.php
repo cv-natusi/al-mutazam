@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 Use App\Models\DataAdministrasi;
 Use App\Models\Guru;
-use DataTables, Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
+use DB, Validator, Storage, Auth, DataTables;
 
 class DataAdministrasiController extends Controller
 {
@@ -20,14 +18,21 @@ class DataAdministrasiController extends Controller
     # Data Administrasi guru
     public function main(Request $request) {
         if(request()->ajax()){
-            $data = DataAdministrasi::where('guru_id', Auth::User()->guru_id)->orderBy('id_administrasi','ASC')->get();
+            $data = DataAdministrasi::where('guru_id', Auth::User()->guru_id)
+            ->orderByRaw('field(status, "0","1","2","3")')
+            // ->orderBy('id_administrasi','ASC')
+            ->get();
 			
 			return DataTables::of($data)
 				->addIndexColumn()
 				->addColumn('actions', function($row){
-					if ( $row->status=='2') {
+					if ($row->status=='2') {
                         $txt = "
-                        <button class='btn btn-sm btn-warning' title='Edit' onclick='uploadBerkas(`$row->id_administrasi`)' disabled>Upload</button>
+                        <button class='btn btn-sm btn-primary' title='Edit' disabled>Upload</button>
+                        ";
+                    } else if ($row->status=='3') {
+                        $txt = "
+                        <button class='btn btn-sm btn-primary' title='Edit' disabled>Terverifikasi</button>
                         ";
                     } else {
                         $txt = "
@@ -43,8 +48,14 @@ class DataAdministrasiController extends Controller
                         return "-";
                     }
                 })
+                ->addColumn('tahun', function($row){
+                    return $row->tahun_ajaran;
+                })
+                ->addColumn('modifySemester', function($row){
+                    return "Semester ".$row->semester;
+                })
                 ->addColumn('modifyKeterangan', function($row){
-                    if (!empty($row->keterangan_tolak)) {
+                    if ($row->status=='0'&&!empty($row->keterangan_tolak)) {
                         return $row->keterangan_tolak;
                     } else {
                         return "-";
@@ -142,8 +153,8 @@ class DataAdministrasiController extends Controller
 			
 			return DataTables::of($data)
 				->addIndexColumn()
-				->addColumn('nip', function($row){
-					$txt = Guru::where('id_guru', $row->guru_id)->first()->nip;
+				->addColumn('nik', function($row){
+					$txt = Guru::where('id_guru', $row->guru_id)->first()->nik;
 					return $txt;
 				})
 				->addColumn('guru', function($row){
@@ -152,6 +163,10 @@ class DataAdministrasiController extends Controller
 				})
                 ->addColumn('modifySemester', function($row){
 					$txt = "<text>Semester $row->semester</text>";
+					return $txt;
+				})
+                ->addColumn('modifyName', function($row){
+					$txt = ($row->nama_berkas)?$row->nama_berkas:'-';
 					return $txt;
 				})
                 ->addColumn('verifikasi', function($row){
@@ -285,9 +300,9 @@ class DataAdministrasiController extends Controller
             $data->status = '2';
             $data->save();
             if ($data) {
-                return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Ditolak.'];
+                return ['code'=>200,'status'=>'success','message'=>'Berhasil.'];
             } else {
-                return ['code'=>201,'status'=>'error','message'=>'Data Gagal Ditolak.'];
+                return ['code'=>201,'status'=>'error','message'=>'Ada kesalahan.'];
             }
         }else{
             return ['code'=>403,'status'=>'failed','message'=> $validator->messages()];

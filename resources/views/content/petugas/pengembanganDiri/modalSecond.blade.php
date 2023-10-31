@@ -36,7 +36,7 @@
                         </div>
                         <div class="col-md-6">
                             <label>Semester <small>*</small></label>
-                            <select name="semester" id="semester" class="form-control single-select">
+                            <select name="semester" id="semesterSecond" class="form-control single-select">
                                 <option value="">.:: Pilih ::.</option>
                                 <option @if(!empty($data) && $data->semester=='1') selected @endif value="1">Semeseter 1</option>
                                 <option @if(!empty($data) && $data->semester=='2') selected @endif value="2">Semeseter 2</option>
@@ -64,7 +64,7 @@
         e.preventDefault();
         var nama = $('#nama_dokumen').val();
         var tahun = $('#tahun_ajaran').val();
-        var semester = $('#semester').val();
+        var semester = $('#semesterSecond option:selected').val()
         if(!nama) {
             Swal.fire('Maaf!!', 'Nama Dokumen Wajib Diisi.', 'warning')
         } else if(!tahun) {

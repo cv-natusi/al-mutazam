@@ -15,6 +15,7 @@
 		<tr>
 			<th><p style="font-weight:bold;text-align:center">NO</p></th>
 			<th><p style="font-weight:bold;text-align:center">NAMA GURU</p></th>
+			<th><p style="font-weight:bold;text-align:center">NAMA KEGIATAN</p></th>
 			<th><p style="font-weight:bold;text-align:center">TANGGAL MULAI</p></th>
 			<th><p style="font-weight:bold;text-align:center">TANGGAL SELESAI</p></th>
 			<th><p style="font-weight:bold;text-align:center">KETERANGAN</p></th>
@@ -28,6 +29,7 @@
 		<tr>
 			<td><p style="padding: 5px; vertical-align: middle;" align="center" valign="middle">{{$no}}</p></td>
 			<td><p style="padding: 5px; vertical-align: middle;" align="center" valign="middle">{{$item->nama}}</p></td>
+			<td><p style="padding: 5px; vertical-align: middle;" align="center" valign="middle">{{$item->nama_dokumen}}</p></td>
 			<td><p style="padding: 5px; vertical-align: middle;" align="center" valign="middle">{{$item->tgl_mulai}}</p></td>
 			<td><p style="padding: 5px; vertical-align: middle;" align="center" valign="middle">{{$item->tgl_selesai}}</p></td>
 			<td><p style="padding: 5px; vertical-align: middle;" align="center" valign="middle">{{!empty($item->keterangan_tolak)?$item->keterangan_tolak:'-'}}</p></td>

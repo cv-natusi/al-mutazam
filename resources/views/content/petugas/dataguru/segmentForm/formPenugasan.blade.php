@@ -47,7 +47,7 @@
 							</tr>
 						</thead>
 						<tbody id="dataPenugasan">
-							@if(count($detailTugas)>0)
+							@if(!empty($detailTugas)&&$detailTugas[0]->id_detail_data_penugasan != '')
 								@foreach($detailTugas as $i => $v)
 									<tr class="rowMapel" id="{{$v->id_tugas_pegawai}}">
 										<td><span id="rowCount">{{$i+1}}</span></td>

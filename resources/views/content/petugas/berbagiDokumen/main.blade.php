@@ -26,7 +26,7 @@
                             <option value="">.:: Pilih ::.</option>
                             <option value="2020-2021">2020-2021</option>
                             <option value="2021-2022">2021-2022</option>
-                            <option value="2022-2023" selected>2022-2023</option>
+                            <option value="2022-2023">2022-2023</option>
                             <option value="2023-2024">2023-2024</option>
                             <option value="2024-2025">2024-2025</option>
                             <option value="2025-2026">2025-2026</option>
@@ -40,7 +40,7 @@
                         <label>Semester</label>
                         <select name="semester" id="semester" class="form-control">
                             <option value="">.:: Pilih ::.</option>
-                            <option value="1" selected>Semester 1</option>
+                            <option value="1">Semester 1</option>
                             <option value="2">Semester 2</option>
                         </select>
                     </div>
@@ -54,7 +54,7 @@
                                     <td style="width: 6%">No</td>
                                     <td style="width: 40%">Nama Dokumen</td>
                                     <td style="width: 40%">File</td>
-                                    <td style="width: 8%">Status</td>
+                                    {{-- <td style="width: 8%">Status</td> --}}
                                     <td style="width: 6%">Aksi</td>
                                 </tr>
                             </thead>
@@ -111,7 +111,7 @@
                 { data: "DT_RowIndex", name: "DT_RowIndex"},
                 { data: "nama_dokumen", name: "nama_dokumen"},
                 { data: "file_dokumen", name: "file_dokumen"},
-                { data: "status", name: "status"},
+                // { data: "status", name: "status"},
                 { data: "actions", name: "actions", class: "text-center"},
             ],
         })

@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
             $table->string('alamat');
+            $table->string('no_telp');
             $table->string('foto')->nullable();
             $table->timestamps();
         });

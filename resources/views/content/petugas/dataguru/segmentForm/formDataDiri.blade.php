@@ -80,7 +80,7 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-8">
-                    <label>Alamat </label>
+                    <label>Alamat <small>*</small></label>
                     <input autocomplete="off" class="form-control" type="text" name="alamat" id="alamat" value="{{ !empty($data->alamat)? $data->alamat : ''}}" placeholder="Alamat">
                 </div>
                 <div class="col-md-4">

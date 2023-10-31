@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('data_guru', function (Blueprint $table)  {
             $table->string('alamat')->nullable()->change();
-            $table->string('no_telp')->nullable();
             $table->string('file_tmt_guru')->nullable();
             $table->string('file_tmt_petugas')->nullable();
         });
@@ -26,7 +25,6 @@ return new class extends Migration
     {
         Schema::table('data_guru', function (Blueprint $table)  {
             $table->string('alamat')->change();
-            $table->dropColumn('no_telp');
             $table->dropColumn('file_tmt_guru');
             $table->dropColumn('file_tmt_petugas');
         });

@@ -15,6 +15,7 @@
 		<tr>
 			<th><p style="font-weight:bold;text-align:center">NO</p></th>
 			<th><p style="font-weight:bold;text-align:center">NAMA GURU</p></th>
+			<th><p style="font-weight:bold;text-align:center">NAMA DOKUMEN</p></th>
             <th><p style="font-weight:bold;text-align:center">DOKUMEN UPLOAD</p></th>
 			<th><p style="font-weight:bold;text-align:center">KETERANGAN</p></th>
 		</tr>
@@ -38,6 +39,7 @@
 		<tr>
 			<td><p style="padding: 5px; vertical-align: middle;" align="center" valign="middle">{{$no}}</p></td>
 			<td><p style="padding: 5px; vertical-align: middle;" align="center" valign="middle">{{$item->nama}}</p></td>
+			<td><p style="padding: 5px; vertical-align: middle;" align="center" valign="middle">{{$item->nama_berkas}}</p></td>
 			<td><p style="padding: 5px; vertical-align: middle;" align="center" valign="middle">{{$status}}</p></td>
 			<td><p style="padding: 5px; vertical-align: middle;" align="center" valign="middle">{{!empty($item->keterangan_tolak)?$item->keterangan_tolak:'-'}}</p></td>
 		</tr>

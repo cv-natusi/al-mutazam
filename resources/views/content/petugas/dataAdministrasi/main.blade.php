@@ -52,8 +52,9 @@
                             <thead>
                                 <tr>
                                     <td>No</td>
-                                    <td>NIP</td>
+                                    <td>NIK</td>
                                     <td>Nama Guru</td>
+                                    <td>Nama Berkas</td>
                                     <td>Tahun Ajaran</td>
                                     <td>Semester</td>
                                     <td class="text-center">Aksi</td>
@@ -87,8 +88,8 @@
     function loadTable(tahun='', semester=''){
         var table = $('#datatabel').DataTable({
             scrollX: true,
-            searching: false,
-            ordering: false,
+            searching: true,
+            // ordering: false,
             // paging: false,
             processing: true,
             serverSide: true,
@@ -110,8 +111,9 @@
             },
             columns: [
                 { data: "DT_RowIndex", name: "DT_RowIndex"},
-                { data: "nip", name: "nip"},
+                { data: "nik", name: "nik"},
                 { data: "guru", name: "guru"},
+                { data: "modifyName", name: "modifyName"},
                 { data: "tahun_ajaran", name: "tahun_ajaran"},
                 { data: "modifySemester", name: "modifySemester"},
                 { data: "actions", name: "actions", class: "text-center"},
