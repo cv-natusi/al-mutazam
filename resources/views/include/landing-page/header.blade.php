@@ -19,7 +19,7 @@
 								<li aria-haspopup="true"><a href="{{route('profil.visimisi')}}">Visi Misi</a></li>
 								<li aria-haspopup="true"><a href="{{route('profil.sambutan')}}">Sambutan Kepala Madrasah</a></li>
 								<li aria-haspopup="true"><a href="{{route('profil.struktur')}}">Struktur Organisasi</a></li>
-								<li aria-haspopup="true"><a href="{{route('profil.struktural')}}">Profil Struktural</a></li>
+								<li aria-haspopup="true"><a href="{{route('profil.struktural')}}">Profil Guru</a></li>
 								<li aria-haspopup="true"><a href="{{route('profil.fasilitas')}}">Fasilitas Madrasah</a></li>
 							</ul>
 						</li>
@@ -33,28 +33,18 @@
 							</ul>
 						</li>
 						<li class="nl-simple" aria-haspopup="true"><a href="{{route('galeri.galeri')}}">GALERI</a></li>
-						{{-- <li aria-haspopup="true"><a href="javascript:void(0)">APLIKASI<span class="wsarrow"></span></a>
-							<ul class="sub-menu">
-								<li aria-haspopup="true"><a href="javascript:void(0)">RDM</a></li>
-								<li aria-haspopup="true"><a href="javascript:void(0)">E-Learning</a></li>
-							</ul>
-						</li> --}}
 					</ul>
 				</nav>
 
 				<!-- For Retina Ready displays take a image with double the amount of pixels that your image will be displayed (e.g 344 x 80 pixels) -->
-				{{-- <div class="desktoplogo"><a href="javascript:void(0)" class="logo-black"><img src="{{asset('landing-page/images/logo.png')}}" width="172" height="40" alt="header-logo"></a></div> --}}
 				<div class="desktoplogo">
 					<div class="row m-0">
 						<div class="col-md-4">
 							<a href="javascript:void(0)" class="logo-black"><img src="{{asset('al-mutazam.png')}}" width="70" height="65" alt="header-logo"></a>
 						</div>
-						{{-- <div class="col-md-8" style="text-align: center;"> --}}
 						<div class="col-md-8 mtb-auto" style="line-height:1.2;">
-							{{-- <span class="m-0 fw9" style="font-size: 20px; display: inline-block !important; line-height: normal !important; vertical-align:middle !important;">MTs AL-MUTAZAM</span> --}}
-								<span class="fw9" style="font-size: 15px;">MTs AL-MUTAZAM</span><br>
+								<span class="fw9" style="font-size: 15px;">MTs AL-MULTAZAM</span><br>
 								<span class="fw4" style="font-size: 13px;">Kab. Mojokerto - Jawa Timur</span>
-							{{-- <span class="m-0 fw5" style="font-size: 14px;">Kab. Mojokerto - Jawa Timur</span> --}}
 						</div>
 					</div>
 				</div>

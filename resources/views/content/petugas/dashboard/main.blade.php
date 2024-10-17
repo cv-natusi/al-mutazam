@@ -5,10 +5,10 @@
 	.card-title {
 		margin-top: 40px;
 	}
-	.bg-card {
-		width: 250px;
-		height: 160px;
-	}
+	/*.bg-card {*/
+	/*	width: 250px;*/
+	/*	height: 160px;*/
+	/*}*/
 </style>
 @endpush
 
@@ -35,7 +35,7 @@
 									<div class="progress-bar bg-white" role="progressbar" style="width: 55%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
 								<div class="d-flex align-items-center text-white">
-									<p class="mb-0">Jumlah Guru</p>
+									<p class="mb-0">Guru</p>
 									<a href="{{ route('dataGuru') }}" class="btn btn-light btn-sm mb-0 ms-auto">Selengkapnya</a>
 								</div>
 							</div>
@@ -54,7 +54,7 @@
 								<div class="progress-bar bg-white" role="progressbar" style="width: 55%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
 							<div class="d-flex align-items-center text-white">
-								<p class="mb-0">Jumlah Rombel</p>
+								<p class="mb-0">Rombel</p>
 								<a href="{{ route('dataKelas') }}" class="btn btn-light btn-sm mb-0 ms-auto">Selengkapnya</a>
 							</div>
 						</div>
@@ -73,7 +73,7 @@
 									<div class="progress-bar bg-white" role="progressbar" style="width: 55%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
 								<div class="d-flex align-items-center text-white">
-									<p class="mb-0">Total Upload Administrasi</p>
+									<p class="mb-0">Administrasi</p>
 									<a href="{{ route('dataAdministrasiPetugas') }}" class="btn btn-light btn-sm mb-0 ms-auto">Selengkapnya</a>
 								</div>
 							</div>
@@ -92,7 +92,7 @@
 									<div class="progress-bar bg-white" role="progressbar" style="width: 55%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
 								<div class="d-flex align-items-center text-white">
-									<p class="mb-0">Total Upload Pengembangan Diri</p>
+									<p class="mb-0">Pengembangan Diri</p>
 									<a href="{{ route('mainPengembanganDiri') }}" class="btn btn-light btn-sm mb-0 ms-auto">Selengkapnya</a>
 								</div>
 							</div>

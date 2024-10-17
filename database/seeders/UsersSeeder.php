@@ -29,13 +29,13 @@ class UsersSeeder extends Seeder
             'level'=> '2',
             'active'=> 'active'
         ]);
-        Users::create([
-            'name_user' => 'Guru Pengajar',
-            'email' => '3527162918000003',
-            'password' => bcrypt('3527162918000003'),
-            'lihat_password' => '3527162918000003',
-            'level'=> '3',
-            'active'=> 'active'
-        ]);
+        // Users::create([
+        //     'name_user' => 'Guru Pengajar',
+        //     'email' => '3527162918000003',
+        //     'password' => bcrypt('3527162918000003'),
+        //     'lihat_password' => '3527162918000003',
+        //     'level'=> '3',
+        //     'active'=> 'active'
+        // ]);
     }
 }

@@ -34,7 +34,7 @@
 				</div>
 							
 				<div class="col-md-4 mt-4" style="padding-left: 30px;">
-					@include('content.landing-page.include.side-dokumen')
+					@include('content.landing-page.include.side-program')
 				</div>
 			</div>
 			

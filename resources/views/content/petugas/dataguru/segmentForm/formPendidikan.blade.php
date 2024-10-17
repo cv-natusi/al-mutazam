@@ -89,11 +89,6 @@
 	</div>
 </div>
 <script type="text/javascript">
-	$('#mata_pelajaran').change(() => {
-		var id = $('#mata_pelajaran').val();
-		$('#sIdMapel').val(id);
-	});
-	
 	async function addMapel() {
 		const kode = await generateId(5)
 		var id = $('#mata_pelajaran').val()

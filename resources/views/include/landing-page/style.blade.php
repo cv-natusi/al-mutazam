@@ -1,3 +1,4 @@
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 <!-- FAVICON AND TOUCH ICONS  -->
 {{-- <link rel="shortcut icon" href="{{asset('landing-page/images/favicon.ico')}}" type="image/x-icon">
 <link rel="icon" href="{{asset('landing-page/images/favicon.ico')}}" type="image/x-icon"> --}}
@@ -186,7 +187,18 @@
 	.fwhite{
 		color: white;
 	}
-
+    
+ /*   @media (min-width: 10px) and (max-width: 610px) {*/
+	/*	.navbar-dark .wsmenu > .wsmenu-list > li > a{*/
+	/*		color: #000 !important;*/
+	/*	}*/
+	/*	.white-menu .wsmenu > .wsmenu-list > li:hover > a{*/
+	/*		color:#000 !important;*/
+	/*	}*/
+	/*	.wsmenu > .wsmenu-list > li > ul.sub-menu > li > a, .wsmenu > .wsmenu-list > li > .wsmegamenu .link-list li a{*/
+	/*		color:#000 !important;*/
+	/*	}*/
+	/*}*/
 	/* Header start */
 	.white-menu .wsmainfull{
 		background-color: #5A79CB!important;
@@ -195,11 +207,20 @@
 		background-color: #5A79CB!important;
 	}
 	.navbar-dark .wsmenu > .wsmenu-list > li > a{
-		color: white;
+		color: #000 !important;
 	}
 	.white-menu .wsmenu > .wsmenu-list > li:hover > a{
-		color:#ffb585;
+		color:#000 !important;
 	}
+	.wsmenu > .wsmenu-list > li > ul.sub-menu > li > a, .wsmenu > .wsmenu-list > li > .wsmegamenu .link-list li a{
+		color:#000 !important;
+	}
+	/*.navbar-dark .wsmenu > .wsmenu-list > li > a{*/
+	/*	color: white;*/
+	/*}*/
+	/*.white-menu .wsmenu > .wsmenu-list > li:hover > a{*/
+	/*	color:#ffb585;*/
+	/*}*/
 	.wsmobileheader{
 		background-color: #5A79CB !important;
 	}
@@ -270,5 +291,11 @@
 	.modal-header {
 		background-color: var(--color-menu);
 	}
+	
+	.modal-body {
+        max-height: calc(100vh - 210px) !important;
+        overflow-y: auto !important;
+    }
+
 </style>
 @stack('style')

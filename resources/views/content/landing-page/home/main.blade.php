@@ -132,14 +132,14 @@
 			<div class="slider">
 				<ul class="slides">
 					@foreach ($slider as $i => $s)
-					@if(file_exists(public_path().'/uploads/slider/'.$s->gambar))
-					@if (empty($s->gambar))
+					@if(file_exists(public_path().'/uploads/galeri/'.$s->file_galeri))
+					@if (empty($s->file_galeri))
 					<li id="slide-{{$i}}">
 						<img src="{{asset('uploads/default.jpg')}}" alt="slide-background">
 					</li>
 					@else
 					<li id="slide-{{$i}}">
-						<img src="{{asset('uploads/slider/'.$s->gambar)}}" alt="slide-background">
+						<img src="{{asset('uploads/galeri/'.$s->file_galeri)}}" alt="slide-background">
 					</li>
 					@endif
 					@endif
@@ -155,18 +155,18 @@
 		<div class="row d-flex align-items-center">
 			<div class="col-md-5">
 				<div class="txt-block pc-25">
-					<p class="h3-sm fw7 m-0" style="font-size: 14px; color: #0F4C81;">MTs AL-MUTAZAM</p>
+					<p class="h3-sm fw7 m-0" style="font-size: 14px; color: #0F4C81;">MTs AL-MULTAZAM</p>
 					<h3 class="h3-sm" style="line-height: 1">Sambutan<br>Kepala Madrasah</h3>
 					<div class="text-justify content" id="content-{{$identity->id_identitas}}">{!!$identity->sambutan_kepsek!!}</div>
 					{{-- <p class="text-justify content" id="content-{{$identity->id_identitas}}">
 					{!! $identity->sambutan_kepsek !!}
 					</p> --}}
 					<a href="javascript:void(0)" id="read-more-{{$identity->id_identitas}}" onclick="readMore('{{$identity->id_identitas}}')" class="color-a">[Baca Selengkapnya]</a>
-					<div class="row">
+					<div class="row mt-3">
 						<div class="col-md-3">
-							<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('ttd-default.png')}}" alt="ttd kepsek">
+							<!--<img class="img-shadow mx-auto d-block responsive img-thumbnail img-fluid" src="{{asset('ttd-default.png')}}" alt="ttd kepsek">-->
 						</div>
-						<div class="col-md-9 text-left">
+						<div class="col-md-12">
 							<h5>EVI RAHMAWATI,S.T</h5>
 							<p>Kepala Madrasah</p>
 						</div>
@@ -482,6 +482,7 @@
 		var textButton = $(`#read-more-${id}`).text()
 		var firstText = $(`#content-${id}`).data('first')
 		var secondText = $(`#content-${id}`).data('second')
+		console.log(id,textButton)
 		if (textButton === '[Baca Selengkapnya]') {
 			$(`#content-${id}`).empty().html(firstText.slice(0, -3) + secondText)
 			$(`#read-more-${id}`).text('[Baca Lebih Sedikit]')

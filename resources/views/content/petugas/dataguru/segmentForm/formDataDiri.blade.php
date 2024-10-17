@@ -79,13 +79,24 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <div class="col-md-8">
+                <div class="col-md-4">
                     <label>Alamat <small>*</small></label>
-                    <input autocomplete="off" class="form-control" type="text" name="alamat" id="alamat" value="{{ !empty($data->alamat)? $data->alamat : ''}}" placeholder="Alamat">
+                    <textarea name="alamat" id="alamat" cols="30" rows="5" class="form-control">{{ !empty($data->alamat)? $data->alamat : ''}}</textarea>
                 </div>
                 <div class="col-md-4">
                     <label>Foto Diri</label>
-                    <input class="form-control" type="file" name="foto" id="foto" value="{{ !empty($data->foto)? $data->foto : ''}}" placeholder="Upload Foto">
+                    <input class="form-control upload" type="file"  onchange="loadFilePhoto(event)" name="foto" id="foto" value="{{ !empty($data->foto)? $data->foto : ''}}" placeholder="Upload Foto">
+                </div>
+                <div class="col-md-4">
+                    <center>
+                        @if (!empty($data)&&!empty($data->foto))
+                        @if(file_exists('images/guru/'.$data->foto))
+                            <img id="preview-photo" src="{{asset('images/guru/'.$data->foto)}}" class="img-polaroid rounded mx-auto d-block responsive img-thumbnail" width="200">
+                        @else
+                            <img id="preview-photo" src="{{asset('uploads/default.jpg')}}" class="img-polaroid rounded mx-auto d-block responsive img-thumbnail" width="200">
+                        @endif
+                        @endif
+                    </center>
                 </div>
             </div>
         </form>
@@ -95,3 +106,14 @@
         <button class="btn btn-success simpanDataDiri" type="button">SIMPAN</button>
     </div>
 </div>
+<script>
+    function loadFilePhoto(event) {
+        var image = URL.createObjectURL(event.target.files[0]);
+        $('#preview-photo').fadeOut(function(){
+            $(this).attr('src', image).fadeIn().css({
+                '-webkit-animation' : 'showSlowlyElement 700ms',
+                'animation'         : 'showSlowlyElement 700ms'
+            });
+        });
+    };
+</script>

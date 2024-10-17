@@ -36,14 +36,6 @@ use App\Helpers\Helpers as Help;
 Route::get('/', function () {
 	return redirect('home');
 });
-Route::get('/clear', function () {
-	$exitCode = Artisan::call('cache:clear');
-	$exitCode = Artisan::call('view:clear');
-	$exitCode = Artisan::call('config:clear');
-	$exitCode = Artisan::call('route:clear');
-	$exitCode = Artisan::call('config:cache');
-	return 'Has been cleared!';
-});
 Route::get('autocheck', function () {
 	DB::beginTransaction();
 	try {
@@ -85,6 +77,7 @@ Route::controller(HomeController::class)->group(function () {
 		Route::post('search-unggulan', 'programUnggulan')->name('searchUnggulan');
 		Route::get('galeri', 'galeri')->name('galeri');
 		Route::get('prestasi-siswa', 'prestasiSiswa')->name('prestasi-siswa');
+		Route::post('search-prestasi-siswa', 'prestasiSiswa')->name('searchPrestasiSiswa');
 		Route::get('uks', 'uks')->name('uks');
 		Route::get('ekskul', 'ekskul')->name('ekskul');
 		Route::post('search-ekskul', 'ekskul')->name('searchEkskul');

@@ -26,22 +26,22 @@ class Berita extends Model{
 	}
 	# Accessor end
 	public static function getBeritaPaginate(){
-		return Berita::select('*', 'tanggal as date_indo')->where('kategori', 1)->orderBy('tanggal', 'DESC')->paginate(4);
+		return Berita::select('*', 'tanggal as date_indo')->where('kategori', 1)->orderBy('id_berita', 'DESC')->paginate(4);
 	}
 	public static function getEventPaginate(){
-		return Berita::select('*', 'tanggal as date_indo')->where('kategori', 2)->orderBy('tanggal', 'DESC')->paginate(4);
+		return Berita::select('*', 'tanggal_acara as date_indo')->where('kategori', 2)->orderBy('id_berita', 'DESC')->paginate(4);
 	}
 	public static function getPengumumanPaginate(){
-		return Berita::select('*', 'tanggal as date_indo')->where('kategori', 3)->orderBy('tanggal', 'DESC')->paginate(5);
+		return Berita::select('*', 'tanggal as date_indo')->where('kategori', 3)->orderBy('id_berita', 'DESC')->paginate(5);
 	}
 	public static function getBeritaLimit($number){
-		return Berita::where('kategori', 1)->orderBy('tanggal', 'DESC')->limit($number)->get();
+		return Berita::where('kategori', 1)->orderBy('id_berita', 'DESC')->limit($number)->get();
 	}
 	public static function getEventLimit($number){
-		return Berita::where('kategori', 2)->orderBy('tanggal', 'DESC')->limit($number)->get();
+		return Berita::where('kategori', 2)->orderBy('id_berita', 'DESC')->limit($number)->get();
 	}
 	public static function getPengumumanLimit($number){
-		return Berita::where('kategori', 3)->orderBy('tanggal', 'DESC')->limit($number)->get();
+		return Berita::where('kategori', 3)->orderBy('id_berita', 'DESC')->limit($number)->get();
 	}
 	public static function filterBeritaById($params){
 		return Berita::where([
@@ -63,10 +63,16 @@ class Berita extends Model{
 		])->first();
 	}
 	public static function getPrestasiPaginate(){
-		return Berita::where('kategori', '4')->where('status', '1')->orderBy('id_berita', 'DESC')->paginate(5);
+		return Berita::where('kategori', '4')->where('status', '1')->limit('10')->orderBy('id_berita', 'DESC')->paginate(10);
+	}
+	public static function filterPrestasiById($params){
+		return Berita::where([
+			['kategori', 4],
+			['id_berita', $params->id]
+		])->first();
 	}
 	public static function getUnggulanPaginate(){
-		return Berita::where('kategori', '5')->where('status', '1')->limit('10')->orderBy('id_berita', 'DESC')->paginate(9);
+		return Berita::where('kategori', '5')->where('status', '1')->limit('10')->orderBy('id_berita', 'DESC')->paginate(10);
 	}
 	public static function filterUnggulanById($params){
 		return Berita::where([

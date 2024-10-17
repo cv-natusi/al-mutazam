@@ -45,6 +45,12 @@
                             </select>
 						</div>
 					</div>
+					<div class="row mb-3">
+						<div class="col-md-12">
+                            <label>Foto User <small>*</small></label>
+                            <input type="file" name="foto" id="foto" class="form-control">
+						</div>
+					</div>
 				</form>
 			</div>
 			<div class="modal-footer">

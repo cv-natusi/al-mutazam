@@ -52,7 +52,7 @@
                             <thead>
                                 <tr>
                                     <td>No</td>
-                                    <td>NIK</td>
+                                    {{-- <td>NIK</td> --}}
                                     <td>Nama Guru</td>
                                     <td>Nama Berkas</td>
                                     <td>Tahun Ajaran</td>
@@ -111,7 +111,7 @@
             },
             columns: [
                 { data: "DT_RowIndex", name: "DT_RowIndex"},
-                { data: "nik", name: "nik"},
+                // { data: "nik", name: "nik"},
                 { data: "guru", name: "guru"},
                 { data: "modifyName", name: "modifyName"},
                 { data: "tahun_ajaran", name: "tahun_ajaran"},

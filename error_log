@@ -1,0 +1,1 @@
+[02-Nov-2023 08:56:19 Asia/Jakarta] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 5.6.40. in /home/smag9352/public_html/mtsalmultazam-mjk.sch.id/vendor/composer/platform_check.php on line 25

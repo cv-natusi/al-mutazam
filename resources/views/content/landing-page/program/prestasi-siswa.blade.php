@@ -5,8 +5,13 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <style>
 	.size-card{
-		height: 150px;
+		height: 300px !important;
 	}
+    @media (min-width: 10px) and (max-width: 610px) {
+        .size-card{
+    		height: 700px !important;
+    	}
+    }
 </style>
 @endpush
 
@@ -31,210 +36,119 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-4 mt-4">
+			@if (count($berita)>0)
+			@foreach ($berita as $index => $b)
+			<div class="col-md-12 mt-4">
 				<section id="contacts-2" class="contacts-section division">
-					@foreach ($beritas1 as $index => $berita1)
 					<div class="contacts-2-holder mb-20">
 						<div class="row d-flex align-items-center">
 							<div class="col-lg-12">
 								<div class="contact-box">
 									<div class="row size-card">
-										<div class="col-md-4 mtb-auto">
-											<img class="img" src="{{asset('uploads/berita/'.$berita1->gambar)}}" alt="contacts-icon" style="height:70px; width:70px; object-fit: cover;">
+										<div class="col-md-6 mtb-auto">
+											<img class="img" src="{{asset('uploads/berita/'.$b->gambar)}}" onclick="modalShow(`{{ $b->id_berita }}`)" alt="contacts-icon" style="height:300px; width:100%; object-fit: cover;">
 											<br>
 										</div>
-										<div class="col-md-8 mtb-auto text-left">
-											<span class="fw4">{{date('d/M/Y',strtotime($berita1->tanggal))}}</span><br>
-											<span class="fw5">{{$berita1->judul}}</span>
+										<div class="col-md-6 mtb-auto text-left">
+											<span class="fw5">{{$b->judul}}</span>
+											<span class="fw4">{!!$b->isi!!}</span>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					@endforeach
-					{{-- <div class="contacts-2-holder mb-20">
-							<div class="row d-flex align-items-center">
-								<div class="col-lg-12">
-									<div class="contact-box">
-										<div class="row">
-											<div class="col-md-4 mtb-auto">
-												<img class="img-80" src="{{asset('landing-page/images/berita/1.png')}}" alt="contacts-icon">
-					<br>
+				</section>
 			</div>
-			<div class="col-md-8 mtb-auto text-left">
-				<span class="fw4">31/Oct/2022</span><br>
-				<span class="fw5">JUARA LOMBA ESAI AL-MULTAZAM 2022</span>
-			</div>
+			@endforeach
+			@endif
 		</div>
-	</div>
-	</div>
-	</div>
-	</div>
-	<div class="contacts-2-holder mb-20">
-		<div class="row d-flex align-items-center">
-			<div class="col-lg-12">
-				<div class="contact-box">
-					<div class="row">
-						<div class="col-md-4 mtb-auto">
-							<img class="img-80" src="{{asset('landing-page/images/berita/1.png')}}" alt="contacts-icon">
-							<br>
-						</div>
-						<div class="col-md-8 mtb-auto text-left">
-							<span class="fw4">31/Oct/2022</span><br>
-							<span class="fw5">JUARA LOMBA ESAI AL-MULTAZAM 2022</span>
-						</div>
-					</div>
+		<div class="row">
+			<div class="col-md-8 mt-4">
+				<div class="d-flex justify-content-center">
+					{!! $berita->links() !!}
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="contacts-2-holder mb-20">
-		<div class="row d-flex align-items-center">
-			<div class="col-lg-12">
-				<div class="contact-box">
-					<div class="row">
-						<div class="col-md-4 mtb-auto">
-							<img class="img-80" src="{{asset('landing-page/images/berita/1.png')}}" alt="contacts-icon">
-							<br>
-						</div>
-						<div class="col-md-8 mtb-auto text-left">
-							<span class="fw4">31/Oct/2022</span><br>
-							<span class="fw5">JUARA LOMBA ESAI AL-MULTAZAM 2022</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="contacts-2-holder">
-		<div class="row d-flex align-items-center">
-			<div class="col-lg-12">
-				<div class="contact-box">
-					<div class="row">
-						<div class="col-md-4 mtb-auto">
-							<img class="img-80" src="{{asset('landing-page/images/berita/1.png')}}" alt="contacts-icon">
-							<br>
-						</div>
-						<div class="col-md-8 mtb-auto text-left">
-							<span class="fw4">31/Oct/2022</span><br>
-							<span class="fw5">JUARA LOMBA ESAI AL-MULTAZAM 2022</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> --}}
-</section>
-</div>
-
-<div class="col-md-4 mt-4">
-	<section id="contacts-2" class="contacts-section division">
-		@foreach ($beritas2 as $index => $berita2)
-		<div class="contacts-2-holder mb-20">
-			<div class="row d-flex align-items-center">
-				<div class="col-lg-12">
-					<div class="contact-box">
-						<div class="row size-card">
-							<div class="col-md-4 mtb-auto">
-								<img class="img" src="{{asset('uploads/berita/'.$berita2->gambar)}}" alt="contacts-icon" style="height:70px; width:70px; object-fit: cover;">
-								<br>
-							</div>
-							<div class="col-md-8 mtb-auto text-left">
-								<span class="fw4">{{date('d/M/Y',strtotime($berita2->tanggal))}}</span><br>
-								<span class="fw5">{{$berita2->judul}}</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		@endforeach
-		{{-- <div class="contacts-2-holder mb-20">
-							<div class="row d-flex align-items-center">
-								<div class="col-lg-12">
-									<div class="contact-box">
-										<div class="row">
-											<div class="col-md-4 mtb-auto">
-												<img class="img-80" src="{{asset('landing-page/images/event/1.png')}}" alt="contacts-icon">
-		<br>
-</div>
-<div class="col-md-8 mtb-auto text-left">
-	<span class="fw4">31/Oct/2022</span><br>
-	<span class="fw5">JUARA LOMBA PUISI TINGKAT MTs AL-MULTAZAM 2022</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="contacts-2-holder mb-20">
-	<div class="row d-flex align-items-center">
-		<div class="col-lg-12">
-			<div class="contact-box">
-				<div class="row">
-					<div class="col-md-4 mtb-auto">
-						<img class="img-80" src="{{asset('landing-page/images/event/1.png')}}" alt="contacts-icon">
-						<br>
-					</div>
-					<div class="col-md-8 mtb-auto text-left">
-						<span class="fw4">31/Oct/2022</span><br>
-						<span class="fw5">JUARA LOMBA PUISI TINGKAT MTs AL-MULTAZAM 2022</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="contacts-2-holder mb-20">
-	<div class="row d-flex align-items-center">
-		<div class="col-lg-12">
-			<div class="contact-box">
-				<div class="row">
-					<div class="col-md-4 mtb-auto">
-						<img class="img-80" src="{{asset('landing-page/images/event/1.png')}}" alt="contacts-icon">
-						<br>
-					</div>
-					<div class="col-md-8 mtb-auto text-left">
-						<span class="fw4">31/Oct/2022</span><br>
-						<span class="fw5">JUARA LOMBA PUISI TINGKAT MTs AL-MULTAZAM 2022</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="contacts-2-holder">
-	<div class="row d-flex align-items-center">
-		<div class="col-lg-12">
-			<div class="contact-box">
-				<div class="row">
-					<div class="col-md-4 mtb-auto">
-						<img class="img-80" src="{{asset('landing-page/images/event/1.png')}}" alt="contacts-icon">
-						<br>
-					</div>
-					<div class="col-md-8 mtb-auto text-left">
-						<span class="fw4">31/Oct/2022</span><br>
-						<span class="fw5">JUARA LOMBA PUISI TINGKAT MTs AL-MULTAZAM 2022</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div> --}}
-</section>
-</div>
-
-<div class="col-md-4 mt-4" style="padding-left: 30px;">
-	@include('content.landing-page.include.side-dokumen')
-</div>
-<div class="row">
-	<div class="col-md-8 mt-4">
-		<div class="d-flex justify-content-center">
-			{!! $berita->links() !!}
-		</div>
-	</div>
-</div>
-</div>
+	<div class="modal" id="exampleModal" tabindex="-1">
+    	<div class="modal-dialog modal-lg">
+    		<div class="modal-content">
+    			<div class="modal-header">
+    				<p class="modal-title fwhite fw7"></p>
+    				<button type="button" class="close-modal btn-x">
+    					<i class="far fa-times-circle fwhite" style="font-size: 25px;"></i>
+    				</button>
+    			</div>
+    			<div class="modal-body">
+    				<div class="row">
+    					<div class="col-md-12 mb-4">
+    						<img class="mx-auto d-block responsive img-fluid" id="modal-img" width="400" height="auto" src="{{asset('default.jpg')}}" alt="team-member-foto">
+    					</div>
+    				</div>
+    				<div class="row">
+    					<div class="col-md-12">
+    						{{-- <div id="event-text"></div> --}}
+    						<div id="event-text" class="text-justify"></div>
+    						{{-- <p class="m-0" id="event-text"></p> --}}
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
 </section>
 @endsection
+@push('script')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript">
+        async function modalShow(id) {
+		try {
+			await $.ajax({
+				url: '{{route("program.searchPrestasiSiswa")}}',
+				type: 'POST',
+				data: {
+					id: id
+				},
+			}).done(async (data, textStatus, xhr) => {
+				const code = xhr.status
+				const rootDir = '{{URL::asset('/uploads/berita')}}'
+				const defaultDir = '{{URL::asset('')}}'
+				if (code !== 200) {
+					await Swal.fire({
+						icon: 'info',
+						title: 'Whoops..',
+						text: 'Data not found',
+						allowOutsideClick: false,
+						allowEscapeKey: false,
+					})
+					return false
+				}
+				await $('.modal-title').text(data.response.judul)
+				await $('#modal-img').attr('src', `${rootDir}/${data.response.gambar}`)
+				await $('#event-text').html(data.response.isi)
+				await $('#modal-img').on('error', async () => {
+					await $('#modal-img').attr('src', `${defaultDir}/default.jpg`)
+				})
+				$('.modal').fadeIn("slow")
+			})
+		} catch (error) {
+			await Swal.fire({
+				icon: 'error',
+				title: 'ERROR!',
+				text: error.responseJSON.metadata.message,
+				allowOutsideClick: false,
+				allowEscapeKey: false,
+			})
+		}
+	}
+
+        $(document).ready(() => {
+            $('.close-modal').click(() => {
+                $('.modal').fadeOut("slow")
+                location.reload()
+            })
+        })
+
+    </script>
+@endpush

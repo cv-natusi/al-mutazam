@@ -177,13 +177,13 @@ class DataAdministrasiController extends Controller
 			
 			return DataTables::of($data)
 				->addIndexColumn()
-				->addColumn('nik', function($row){
-					$txt = Guru::where('id_guru', $row->guru_id)->first()->nik;
-					return $txt;
-				})
+				// ->addColumn('nik', function($row){
+				// 	$txt = Guru::where('id_guru', $row->guru_id)->first()->nik;
+				// 	return $txt;
+				// })
 				->addColumn('guru', function($row){
-					$txt = Guru::where('id_guru', $row->guru_id)->first()->nama;
-					return $txt;
+				    $txt = Guru::where('id_guru', $row->guru_id)->first();
+					return $txt ? $txt->nama : 'Guru tidak ditemukan';;
 				})
                 ->addColumn('modifySemester', function($row){
 					$txt = "<text>Semester $row->semester</text>";
@@ -206,8 +206,8 @@ class DataAdministrasiController extends Controller
                         $txt .= "
                         <button class='btn btn-sm btn-primary disabled' title='verifikasi' onclick='verifikasi(`$row->id_administrasi`)'>Verifikasi</button>
                         <button class='btn btn-sm btn-danger disabled' title='tolak' onclick='tolak(`$row->id_administrasi`)'>Tolak</button>
-                        <button style='color: #fff' class='btn btn-sm btn-secondary disabled' title='Detail' onclick='formAdd(`$row->id_administrasi`)'><i class='fadeIn animated bx bxs-file-find' aria-hidden='true'></i></button>
-                        <button style='color: #fff' class='btn btn-sm btn-danger disabled' title='Delete' onclick='hapusData(`$row->id_administrasi`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>
+                        <button style='color: #fff' class='btn btn-sm btn-secondary' title='Detail' onclick='formAdd(`$row->id_administrasi`)'><i class='fadeIn animated bx bxs-file-find' aria-hidden='true'></i></button>
+                        <button style='color: #fff' class='btn btn-sm btn-danger' title='Delete' onclick='hapusData(`$row->id_administrasi`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>
                         ";
                     }
                     return $txt;
@@ -227,7 +227,7 @@ class DataAdministrasiController extends Controller
                     $txt = "<button class='btn btn-sm btn-success text-center' title='lihat' onclick='lihat(`$row->id_administrasi`)'><i class='bx bxs-bullseye'></i> Lihat</button>";
 					return $txt;
 				})
-				->rawColumns(['actions', 'btnStatus', 'verifikasi','modifySemester'])
+				->rawColumns(['actions', 'btnStatus', 'verifikasi','modifySemester','guru'])
 				->toJson();
 		}
 
@@ -286,26 +286,30 @@ class DataAdministrasiController extends Controller
 		return ['content'=>$content];
     }
     public function save(Request $request) {
-        // if (empty($request->id)) {
-        //     $data = new DataAdministrasi;
-        // } else {
-        //     $data = DataAdministrasi::find($request->id);
-        // }
         try {
-            $i = 0;
-            foreach ($request->guru_id as $key => $v) {
-                $data = new DataAdministrasi;
-                $data->guru_id = $request->guru_id[$i];
+            if (!empty($request->id)) {
+                $data = DataAdministrasi::where('id_administrasi',$request->id)->first();
                 $data->nama_berkas = $request->nama_berkas;
                 $data->tahun_ajaran = $request->tahun_ajaran;
                 $data->semester = $request->semester;
                 $data->deadline_upload = $request->deadline_upload;
-                $data->status = '1'; # Meminta pengupload-an kepada guru
                 $data->save();
-                $i++;
-
                 if (!$data) {
-                    return ['code'=>201,'status'=>'error','message'=>'Data Gagal Disimpan.'];
+                    return ['code'=>204,'status'=>'error','message'=>'Data Gagal Disimpan.'];
+                }
+            } else {
+                foreach ($request->guru_id as $key => $v) {
+                    $data = new DataAdministrasi;
+                    $data->guru_id = $v;
+                    $data->nama_berkas = $request->nama_berkas;
+                    $data->tahun_ajaran = $request->tahun_ajaran;
+                    $data->semester = $request->semester;
+                    $data->deadline_upload = $request->deadline_upload;
+                    $data->status = '1'; # Meminta pengupload-an kepada guru
+                    $data->save();
+                    if (!$data) {
+                        return ['code'=>204,'status'=>'error','message'=>'Data Gagal Disimpan.'];
+                    }
                 }
             }
             return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Disimpan.'];

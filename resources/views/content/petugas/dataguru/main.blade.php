@@ -65,7 +65,7 @@
                             <thead>
                                 <tr>
                                     <td>No</td>
-                                    <td>NIP</td>
+                                    <td>NIK</td>
                                     <td>Nama Guru</td>
                                     <td>Tanggal Lahir</td>
                                     <td>Alamat</td>
@@ -115,7 +115,7 @@
             },
             columns: [
                 { data: "DT_RowIndex", name: "DT_RowIndex"},
-                { data: "nip", name: "nip"},
+                { data: "nik", name: "nik"},
                 { data: "nama", name: "nama"},
                 { data: "tanggal_lahir", name: "tanggal_lahir"},
                 { data: "alamat", name: "alamat"},

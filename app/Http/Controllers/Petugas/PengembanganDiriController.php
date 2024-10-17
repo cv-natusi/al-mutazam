@@ -116,14 +116,13 @@ class PengembanganDiriController extends Controller
     public function mstPengembanganDiri(Request $request)
     {
         if ($request->ajax()) {
-            $data = MstPengembanganDiri::orderBy('id_mst_pengembangan_diri','ASC')->get();
+            $data = MstPengembanganDiri::where('active',true)->orderBy('id_mst_pengembangan_diri','ASC')->get();
             return DataTables::of($data)
 				->addIndexColumn()
 				->addColumn('actions', function($row){
 					$txt = "
                     <button class='btn btn-sm btn-secondary' title='Edit' onclick='formSecond(`$row->id_mst_pengembangan_diri`)'><i class='fadeIn animated bx bxs-file' aria-hidden='true'></i></button>
-                    <button class='btn btn-sm btn-danger' title='Hapus' onclick='deleteSecond(`$row->id_mst_pengembangan_diri`)'><i class='fadeIn animated bx bxs-trash' aria-hidden='true'></i></button>
-					";
+                    <button class='btn btn-sm btn-danger' title='Nonaktif' onclick='nonaktifSecond(`$row->id_mst_pengembangan_diri`)'><i class='fadeIn animated bx bxs-x-circle' aria-hidden='true'></i></button>";
 					return $txt;
 				})
 				->rawColumns(['actions'])
@@ -159,7 +158,7 @@ class PengembanganDiriController extends Controller
                 ->where('pengembangan_diri.id_pengembangan_diri',$request->id)->first();
 		}
         $data['guru'] = Guru::all();
-        $data['dokumen'] = MstPengembanganDiri::all();
+        $data['dokumen'] = MstPengembanganDiri::where('active',true)->get();
         $content = view('content.petugas.pengembanganDiri.modalFirstAdd', $data)->render();
 		return ['content'=>$content];
     }
@@ -253,6 +252,7 @@ class PengembanganDiriController extends Controller
         $data->nama_dokumen = $request->nama_dokumen;
         $data->tahun_ajaran = $request->tahun_ajaran;
         $data->semester = $request->semester;
+        $data->active = true;
         $data->save();
         if ($data) {
             return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Disimpan.'];
@@ -377,7 +377,7 @@ class PengembanganDiriController extends Controller
     public function formPengembanganDiriGuru(Request $request) {
         $data['title'] = "Upload Data Pengembangan Diri Guru";
         $data['data'] = PengembanganDiri::where('id_pengembangan_diri',$request->id)->first();
-        $data['dokumen'] = MstPengembanganDiri::all();
+        $data['dokumen'] = MstPengembanganDiri::where('active',true)->get();
         $content = view('content.guru.pengembanganDiri.modal', $data)->render();
 		return ['content'=>$content];
     }
@@ -476,7 +476,8 @@ class PengembanganDiriController extends Controller
     }
     public function deleteMstPengembanganDiri(Request $request) {
 		$data = mstPengembanganDiri::find($request->id);
-        $data->delete();
+        $data->active = false;
+        $data->save();
         if ($data) {
             return ['code'=>200,'status'=>'success','message'=>'Data Berhasil Dihapus.'];
         } else {

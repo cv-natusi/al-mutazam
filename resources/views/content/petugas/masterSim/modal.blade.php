@@ -26,7 +26,7 @@
                     <div class="row mb-3">
 						<div class="col-md-12">
                             <label>Link URL <small>*</small></label>
-                            <input type="text" name="link_url" id="link_url" class="form-control" value="{{!empty($data)?$data->nama:''}}">
+                            <input type="text" name="link_url" id="link_url" class="form-control" value="{{!empty($data)?$data->link_url:''}}">
 						</div>
 					</div>
 				</form>

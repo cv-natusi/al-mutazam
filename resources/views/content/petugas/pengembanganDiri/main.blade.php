@@ -320,10 +320,10 @@
           }
         });
     }
-    function deleteSecond(id) { 
-		Swal.fire({
+    function nonaktifSecond(id='') {
+        Swal.fire({
 			title: "Apakah Anda yakin?",
-			text: "Data yang dihapus tidak dapat dikembalikan lagi.",
+			text: "Data akan dinonaktifkan.",
 			icon: 'warning',
 			showCancelButton: true,
 			cancelButtonText: 'Batal',

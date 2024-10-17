@@ -30,27 +30,26 @@
 			</div>
 			<div class="user-box dropdown">
 				<a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-					<img src="{{ asset('assets/images/avatars/no-avatar.png')}}" class="user-img" alt="user avatar">
+					@php $img=Auth::User()->foto; @endphp
+					@if(Auth::User()->level=='3' && asset('storage/uploads/pengguna/'.$img))
+						<img src="{{asset('storage/uploads/pengguna/'.$img)}}" class="user-img" alt="user avatar">
+					@else		
+						<img src="{{ asset('assets/images/avatars/no-avatar.png')}}" class="user-img" alt="user avatar">
+					@endif
 					<div class="user-info ps-3">
-						<p class="user-name mb-0">{{Auth::user()->name}}</p>
+						<p class="user-name mb-0">{{Auth::user()->name_user}}</p>
 						<p class="designattion mb-0">
-							@if (Auth::user()->level_user == 1)
-							ADMINISTRATOR
-							@elseif (Auth::user()->level_user == 2)
-							PRTUGAS SEKOLAH
-							@elseif (Auth::user()->level_user == 3)
-							GURU PENGAJAR
-							@endif
+						@if (Auth::user()->level == 1)
+							ADMIN
+						@elseif (Auth::user()->level == 2)
+							PETUGAS
+						@elseif (Auth::user()->level == 3)
+							GURU
+						@endif
 						</p>
 					</div>
 				</a>
 				<ul class="dropdown-menu dropdown-menu-end">
-					{{-- <li>
-						<a class="dropdown-item" href=""><i class="bx bx-user"></i><span>Profile</span></a>
-					</li> --}}
-					{{-- <li>
-						<div class="dropdown-divider mb-0"></div>
-					</li> --}}
 					<li><a class="dropdown-item" href="{{route('logout')}}"><i class='bx bx-log-out-circle'></i><span>Logout</span></a>
 					</li>
 				</ul>

@@ -35,10 +35,10 @@ class HomeController extends Controller
 		$event = Berita::getEventLimit(3);
 		$pengumuman = Berita::getPengumumanLimit(6);
 		$dokumen = BerbagiDokumen::getDokumenLimit(6);
-		$slider = DB::table('slider')->get();
-		$beritaSlider = Berita::where('kategori', 1)->orderBy('tanggal', 'ASC')->limit(3)->get();
+		$slider = DB::table('galeri')->orderBy('id_galeri', 'DESC')->limit(5)->get();
+		$beritaSlider = Berita::where('kategori', '4')->where('status', '1')->orderBy('id_berita', 'DESC')->limit(3)->get();
 		// $agendas = DB::table('berita')->where('status', '1')->where('tanggal_acara', '>=', date('Y-m-d'))->where('kategori', '2')->orderBy('tanggal_acara', 'ASC')->limit(10)->get();
-		$agendas = DB::table('berita')->where('status', '1')->where('kategori', '2')->orderBy('tanggal_acara', 'ASC')->limit(10)->get();
+		$agendas = DB::table('berita')->where('status', '1')->where('kategori', '2')->orderBy('tanggal_acara', 'DESC')->limit(10)->get();
 		return view('content.landing-page.home.main', compact('berita', 'event', 'pengumuman', 'slider', 'beritaSlider', 'agendas', 'dokumen'));
 	}
 	public function berita(Request $request)
@@ -170,9 +170,9 @@ class HomeController extends Controller
 	}
 	public function prestasiSiswa(Request $request)
 	{
-		$beritas1 = DB::table('berita')->where('kategori', '4')->where('status', '1')->orderBy('id_berita', 'DESC')->take(5)->get();
-		$lastBeritas1 = $beritas1->last()->id_berita;
-		$beritas2 = DB::table('berita')->where('kategori', '4')->where('status', '1')->where('id_berita', '<', $lastBeritas1)->orderBy('id_berita', 'DESC')->take(5)->get();
+		// $beritas1 = DB::table('berita')->where('kategori', '4')->where('status', '1')->orderBy('id_berita', 'DESC')->get();
+		// $lastBeritas1 = $beritas1->last()->id_berita;
+		// $beritas2 = DB::table('berita')->where('kategori', '4')->where('status', '1')->where('id_berita', '<', $lastBeritas1)->orderBy('id_berita', 'DESC')->take(5)->get();
 
 		if ($request->ajax()) {
 			$payload = [
@@ -187,8 +187,9 @@ class HomeController extends Controller
 			return Helpers::resAjax($payload);
 		}
 		$berita = Berita::getPrestasiPaginate();
-		$dokumen = BerbagiDokumen::getDokumenLimit(6);
-		return view('content.landing-page.program.prestasi-siswa', compact('beritas1', 'beritas2', 'berita','dokumen'));
+		// $dokumen = BerbagiDokumen::getDokumenLimit(6);
+		return view('content.landing-page.program.prestasi-siswa', compact('berita'));
+		// return view('content.landing-page.program.prestasi-siswa', compact('beritas1', 'beritas2', 'berita','dokumen'));
 	}
 	public function galeri(Request $request)
 	{
@@ -212,8 +213,6 @@ class HomeController extends Controller
 	}
 	public function uks(Request $request)
 	{
-		$dokumen = BerbagiDokumen::getDokumenLimit(6);
-        // return view('content.landing-page.profil.sambutan', compact('identity','amtvs','dokumen'));
-		return view('content.landing-page.program.uks', compact('dokumen'));
+		return view('content.landing-page.program.uks');
 	}
 }
