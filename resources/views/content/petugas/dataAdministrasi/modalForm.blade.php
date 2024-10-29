@@ -48,7 +48,7 @@
                             <select name="guru_id[]" id="guru_id" class="form-control single-select" multiple='multiple' @if(!empty($data)) disabled="disabled" @endif>
                                 <option value="">.:: Pilih ::.</option>
                                 @foreach ($guru as $g)
-                                    <option @if(!empty($data) && $data->guru_id==$g->id_guru) selected @endif value="{{$g->id_guru}}">{{$g->nama}}</option>
+                                    <option @if(!empty($data) && $data->guru_id == $g->id_guru) selected @endif value="{{$g->id_guru}}">{{$g->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
