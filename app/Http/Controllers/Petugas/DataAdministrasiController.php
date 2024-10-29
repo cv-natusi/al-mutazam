@@ -21,6 +21,7 @@ class DataAdministrasiController extends Controller
             $data = DataAdministrasi::where('guru_id', Auth::User()->guru_id)
             ->orderByRaw('field(status, "0","1","2","3")')
             // ->orderBy('id_administrasi','ASC')
+            ->orderBy('id_administrasi','DESC')
             ->get();
 			
 			return DataTables::of($data)
