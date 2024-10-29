@@ -20,7 +20,7 @@ class DataAdministrasiController extends Controller
         if(request()->ajax()){
             $data = DataAdministrasi::where('guru_id', Auth::User()->guru_id)
             ->orderByRaw('field(status, "0","1","2","3")')
-            ->orderBy('id_administrasi','DESC')
+            ->orderBy('id_administrasi','desc')
             ->get();
 			
 			return DataTables::of($data)
