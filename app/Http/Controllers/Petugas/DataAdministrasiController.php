@@ -19,7 +19,7 @@ class DataAdministrasiController extends Controller
     public function main(Request $request) {
         if(request()->ajax()){
             $data = DataAdministrasi::where('guru_id', Auth::User()->guru_id)
-            ->orderByRaw('field(status, "0","1","2","3")')
+            // ->orderByRaw('field(status, "0","1","2","3")')
             ->orderBy('id_administrasi','desc')
             ->get();
 			
