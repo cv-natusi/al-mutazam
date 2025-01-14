@@ -123,7 +123,10 @@ class DataAdministrasiController extends Controller
                 if($check == 1 || $check == true){
                     Storage::disk('public')->delete("uploads/dataAdministrasi/$data->file");
                 }
-                $fileName = $request->file->getClientOriginalName();
+                // $fileName = $request->file->getClientOriginalName() . '_' . date("Y-m-d_H:i:s");
+                $fileNameWithExt = $request->file->getClientOriginalName();
+                $fileInfo = pathinfo($fileNameWithExt); // Mendapatkan informasi file
+                $fileName = $fileInfo['filename'] . '_' . date("Y-m-d_H:i:s") . '.' . $fileInfo['extension']; // Menambahkan datetime sebelum ekstensi
                 $filePath = 'uploads/dataAdministrasi/' . $fileName;
                 $path = Storage::disk('public')->put($filePath, file_get_contents($request->file));
                 $path = Storage::disk('public')->url($path);
@@ -142,6 +145,7 @@ class DataAdministrasiController extends Controller
                 // $data->file = "$fileUpload";
             }
             $data->status = '2';
+            // return $fileName;
             $data->save();
             if ($data) {
                 return ['code'=>200,'status'=>'success','message'=>'Berhasil.'];
